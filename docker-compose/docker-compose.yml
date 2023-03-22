@@ -1,4 +1,3 @@
-version: "3.5"
 services:
   mysql:
     image: mysql
@@ -12,5 +11,27 @@ services:
     volumes:
       - ../webapps/NutritionalGenerator/BaseDatos/script_bd.sql:/docker-entrypoint-initdb.d/script_bd.sql
       - db_data:/var/lib/mysql
+  ClientNutriApp:
+    container_name: ClientNutriApp
+    build:
+      context: ../webapps/ClientNutriApp
+    image: client_nutri_app:latest
+    ports:
+      - 8081:8081
+    networks:
+      - nutri_menu_net
+  NutritionalGenerator:
+    container_name: NutritionalGenerator
+    build:
+      context: ../webapps/NutritionalGenerator
+    image: nutritional_generator:latest
+    ports:
+      - 8080:8080
+    networks:
+      - nutri_menu_net
+
 volumes:
   db_data:
+
+networks:
+  nutri_menu_net: {}
