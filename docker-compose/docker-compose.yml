@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_DATABASE: nutri_db
+    volumes:
+      - ../webapps/NutritionalGenerator/BaseDatos/script_bd.sql:/docker-entrypoint-initdb.d/script_bd.sql
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
