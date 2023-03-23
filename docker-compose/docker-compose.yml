@@ -1,8 +1,9 @@
 services:
-  mysql:
-    image: mysql
+  mysqldb:
+    image: mysql:8.0
     ports:
       - 3306:3306
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
     environment:
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_USER: mysql
