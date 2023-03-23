@@ -4,11 +4,12 @@ services:
     ports:
       - 3306:3306
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci
+    env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-      MYSQL_DATABASE: nutri_db
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
     volumes:
       - ../webapps/NutritionalGenerator/BaseDatos/script_bd.sql:/docker-entrypoint-initdb.d/script_bd.sql
       - db_data:/var/lib/mysql
