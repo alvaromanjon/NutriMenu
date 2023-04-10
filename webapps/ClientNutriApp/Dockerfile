@@ -1,4 +1,7 @@
-FROM --platform=linux/amd64 eclipse-temurin:19-alpine
-EXPOSE 8081
-COPY target/ws-nutriClient-app.jar ws-nutriClient-app.jar
-ENTRYPOINT ["java","-jar","/ws-nutriClient-app.jar"]
+FROM maven:3.9-amazoncorretto-19
+EXPOSE 8080
+WORKDIR /ClientNutriApp
+COPY . .
+RUN mvn clean install
+
+CMD mvn spring-boot:run
