@@ -1,10 +1,26 @@
 services:
-  nutrimenuenterprise:
+  nutrimenumanage:
     build:
-      context: ../webapps/NutriMenuEnterprise
+      context: ../webapps/nutrimenumanage
     restart: always
     ports:
-      - 8081:8080
+      - 8080:8080
+    networks:
+      - nutrimenu-net
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/nutri_db?allowPublicKeyRetrieval=true
+    depends_on:
+      - mysqldb
+
+    volumes:
+      - .m2:/root/.m2
+  
+  nutrimenuclient:
+    build:
+      context: ../webapps/nutrimenuclient
+    restart: always
+    ports:
+      - 8081:8081
     networks:
       - nutrimenu-net
     environment:
