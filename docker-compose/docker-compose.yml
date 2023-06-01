@@ -6,16 +6,20 @@ services:
     ports:
       - 8080:8080
       - 35729:35729
+      - 5005:5005
     networks:
       - nutrimenu-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/nutri_db?allowPublicKeyRetrieval=true
+      DATABASE_HOST: mysqldb
+      DATABASE_NAME: nutri_db
     depends_on:
       - mysqldb
-
+    working_dir: /app
+    command: sh run_docker.sh
     volumes:
+      - ../webapps/nutrimenumanage:/app
       - .m2:/root/.m2
-  
+
   nutrimenuclient:
     build:
       context: ../webapps/nutrimenuclient
@@ -23,14 +27,18 @@ services:
     ports:
       - 8081:8081
       - 35730:35730
+      - 5006:5006
     networks:
       - nutrimenu-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/nutri_db?allowPublicKeyRetrieval=true
+      DATABASE_HOST: mysqldb
+      DATABASE_NAME: nutri_db
     depends_on:
       - mysqldb
-
+    working_dir: /app
+    command: sh run_docker.sh
     volumes:
+      - ../webapps/nutrimenuclient:/app
       - .m2:/root/.m2
 
   mysqldb:
