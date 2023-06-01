@@ -8,11 +8,11 @@
 		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.alvaromanjon</groupId>
-	<artifactId>nutrimenuenterprise</artifactId>
+	<groupId>ooo.alvar</groupId>
+	<artifactId>nutrimenumanage</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>nutrimenuenterprise</name>
-	<description>NutriMenu enterprise webapp</description>
+	<name>nutrimenumanage</name>
+	<description>NutriMenu management webapp</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

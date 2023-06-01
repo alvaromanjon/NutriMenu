@@ -1,13 +1,13 @@
-package com.alvaromanjon.nutrimenuenterprise;
+package ooo.alvar.nutrimenumanage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NutriMenuEnterpriseApplication {
+public class NutrimenumanageApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NutriMenuEnterpriseApplication.class, args);
+		SpringApplication.run(NutrimenumanageApplication.class, args);
 	}
 
 }
