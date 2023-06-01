@@ -4,14 +4,13 @@ services:
       context: ../webapps/nutrimenumanage
     restart: always
     ports:
-      - 8080:8080
-      - 35729:35729
-      - 5005:5005
+      - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
+      - ${MANAGE_RELOAD_DOCKER_PORT}:${MANAGE_RELOAD_LOCAL_PORT}
+      - ${MANAGE_DEBUG_DOCKER_PORT}:${MANAGE_DEBUG_LOCAL_PORT}
     networks:
       - nutrimenu-net
-    environment:
-      DATABASE_HOST: mysqldb
-      DATABASE_NAME: nutri_db
+    env_file:
+      - .env
     depends_on:
       - mysqldb
     working_dir: /app
@@ -25,14 +24,13 @@ services:
       context: ../webapps/nutrimenuclient
     restart: always
     ports:
-      - 8081:8081
-      - 35730:35730
-      - 5006:5006
+      - ${CLIENT_WEB_DOCKER_PORT}:${CLIENT_WEB_LOCAL_PORT}
+      - ${CLIENT_RELOAD_DOCKER_PORT}:${CLIENT_RELOAD_LOCAL_PORT}
+      - ${CLIENT_DEBUG_DOCKER_PORT}:${CLIENT_DEBUG_LOCAL_PORT}
     networks:
       - nutrimenu-net
-    environment:
-      DATABASE_HOST: mysqldb
-      DATABASE_NAME: nutri_db
+    env_file:
+      - .env
     depends_on:
       - mysqldb
     working_dir: /app
@@ -45,14 +43,11 @@ services:
     image: "mysql:8.0"
     restart: always
     ports:
-      - 3306:3306
+      - ${DB_DOCKER_PORT}:${DB_LOCAL_PORT}
     networks:
       - nutrimenu-net
-    environment:
-      MYSQL_DATABASE: nutri_db
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-      MYSQL_ROOT_PASSWORD: mysql
+    env_file:
+      - .env
     volumes:
       - db_data:/var/lib/mysql
 
