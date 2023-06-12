@@ -23,5 +23,50 @@ Una vez ejecutemos el instalador (en caso de macOS simplemente se debe arrastrar
 \imagen{Docker/docker-main-window}{Ventana principal de Docker Desktop}
 
 En esta ventana podemos ver todos los contenedores que están ejecutándose actualmente en el sistema, así como las imágenes descargadas y los volúmenes creados.
- 
+
+\subsection{Preparación del entorno de desarrollo}
+
+Para hacer más sencillo el cambio de valores en distintos parámetros de la aplicación, como el mapeado de puertos o la gestión de secretos, y facilitar así el despliegue de nuevos entornos o la escalabilidad de los servicios, estos valores se han externalizado en un sólo archivo \verb,.env,, que va a ser un archivo que simplemente va a contener las variables junto a sus valores. 
+
+Al ser un fichero que contiene secretos, siguiendo lo que dictan las buenas prácticas no se sincronizará con el repositorio, ya que si se tratase de un entorno de producción o el código se hiciera público, cualquier usuario podría obtener acceso a los datos de los usuarios de la aplicación.
+
+Por lo tanto, antes de desplegar los contenedores, para que la aplicación funcione correctamente el archivo se ha de crear dentro del directorio \verb,/docker-compose,, y se deben de definir las siguientes variables dentro de él:
+
+\begin{lstlisting}[language=Bash]
+# Variables del backend de la parte de los clientes
+CLIENT_WEB_DOCKER_PORT=8081
+CLIENT_WEB_LOCAL_PORT=8081
+CLIENT_RELOAD_DOCKER_PORT=35730
+CLIENT_RELOAD_LOCAL_PORT=35730
+CLIENT_DEBUG_DOCKER_PORT=5006
+CLIENT_DEBUG_LOCAL_PORT=5006
+
+# Variables del backend de la parte de gestion
+MANAGE_WEB_DOCKER_PORT=8080
+MANAGE_WEB_LOCAL_PORT=8080
+MANAGE_RELOAD_DOCKER_PORT=35729
+MANAGE_RELOAD_LOCAL_PORT=35729
+MANAGE_DEBUG_DOCKER_PORT=5005
+MANAGE_DEBUG_LOCAL_PORT=5005
+
+# Variables de la base de datos
+DATABASE_HOST=mysqldb
+MYSQL_DATABASE=nutri_db
+MYSQL_USER=<MySQL user> # Introduce el nombre del usuario de MySQL
+MYSQL_PASSWORD=<MySQL password> # Introduce la pass escogida para el usuario creado en el paso anterior
+MYSQL_ROOT_PASSWORD=<MySQL root password> # Introduce la pass escogida para el usuario root de MySQL
+DB_DOCKER_PORT=3306
+DB_LOCAL_PORT=3306
+\end{lstlisting}
+
+Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (indicando los valores escogidos en \verb,MYSQL_USER,, \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
+\begin{itemize}
+	\item Los puertos en los que se van a ejecutar cada una de las aplicaciones, que en este caso van a ser el \textbf{8080} para la aplicación de gestión y el \textbf{8081} para la aplicación de los clientes.
+	\item Los puertos en los que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso los puertos van a ser el \textbf{35729} para la aplicación de gestión y el \textbf{35730} para la aplicación de los clientes.
+	\item Los puertos que se van a usar para permitir conectar un debugger remoto a la aplicación, y poder así hacer debug desde el IDE que usemos para el desarrollo. Los puertos serán el \textbf{5005} para la aplicación de gestión y el \textbf{5006} para la aplicación de los clientes.
+	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, \textbf{credenciales de los usuarios de MySQL}, y el puerto escogido para la base de datos, que en este caso va a ser el usado por defecto, \textbf{3306}. 
+\end{itemize}
+
+
+
 \section{Pruebas del sistema}
