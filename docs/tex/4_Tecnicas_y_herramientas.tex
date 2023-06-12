@@ -21,7 +21,7 @@ Docker es una plataforma de código abierto que permite el desarrollo, ejecució
 
 \subsubsection{Arquitectura de Docker}
 
-\imagen{docker_architecture}{Arquitectura de Docker}{0.75}
+\imagen{Docker/docker_architecture}{Arquitectura de Docker}{0.75}
 
 La arquitectura de Docker es una arquitectura \textbf{cliente-servidor} \cite{docker:overview-architecture}. El cliente de Docker, que es con lo que interactúa el usuario, habla con el \textit{daemon} haciendo llamadas API REST, y este se encarga de gestionar las peticiones y los objetos de Docker, como son las imágenes, los contenedores, los volúmenes y las redes. Finalmente, para conseguir las imágenes, el \textit{daemon} habla con \textit{Docker Registry}, el repositorio que contiene todas las imágenes necesarias para el despliegue. Por defecto se usa \textbf{Docker Hub}, un repositorio público en el que cualquiera puede subir y descargar imágenes, pero se puede usar también un repositorio privado.
 
