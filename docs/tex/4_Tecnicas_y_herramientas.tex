@@ -30,4 +30,16 @@ La arquitectura de Docker es una arquitectura \textbf{cliente-servidor} \cite{do
 Las imágenes son plantillas que contienen instrucciones y parámetros para crear contenedores de Docker. Se puede crear un contenedor usando directamente una imagen del \textit{registry}, reutilizando imágenes ya existentes como base para crear nuestras propias imágenes, o incluso creando nuestras propias imágenes desde cero. Las imágenes se crean usando archivos \textit{Dockerfile}, añadiendo en él las distintas dependencias, instrucciones y parámetros, y cada uno de estos elementos es una capa dentro de la imagen. De esta manera, cada vez que se modifica el \textit{Dockerfile} y se vuelve a construir la imagen, realmente sólo se vuelven a construir las capas en las que han habido cambios, acelerando de esta forma el proceso de despliegue.
 \cite{docker:overview-objects}
 
+\subsection{Docker Compose}
+
+Docker Compose es una herramienta que nos permite definir, orquestrar, desplegar y escalar \textbf{aplicaciones Docker multi-contenedor}. Para ello, se define un archivo \textit{YAML} en el que se van a definir las  configuraciones necesarias para los distintos servicios pertenecientes a la aplicación. Esto nos va a permitir establecer relaciones y dependencias entre distintos contenedores que forman parte de un mismo aplicativo, permitiendo así que varios contenedores formen parte de una misma red o tengan la capacidad de compartir volúmenes de almacenamiento, por poner unos ejemplos.
+
+He decidido usar esta herramienta ya que facilita bastante la conexión e integración entre los distintos servicios que componen la aplicación, como son la base de datos, el backend, y el frontend. Además de esto, a la hora de poner la aplicación en producción, obtenemos varias ventajas respecto a un entorno tradicional:
+
+\begin{itemize}
+
+\item \textbf{Automatización de despliegues}, ya que una vez hayamos definido en el archivo de configuración de Docker Compose todas las dependencias, configuraciones y relaciones necesarias, con un sólo comando Docker Compose se va a encargar de crear y desplegar los contenedores, configurar los elementos necesarios, e iniciar los servicios.
+\item \textbf{Creación de entornos aislados y consistentes}, lo que nos permite desplegar entornos de desarrollo locales, así como entornos CI/CD de validación y pruebas, y que estos repliquen la infraestructura de producción, que también puede ser desplegada usando Docker Compose.
+\item \textbf{Escalabilidad de infraestructura}, puesto que con un sólo comando podemos aumentar o disminuir el número de instancias de las que dispone un servicio.	
+\end{itemize}
 
