@@ -12,15 +12,15 @@ Para realizar la compilación, despliegue y ejecución del proyecto es imprescin
 
 \subsection{Instalación de Docker Desktop}
 
-\imagen{Docker/docker-download}{Página de descarga de Docker Desktop}
+\imagen{Docker/docker-download}{Página de descarga de Docker Desktop}{0.8}
 
 Para realizar la instalación de Docker Desktop tan sólo debemos dirigirnos a \url{https://docs.docker.com/get-docker/}, seleccionar la plataforma deseada, y descargar el instalador.
 
-\imagen{Docker/docker-installation-mac}{Instalación de Docker Desktop en Mac}
+\imagen{Docker/docker-installation-mac}{Instalación de Docker Desktop en Mac}{0.8}
 
 Una vez ejecutemos el instalador (en caso de macOS simplemente se debe arrastrar la aplicación a la carpeta de Aplicaciones), y hayamos seguido todos los pasos hasta finalizar la instalación, nos encontraremos con el panel principal de Docker Desktop. 
 
-\imagen{Docker/docker-main-window}{Ventana principal de Docker Desktop}
+\imagen{Docker/docker-main-window}{Ventana principal de Docker Desktop}{0.8}
 
 En esta ventana podemos ver todos los contenedores que están ejecutándose actualmente en el sistema, así como las imágenes descargadas y los volúmenes creados.
 
@@ -60,6 +60,7 @@ DB_LOCAL_PORT=3306
 \end{lstlisting}
 
 Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (indicando los valores escogidos en \verb,MYSQL_USER,, \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
+
 \begin{itemize}
 	\item Los puertos en los que se van a ejecutar cada una de las aplicaciones, que en este caso van a ser el \textbf{8080} para la aplicación de gestión y el \textbf{8081} para la aplicación de los clientes.
 	\item Los puertos en los que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso los puertos van a ser el \textbf{35729} para la aplicación de gestión y el \textbf{35730} para la aplicación de los clientes.
@@ -67,6 +68,30 @@ Los valores pueden ser modificados si es necesario, pero se recomienda usar los 
 	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, \textbf{credenciales de los usuarios de MySQL}, y el puerto escogido para la base de datos, que en este caso va a ser el usado por defecto, \textbf{3306}. 
 \end{itemize}
 
+\subsection{Despliegue de la aplicación}
 
+\imagen{Docker/docker-compose-build}{Creación de las imágenes de los contenedores Docker}{0.8}
+
+Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola y accederemos al directorio \verb,/docker-compose,, donde ejecutaremos el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+docker-compose build
+\end{lstlisting}
+
+\imagen{Docker/docker-compose-up}{Despliegue de los contenedores Docker}{0.8}
+
+Para desplegar los contenedores y levantar el servicio, ejecutaremos el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+docker-compose up -d
+\end{lstlisting}
+
+\imagen{Docker/docker-desktop-containers}{Ejecución multi-contenedor de la aplicación}{0.8}
+
+Si todo ha ido bien, podremos ver en Docker Desktop los contenedores corriendo con estado \textit{Running}, y ya podremos acceder a la aplicación como haríamos con cualquier tipo de despliegue. 
+
+\imagen{Docker/docker-desktop-logs}{Logs de la ejecución de un contenedor en Docker Desktop}{0.8}
+
+Para asegurarnos de que no hay ningún tipo de problema, podemos seleccionar los 3 puntos verticales situados a la derecha de cada contenedor, y hacer click en \textit{View details}, ya que esto nos permite poder ver el log de cada servicio en tiempo real. 
 
 \section{Pruebas del sistema}
