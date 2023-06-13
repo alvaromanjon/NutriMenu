@@ -6,6 +6,32 @@
 
 \section{Manual del programador}
 
+\subsection{Configuración del debugger remoto}
+
+Como veremos en el apartado \ref{entorno-desarrollo}, se van a configurar distintos puertos por cada uno de los servicios, y uno de estos va a ser el puerto de debug. Como vamos a ejecutar la aplicación usando Docker Compose y no compilando el código directamente desde nuestro IDE, por defecto no podemos hacer debug como haríamos con cualquier código compilado localmente. 
+
+Sin embargo, con los pasos que vamos a ver a continuación \cite{medium:spring-boot-in-docker}, \textbf{vamos a ser capaces de conectarnos a nuestro entorno \textit{contenerizado} y realizar debug del código como lo haríamos de forma normal}. En este caso voy a demostrar cómo funcionaría en IntelliJ IDEA, pero mientras que el IDE disponga de un \textit{debugger remoto} y sigamos correctamente las instrucciones del desarrollador del IDE para usarlo, no debería de haber ningún problema.
+
+\imagen{IntelliJ/debug-edit-conf-1}{Listado de todas las configuraciones de ejecución disponibles}{0.8}
+
+Para comenzar, debemos de abrir  el proyecto en IntelliJ y en la parte superior, al lado de los botones de Ejecución y Debug, tenemos un selector donde podemos seleccionar la configuración que deseemos. Debemos hacer click en \textit{Edit Configurations...}.
+
+\imagen{IntelliJ/debug-edit-conf-2}{Selección del tipo de configuración}{0.8}
+
+Debemos hacer click en el icono con un + para añadir una nueva configuración, y seleccionar dentro del desplegable \textit{Remote JVM Debug}.
+
+\imagen{IntelliJ/debug-edit-conf-3}{Creación de la configuración del debugger remoto}{0.8}
+
+A continuación daremos nombre a la configuración, indicaremos el puerto correspondiente al servicio que estemos configurando, y seleccionaremos el módulo de dicho servicio.
+
+\imagen{IntelliJ/debug-edit-conf-4}{Creación de un módulo para un servicio}{0.6}
+
+En caso de que el módulo correspondiente no aparezca, deberemos seleccionar en la barra de herramientas \textit{File > New > Module from Existing Sources...}, seleccionar el directorio en el que se encuentre la carpeta con el servicio correspondiente, y escoger Maven dentro de \textit{Import module from external model}. Si sí que nos aparece el módulo podemos ignorar este paso.
+
+\imagen{IntelliJ/debug-edit-conf-5}{Debug del servicio}{0.9}
+
+Una vez hayamos completado estos pasos, podemos guardar la configuración y ejecutar el proyecto (asegurándonos de que la configuración deseada está seleccionada) desde el botón de Debug, como haríamos de normal. Si todo ha ido bien, el IDE nos devolverá en la consola el mensaje \textit{Connected to the target VM, address: 'localhost:5005', transport: 'socket'}. Hay que tener en cuenta que estos pasos se deben repetir para cada uno de los servicios, seleccionando en cada caso el puerto y módulo indicados.
+
 \section{Compilación, despliegue y ejecución del proyecto}
 
 Para realizar la compilación, despliegue y ejecución del proyecto es imprescindible disponer de \textbf{Docker CLI} y \textbf{Docker Compose} instalados en el equipo. La mejor forma de instalarlos es mediante \textbf{Docker Desktop}, ya que se encarga de instalar en el equipo el \textit{daemon} de Docker, Docker CLI, Docker Compose, y demás dependencias y herramientas que no vamos a utilizar para este proyecto, pero que nos pueden ayudar en el futuro. Docker Desktop es compatible con Windows, macOS y Linux, y soporta tanto arquitecturas x86 como ARM64 (Apple Silicon).
@@ -24,7 +50,7 @@ Una vez ejecutemos el instalador (en caso de macOS simplemente se debe arrastrar
 
 En esta ventana podemos ver todos los contenedores que están ejecutándose actualmente en el sistema, así como las imágenes descargadas y los volúmenes creados.
 
-\subsection{Preparación del entorno de desarrollo}
+\subsection{Preparación del entorno de desarrollo} \label{entorno-desarrollo}
 
 Para hacer más sencillo el cambio de valores en distintos parámetros de la aplicación, como el mapeado de puertos o la gestión de secretos, y facilitar así el despliegue de nuevos entornos o la escalabilidad de los servicios, estos valores se han externalizado en un sólo archivo \verb,.env,, que va a ser un archivo que simplemente va a contener las variables junto a sus valores. 
 
