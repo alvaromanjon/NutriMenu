@@ -4,7 +4,39 @@
 
 \section{Estructura de directorios}
 
+\subsection{Estructura de Docker y Docker Compose}
+
+\dirtree{%
+.1 NutriMenu.
+.2 docker-compose.
+.3 docker-compose.yml.
+.2 webapps.
+.3 nutrimenuclient.
+.4 Dockerfile.
+.4 run-docker.sh.
+.3 nutrimenumanage.
+.4 Dockerfile.
+.4 run-docker.sh.
+}
+
 \section{Manual del programador}
+
+\subsection{Dockerfiles}
+
+\begin{lstlisting}
+FROM eclipse-temurin:17
+RUN apt update && apt -y upgrade
+RUN apt install -y inotify-tools dos2unix
+ENV HOME=/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+\end{lstlisting}
+
+Cada uno de los servicios del \textit{backend} dispone de un \textbf{Dockerfile}, que a la hora del despliegue es el encargado de definir cómo se va a crear la imagen, y qué parámetros y dependencias va a necesitar.
+
+En este caso me he basado en otra imagen ya existente, \textit{\textbf{eclipse-temurin}} (\href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}), ya que contiene tanto el JDK como el JRE de Java, además de todos los binarios relacionados. He especificado que quiero usar la etiqueta \textit{\textbf{17}}, puesto que quiero usar Java 17 para este proyecto, ya que es la última versión LTS \textit{(Long Term Support)} disponible en el momento \cite{java:releases}. Existen muchas implementaciones del JDK de Java \cite{foojay:java-jdks}, pero en este caso he usado Eclipse Temurin principalmente por el soporte a arquitecturas \textit{ARMv7} y \textit{ARM64/v8}, lo que permite poder ejecutar los contenedores en plataformas como Apple Silicon, o incluso en mini-computadores como una Raspberry Pi.
+
+Además de esto, también se van a instalar como dependencias \textit{\href{https://github.com/inotify-tools}{inotify-tools}}, una herramienta para monitorizar cambios en el código; y \textit{\href{https://dos2unix.sourceforge.io/}{dos2unix}}, que se encarga de cambiar el tipo de final de línea de \textbf{CRLF} (Windows) a \textbf{LF} (Unix) \cite{medium:spring-boot-in-docker}.
 
 \subsection{Configuración del debugger remoto}
 
