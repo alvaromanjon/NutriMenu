@@ -4,8 +4,233 @@
 
 \section{Estructura de directorios}
 
+\subsection{Estructura de Docker y Docker Compose}
+
+\dirtree{%
+.1 NutriMenu.
+.2 docker-compose.
+.3 docker-compose.yml.
+.2 webapps.
+.3 nutrimenuclient.
+.4 Dockerfile.
+.4 run-docker.sh.
+.3 nutrimenumanage.
+.4 Dockerfile.
+.4 run-docker.sh.
+}
+
 \section{Manual del programador}
 
-\section{Compilación, instalación y ejecución del proyecto}
+\subsection{Dockerfiles}
+
+\begin{lstlisting}
+FROM eclipse-temurin:17
+RUN apt update && apt -y upgrade
+RUN apt install -y inotify-tools dos2unix
+ENV HOME=/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+\end{lstlisting}
+
+Cada uno de los servicios del \textit{backend} dispone de un \textbf{Dockerfile}, que a la hora del despliegue es el encargado de definir cómo se va a crear la imagen, y qué parámetros y dependencias va a necesitar.
+
+En este caso me he basado en otra imagen ya existente, \textit{\textbf{eclipse-temurin}} (\href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}), ya que contiene tanto el JDK como el JRE de Java, además de todos los binarios relacionados. He especificado que quiero usar la etiqueta \textit{\textbf{17}}, puesto que quiero usar Java 17 para este proyecto, ya que es la última versión LTS \textit{(Long Term Support)} disponible en el momento \cite{java:releases}. Existen muchas implementaciones del JDK de Java \cite{foojay:java-jdks}, pero en este caso he usado Eclipse Temurin principalmente por el soporte a arquitecturas \textit{ARMv7} y \textit{ARM64/v8}, lo que permite poder ejecutar los contenedores en plataformas como Apple Silicon, o incluso en mini-computadores como una Raspberry Pi.
+
+Además de esto, también se van a instalar como dependencias \textit{\href{https://github.com/inotify-tools}{inotify-tools}}, una herramienta para monitorizar cambios en el código; y \textit{\href{https://dos2unix.sourceforge.io/}{dos2unix}}, que se encarga de cambiar el tipo de final de línea de \textbf{CRLF} (Windows) a \textbf{LF} (Unix) \cite{medium:spring-boot-in-docker}.
+
+\subsection{Docker Compose}
+
+\subsubsection{Backend}
+
+\begin{lstlisting}
+services:
+  nutrimenumanage:
+    build:
+      context: ../webapps/nutrimenumanage
+    restart: always
+    ports:
+      - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
+      - ${MANAGE_RELOAD_DOCKER_PORT}:${MANAGE_RELOAD_LOCAL_PORT}
+      - ${MANAGE_DEBUG_DOCKER_PORT}:${MANAGE_DEBUG_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    depends_on:
+      - mysqldb
+    working_dir: /app
+    command: sh run_docker.sh
+    volumes:
+      - ../webapps/nutrimenumanage:/app
+      - .m2:/root/.m2
+\end{lstlisting}
+
+Vamos a crear dos contenedores distintos, uno por cada parte del \textit{backend} (parte de clientes y parte de gestión). Cada uno de ellos va a crear una imagen usando los \textit{Dockerfiles} descritos en el anterior punto, y van a contener una serie de parámetros:
+
+\begin{itemize}
+	\item Van a estar configurados para \textbf{reiniciarse de forma automática} en caso de fallo \cite{baeldung:restart-policies}.
+	\item Se van a \textbf{configurar los puertos} descritos en el apartado \ref{entorno-desarrollo}.
+	\item \textbf{Se van a conectar a una red} creada también en el fichero de Docker Compose, la cual veremos a continuación.
+	\item Van a usar el archivo de \textbf{variables de entorno} descrito en el apartado \ref{entorno-desarrollo}.
+	\item \textbf{Dependen del contenedor de la base de datos al arrancar}, esto es que hasta que no arranque este contenedor, no lo van a hacer ellos, para evitar así problemas de conexión.
+	\item Nada más arrancar \textbf{van a ejecutar el comando \texttt{run\_docker.sh}}. Este comando lo que hace es levantar el servicio de backend y estar a su vez a la espera de cambios en los ficheros del código fuente para, en caso de que suceda, recompilar el código de forma transparente.
+	\item Se van a conectar dos volúmenes a cada contenedor: uno va a ser \textbf{el que contiene el código del servicio} (ya que si simplemente copiáramos el código al contenedor, cada vez que hubiera cambios en el código habría que volver a desplegar los contenedores, y de esta forma podemos realizar cambios en tiempo real); y otro va a ser \textbf{el volumen encargado de almacenar las dependencias de Maven}, para no tener que descargarlas cada vez que ejecutemos el código.
+\end{itemize}
+
+\subsubsection{Base de datos}
+
+\begin{lstlisting}
+services:
+  mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - ${DB_DOCKER_PORT}:${DB_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+\end{lstlisting}
+
+La base de datos también va a disponer de su propio contenedor, con ciertos parámetros similares a los de los servicios del \textit{backend}. Podemos destacar de aquí algunos elementos:
+
+\begin{itemize}
+	\item Vamos a usar la \textbf{imagen oficial de MySQL} (\href{https://hub.docker.com/layers/library/mysql/8/images/sha256-1717a37c2adc7772b569eb727bb198b6792f7d50c2adb4839ba637b5c9d88f42?context=explore}{Docker Hub}), concretamente la versión \textbf{8} (con los últimos parches). 
+	\item Se va a conectar un volumen a la base de datos, que no es más que \textbf{el volumen encargado de almacenar todos los datos} de la base de datos. Esto es para no tener que inicializar la base de datos cada vez que la despleguemos, y mantener así persistencia entre sesiones.
+\end{itemize} 
+
+\subsubsection{Volúmenes}
+
+\begin{lstlisting}
+volumes:
+  db_data:
+\end{lstlisting}
+
+Es el volumen creado para la base de datos, ya que a diferencia de los volúmenes creados para el \textit{backend}, en los que realmente hemos conectado dos carpetas de nuestro equipo a los contenedores, este volumen se crea dentro de Docker.
+
+\subsubsection{Redes}
+
+\begin{lstlisting}
+networks:
+  nutrimenu-net:
+\end{lstlisting}
+
+Esta es la red creada para conectar todos los contenedores y que no existan problemas de conectividad entre ellos.
+
+\subsection{Configuración del debugger remoto}
+
+Como veremos en el apartado \ref{entorno-desarrollo}, se van a configurar distintos puertos por cada uno de los servicios, y uno de estos va a ser el puerto de debug. Como vamos a ejecutar la aplicación usando Docker Compose y no compilando el código directamente desde nuestro IDE, por defecto no podemos hacer debug como haríamos con cualquier código compilado localmente. 
+
+Sin embargo, con los pasos que vamos a ver a continuación \cite{medium:spring-boot-in-docker}, \textbf{vamos a ser capaces de conectarnos a nuestro entorno \textit{contenerizado} y realizar debug del código como lo haríamos de forma normal}. En este caso voy a demostrar cómo funcionaría en IntelliJ IDEA, pero mientras que el IDE disponga de un \textit{debugger remoto} y sigamos correctamente las instrucciones del desarrollador del IDE para usarlo, no debería de haber ningún problema.
+
+\imagen{IntelliJ/debug-edit-conf-1}{Listado de todas las configuraciones de ejecución disponibles}{0.8}
+
+Para comenzar, debemos de abrir  el proyecto en IntelliJ y en la parte superior, al lado de los botones de Ejecución y Debug, tenemos un selector donde podemos seleccionar la configuración que deseemos. Debemos hacer click en \textit{Edit Configurations...}.
+
+\imagen{IntelliJ/debug-edit-conf-2}{Selección del tipo de configuración}{0.8}
+
+Debemos hacer click en el icono con un + para añadir una nueva configuración, y seleccionar dentro del desplegable \textit{Remote JVM Debug}.
+
+\imagen{IntelliJ/debug-edit-conf-3}{Creación de la configuración del debugger remoto}{0.8}
+
+A continuación daremos nombre a la configuración, indicaremos el puerto correspondiente al servicio que estemos configurando, y seleccionaremos el módulo de dicho servicio.
+
+\imagen{IntelliJ/debug-edit-conf-4}{Creación de un módulo para un servicio}{0.6}
+
+En caso de que el módulo correspondiente no aparezca, deberemos seleccionar en la barra de herramientas \textit{File > New > Module from Existing Sources...}, seleccionar el directorio en el que se encuentre la carpeta con el servicio correspondiente, y escoger Maven dentro de \textit{Import module from external model}. Si sí que nos aparece el módulo podemos ignorar este paso.
+
+\imagen{IntelliJ/debug-edit-conf-5}{Debug del servicio}{0.9}
+
+Una vez hayamos completado estos pasos, podemos guardar la configuración y ejecutar el proyecto (asegurándonos de que la configuración deseada está seleccionada) desde el botón de Debug, como haríamos de normal. Si todo ha ido bien, el IDE nos devolverá en la consola el mensaje \textit{Connected to the target VM, address: 'localhost:5005', transport: 'socket'}. Hay que tener en cuenta que estos pasos se deben repetir para cada uno de los servicios, seleccionando en cada caso el puerto y módulo indicados.
+
+\section{Compilación, despliegue y ejecución del proyecto}
+
+Para realizar la compilación, despliegue y ejecución del proyecto es imprescindible disponer de \textbf{Docker CLI} y \textbf{Docker Compose} instalados en el equipo. La mejor forma de instalarlos es mediante \textbf{Docker Desktop}, ya que se encarga de instalar en el equipo el \textit{daemon} de Docker, Docker CLI, Docker Compose, y demás dependencias y herramientas que no vamos a utilizar para este proyecto, pero que nos pueden ayudar en el futuro. Docker Desktop es compatible con Windows, macOS y Linux, y soporta tanto arquitecturas x86 como ARM64 (Apple Silicon).
+
+\subsection{Instalación de Docker Desktop}
+
+\imagen{Docker/docker-download}{Página de descarga de Docker Desktop}{0.8}
+
+Para realizar la instalación de Docker Desktop tan sólo debemos dirigirnos a \url{https://docs.docker.com/get-docker/}, seleccionar la plataforma deseada, y descargar el instalador.
+
+\imagen{Docker/docker-installation-mac}{Instalación de Docker Desktop en Mac}{0.8}
+
+Una vez ejecutemos el instalador (en caso de macOS simplemente se debe arrastrar la aplicación a la carpeta de Aplicaciones), y hayamos seguido todos los pasos hasta finalizar la instalación, nos encontraremos con el panel principal de Docker Desktop. 
+
+\imagen{Docker/docker-main-window}{Ventana principal de Docker Desktop}{0.8}
+
+En esta ventana podemos ver todos los contenedores que están ejecutándose actualmente en el sistema, así como las imágenes descargadas y los volúmenes creados.
+
+\subsection{Preparación del entorno de desarrollo} \label{entorno-desarrollo}
+
+Para hacer más sencillo el cambio de valores en distintos parámetros de la aplicación, como el mapeado de puertos o la gestión de secretos, y facilitar así el despliegue de nuevos entornos o la escalabilidad de los servicios, estos valores se han externalizado en un sólo archivo \verb,.env,, que va a ser un archivo que simplemente va a contener las variables junto a sus valores. 
+
+Al ser un fichero que contiene secretos, siguiendo lo que dictan las buenas prácticas no se sincronizará con el repositorio, ya que si se tratase de un entorno de producción o el código se hiciera público, cualquier usuario podría obtener acceso a los datos de los usuarios de la aplicación.
+
+Por lo tanto, antes de desplegar los contenedores, para que la aplicación funcione correctamente el archivo se ha de crear dentro del directorio \verb,/docker-compose,, y se deben de definir las siguientes variables dentro de él:
+
+\begin{lstlisting}[language=Bash]
+# Variables del backend de la parte de los clientes
+CLIENT_WEB_DOCKER_PORT=8081
+CLIENT_WEB_LOCAL_PORT=8081
+CLIENT_RELOAD_DOCKER_PORT=35730
+CLIENT_RELOAD_LOCAL_PORT=35730
+CLIENT_DEBUG_DOCKER_PORT=5006
+CLIENT_DEBUG_LOCAL_PORT=5006
+
+# Variables del backend de la parte de gestion
+MANAGE_WEB_DOCKER_PORT=8080
+MANAGE_WEB_LOCAL_PORT=8080
+MANAGE_RELOAD_DOCKER_PORT=35729
+MANAGE_RELOAD_LOCAL_PORT=35729
+MANAGE_DEBUG_DOCKER_PORT=5005
+MANAGE_DEBUG_LOCAL_PORT=5005
+
+# Variables de la base de datos
+DATABASE_HOST=mysqldb
+MYSQL_DATABASE=nutri_db
+MYSQL_USER=<MySQL user> # Introduce el nombre del usuario de MySQL
+MYSQL_PASSWORD=<MySQL password> # Introduce la pass escogida para el usuario creado en el paso anterior
+MYSQL_ROOT_PASSWORD=<MySQL root password> # Introduce la pass escogida para el usuario root de MySQL
+DB_DOCKER_PORT=3306
+DB_LOCAL_PORT=3306
+\end{lstlisting}
+
+Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (indicando los valores escogidos en \verb,MYSQL_USER,, \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
+
+\begin{itemize}
+	\item Los puertos en los que se van a ejecutar cada una de las aplicaciones, que en este caso van a ser el \textbf{8080} para la aplicación de gestión y el \textbf{8081} para la aplicación de los clientes.
+	\item Los puertos en los que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso los puertos van a ser el \textbf{35729} para la aplicación de gestión y el \textbf{35730} para la aplicación de los clientes.
+	\item Los puertos que se van a usar para permitir conectar un debugger remoto a la aplicación, y poder así hacer debug desde el IDE que usemos para el desarrollo. Los puertos serán el \textbf{5005} para la aplicación de gestión y el \textbf{5006} para la aplicación de los clientes.
+	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, \textbf{credenciales de los usuarios de MySQL}, y el puerto escogido para la base de datos, que en este caso va a ser el usado por defecto, \textbf{3306}. 
+\end{itemize}
+
+\subsection{Despliegue de la aplicación}
+
+\imagen{Docker/docker-compose-build}{Creación de las imágenes de los contenedores Docker}{0.8}
+
+Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola y accederemos al directorio \verb,/docker-compose,, donde ejecutaremos el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+docker-compose build
+\end{lstlisting}
+
+\imagen{Docker/docker-compose-up}{Despliegue de los contenedores Docker}{0.8}
+
+Para desplegar los contenedores y levantar el servicio, ejecutaremos el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+docker-compose up -d
+\end{lstlisting}
+
+\imagen{Docker/docker-desktop-containers}{Ejecución multi-contenedor de la aplicación}{0.8}
+
+Si todo ha ido bien, podremos ver en Docker Desktop los contenedores corriendo con estado \textit{Running}, y ya podremos acceder a la aplicación como haríamos con cualquier tipo de despliegue. 
+
+\imagen{Docker/docker-desktop-logs}{Logs de la ejecución de un contenedor en Docker Desktop}{0.8}
+
+Para asegurarnos de que no hay ningún tipo de problema, podemos seleccionar los 3 puntos verticales situados a la derecha de cada contenedor, y hacer click en \textit{View details}, ya que esto nos permite poder ver el log de cada servicio en tiempo real. 
 
 \section{Pruebas del sistema}

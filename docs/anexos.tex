@@ -20,6 +20,33 @@
 	allcolors = {red}
 }
 
+% Código
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+   aboveskip=3mm,
+   belowskip=3mm,
+   showstringspaces=false,
+   columns=flexible,
+   basicstyle={\small\ttfamily},
+   numbers=none,
+   numberstyle=\tiny\color{gray},
+   keywordstyle=\color{blue},
+   commentstyle=\color{dkgreen},
+   stringstyle=\color{mauve},
+   breaklines=true,
+   breakatwhitespace=true
+   tabsize=3
+  }
+
+% Árboles de directorios
+\usepackage{dirtree}
+
 % Ecuaciones
 \usepackage{amsmath}
 
@@ -38,10 +65,10 @@
 
 % Imagenes
 \usepackage{graphicx}
-\newcommand{\imagen}[2]{
+\newcommand{\imagen}[3]{
 	\begin{figure}[!h]
 		\centering
-		\includegraphics[width=0.9\textwidth]{#1}
+		\includegraphics[width=#3\textwidth]{#1}
 		\caption{#2}\label{fig:#1}
 	\end{figure}
 	\FloatBarrier
