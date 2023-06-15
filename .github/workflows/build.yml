@@ -1,0 +1,25 @@
+name: Docker Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create env file
+        run: |
+          cd docker-compose
+          echo "${{ secrets.ENV_FILE }}" > .env
+      - name: Build Docker Compose
+        run: |
+          cd docker-compose
+          docker-compose up -d
+      - name: Check running containers
+        run: docker ps -a
+      - name: Check nutrimenuclient logs
+        run: docker logs nutrimenuclient
+      - name: Check nutrimenumanage logs
+        run: docker logs nutrimenumanage
