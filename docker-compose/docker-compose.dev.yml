@@ -1,7 +1,7 @@
 services:
   nutrimenumanage:
     build:
-      context: ../webapps/nutrimenumanage
+      context: ../webapps/nutrimenumanage/Docker/dev
     restart: always
     ports:
       - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
@@ -14,14 +14,14 @@ services:
     depends_on:
       - mysqldb
     working_dir: /app
-    command: sh run_docker.sh
+    command: sh run_docker_dev.sh
     volumes:
       - ../webapps/nutrimenumanage:/app
       - .m2:/root/.m2
 
   nutrimenuclient:
     build:
-      context: ../webapps/nutrimenuclient
+      context: ../webapps/nutrimenuclient/Docker/dev
     restart: always
     ports:
       - ${CLIENT_WEB_DOCKER_PORT}:${CLIENT_WEB_LOCAL_PORT}
@@ -34,7 +34,7 @@ services:
     depends_on:
       - mysqldb
     working_dir: /app
-    command: sh run_docker.sh
+    command: sh run_docker_dev.sh
     volumes:
       - ../webapps/nutrimenuclient:/app
       - .m2:/root/.m2

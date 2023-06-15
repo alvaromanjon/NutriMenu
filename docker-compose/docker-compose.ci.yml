@@ -1,0 +1,56 @@
+services:
+  nutrimenumanage:
+    build:
+      context: ../webapps/nutrimenumanage
+    restart: on-failure
+    ports:
+      - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
+      - ${MANAGE_RELOAD_DOCKER_PORT}:${MANAGE_RELOAD_LOCAL_PORT}
+      - ${MANAGE_DEBUG_DOCKER_PORT}:${MANAGE_DEBUG_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    depends_on:
+      - mysqldb
+    working_dir: /app
+    command: sh run_docker_ci.sh
+    volumes:
+      - ../webapps/nutrimenumanage:/app
+
+  nutrimenuclient:
+    build:
+      context: ../webapps/nutrimenuclient
+    restart: on-failure
+    ports:
+      - ${CLIENT_WEB_DOCKER_PORT}:${CLIENT_WEB_LOCAL_PORT}
+      - ${CLIENT_RELOAD_DOCKER_PORT}:${CLIENT_RELOAD_LOCAL_PORT}
+      - ${CLIENT_DEBUG_DOCKER_PORT}:${CLIENT_DEBUG_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    depends_on:
+      - mysqldb
+    working_dir: /app
+    command: sh run_docker_ci.sh
+    volumes:
+      - ../webapps/nutrimenuclient:/app
+
+  mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - ${DB_DOCKER_PORT}:${DB_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+networks:
+  nutrimenu-net:
