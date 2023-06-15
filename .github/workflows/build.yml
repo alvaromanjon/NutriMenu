@@ -16,10 +16,10 @@ jobs:
       - name: Build Docker Compose
         run: |
           cd docker-compose
-          docker-compose up -d
+          docker compose up -d
       - name: Check running containers
         run: docker ps -a
       - name: Check nutrimenuclient logs
-        run: docker logs nutrimenuclient
+        run: docker compose logs nutrimenuclient
       - name: Check nutrimenumanage logs
-        run: docker logs nutrimenumanage
+        run: docker compose logs nutrimenumanage
