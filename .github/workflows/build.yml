@@ -17,9 +17,17 @@ jobs:
         run: |
           cd docker-compose
           docker compose up -d
+      - name: Wait for 60 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "60s"
       - name: Check running containers
         run: docker ps -a
       - name: Check nutrimenuclient logs
-        run: docker compose logs nutrimenuclient
+        run: |
+          cd docker-compose
+          docker compose logs nutrimenuclient
       - name: Check nutrimenumanage logs
-        run: docker compose logs nutrimenumanage
+        run: |
+          cd docker-compose
+          docker compose logs nutrimenumanage
