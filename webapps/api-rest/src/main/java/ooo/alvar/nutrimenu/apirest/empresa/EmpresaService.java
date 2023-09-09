@@ -20,7 +20,19 @@ public class EmpresaService {
     return empresas;
   }
 
+  public Empresa getEmpresa(String id) {
+    return empresaRepository.findById(id).orElse(null);
+  }
+
   public void addEmpresa(Empresa empresa) {
    empresaRepository.save(empresa);
+  }
+
+  public void updateEmpresa(String id, Empresa empresa) {
+    empresaRepository.save(empresa);
+  }
+
+  public void deleteEmpresa(String id) {
+    empresaRepository.deleteById(id);
   }
 }

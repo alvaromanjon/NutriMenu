@@ -1,10 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.empresa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +16,23 @@ public class EmpresaController {
     return empresaService.getAllEmpresas();
   }
 
-  @RequestMapping(method = RequestMethod.POST, value="/empresas/add")
+  @RequestMapping("/empresas/{id}")
+public Empresa getEmpresa(@PathVariable String id) {
+    return empresaService.getEmpresa(id);
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value="/empresas")
   public void addEmpresa(@RequestBody Empresa empresa) {
     empresaService.addEmpresa(empresa);
   }
 
+  @RequestMapping(method = RequestMethod.PUT, value="/empresas/{id}")
+  public void updateEmpresa(@RequestBody Empresa empresa, @PathVariable String id) {
+    empresaService.updateEmpresa(id, empresa);
+  }
+
+  @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{id}")
+  public void deleteEmpresa(@PathVariable String id) {
+    empresaService.deleteEmpresa(id);
+  }
 }
