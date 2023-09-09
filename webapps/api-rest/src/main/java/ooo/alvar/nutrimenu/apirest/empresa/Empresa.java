@@ -19,7 +19,6 @@ public class Empresa {
 
   public Empresa(String nombre, String email, String direccion, String telefono, String cif) {
     super();
-    this.id = "";
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
