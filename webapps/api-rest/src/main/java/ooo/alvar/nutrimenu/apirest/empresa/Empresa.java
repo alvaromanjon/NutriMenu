@@ -17,6 +17,16 @@ public class Empresa {
   public Empresa() {
   }
 
+  public Empresa(String nombre, String email, String direccion, String telefono, String cif) {
+    super();
+    this.id = "";
+    this.nombre = nombre;
+    this.email = email;
+    this.direccion = direccion;
+    this.telefono = telefono;
+    this.cif = cif;
+  }
+
   public Empresa(String id, String nombre, String email, String direccion, String telefono, String cif) {
     super();
     this.id = id;

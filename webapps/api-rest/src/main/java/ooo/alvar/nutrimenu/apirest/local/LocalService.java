@@ -33,11 +33,22 @@ public class LocalService {
   }
 
   public void addLocal(Local local) {
+    Local ultimoLocal = localRepository.findTopByIdContainsIgnoreCaseOrderByIdDesc(local.getEmpresa().getId() + "-" + local.getNombre().replace(' ', '_')).orElse(null);
+    int contador = 1;
+
+    if (ultimoLocal != null) {
+      String ultimoLocalId = ultimoLocal.getId();
+      String[] ultimoLocalPartes = ultimoLocalId.split("-");
+      contador = Integer.parseInt(ultimoLocalPartes[ultimoLocalPartes.length - 1]) + 1;
+    }
+
+    local.setId(local.getEmpresa().getId() + "-" + local.getNombre().toLowerCase().replace(' ', '_') + "-" + contador);
+
     localRepository.save(local);
   }
 
   public void updateLocal(Local local, String id) {
-    localRepository.deleteById(id);
+    local.setId(id);
     localRepository.save(local);
   }
 

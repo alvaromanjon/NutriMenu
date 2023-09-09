@@ -25,11 +25,12 @@ public class EmpresaService {
   }
 
   public void addEmpresa(Empresa empresa) {
-   empresaRepository.save(empresa);
+    empresa.setId(empresa.getNombre().toLowerCase().replace(' ', '_'));
+    empresaRepository.save(empresa);
   }
 
   public void updateEmpresa(Empresa empresa, String id) {
-    empresaRepository.deleteById(id);
+    empresa.setId(id);
     empresaRepository.save(empresa);
   }
 

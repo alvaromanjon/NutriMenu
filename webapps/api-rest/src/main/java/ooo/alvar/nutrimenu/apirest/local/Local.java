@@ -19,10 +19,9 @@ public class Local {
 
   public Local() {
   }
-
-  public Local(String id, String idEmpresa, String nombre, String email, String direccion, String telefono) {
+  public Local(String idEmpresa, String nombre, String email, String direccion, String telefono) {
     super();
-    this.id = id;
+    this.id = "";
     this.empresa = new Empresa(idEmpresa, "", "", "", "", "");
     this.nombre = nombre;
     this.email = email;

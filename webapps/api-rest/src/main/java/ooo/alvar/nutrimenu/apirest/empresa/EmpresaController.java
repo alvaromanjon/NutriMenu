@@ -17,7 +17,7 @@ public class EmpresaController {
   }
 
   @RequestMapping("/empresas/{id}")
-public Empresa getEmpresa(@PathVariable String id) {
+  public Empresa getEmpresa(@PathVariable String id) {
     return empresaService.getEmpresa(id);
   }
 
