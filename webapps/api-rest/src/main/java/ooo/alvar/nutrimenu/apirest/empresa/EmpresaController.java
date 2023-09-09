@@ -28,7 +28,7 @@ public Empresa getEmpresa(@PathVariable String id) {
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{id}")
   public void updateEmpresa(@RequestBody Empresa empresa, @PathVariable String id) {
-    empresaService.updateEmpresa(id, empresa);
+    empresaService.updateEmpresa(empresa, id);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{id}")

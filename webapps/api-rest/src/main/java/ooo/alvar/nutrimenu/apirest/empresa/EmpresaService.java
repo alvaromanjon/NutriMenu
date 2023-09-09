@@ -28,7 +28,8 @@ public class EmpresaService {
    empresaRepository.save(empresa);
   }
 
-  public void updateEmpresa(String id, Empresa empresa) {
+  public void updateEmpresa(Empresa empresa, String id) {
+    empresaRepository.deleteById(id);
     empresaRepository.save(empresa);
   }
 
