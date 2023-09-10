@@ -2,6 +2,8 @@ package ooo.alvar.nutrimenu.apirest.menu;
 
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,15 +25,17 @@ public class MenuController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/menus")
-  public void addMenu(@PathVariable String idEmpresa, @RequestBody Menu menu) {
+  public ResponseEntity<Menu> addMenu(@PathVariable String idEmpresa, @RequestBody Menu menu) {
     menu.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    menuService.addMenu(menu);
+    Menu menuCreado = menuService.addMenu(menu);
+    return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/menus/{idMenu}")
-  public void updateMenu(@PathVariable String idEmpresa, @PathVariable String idMenu, @RequestBody Menu menu) {
+  public ResponseEntity<Menu> updateMenu(@PathVariable String idEmpresa, @PathVariable String idMenu, @RequestBody Menu menu) {
     menu.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    menuService.updateMenu(menu, idMenu);
+    Menu menuActualizado = menuService.updateMenu(menu, idMenu);
+    return new ResponseEntity<>(menuActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/menus/{idMenu}")

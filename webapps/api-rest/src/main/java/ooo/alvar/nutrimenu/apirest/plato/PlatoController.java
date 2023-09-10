@@ -32,9 +32,10 @@ public class PlatoController {
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}")
-  public void updatePlato(@PathVariable String idEmpresa, @PathVariable String idPlato, @RequestBody Plato plato) {
+  public ResponseEntity<Plato> updatePlato(@PathVariable String idEmpresa, @PathVariable String idPlato, @RequestBody Plato plato) {
     plato.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    platoService.updatePlato(plato, idPlato);
+    Plato platoActualizado = platoService.updatePlato(plato, idPlato);
+    return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/platos/{idPlato}")

@@ -1,7 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
-import jakarta.persistence.EntityExistsException;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityAlreadyExistsException;
+import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,11 @@ public class PlatoService {
   private PlatoRepository platoRepository;
 
   public Plato getPlato(String id) {
-    return platoRepository.findById(id).orElse(null);
+    Plato platoDevuelto = platoRepository.findById(id).orElse(null);
+    if (platoDevuelto == null) {
+      throw new EntityDoesntExistsException("No existe un plato con id " + id);
+    }
+    return platoDevuelto;
   }
 
   public List<Plato> getAllPlatosByEmpresa(String id) {
@@ -32,21 +36,29 @@ public class PlatoService {
     plato.setFechaModificacion(java.time.Instant.now());
 
     if (platoRepository.existsById(plato.getId())) {
-      throw new EntityAlreadyExistsException("Ya existe un plato llamado " + plato.getNombre() + " en esta empresa.");
+      throw new EntityAlreadyExistsException("Ya existe un plato llamado " + plato.getNombre() + " en esta empresa");
     }
 
     return platoRepository.save(plato);
   }
 
-  public void updatePlato(Plato plato, String id) {
+  public Plato updatePlato(Plato plato, String id) {
+    if (!platoRepository.existsById(id)) {
+      throw new EntityDoesntExistsException("No existe un plato con id " + id);
+    }
+
     plato.setId(id);
     Plato platoOriginal = platoRepository.findById(id).orElse(null);
     plato.setFechaCreacion(platoOriginal.getFechaCreacion());
     plato.setFechaModificacion(java.time.Instant.now());
-    platoRepository.save(plato);
+    return platoRepository.save(plato);
   }
 
   public void deletePlato(String id) {
+    if (!platoRepository.existsById(id)) {
+      throw new EntityDoesntExistsException("No existe un plato con id " + id);
+    }
+
     platoRepository.deleteById(id);
   }
 }

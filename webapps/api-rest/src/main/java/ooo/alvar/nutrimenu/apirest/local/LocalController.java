@@ -2,6 +2,8 @@ package ooo.alvar.nutrimenu.apirest.local;
 
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,21 +24,23 @@ public class LocalController {
     return localService.getAllLocalesByEmpresa(idEmpresa);
   }
 
-  @RequestMapping("/locales/{idLocal}")
+  @RequestMapping("/empresas/{idEmpresa}/locales/{idLocal}")
   public Local getLocal(@PathVariable String idLocal) {
     return localService.getLocal(idLocal);
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/locales")
-  public void addLocal(@PathVariable String idEmpresa, @RequestBody Local local) {
+  public ResponseEntity<Local> addLocal(@PathVariable String idEmpresa, @RequestBody Local local) {
     local.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    localService.addLocal(local);
+    Local localCreado = localService.addLocal(local);
+    return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/locales/{idLocal}")
-  public void updateLocal(@PathVariable String idEmpresa, @PathVariable String idLocal, @RequestBody Local local) {
+  public ResponseEntity<Local> updateLocal(@PathVariable String idEmpresa, @PathVariable String idLocal, @RequestBody Local local) {
     local.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    localService.updateLocal(local, idLocal);
+    Local localActualizado = localService.updateLocal(local, idLocal);
+    return new ResponseEntity<>(localActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/locales/{idLocal}")
