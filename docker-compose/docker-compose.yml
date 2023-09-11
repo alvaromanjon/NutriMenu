@@ -1,4 +1,21 @@
+name: nutrimenu-dev
 services:
+  frontend:
+    build:
+      context: ../webapps/frontend
+    restart: always
+    ports:
+      - ${FRONTEND_DOCKER_PORT}:${FRONTEND_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    depends_on:
+      - api-rest
+    volumes:
+      - ../webapps/frontend:/app:rw
+    stdin_open: true
+
   api-rest:
     build:
       context: ../webapps/apirest
