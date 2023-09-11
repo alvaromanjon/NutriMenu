@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ooo.alvar.nutrimenu</groupId>
-	<artifactId>api-rest</artifactId>
+	<artifactId>apirest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api-rest</name>
 	<description>API REST for NutriMenu</description>

@@ -1,7 +1,7 @@
 services:
   api-rest:
     build:
-      context: ../webapps/api-rest
+      context: ../webapps/apirest
     restart: always
     ports:
       - ${API_WEB_DOCKER_PORT}:${API_WEB_LOCAL_PORT}
@@ -16,7 +16,7 @@ services:
     working_dir: /app
     command: sh run_docker.sh
     volumes:
-      - ../webapps/api-rest:/app
+      - ../webapps/apirest:/app
       - .m2:/root/.m2
 
   mysqldb:
