@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:alpine
 ENV HOME=/app
 RUN mkdir -p $HOME
 WORKDIR $HOME
