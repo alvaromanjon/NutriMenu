@@ -4,5 +4,5 @@ RUN mkdir -p $HOME
 WORKDIR $HOME
 COPY package*.json ./
 RUN npm install
-EXPOSE ${FRONTEND_LOCAL_PORT}
+EXPOSE 3000
 CMD ["npm", "start"]

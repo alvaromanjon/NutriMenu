@@ -14,16 +14,19 @@ public class PlatoController {
   @Autowired
   private PlatoService platoService;
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/empresas/{idEmpresa}/platos")
   public List<Plato> getAllPlatosByEmpresa(@PathVariable String idEmpresa) {
     return platoService.getAllPlatosByEmpresa(idEmpresa);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/empresas/{idEmpresa}/platos/{idPlato}")
   public Plato getPlato(@PathVariable String idPlato) {
     return platoService.getPlato(idPlato);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/platos")
   public ResponseEntity<Plato> addPlato(@PathVariable String idEmpresa, @RequestBody Plato plato) {
     plato.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
@@ -31,6 +34,7 @@ public class PlatoController {
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}")
   public ResponseEntity<Plato> updatePlato(@PathVariable String idEmpresa, @PathVariable String idPlato, @RequestBody Plato plato) {
     plato.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
@@ -38,6 +42,7 @@ public class PlatoController {
     return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/platos/{idPlato}")
   public void deletePlato(@PathVariable String idPlato) {
     platoService.deletePlato(idPlato);
