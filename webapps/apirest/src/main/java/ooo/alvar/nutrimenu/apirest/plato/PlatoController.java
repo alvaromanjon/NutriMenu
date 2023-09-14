@@ -1,10 +1,12 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -17,6 +19,11 @@ public class PlatoController {
   @RequestMapping("/empresas/{idEmpresa}/platos")
   public List<Plato> getAllPlatosByEmpresa(@PathVariable String idEmpresa) {
     return platoService.getAllPlatosByEmpresa(idEmpresa);
+  }
+
+  @RequestMapping("/empresas/{idEmpresa}/platos/tipo/{plato}")
+  public List<Plato> getAllPlatosByTipoPlato(@PathVariable String idEmpresa, @PathVariable tipoPlato plato) {
+    return platoService.getAllPlatosByTipoPlato(idEmpresa, plato);
   }
 
   @RequestMapping("/empresas/{idEmpresa}/platos/{idPlato}")

@@ -2,6 +2,7 @@ package ooo.alvar.nutrimenu.apirest.plato;
 
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityAlreadyExistsException;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
+import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,10 @@ public class PlatoService {
       .forEach(platos::add);
 
     return platos;
+  }
+
+  public List<Plato> getAllPlatosByTipoPlato(String idEmpresa, tipoPlato plato) {
+    return platoRepository.findByEmpresaIdAndTipoPlato(idEmpresa, plato);
   }
 
   public Plato addPlato(Plato plato) {
