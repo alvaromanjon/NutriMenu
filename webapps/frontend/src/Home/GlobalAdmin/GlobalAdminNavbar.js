@@ -7,6 +7,7 @@ const GlobalAdminNavbar = ({ handleClick }) => {
       <button onClick={() => handleClick("gestion_empresas")}>Gestión de empresas</button>
       <button onClick={() => handleClick("gestion_locales")}>Gestión de locales</button>
       <button onClick={() => handleClick("gestion_menus")}>Gestión de menús</button>
+      <button onClick={() => handleClick("gestion_platos")}>Gestión de platos</button>
     </nav>
   );
 };

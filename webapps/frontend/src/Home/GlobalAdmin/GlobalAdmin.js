@@ -79,6 +79,24 @@ const GlobalAdmin = () => {
     },
   ];
 
+  const data_platos = [
+    {
+      id: "goiko_grill-teques",
+      empresa: {
+        id: "goiko_grill",
+        nombre: "Goiko Grill",
+        email: "goiko@gmail.com",
+        direccion: "Calle Mayor 2",
+        telefono: "900123123",
+        cif: "1111111",
+      },
+      tipoPlato: "ENTRANTE",
+      nombre: "Teques",
+      fechaCreacion: "2023-09-14T18:46:58.497747Z",
+      fechaModificacion: "2023-09-14T18:46:58.497747Z",
+    },
+  ];
+
   return (
     <div>
       <GlobalAdminNavbar handleClick={handleClick} />
@@ -88,13 +106,14 @@ const GlobalAdmin = () => {
           data_empresas={data_empresas}
           data_locales={data_locales}
           data_menus={data_menus}
+          data_platos={data_platos}
         />
       )}
     </div>
   );
 };
 
-const GlobalAdminContent = ({ tab, data_empresas, data_locales, data_menus }) => {
+const GlobalAdminContent = ({ tab, data_empresas, data_locales, data_menus, data_platos }) => {
   switch (tab) {
     case "gestion_empresas":
       return <GestionableDataTable title="Gestión de empresas" data={data_empresas} type="empresas" />;
@@ -102,6 +121,8 @@ const GlobalAdminContent = ({ tab, data_empresas, data_locales, data_menus }) =>
       return <GestionableDataTable title="Gestión de locales" data={data_locales} type="locales" />;
     case "gestion_menus":
       return <GestionableDataTable title="Gestión de menús" data={data_menus} type="menus" />;
+    case "gestion_platos":
+      return <GestionableDataTable title="Gestión de platos" data={data_platos} type="platos" />;
     default:
       <p>Hola</p>;
   }
