@@ -6,6 +6,7 @@ const GlobalAdminNavbar = ({ handleClick }) => {
       <h1>NutriMenu</h1>
       <button onClick={() => handleClick("gestion_empresas")}>Gestión de empresas</button>
       <button onClick={() => handleClick("gestion_locales")}>Gestión de locales</button>
+      <button onClick={() => handleClick("gestion_menus")}>Gestión de menús</button>
     </nav>
   );
 };

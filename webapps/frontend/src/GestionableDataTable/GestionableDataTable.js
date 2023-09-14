@@ -1,5 +1,6 @@
 import DataTableEmpresas from "./Empresas/DataTableEmpresas";
 import DataTableLocales from "./Locales/DataTableLocales";
+import DataTableMenus from "./Menus/DataTableMenus";
 
 const GestionableDataTable = ({ title, data, type }) => {
   let content;
@@ -23,8 +24,8 @@ const GestionableDataTableType = ({ data, type }) => {
       return <DataTableLocales data={data} />;
 
     case "menus":
-      //content = <DataTableMenus data={data} />;
-      break;
+      return <DataTableMenus data={data} />;
+
     default:
       break;
   }
