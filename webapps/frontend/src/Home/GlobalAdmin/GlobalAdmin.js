@@ -1,6 +1,6 @@
 import GestionableDataTable from "../../GestionableDataTable/GestionableDataTable";
 import GlobalAdminNavbar from "./GlobalAdminNavbar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const GlobalAdmin = () => {
   const [tab, setTab] = useState(null);
@@ -30,25 +30,36 @@ const GlobalAdmin = () => {
 
   const data_locales = [
     {
-      id: "goiko-local_burgos-2",
+      id: "goiko_grill-local_burgos",
       empresa: {
-        id: "goiko",
-        nombre: "Goiko",
+        id: "goiko_grill",
+        nombre: "Goiko Grill",
         email: "goiko@gmail.com",
         direccion: "Calle Mayor 2",
         telefono: "900123123",
-        cif: null,
+        cif: "1111111",
       },
       nombre: "Local Burgos",
       email: "goiko@gmail.com",
       direccion: "Calle Mayor 2",
       telefono: "900123123",
     },
+    {
+      id: "goiko_grill-local_madrid",
+      empresa: {
+        id: "goiko_grill",
+        nombre: "Goiko Grill",
+        email: "goiko@gmail.com",
+        direccion: "Calle Mayor 2",
+        telefono: "900123123",
+        cif: "1111111",
+      },
+      nombre: "Local Madrid",
+      email: "goiko@gmail.com",
+      direccion: "Calle Mayor 2",
+      telefono: "900123123",
+    },
   ];
-
-  useEffect(() => {
-    console.log("tab", tab);
-  }, [tab]);
 
   return (
     <div>

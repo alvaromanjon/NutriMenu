@@ -7,10 +7,6 @@ const SeleccionDatosList = ({ items, url }) => {
     setSeleccion(seleccionado);
   };
 
-  useEffect(() => {
-    console.log(seleccion);
-  }, [seleccion]);
-
   return (
     <div className="seleccion-datos-box">
       <div className="seleccion-datos-list">
