@@ -1,15 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const SeleccionDatosList = ({ items, url }) => {
-  const [seleccion, setSeleccion] = useState(null);
-  const handleClick = (seleccionado) => {
-    setSeleccion(seleccionado);
-  };
-
-  useEffect(() => {
-    console.log(seleccion);
-  }, [seleccion]);
+const SeleccionDatosList = ({ items, onClick }) => {
 
   return (
     <div className="seleccion-datos-box">
@@ -21,17 +12,12 @@ const SeleccionDatosList = ({ items, url }) => {
               name="seleccion"
               id={item.id + "radio"}
               onChange={() => {
-                handleClick(item.id);
+                onClick(item.id);
               }}
             />
             <label htmlFor={item.id + "radio"}>{item.nombre}</label>
           </div>
         ))}
-      </div>
-      <div className="seleccion-datos-button">
-        <Link to={url + seleccion}>
-          <button>Continuar</button>
-        </Link>
       </div>
     </div>
   );
