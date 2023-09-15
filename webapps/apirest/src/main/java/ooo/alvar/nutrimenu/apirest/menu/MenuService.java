@@ -3,6 +3,8 @@ package ooo.alvar.nutrimenu.apirest.menu;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
+import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class MenuService {
 
   @Autowired
   private EmpresaRepository empresaRepository;
+
+  @Autowired
+private LocalRepository localRepository;
 
   public Menu getMenu(Long id) {
     Menu menuDevuelto = menuRepository.findById(id).orElse(null);
@@ -54,6 +59,24 @@ public class MenuService {
     menu.setFechaModificacion(java.time.Instant.now());
 
     return menuRepository.save(menu);
+  }
+
+  public Menu addLocaltoMenu(Long idMenu, Long idLocal) {
+    Optional<Menu> menuAntiguo = menuRepository.findById(idMenu);
+
+    if (!menuAntiguo.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un menú con id " + idMenu);
+    }
+
+    Optional<Local> local = localRepository.findById(idLocal);
+
+    if (!local.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
+    }
+
+    menuAntiguo.get().getLocales().add(local.get());
+
+    return menuRepository.save(menuAntiguo.get());
   }
 
   public Menu updateMenu(Menu menu, Long id) {

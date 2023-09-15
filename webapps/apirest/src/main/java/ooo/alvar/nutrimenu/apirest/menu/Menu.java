@@ -2,8 +2,11 @@ package ooo.alvar.nutrimenu.apirest.menu;
 
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.local.Local;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Menu {
@@ -19,6 +22,15 @@ public class Menu {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
+
+
+  @ManyToMany
+  @JoinTable(
+    name = "local_menu",
+    joinColumns = @JoinColumn(name = "menu_id"),
+    inverseJoinColumns = @JoinColumn(name = "local_id")
+  )
+  private List<Local> locales = new ArrayList<>();
 
   public Menu() {
   }
@@ -76,5 +88,13 @@ public class Menu {
 
   public void setEmpresa(Empresa empresa) {
     this.empresa = empresa;
+  }
+
+  public List<Local> getLocales() {
+    return locales;
+  }
+
+  public void setLocales(List<Local> locales) {
+    this.locales = locales;
   }
 }

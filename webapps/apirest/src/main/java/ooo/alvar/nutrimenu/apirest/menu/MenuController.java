@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.menu;
 
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +28,12 @@ public class MenuController {
     Menu menuCreado = menuService.addMenu(idEmpresa, menu);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
+  @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/menus/{idMenu}/locales/{idLocal}")
+  public ResponseEntity<Menu> addLocaltoMenu(@PathVariable Long idEmpresa, @PathVariable Long idMenu, @PathVariable Long idLocal) {
+    Menu menuCreado = menuService.addLocaltoMenu(idMenu, idLocal);
+    return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
+  }
+
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/menus/{idMenu}")
   public ResponseEntity<Menu> updateMenu(@PathVariable Long idEmpresa, @PathVariable Long idMenu, @RequestBody Menu menu) {

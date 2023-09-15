@@ -3,6 +3,7 @@ package ooo.alvar.nutrimenu.apirest.local;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class LocalService {
 
   @Autowired
   private EmpresaRepository empresaRepository;
+
 
   public Local getLocal(Long id) {
     Local localDevuelto = localRepository.findById(id).orElse(null);
@@ -71,10 +73,16 @@ public class LocalService {
   }
 
   public void deleteLocal(Long id) {
-    if (!localRepository.existsById(id)) {
+    Local localActual = localRepository.findById(id).orElse(null);
+    if (localActual == null) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
     }
 
+    for (Menu menu : localActual.getMenus()) {
+      menu.getLocales().remove(localActual);
+    }
+
+    localActual.getMenus().clear();
     localRepository.deleteById(id);
   }
 }

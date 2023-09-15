@@ -1,7 +1,12 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -24,6 +29,10 @@ public class Local {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "locales")
+  private List<Menu> menus = new ArrayList<>();
 
   public Local() {
   }
@@ -83,5 +92,13 @@ public class Local {
 
   public void setTelefono(String telefono) {
     this.telefono = telefono;
+  }
+
+  public List<Menu> getMenus() {
+    return menus;
+  }
+
+  public void setMenus(List<Menu> menus) {
+    this.menus = menus;
   }
 }
