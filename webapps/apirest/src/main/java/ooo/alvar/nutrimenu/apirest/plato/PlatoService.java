@@ -30,8 +30,7 @@ public class PlatoService {
 
   public List<Plato> getAllPlatosByEmpresa(Long id) {
     List<Plato> platos = new ArrayList<>();
-    platoRepository.findByEmpresaId(id)
-      .forEach(platos::add);
+    platos.addAll(platoRepository.findByEmpresaId(id));
 
     return platos;
   }

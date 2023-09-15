@@ -39,8 +39,7 @@ public class UsuarioService {
   public List<Usuario> getAllUsuariosByRol(Rol rol) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
-    usuarioRepository.findAllByRol(rol)
-      .forEach(listaUsuarios::add);
+    listaUsuarios.addAll(usuarioRepository.findAllByRol(rol));
 
     return listaUsuarios;
   }

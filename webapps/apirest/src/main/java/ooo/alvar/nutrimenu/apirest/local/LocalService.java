@@ -37,8 +37,7 @@ public class LocalService {
 
   public List<Local> getAllLocalesByEmpresa(Long id) {
     List<Local> locales = new ArrayList<>();
-    localRepository.findByEmpresaId(id)
-      .forEach(locales::add);
+    locales.addAll(localRepository.findByEmpresaId(id));
 
     return locales;
   }
