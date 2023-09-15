@@ -14,7 +14,7 @@ public class EmpresaController {
   private EmpresaService empresaService;
 
   @RequestMapping("/empresas/{id}")
-  public Empresa getEmpresa(@PathVariable String id) {
+  public Empresa getEmpresa(@PathVariable Long id) {
     return empresaService.getEmpresa(id);
   }
 
@@ -30,13 +30,13 @@ public class EmpresaController {
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{id}")
-  public ResponseEntity<Empresa> updateEmpresa(@RequestBody Empresa empresa, @PathVariable String id) {
+  public ResponseEntity<Empresa> updateEmpresa(@RequestBody Empresa empresa, @PathVariable Long id) {
     Empresa empresaActualizada = empresaService.updateEmpresa(empresa, id);
     return new ResponseEntity<>(empresaActualizada, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{id}")
-  public void deleteEmpresa(@PathVariable String id) {
+  public void deleteEmpresa(@PathVariable Long id) {
     empresaService.deleteEmpresa(id);
   }
 }

@@ -1,39 +1,47 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nombre"}),
+        @UniqueConstraint(columnNames = {"email"})
+      })
 public class Local {
 
   @Id
-  private String id;
-  @ManyToOne
-  private Empresa empresa;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
   private String nombre;
+  @Column(nullable = false)
   private String email;
+  @Column(nullable = false)
   private String direccion;
+  @Column(nullable = false)
   private String telefono;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
 
   public Local() {
   }
 
-  public Local(String idEmpresa, String nombre, String email, String direccion, String telefono) {
+  public Local(String nombre, String email, String direccion, String telefono, Empresa empresa) {
     super();
-    this.empresa = new Empresa(idEmpresa, "", "", "", "", "");
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
     this.telefono = telefono;
+    this.empresa = empresa;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

@@ -15,31 +15,29 @@ public class MenuController {
   private MenuService menuService;
 
   @RequestMapping("/empresas/{idEmpresa}/menus")
-  public List<Menu> getAllMenusByEmpresa(@PathVariable String idEmpresa) {
+  public List<Menu> getAllMenusByEmpresa(@PathVariable Long idEmpresa) {
     return menuService.getAllMenusByEmpresa(idEmpresa);
   }
 
   @RequestMapping("/empresas/{idEmpresa}/menus/{idMenu}")
-  public Menu getMenu(@PathVariable String idMenu) {
+  public Menu getMenu(@PathVariable Long idMenu) {
     return menuService.getMenu(idMenu);
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/menus")
-  public ResponseEntity<Menu> addMenu(@PathVariable String idEmpresa, @RequestBody Menu menu) {
-    menu.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    Menu menuCreado = menuService.addMenu(menu);
+  public ResponseEntity<Menu> addMenu(@PathVariable Long idEmpresa, @RequestBody Menu menu) {
+    Menu menuCreado = menuService.addMenu(idEmpresa, menu);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/menus/{idMenu}")
-  public ResponseEntity<Menu> updateMenu(@PathVariable String idEmpresa, @PathVariable String idMenu, @RequestBody Menu menu) {
-    menu.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
+  public ResponseEntity<Menu> updateMenu(@PathVariable Long idEmpresa, @PathVariable Long idMenu, @RequestBody Menu menu) {
     Menu menuActualizado = menuService.updateMenu(menu, idMenu);
     return new ResponseEntity<>(menuActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/menus/{idMenu}")
-  public void deleteMenu(@PathVariable String idMenu) {
+  public void deleteMenu(@PathVariable Long idMenu) {
     menuService.deleteMenu(idMenu);
   }
 }

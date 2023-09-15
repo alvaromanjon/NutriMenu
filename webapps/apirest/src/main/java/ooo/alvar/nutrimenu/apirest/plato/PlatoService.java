@@ -1,6 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
-import ooo.alvar.nutrimenu.apirest.excepciones.EntityAlreadyExistsException;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlatoService {
@@ -15,7 +17,10 @@ public class PlatoService {
   @Autowired
   private PlatoRepository platoRepository;
 
-  public Plato getPlato(String id) {
+  @Autowired
+  private EmpresaRepository empresaRepository;
+
+  public Plato getPlato(Long id) {
     Plato platoDevuelto = platoRepository.findById(id).orElse(null);
     if (platoDevuelto == null) {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
@@ -23,7 +28,7 @@ public class PlatoService {
     return platoDevuelto;
   }
 
-  public List<Plato> getAllPlatosByEmpresa(String id) {
+  public List<Plato> getAllPlatosByEmpresa(Long id) {
     List<Plato> platos = new ArrayList<>();
     platoRepository.findByEmpresaId(id)
       .forEach(platos::add);
@@ -31,35 +36,41 @@ public class PlatoService {
     return platos;
   }
 
-  public List<Plato> getAllPlatosByTipoPlato(String idEmpresa, tipoPlato plato) {
+  public List<Plato> getAllPlatosByTipoPlato(Long idEmpresa, tipoPlato plato) {
     return platoRepository.findByEmpresaIdAndTipoPlato(idEmpresa, plato);
   }
 
-  public Plato addPlato(Plato plato) {
-    plato.setId(plato.getEmpresa().getId() + "-" + plato.getNombre().toLowerCase().replace(' ', '_'));
+  public Plato addPlato(Long idEmpresa, Plato plato) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
+
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
+    }
+
+    plato.setEmpresa(empresa.get());
     plato.setFechaCreacion(java.time.Instant.now());
     plato.setFechaModificacion(java.time.Instant.now());
 
-    if (platoRepository.existsById(plato.getId())) {
-      throw new EntityAlreadyExistsException("Ya existe un plato llamado " + plato.getNombre() + " en esta empresa");
-    }
-
     return platoRepository.save(plato);
   }
 
-  public Plato updatePlato(Plato plato, String id) {
-    if (!platoRepository.existsById(id)) {
+  public Plato updatePlato(Plato plato, Long id) {
+    Optional<Plato> platoAntiguo = platoRepository.findById(id);
+
+    if (!platoAntiguo.isPresent()) {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
     }
 
-    plato.setId(id);
-    Plato platoOriginal = platoRepository.findById(id).orElse(null);
-    plato.setFechaCreacion(platoOriginal.getFechaCreacion());
-    plato.setFechaModificacion(java.time.Instant.now());
-    return platoRepository.save(plato);
+    Plato nuevoPlato = platoAntiguo.get();
+    nuevoPlato.setNombre(plato.getNombre());
+    nuevoPlato.setDescripcion(plato.getDescripcion());
+    nuevoPlato.setTipoPlato(plato.getTipoPlato());
+    nuevoPlato.setFechaModificacion(java.time.Instant.now());
+
+    return platoRepository.save(nuevoPlato);
   }
 
-  public void deletePlato(String id) {
+  public void deletePlato(Long id) {
     if (!platoRepository.existsById(id)) {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
     }

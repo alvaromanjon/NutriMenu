@@ -1,11 +1,15 @@
 package ooo.alvar.nutrimenu.apirest.menu;
 
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuService {
@@ -13,7 +17,10 @@ public class MenuService {
   @Autowired
   private MenuRepository menuRepository;
 
-  public Menu getMenu(String id) {
+  @Autowired
+  private EmpresaRepository empresaRepository;
+
+  public Menu getMenu(Long id) {
     Menu menuDevuelto = menuRepository.findById(id).orElse(null);
     if (menuDevuelto == null) {
       throw new EntityDoesntExistsException("No existe un menú con id " + id);
@@ -21,7 +28,15 @@ public class MenuService {
     return menuDevuelto;
   }
 
-  public List<Menu> getAllMenusByEmpresa(String id) {
+  public List<Menu> getAllMenus() {
+    List<Menu> menus = new ArrayList<>();
+    menuRepository.findAll()
+      .forEach(menus::add);
+
+    return menus;
+  }
+
+  public List<Menu> getAllMenusByEmpresa(Long id) {
     List<Menu> menus = new ArrayList<>();
     menuRepository.findByEmpresaId(id)
       .forEach(menus::add);
@@ -29,36 +44,36 @@ public class MenuService {
     return menus;
   }
 
-  public Menu addMenu(Menu menu) {
-    Menu ultimoMenu = menuRepository.findTopByIdContainsIgnoreCaseOrderByIdDesc(menu.getEmpresa().getId() + "-" + menu.getNombre().replace(' ', '_')).orElse(null);
-    int contador = 1;
+  public Menu addMenu(Long idEmpresa, Menu menu) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
 
-    if (ultimoMenu != null) {
-      String ultimoMenuId = ultimoMenu.getId();
-      String[] ultimoMenuPartes = ultimoMenuId.split("-");
-      contador = Integer.parseInt(ultimoMenuPartes[ultimoMenuPartes.length - 1]) + 1;
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
     }
 
-    menu.setId(menu.getEmpresa().getId() + "-" + menu.getNombre().toLowerCase().replace(' ', '_') + "-" + contador);
-
+    menu.setEmpresa(empresa.get());
     menu.setFechaCreacion(java.time.Instant.now());
     menu.setFechaModificacion(java.time.Instant.now());
+
     return menuRepository.save(menu);
   }
 
-  public Menu updateMenu(Menu menu, String id) {
-    if (!menuRepository.existsById(id)) {
+  public Menu updateMenu(Menu menu, Long id) {
+    Optional<Menu> menuAntiguo = menuRepository.findById(id);
+
+    if (!menuAntiguo.isPresent()) {
       throw new EntityDoesntExistsException("No existe un menú con id " + id);
     }
 
-    menu.setId(id);
-    Menu menuOriginal = menuRepository.findById(id).orElse(null);
-    menu.setFechaCreacion(menuOriginal.getFechaCreacion());
-    menu.setFechaModificacion(java.time.Instant.now());
-    return menuRepository.save(menu);
+    Menu nuevoMenu = menuAntiguo.get();
+    nuevoMenu.setNombre(menu.getNombre());
+    nuevoMenu.setDescripcion(menu.getDescripcion());
+    nuevoMenu.setFechaModificacion(java.time.Instant.now());
+
+    return menuRepository.save(nuevoMenu);
   }
 
-  public void deleteMenu(String id) {
+  public void deleteMenu(Long id) {
     if (!menuRepository.existsById(id)) {
       throw new EntityDoesntExistsException("No existe un menú con id " + id);
     }

@@ -1,17 +1,28 @@
 package ooo.alvar.nutrimenu.apirest.empresa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nombre"}),
+        @UniqueConstraint(columnNames = {"email"}),
+        @UniqueConstraint(columnNames = {"telefono"}),
+        @UniqueConstraint(columnNames = {"cif"})
+      })
 public class Empresa {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
   private String nombre;
+  @Column(nullable = false)
   private String email;
+  @Column(nullable = false)
   private String direccion;
+  @Column(nullable = false)
   private String telefono;
+  @Column(nullable = false)
   private String cif;
 
   public Empresa() {
@@ -26,21 +37,11 @@ public class Empresa {
     this.cif = cif;
   }
 
-  public Empresa(String id, String nombre, String email, String direccion, String telefono, String cif) {
-    super();
-    this.id = id;
-    this.nombre = nombre;
-    this.email = email;
-    this.direccion = direccion;
-    this.telefono = telefono;
-    this.cif = cif;
-  }
-
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

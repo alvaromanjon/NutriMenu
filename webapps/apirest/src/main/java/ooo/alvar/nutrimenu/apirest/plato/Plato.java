@@ -7,41 +7,42 @@ import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import java.time.Instant;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nombre", "empresa_id"})
+      })
 public class Plato {
   @Id
-  private String id;
-  @ManyToOne
-  private Empresa empresa;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private tipoPlato tipoPlato;
+  @Column(nullable = false)
   private String nombre;
+  private String descripcion;
   private Instant fechaCreacion;
   private Instant fechaModificacion;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
 
   public Plato() {
   }
 
-  public Plato(String idEmpresa, String nombre, tipoPlato tipoPlato) {
+  public Plato(String nombre, String descripcion, tipoPlato tipoPlato, Empresa empresa) {
     super();
-    this.empresa = new Empresa(idEmpresa, "", "", "", "", "");
     this.nombre = nombre;
+    this.descripcion = descripcion;
     this.tipoPlato = tipoPlato;
+    this.empresa = empresa;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
-  }
-
-  public Empresa getEmpresa() {
-    return empresa;
-  }
-
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
   }
 
   public ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato getTipoPlato() {
@@ -60,6 +61,14 @@ public class Plato {
     this.nombre = nombre;
   }
 
+  public String getDescripcion() {
+    return descripcion;
+  }
+
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
+  }
+
   public Instant getFechaCreacion() {
     return fechaCreacion;
   }
@@ -74,5 +83,13 @@ public class Plato {
 
   public void setFechaModificacion(Instant fechaModificacion) {
     this.fechaModificacion = fechaModificacion;
+  }
+
+  public Empresa getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(Empresa empresa) {
+    this.empresa = empresa;
   }
 }

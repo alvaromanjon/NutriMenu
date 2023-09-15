@@ -17,36 +17,34 @@ public class PlatoController {
   private PlatoService platoService;
 
   @RequestMapping("/empresas/{idEmpresa}/platos")
-  public List<Plato> getAllPlatosByEmpresa(@PathVariable String idEmpresa) {
+  public List<Plato> getAllPlatosByEmpresa(@PathVariable Long idEmpresa) {
     return platoService.getAllPlatosByEmpresa(idEmpresa);
   }
 
   @RequestMapping("/empresas/{idEmpresa}/platos/tipo/{plato}")
-  public List<Plato> getAllPlatosByTipoPlato(@PathVariable String idEmpresa, @PathVariable tipoPlato plato) {
+  public List<Plato> getAllPlatosByTipoPlato(@PathVariable Long idEmpresa, @PathVariable tipoPlato plato) {
     return platoService.getAllPlatosByTipoPlato(idEmpresa, plato);
   }
 
   @RequestMapping("/empresas/{idEmpresa}/platos/{idPlato}")
-  public Plato getPlato(@PathVariable String idPlato) {
+  public Plato getPlato(@PathVariable Long idPlato) {
     return platoService.getPlato(idPlato);
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/platos")
-  public ResponseEntity<Plato> addPlato(@PathVariable String idEmpresa, @RequestBody Plato plato) {
-    plato.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
-    Plato platoCreado = platoService.addPlato(plato);
+  public ResponseEntity<Plato> addPlato(@PathVariable Long idEmpresa, @RequestBody Plato plato) {
+    Plato platoCreado = platoService.addPlato(idEmpresa, plato);
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}")
-  public ResponseEntity<Plato> updatePlato(@PathVariable String idEmpresa, @PathVariable String idPlato, @RequestBody Plato plato) {
-    plato.setEmpresa(new Empresa(idEmpresa, "", "", "", "", ""));
+  public ResponseEntity<Plato> updatePlato(@PathVariable Long idEmpresa, @PathVariable Long idPlato, @RequestBody Plato plato) {
     Plato platoActualizado = platoService.updatePlato(plato, idPlato);
     return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas/{idEmpresa}/platos/{idPlato}")
-  public void deletePlato(@PathVariable String idPlato) {
+  public void deletePlato(@PathVariable Long idPlato) {
     platoService.deletePlato(idPlato);
   }
 }

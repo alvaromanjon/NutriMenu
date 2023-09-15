@@ -1,12 +1,14 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
-import ooo.alvar.nutrimenu.apirest.excepciones.EntityAlreadyExistsException;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocalService {
@@ -14,7 +16,10 @@ public class LocalService {
   @Autowired
   private LocalRepository localRepository;
 
-  public Local getLocal(String id) {
+  @Autowired
+  private EmpresaRepository empresaRepository;
+
+  public Local getLocal(Long id) {
     Local localDevuelto = localRepository.findById(id).orElse(null);
     if (localDevuelto == null) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
@@ -30,7 +35,7 @@ public class LocalService {
     return locales;
   }
 
-  public List<Local> getAllLocalesByEmpresa(String id) {
+  public List<Local> getAllLocalesByEmpresa(Long id) {
     List<Local> locales = new ArrayList<>();
     localRepository.findByEmpresaId(id)
       .forEach(locales::add);
@@ -38,26 +43,35 @@ public class LocalService {
     return locales;
   }
 
-  public Local addLocal(Local local) {
-    local.setId(local.getEmpresa().getId() + "-" + local.getNombre().toLowerCase().replace(' ', '_'));
+  public Local addLocal(Long idEmpresa, Local local) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
 
-    if (localRepository.existsById(local.getId())) {
-      throw new EntityAlreadyExistsException("Ya existe un local llamado " + local.getNombre() + " en esta empresa");
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
     }
+
+    local.setEmpresa(empresa.get());
 
     return localRepository.save(local);
   }
 
-  public Local updateLocal(Local local, String id) {
-    if (!localRepository.existsById(id)) {
+  public Local updateLocal(Local local, Long id) {
+    Optional<Local> localAntiguo = localRepository.findById(id);
+
+    if (!localAntiguo.isPresent()) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
     }
 
-    local.setId(id);
-    return localRepository.save(local);
+    Local nuevoLocal = localAntiguo.get();
+    nuevoLocal.setNombre(local.getNombre());
+    nuevoLocal.setEmail(local.getEmail());
+    nuevoLocal.setDireccion(local.getDireccion());
+    nuevoLocal.setTelefono(local.getTelefono());
+
+    return localRepository.save(nuevoLocal);
   }
 
-  public void deleteLocal(String id) {
+  public void deleteLocal(Long id) {
     if (!localRepository.existsById(id)) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
     }

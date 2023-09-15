@@ -5,7 +5,7 @@ public enum Rol {
   ADMINISTRADOR_GLOBAL(0, "Administrador global"),
   ADMINISTRADOR_EMPRESA(1, "Administrador de empresa"),
   ADMINISTRADOR_LOCAL(2, "Administrador de local"),
-  USUARIO(3, "Usuario");
+  CAMARERO(3, "Camarero");
 
   private final int codigo;
   private final String rol;

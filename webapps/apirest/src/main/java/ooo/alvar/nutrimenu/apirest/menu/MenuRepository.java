@@ -5,7 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface MenuRepository extends CrudRepository<Menu, String> {
-    List<Menu> findByEmpresaId(String idEmpresa);
-    Optional<Menu> findTopByIdContainsIgnoreCaseOrderByIdDesc(String name);
+public interface MenuRepository extends CrudRepository<Menu, Long> {
+    List<Menu> findByEmpresaId(Long idEmpresa);
 }
