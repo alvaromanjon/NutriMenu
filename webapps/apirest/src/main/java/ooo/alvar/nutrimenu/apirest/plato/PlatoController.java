@@ -36,6 +36,12 @@ public class PlatoController {
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
+  @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}/alimentos/{idAlimento}")
+  public ResponseEntity<Plato> addAlimentoToPlato(@PathVariable Long idEmpresa, @PathVariable Long idPlato, @PathVariable Long idAlimento) {
+    Plato platoCreado = platoService.addAlimentoToPlato(idPlato, idAlimento);
+    return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
+  }
+
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}")
   public ResponseEntity<Plato> updatePlato(@PathVariable Long idEmpresa, @PathVariable Long idPlato, @RequestBody Plato plato) {
     Plato platoActualizado = platoService.updatePlato(plato, idPlato);

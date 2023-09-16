@@ -1,5 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
+import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
+import ooo.alvar.nutrimenu.apirest.alimento.AlimentoRepository;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
@@ -21,6 +23,9 @@ public class PlatoService {
 
   @Autowired
   private EmpresaRepository empresaRepository;
+
+  @Autowired
+  private AlimentoRepository alimentoRepository;
 
   public Plato getPlato(Long id) {
     Plato platoDevuelto = platoRepository.findById(id).orElse(null);
@@ -53,6 +58,25 @@ public class PlatoService {
     plato.setFechaModificacion(java.time.Instant.now());
 
     return platoRepository.save(plato);
+  }
+
+  public Plato addAlimentoToPlato(Long idPlato, Long idAlimento) {
+    Optional<Plato> platoAntiguo = platoRepository.findById(idPlato);
+
+    if (!platoAntiguo.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un plato con id " + idPlato);
+    }
+
+    Optional<Alimento> alimento = alimentoRepository.findById(idAlimento);
+
+    if (!alimento.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un alimento con id " + idAlimento);
+    }
+
+    platoAntiguo.get().getAlimentos().add(alimento.get());
+    platoAntiguo.get().setFechaModificacion(java.time.Instant.now());
+
+    return platoRepository.save(platoAntiguo.get());
   }
 
   public Plato updatePlato(Plato plato, Long id) {
