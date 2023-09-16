@@ -38,7 +38,7 @@ public class Vitaminas {
   public Vitaminas() {
   }
 
-  public Vitaminas(BigDecimal vitaminaA, BigDecimal vitaminaD, BigDecimal vitaminaE, BigDecimal vitaminaB9, BigDecimal vitaminaB3, BigDecimal vitaminaB2, BigDecimal vitaminaB1, BigDecimal vitaminaB12, BigDecimal vitaminaB6, BigDecimal vitaminaC, ComponentesNutricionales componentesNutricionales) {
+  public Vitaminas(BigDecimal vitaminaA, BigDecimal vitaminaD, BigDecimal vitaminaE, BigDecimal vitaminaB9, BigDecimal vitaminaB3, BigDecimal vitaminaB2, BigDecimal vitaminaB1, BigDecimal vitaminaB12, BigDecimal vitaminaB6, BigDecimal vitaminaC) {
     super();
     this.vitaminaA = vitaminaA;
     this.vitaminaD = vitaminaD;
@@ -50,7 +50,10 @@ public class Vitaminas {
     this.vitaminaB12 = vitaminaB12;
     this.vitaminaB6 = vitaminaB6;
     this.vitaminaC = vitaminaC;
-    this.componentesNutricionales = componentesNutricionales;
+  }
+
+  public Vitaminas(Vitaminas c) {
+    this(c.getVitaminaA(), c.getVitaminaD(), c.getVitaminaE(), c.getVitaminaB9(), c.getVitaminaB3(), c.getVitaminaB2(), c.getVitaminaB1(), c.getVitaminaB12(), c.getVitaminaB6(), c.getVitaminaC());
   }
 
   public Long getId() {

@@ -2,6 +2,7 @@ package ooo.alvar.nutrimenu.apirest.plato;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
@@ -32,6 +33,13 @@ public class Plato {
   @JsonIgnore
   @ManyToMany(mappedBy = "platos")
   private List<Menu> menus = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(
+    name = "plato_alimento",
+    joinColumns = @JoinColumn(name = "plato_id"),
+    inverseJoinColumns = @JoinColumn(name = "alimento_id")
+  )
+  private List<Alimento> alimentos = new ArrayList<>();
 
   public Plato() {
   }
@@ -106,5 +114,13 @@ public class Plato {
 
   public void setMenus(List<Menu> menus) {
     this.menus = menus;
+  }
+
+  public List<Alimento> getAlimentos() {
+    return alimentos;
+  }
+
+  public void setAlimentos(List<Alimento> alimentos) {
+    this.alimentos = alimentos;
   }
 }

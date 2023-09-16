@@ -33,14 +33,6 @@ public class MenuService {
     return menuDevuelto;
   }
 
-  public List<Menu> getAllMenus() {
-    List<Menu> menus = new ArrayList<>();
-    menuRepository.findAll()
-      .forEach(menus::add);
-
-    return menus;
-  }
-
   public List<Menu> getAllMenusByEmpresa(Long id) {
     List<Menu> menus = new ArrayList<>();
     menus.addAll(menuRepository.findByEmpresaId(id));

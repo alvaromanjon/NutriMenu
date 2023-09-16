@@ -33,7 +33,7 @@ public class Minerales {
   public Minerales() {
   }
 
-  public Minerales(BigDecimal calcio, BigDecimal hierro, BigDecimal potasio, BigDecimal magnesio, BigDecimal sodio, BigDecimal fosforo, BigDecimal selenio, BigDecimal zinc, ComponentesNutricionales componentesNutricionales) {
+  public Minerales(BigDecimal calcio, BigDecimal hierro, BigDecimal potasio, BigDecimal magnesio, BigDecimal sodio, BigDecimal fosforo, BigDecimal selenio, BigDecimal zinc) {
     super();
     this.calcio = calcio;
     this.hierro = hierro;
@@ -43,7 +43,10 @@ public class Minerales {
     this.fosforo = fosforo;
     this.selenio = selenio;
     this.zinc = zinc;
-    this.componentesNutricionales = componentesNutricionales;
+  }
+
+  public Minerales(Minerales c) {
+    this(c.getCalcio(), c.getHierro(), c.getPotasio(), c.getMagnesio(), c.getSodio(), c.getFosforo(), c.getSelenio(), c.getZinc());
   }
 
   public Long getId() {

@@ -37,7 +37,7 @@ public class ComponentesNutricionales {
   public ComponentesNutricionales() {
   }
 
-  public ComponentesNutricionales(BigDecimal calorias, BigDecimal grasas, BigDecimal grasasSaturadas, BigDecimal hidratosCarbono, BigDecimal azucares, BigDecimal fibra, BigDecimal proteinas, BigDecimal sal, Vitaminas vitaminas, Minerales minerales) {
+  public ComponentesNutricionales(BigDecimal calorias, BigDecimal grasas, BigDecimal grasasSaturadas, BigDecimal hidratosCarbono, BigDecimal azucares, BigDecimal fibra, BigDecimal proteinas, BigDecimal sal) {
     super();
     this.calorias = calorias;
     this.grasas = grasas;
@@ -47,8 +47,10 @@ public class ComponentesNutricionales {
     this.fibra = fibra;
     this.proteinas = proteinas;
     this.sal = sal;
-    this.vitaminas = vitaminas;
-    this.minerales = minerales;
+  }
+
+  public ComponentesNutricionales(ComponentesNutricionales c) {
+    this(c.getCalorias(), c.getGrasas(), c.getGrasasSaturadas(), c.getHidratosCarbono(), c.getAzucares(), c.getFibra(), c.getProteinas(), c.getSal());
   }
 
   public Long getId() {
