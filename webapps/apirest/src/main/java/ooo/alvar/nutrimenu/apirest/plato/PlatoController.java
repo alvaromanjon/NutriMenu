@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

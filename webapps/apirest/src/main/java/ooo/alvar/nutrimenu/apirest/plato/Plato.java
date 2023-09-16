@@ -1,10 +1,14 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -25,6 +29,9 @@ public class Plato {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
+  @JsonIgnore
+  @ManyToMany(mappedBy = "platos")
+  private List<Menu> menus = new ArrayList<>();
 
   public Plato() {
   }
@@ -91,5 +98,13 @@ public class Plato {
 
   public void setEmpresa(Empresa empresa) {
     this.empresa = empresa;
+  }
+
+  public List<Menu> getMenus() {
+    return menus;
+  }
+
+  public void setMenus(List<Menu> menus) {
+    this.menus = menus;
   }
 }

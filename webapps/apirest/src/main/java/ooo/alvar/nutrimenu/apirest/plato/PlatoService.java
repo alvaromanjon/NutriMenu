@@ -3,6 +3,8 @@ package ooo.alvar.nutrimenu.apirest.plato;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
+import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,10 +72,16 @@ public class PlatoService {
   }
 
   public void deletePlato(Long id) {
-    if (!platoRepository.existsById(id)) {
+    Plato platoActual = platoRepository.findById(id).orElse(null);
+    if (platoActual == null) {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
     }
 
+    for (Menu menu : platoActual.getMenus()) {
+      menu.getPlatos().remove(platoActual);
+    }
+
+    platoActual.getMenus().clear();
     platoRepository.deleteById(id);
   }
 }
