@@ -54,12 +54,6 @@ public class AlimentoController {
     return new ResponseEntity<Alimento>(alimentoActualizado, HttpStatus.CREATED);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value="/alimentos/cantidad")
-  public ResponseEntity<Alimento> actualizarCantidadAlimento(@RequestParam Long id, @RequestParam double cantidad) {
-    Alimento alimentoActualizado = alimentoService.updateCantidad(cantidad, id);
-    return new ResponseEntity<>(alimentoActualizado, HttpStatus.CREATED);
-  }
-
   @RequestMapping(method = RequestMethod.PUT, value="/alimentos")
   public ResponseEntity<Alimento> updateAlimento(@RequestBody Alimento alimento, @RequestParam Long id) {
     Alimento alimentoActualizado = alimentoService.updateAlimento(alimento, id);

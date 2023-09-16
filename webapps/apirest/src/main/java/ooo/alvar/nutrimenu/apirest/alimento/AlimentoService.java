@@ -1,18 +1,15 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionalesRepository;
-import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.minerales.Minerales;
-import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.vitaminas.Vitaminas;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.plato.Plato;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +25,9 @@ public class AlimentoService {
 
   @Autowired
   private ComponentesNutricionalesRepository componentesNutricionalesRepository;
+
+  @Autowired
+  private PlatoAlimentoRepository platoAlimentoRepository;
 
   public Alimento getAlimento(Long id) {
     Alimento alimentoDevuelto = alimentoRepository.findById(id).orElse(null);
@@ -83,17 +83,17 @@ public class AlimentoService {
       throw new EntityDoesntExistsException("No existe un componente nutricional con id " + idComponente);
     }
 
-    ComponentesNutricionales componenteModificable = new ComponentesNutricionales(componente.get());
-    componenteModificable.setVitaminas(new Vitaminas(componente.get().getVitaminas()));
-    componenteModificable.setMinerales(new Minerales(componente.get().getMinerales()));
+    //ComponentesNutricionales componenteModificable = new ComponentesNutricionales(componente.get());
+    //componenteModificable.setVitaminas(new Vitaminas(componente.get().getVitaminas()));
+    //componenteModificable.setMinerales(new Minerales(componente.get().getMinerales()));
 
-    alimentoAntiguo.get().setComponentesOriginales(componente.get());
-    alimentoAntiguo.get().setComponentesCambiados(componenteModificable);
+    alimentoAntiguo.get().setComponentesNutricionales(componente.get());
+    //alimentoAntiguo.get().setComponentesCambiados(componenteModificable);
 
     return alimentoRepository.save(alimentoAntiguo.get());
   }
 
-  public Alimento updateCantidad(double cantidad, Long idAlimento) {
+/*  public Alimento updateCantidad(double cantidad, Long idAlimento) {
     Optional<Alimento> alimentoAntiguo = alimentoRepository.findById(idAlimento);
 
     if (!alimentoAntiguo.isPresent()) {
@@ -102,7 +102,7 @@ public class AlimentoService {
 
     alimentoAntiguo.get().setGramosEscogidos(cantidad);
 
-    ComponentesNutricionales componentesOriginales = alimentoAntiguo.get().getComponentesOriginales();
+    ComponentesNutricionales componentesOriginales = alimentoAntiguo.get().getComponentesNutricionales();
     ComponentesNutricionales componentesCambiados = alimentoAntiguo.get().getComponentesCambiados();
 
     if (componentesOriginales == null) {
@@ -151,7 +151,7 @@ public class AlimentoService {
 
     alimentoAntiguo.get().setComponentesCambiados(componentesCambiados);
     return alimentoRepository.save(alimentoAntiguo.get());
-  }
+  }*/
 
   public Alimento updateAlimento(Alimento alimento, Long id) {
     Optional<Alimento> alimentoAntiguo = alimentoRepository.findById(id);
@@ -178,11 +178,7 @@ public class AlimentoService {
       throw new EntityDoesntExistsException("No existe un alimento con id " + id);
     }
 
-    for (Plato plato : alimentoActual.getPlatos()) {
-      plato.getAlimentos().remove(alimentoActual);
-    }
-
-    alimentoActual.getPlatos().clear();
+    platoAlimentoRepository.deleteByAlimentoId(id);
     alimentoRepository.deleteById(id);
   }
 

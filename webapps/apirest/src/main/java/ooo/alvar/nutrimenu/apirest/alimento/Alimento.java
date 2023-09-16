@@ -1,16 +1,22 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
-import ooo.alvar.nutrimenu.apirest.plato.Plato;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = {
+  @UniqueConstraint(columnNames = {"nombre", "empresa_id"})
+})
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Alimento {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,32 +27,26 @@ public class Alimento {
   @Column(nullable = false)
   private grupoAlimento grupoAlimento;
   private double gramosPorRacion = 100;
-  private double gramosEscogidos = 100;
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "componentes_originales_id", referencedColumnName = "id", unique = true)
-  private ComponentesNutricionales componentesOriginales;
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "componentes_cambiados_id", referencedColumnName = "id", unique = true)
-  private ComponentesNutricionales componentesCambiados;
+  @JoinColumn(name = "componentes_nutricionales_id", referencedColumnName = "id", unique = true)
+  private ComponentesNutricionales componentesNutricionales;
   @JsonIgnore
-  @ManyToMany(mappedBy = "alimentos")
-  private List<Plato> platos = new ArrayList<>();
+  @OneToMany(mappedBy = "alimento")
+  private List<PlatoAlimento> platos = new ArrayList<>();
 
   public Alimento() {
   }
 
-  public Alimento(String nombre, grupoAlimento grupoAlimento, double gramosPorRacion, double gramosEscogidos, Empresa empresa, ComponentesNutricionales componentesOriginales, ComponentesNutricionales componentesCambiados) {
+  public Alimento(String nombre, grupoAlimento grupoAlimento, double gramosPorRacion, Empresa empresa, ComponentesNutricionales componentesNutricionales) {
     super();
     this.nombre = nombre;
     this.grupoAlimento = grupoAlimento;
     this.gramosPorRacion = gramosPorRacion;
-    this.gramosEscogidos = gramosEscogidos;
     this.empresa = empresa;
-    this.componentesOriginales = componentesOriginales;
-    this.componentesCambiados = componentesCambiados;
+    this.componentesNutricionales = componentesNutricionales;
   }
 
   public Long getId() {
@@ -81,14 +81,6 @@ public class Alimento {
     this.gramosPorRacion = gramosPorRacion;
   }
 
-  public double getGramosEscogidos() {
-    return gramosEscogidos;
-  }
-
-  public void setGramosEscogidos(double gramosEscogidos) {
-    this.gramosEscogidos = gramosEscogidos;
-  }
-
   public Empresa getEmpresa() {
     return empresa;
   }
@@ -97,27 +89,19 @@ public class Alimento {
     this.empresa = empresa;
   }
 
-  public ComponentesNutricionales getComponentesOriginales() {
-    return componentesOriginales;
+  public ComponentesNutricionales getComponentesNutricionales() {
+    return componentesNutricionales;
   }
 
-  public void setComponentesOriginales(ComponentesNutricionales componentesOriginales) {
-    this.componentesOriginales = componentesOriginales;
+  public void setComponentesNutricionales(ComponentesNutricionales componentesNutricionales) {
+    this.componentesNutricionales = componentesNutricionales;
   }
 
-  public ComponentesNutricionales getComponentesCambiados() {
-    return componentesCambiados;
-  }
-
-  public void setComponentesCambiados(ComponentesNutricionales componentesCambiados) {
-    this.componentesCambiados = componentesCambiados;
-  }
-
-  public List<Plato> getPlatos() {
+  public List<PlatoAlimento> getPlatos() {
     return platos;
   }
 
-  public void setPlatos(List<Plato> platos) {
+  public void setPlatos(List<PlatoAlimento> platos) {
     this.platos = platos;
   }
 }

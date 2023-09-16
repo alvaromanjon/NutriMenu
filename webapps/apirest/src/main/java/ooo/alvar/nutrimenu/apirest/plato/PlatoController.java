@@ -1,6 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,15 @@ public class PlatoController {
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/platos/{idPlato}/alimentos/{idAlimento}")
-  public ResponseEntity<Plato> addAlimentoToPlato(@PathVariable Long idEmpresa, @PathVariable Long idPlato, @PathVariable Long idAlimento) {
-    Plato platoCreado = platoService.addAlimentoToPlato(idPlato, idAlimento);
+  public ResponseEntity<PlatoAlimento> addAlimentoToPlato(@PathVariable Long idEmpresa, @PathVariable Long idPlato, @PathVariable Long idAlimento, @RequestParam(required = false) Double cantidad) {
+    PlatoAlimento platoCreado;
+
+    if (cantidad == null) {
+      platoCreado = platoService.addAlimentoToPlato(idPlato, idAlimento);
+    } else {
+      platoCreado = platoService.actualizaCantidad(idPlato, idAlimento, cantidad);
+    }
+
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 

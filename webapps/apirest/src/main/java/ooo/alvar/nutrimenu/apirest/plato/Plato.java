@@ -1,11 +1,13 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"nombre", "empresa_id"})
       })
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Plato {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,13 +36,8 @@ public class Plato {
   @JsonIgnore
   @ManyToMany(mappedBy = "platos")
   private List<Menu> menus = new ArrayList<>();
-  @ManyToMany
-  @JoinTable(
-    name = "plato_alimento",
-    joinColumns = @JoinColumn(name = "plato_id"),
-    inverseJoinColumns = @JoinColumn(name = "alimento_id")
-  )
-  private List<Alimento> alimentos = new ArrayList<>();
+  @OneToMany(mappedBy = "plato")
+  private List<PlatoAlimento> alimentos = new ArrayList<>();
 
   public Plato() {
   }
@@ -116,11 +114,11 @@ public class Plato {
     this.menus = menus;
   }
 
-  public List<Alimento> getAlimentos() {
+  public List<PlatoAlimento> getAlimentos() {
     return alimentos;
   }
 
-  public void setAlimentos(List<Alimento> alimentos) {
+  public void setAlimentos(List<PlatoAlimento> alimentos) {
     this.alimentos = alimentos;
   }
 }
