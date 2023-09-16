@@ -34,6 +34,12 @@ public class LocalController {
     return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
   }
 
+  @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/locales/{idLocal}/menus/{idMenu}")
+  public ResponseEntity<Local> addMenuToLocal(@PathVariable Long idEmpresa, @PathVariable Long idLocal, @PathVariable Long idMenu) {
+    Local localCreado = localService.addMenuToLocal(idLocal, idMenu);
+    return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
+  }
+
   @RequestMapping(method = RequestMethod.PUT, value="/empresas/{idEmpresa}/locales/{idLocal}")
   public ResponseEntity<Local> updateLocal(@PathVariable Long idEmpresa, @PathVariable Long idLocal, @RequestBody Local local) {
     Local localActualizado = localService.updateLocal(local, idLocal);

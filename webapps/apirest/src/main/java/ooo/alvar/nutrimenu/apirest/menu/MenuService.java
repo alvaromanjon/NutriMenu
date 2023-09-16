@@ -4,7 +4,6 @@ import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import ooo.alvar.nutrimenu.apirest.local.Local;
-import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
 import ooo.alvar.nutrimenu.apirest.plato.Plato;
 import ooo.alvar.nutrimenu.apirest.plato.PlatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ public class MenuService {
 
   @Autowired
   private EmpresaRepository empresaRepository;
-
-  @Autowired
-  private LocalRepository localRepository;
 
   @Autowired
   private PlatoRepository platoRepository;
@@ -66,24 +62,6 @@ public class MenuService {
     return menuRepository.save(menu);
   }
 
-  public Menu addLocaltoMenu(Long idMenu, Long idLocal) {
-    Optional<Menu> menuAntiguo = menuRepository.findById(idMenu);
-
-    if (!menuAntiguo.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un menú con id " + idMenu);
-    }
-
-    Optional<Local> local = localRepository.findById(idLocal);
-
-    if (!local.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
-    }
-
-    menuAntiguo.get().getLocales().add(local.get());
-
-    return menuRepository.save(menuAntiguo.get());
-  }
-
   public Menu addPlatoToMenu(Long idMenu, Long idPlato) {
     Optional<Menu> menuAntiguo = menuRepository.findById(idMenu);
 
@@ -118,10 +96,16 @@ public class MenuService {
   }
 
   public void deleteMenu(Long id) {
-    if (!menuRepository.existsById(id)) {
+    Menu menuActual = menuRepository.findById(id).orElse(null);
+    if (menuActual == null) {
       throw new EntityDoesntExistsException("No existe un menú con id " + id);
     }
 
+    for (Local local : menuActual.getLocales()) {
+      local.getMenus().remove(menuActual);
+    }
+
+    menuActual.getLocales().clear();
     menuRepository.deleteById(id);
   }
 }

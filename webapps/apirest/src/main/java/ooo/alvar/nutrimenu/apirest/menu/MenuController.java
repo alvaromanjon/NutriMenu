@@ -28,11 +28,6 @@ public class MenuController {
     Menu menuCreado = menuService.addMenu(idEmpresa, menu);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
-  @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/menus/{idMenu}/locales/{idLocal}")
-  public ResponseEntity<Menu> addLocalToMenu(@PathVariable Long idEmpresa, @PathVariable Long idMenu, @PathVariable Long idLocal) {
-    Menu menuCreado = menuService.addLocaltoMenu(idMenu, idLocal);
-    return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
-  }
 
   @RequestMapping(method = RequestMethod.POST, value="/empresas/{idEmpresa}/menus/{idMenu}/platos/{idPlato}")
   public ResponseEntity<Menu> addPlatoToMenu(@PathVariable Long idEmpresa, @PathVariable Long idMenu, @PathVariable Long idPlato) {

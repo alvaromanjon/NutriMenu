@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
@@ -29,9 +28,12 @@ public class Local {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
-
-  @JsonIgnore
-  @ManyToMany(mappedBy = "locales")
+  @ManyToMany
+  @JoinTable(
+    name = "local_menu",
+    joinColumns = @JoinColumn(name = "local_id"),
+    inverseJoinColumns = @JoinColumn(name = "menu_id")
+  )
   private List<Menu> menus = new ArrayList<>();
 
   public Local() {
