@@ -1,12 +1,8 @@
 package ooo.alvar.nutrimenu.apirest.usuario;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.usuario.rol.Rol;
 
 
@@ -30,17 +26,26 @@ public class Usuario {
   private String email;
   @Column(nullable = false)
   private Rol rol;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
+
+  @ManyToOne
+  @JoinColumn(name = "local_id")
+  private Local local;
 
   public Usuario() {
   }
 
-  public Usuario(String usuario, String password, String nombre, String email, Rol rol) {
+  public Usuario(String usuario, String password, String nombre, String email, Rol rol, Empresa empresa, Local local) {
     super();
     this.usuario = usuario;
     this.password = password;
     this.nombre = nombre;
     this.email = email;
     this.rol = rol;
+    this.empresa = empresa;
+    this.local = local;
   }
 
   public Long getId() {
@@ -89,5 +94,21 @@ public class Usuario {
 
   public void setRol(Rol rol) {
     this.rol = rol;
+  }
+
+  public Empresa getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(Empresa empresa) {
+    this.empresa = empresa;
+  }
+
+  public Local getLocal() {
+    return local;
+  }
+
+  public void setLocal(Local local) {
+    this.local = local;
   }
 }

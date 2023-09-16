@@ -21,9 +21,11 @@ public class UsuarioController {
   private UsuarioService usuarioService;
 
   @RequestMapping("/usuarios")
-  public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false) Long id, 
+  public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false) Long id,
                                 @RequestParam(required = false) String email,
-                                @RequestParam(required = false) Rol rol) {
+                                @RequestParam(required = false) Rol rol,
+                                @RequestParam(required = false, name="empresa") Long idEmpresa,
+                                @RequestParam(required = false, name="local") Long idLocal) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
     if (email != null) {
@@ -32,16 +34,22 @@ public class UsuarioController {
       listaUsuarios.add(usuarioService.getUsuarioById(id));
     } else if (rol != null) {
       listaUsuarios = usuarioService.getAllUsuariosByRol(rol);
+    } else if (idEmpresa != null) {
+      listaUsuarios = usuarioService.getAllUsuariosByEmpresa(idEmpresa);
+    } else if (idLocal != null) {
+      listaUsuarios = usuarioService.getAllUsuariosByLocal(idLocal);
     } else {
       listaUsuarios = usuarioService.getAllUsuarios();
     }
 
-    return new ResponseEntity<List<Usuario>>(listaUsuarios, HttpStatus.OK);    
+    return new ResponseEntity<List<Usuario>>(listaUsuarios, HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/usuarios")
-  public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario) {
-    Usuario usuarioCreado = usuarioService.addUsuario(usuario);
+  public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario,
+                                            @RequestParam(required = false, defaultValue = "-1", name = "empresa") Long idEmpresa,
+                                            @RequestParam(required = false, defaultValue = "-1", name = "local") Long idLocal) {
+    Usuario usuarioCreado = usuarioService.addUsuario(idEmpresa, idLocal, usuario);
     return new ResponseEntity<Usuario>(usuarioCreado, HttpStatus.CREATED);
   }
 
