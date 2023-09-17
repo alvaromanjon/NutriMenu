@@ -15,6 +15,7 @@ public class LocalController {
   @Autowired
   private LocalService localService;
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/locales")
   public ResponseEntity<List<Local>> getLocales(@RequestParam(required = false, name = "id_local") Long id,
                                                 @RequestParam(required = false) String nombre,
@@ -41,24 +42,28 @@ public class LocalController {
     return new ResponseEntity<>(listaLocales, HttpStatus.OK);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/locales")
   public ResponseEntity<Local> addLocal(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody Local local) {
     Local localCreado = localService.addLocal(idEmpresa, local);
     return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/add/local/menus")
   public ResponseEntity<Local> addMenuToLocal(@RequestParam(name="id_local") Long idLocal, @RequestParam(name="id_menu") Long idMenu) {
     Local localCreado = localService.addMenuToLocal(idLocal, idMenu);
     return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/locales")
   public ResponseEntity<Local> updateLocal(@RequestParam(name="id_local") Long idLocal, @RequestBody Local local) {
     Local localActualizado = localService.updateLocal(local, idLocal);
     return new ResponseEntity<>(localActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.DELETE, value="/locales")
   public ResponseEntity<String> deleteLocal(@RequestParam(name="id_local") Long idLocal) {
     localService.deleteLocal(idLocal);

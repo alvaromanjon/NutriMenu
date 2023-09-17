@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.plato;
 
-import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
@@ -19,6 +18,7 @@ public class PlatoController {
   @Autowired
   private PlatoService platoService;
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/platos")
   public ResponseEntity<List<Plato>> getPlatos(@RequestParam(required = false, name="id_plato") Long idPlato,
                                                @RequestParam(required = false, name="id_empresa") Long idEmpresa,
@@ -39,31 +39,36 @@ public class PlatoController {
     return new ResponseEntity<>(listaPlatos, HttpStatus.OK);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/platos")
   public ResponseEntity<Plato> addPlato(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody Plato plato) {
     Plato platoCreado = platoService.addPlato(idEmpresa, plato);
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/add/plato/alimentos")
-  public ResponseEntity<PlatoAlimento> addAlimentoToPlato(@RequestParam(name="id_plato") Long idPlato, @RequestParam(name="id_alimento") Long idAlimento, @RequestParam(required = false) Double cantidad) {
+  public ResponseEntity<PlatoAlimento> addAlimentoToPlato(@RequestParam(name="id_plato") Long idPlato, @RequestParam(name="id_alimento") Long idAlimento) {
     PlatoAlimento platoCreado = platoService.addAlimentoToPlato(idPlato, idAlimento);
 
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/update/plato/alimentos")
   public ResponseEntity<PlatoAlimento> updateCantidadAlimento(@RequestParam(name="id_plato") Long idPlato, @RequestParam(name="id_alimento") Long idAlimento, @RequestParam Double cantidad) {
     PlatoAlimento platoActualizado = platoService.actualizaCantidad(idPlato, idAlimento, cantidad);
     return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/platos")
   public ResponseEntity<Plato> updatePlato(@RequestParam(name="id_plato") Long idPlato, @RequestBody Plato plato) {
     Plato platoActualizado = platoService.updatePlato(plato, idPlato);
     return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.DELETE, value="/platos")
   public ResponseEntity<String> deletePlato(@RequestParam(name="id_plato") Long idPlato) {
     platoService.deletePlato(idPlato);

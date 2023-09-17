@@ -15,6 +15,7 @@ public class MenuController {
   @Autowired
   private MenuService menuService;
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/menus")
   public ResponseEntity<List<Menu>> getMenus(@RequestParam(required=false, name="id_menu") Long id,
                                          @RequestParam(required=false, name="id_empresa") Long idEmpresa) {
@@ -29,24 +30,28 @@ public class MenuController {
     return new ResponseEntity<>(listaMenus, HttpStatus.OK);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/menus")
   public ResponseEntity<Menu> addMenu(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody Menu menu) {
     Menu menuCreado = menuService.addMenu(idEmpresa, menu);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/add/menu/platos")
   public ResponseEntity<Menu> addPlatoToMenu(@RequestParam(name="id_menu") Long idMenu, @RequestParam(name="id_plato") Long idPlato) {
     Menu menuCreado = menuService.addPlatoToMenu(idMenu, idPlato);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/menus")
   public ResponseEntity<Menu> updateMenu(@RequestParam(name="id_menu") Long idMenu, @RequestBody Menu menu) {
     Menu menuActualizado = menuService.updateMenu(menu, idMenu);
     return new ResponseEntity<>(menuActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.DELETE, value="/menus")
   public ResponseEntity<String> deleteMenu(@RequestParam(name="id_menu") Long idMenu) {
     menuService.deleteMenu(idMenu);

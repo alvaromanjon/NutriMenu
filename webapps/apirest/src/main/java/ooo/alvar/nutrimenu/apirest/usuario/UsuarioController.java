@@ -6,11 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ooo.alvar.nutrimenu.apirest.usuario.rol.Rol;
 
@@ -20,6 +16,7 @@ public class UsuarioController {
   @Autowired
   private UsuarioService usuarioService;
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/usuarios")
   public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false, name="id_usuario") Long id,
                                 @RequestParam(required = false) String email,
@@ -45,23 +42,26 @@ public class UsuarioController {
     return new ResponseEntity<>(listaUsuarios, HttpStatus.OK);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/usuarios")
   public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario,
                                             @RequestParam(required = false, defaultValue = "-1", name = "id_empresa") Long idEmpresa,
                                             @RequestParam(required = false, defaultValue = "-1", name = "id_local") Long idLocal) {
     Usuario usuarioCreado = usuarioService.addUsuario(idEmpresa, idLocal, usuario);
-    return new ResponseEntity<Usuario>(usuarioCreado, HttpStatus.CREATED);
+    return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/usuarios")
   public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario, @RequestParam(name="id_usuario") Long id) {
     Usuario usuarioActualizado = usuarioService.updateUsuario(usuario, id);
-    return new ResponseEntity<Usuario>(usuarioActualizado, HttpStatus.CREATED);
+    return new ResponseEntity<>(usuarioActualizado, HttpStatus.CREATED);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.DELETE, value="/usuarios")
   public ResponseEntity<String> deleteUsuario(@RequestParam(name="id_usuario") Long id) {
     usuarioService.deleteUsuario(id);
-    return new ResponseEntity<String>("Usuario con id " + id + " borrado correctamente", HttpStatus.OK);
+    return new ResponseEntity<>("Usuario con id " + id + " borrado correctamente", HttpStatus.OK);
   }
 }
