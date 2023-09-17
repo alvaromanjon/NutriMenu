@@ -29,8 +29,8 @@ jobs:
         run: |
           cd docker-compose
           docker-compose -f docker-compose.ci.yml ps
-          docker-compose -f docker-compose.ci.yml exec -T api-rest echo 'Running!'
-          docker-compose -f docker-compose.ci.yml exec -T mysqldb echo 'Running!'
+          docker-compose -f docker-compose.ci.yml exec -T api-rest echo 'API Running!'
+          docker-compose -f docker-compose.ci.yml exec -T mysqldb echo 'DB Running!'
 
       - name: Check api-rest logs
         run: |

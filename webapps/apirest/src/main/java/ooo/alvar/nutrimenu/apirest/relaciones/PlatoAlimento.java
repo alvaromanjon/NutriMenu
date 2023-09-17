@@ -2,6 +2,7 @@ package ooo.alvar.nutrimenu.apirest.relaciones;
 
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
+import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.plato.Plato;
 
 @Entity
@@ -19,6 +20,9 @@ public class PlatoAlimento {
   @JoinColumn(name = "alimento_id")
   private Alimento alimento;
   private double gramosEscogidos = 100;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "componentes_nutricionales_id", referencedColumnName = "id")
+  private ComponentesNutricionales componentesNutricionales;
 
   public PlatoAlimento() {
   }
@@ -57,5 +61,13 @@ public class PlatoAlimento {
 
   public void setGramosEscogidos(double gramosEscogidos) {
     this.gramosEscogidos = gramosEscogidos;
+  }
+
+  public ComponentesNutricionales getComponentesNutricionales() {
+    return componentesNutricionales;
+  }
+
+  public void setComponentesNutricionales(ComponentesNutricionales componentesNutricionales) {
+    this.componentesNutricionales = componentesNutricionales;
   }
 }
