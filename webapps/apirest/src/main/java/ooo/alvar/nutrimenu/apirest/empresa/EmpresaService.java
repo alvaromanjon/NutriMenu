@@ -39,21 +39,15 @@ public class EmpresaService {
   }
 
   public Empresa getEmpresaByEmail(String email) {
-    Empresa empresaDevuelta = empresaRepository.findByEmail(email);
-
-    return empresaDevuelta;
+    return empresaRepository.findByEmail(email);
   }
 
   public Empresa getEmpresaByTelefono(String telefono) {
-    Empresa empresaDevuelta = empresaRepository.findByTelefono(telefono);
-
-    return empresaDevuelta;
+    return empresaRepository.findByTelefono(telefono);
   }
 
   public Empresa getEmpresaByCif(String cif) {
-    Empresa empresaDevuelta = empresaRepository.findByCif(cif);
-
-    return empresaDevuelta;
+    return empresaRepository.findByCif(cif);
   }
 
   public Empresa addEmpresa(Empresa empresa) {

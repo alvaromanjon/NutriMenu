@@ -15,7 +15,7 @@ public class EmpresaController {
   private EmpresaService empresaService;
 
   @RequestMapping("/empresas")
-  public ResponseEntity<List<Empresa>> getEmpresas(@RequestParam(required = false) Long id,
+  public ResponseEntity<List<Empresa>> getEmpresas(@RequestParam(required = false, name = "id_empresa") Long id,
                                                    @RequestParam(required = false) String nombre,
                                                    @RequestParam(required = false) String email,
                                                    @RequestParam(required = false) String telefono,
@@ -45,13 +45,13 @@ public class EmpresaController {
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/empresas")
-  public ResponseEntity<Empresa> updateEmpresa(@RequestBody Empresa empresa, @RequestParam Long id) {
+  public ResponseEntity<Empresa> updateEmpresa(@RequestBody Empresa empresa, @RequestParam(name = "id_empresa") Long id) {
     Empresa empresaActualizada = empresaService.updateEmpresa(empresa, id);
     return new ResponseEntity<>(empresaActualizada, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/empresas")
-  public ResponseEntity<String> deleteEmpresa(@RequestParam Long id) {
+  public ResponseEntity<String> deleteEmpresa(@RequestParam(name="id_empresa") Long id) {
     empresaService.deleteEmpresa(id);
     return new ResponseEntity<>("Empresa con id " + id + " eliminada correctamente", HttpStatus.OK);
   }
