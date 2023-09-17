@@ -18,7 +18,7 @@ jobs:
       - name: Build Docker Compose
         run: |
           cd docker-compose
-          docker compose -f docker-compose.ci.yml up -d
+          docker-compose -f docker-compose.ci.yml up -d
 
       - name: Wait for 60 seconds
         uses: jakejarvis/wait-action@master
@@ -26,18 +26,18 @@ jobs:
           time: '60s'
 
       - name: Check running containers
-        run: docker compose -f docker-compose.ci.yml ps
-             docker compose -f docker-compose.ci.yml exec api-rest echo "I'm running!"
-             docker compose -f docker-compose.ci.yml exec mysqldb echo "I'm running!"
+        run: docker-compose -f docker-compose.ci.yml ps
+             docker-compose -f docker-compose.ci.yml exec api-rest echo 'Running!'
+             docker-compose -f docker-compose.ci.yml exec mysqldb echo 'Running!'
 
       - name: Check api-rest logs
         run: |
           cd docker-compose
-          docker compose -f docker-compose.ci.yml logs api-rest
+          docker-compose -f docker-compose.ci.yml logs api-rest
 
       - name: Check mysqldb logs
         run: |
           cd docker-compose
-          docker compose -f docker-compose.ci.yml logs mysqldb
+          docker-compose -f docker-compose.ci.yml logs mysqldb
 
 
