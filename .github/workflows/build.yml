@@ -26,9 +26,11 @@ jobs:
           time: '60s'
 
       - name: Check running containers
-        run: docker-compose -f docker-compose.ci.yml ps
-             docker-compose -f docker-compose.ci.yml exec api-rest echo 'Running!'
-             docker-compose -f docker-compose.ci.yml exec mysqldb echo 'Running!'
+        run: |
+          cd docker-compose
+          docker-compose -f docker-compose.ci.yml ps
+          docker-compose -f docker-compose.ci.yml exec api-rest echo 'Running!'
+          docker-compose -f docker-compose.ci.yml exec mysqldb echo 'Running!'
 
       - name: Check api-rest logs
         run: |
