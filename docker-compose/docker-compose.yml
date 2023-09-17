@@ -12,7 +12,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     working_dir: /app
     command: sh run_docker.sh
     volumes:
@@ -30,6 +31,13 @@ services:
       - .env
     volumes:
       - db_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
 
 volumes:
   db_data:
