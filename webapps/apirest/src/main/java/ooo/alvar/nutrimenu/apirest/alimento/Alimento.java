@@ -34,7 +34,7 @@ public class Alimento {
   @JoinColumn(name = "componentes_nutricionales_id", referencedColumnName = "id", unique = true)
   private ComponentesNutricionales componentesNutricionales;
   @JsonIgnore
-  @OneToMany(mappedBy = "alimento")
+  @OneToMany(mappedBy = "alimento", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PlatoAlimento> platos = new ArrayList<>();
 
   public Alimento() {

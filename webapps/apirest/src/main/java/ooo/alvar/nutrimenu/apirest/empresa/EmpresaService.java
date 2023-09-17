@@ -30,6 +30,32 @@ public class EmpresaService {
     return empresas;
   }
 
+  public List<Empresa> getAllEmpresasByNombre(String nombre) {
+    List<Empresa> empresas = new ArrayList<>();
+    empresaRepository.findAllByNombreContainsIgnoreCase(nombre)
+      .forEach(empresas::add);
+
+    return empresas;
+  }
+
+  public Empresa getEmpresaByEmail(String email) {
+    Empresa empresaDevuelta = empresaRepository.findByEmail(email);
+
+    return empresaDevuelta;
+  }
+
+  public Empresa getEmpresaByTelefono(String telefono) {
+    Empresa empresaDevuelta = empresaRepository.findByTelefono(telefono);
+
+    return empresaDevuelta;
+  }
+
+  public Empresa getEmpresaByCif(String cif) {
+    Empresa empresaDevuelta = empresaRepository.findByCif(cif);
+
+    return empresaDevuelta;
+  }
+
   public Empresa addEmpresa(Empresa empresa) {
     return empresaRepository.save(empresa);
   }
@@ -42,11 +68,21 @@ public class EmpresaService {
     }
 
     Empresa nuevaEmpresa = empresaAntigua.get();
-    nuevaEmpresa.setNombre(empresa.getNombre());
-    nuevaEmpresa.setEmail(empresa.getEmail());
-    nuevaEmpresa.setDireccion(empresa.getDireccion());
-    nuevaEmpresa.setTelefono(empresa.getTelefono());
-    nuevaEmpresa.setCif(empresa.getCif());
+    if (empresa.getNombre() != null) {
+      nuevaEmpresa.setNombre(empresa.getNombre());
+    }
+    if (empresa.getEmail() != null) {
+      nuevaEmpresa.setEmail(empresa.getEmail());
+    }
+    if (empresa.getDireccion() != null) {
+      nuevaEmpresa.setDireccion(empresa.getDireccion());
+    }
+    if (empresa.getTelefono() != null) {
+      nuevaEmpresa.setTelefono(empresa.getTelefono());
+    }
+    if (empresa.getCif() != null) {
+      nuevaEmpresa.setCif(empresa.getCif());
+    }
 
     return empresaRepository.save(nuevaEmpresa);
   }
