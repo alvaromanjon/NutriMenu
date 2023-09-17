@@ -39,7 +39,7 @@ public class AlimentoService {
 
   public List<Alimento> getAllAlimentosByEmpresa(Long id) {
     List<Alimento> alimentos = new ArrayList<>();
-    alimentos.addAll(alimentoRepository.findByEmpresaId(id));
+    alimentos.addAll(alimentoRepository.findAllByEmpresaId(id));
 
     return alimentos;
   }

@@ -21,7 +21,7 @@ public class AlimentoController {
   private AlimentoService alimentoService;
 
   @RequestMapping("/alimentos")
-  public ResponseEntity<List<Alimento>> getAlimentos(@RequestParam(required = false) Long id,
+  public ResponseEntity<List<Alimento>> getAlimentos(@RequestParam(required = false, name="id_alimento") Long id,
                                                      @RequestParam(required = false) String nombre,
                                                      @RequestParam(required = false, name = "tipo_alimento") grupoAlimento grupoAlimento,
                                                      @RequestParam(required = false, name = "id_empresa") Long idEmpresa) {
@@ -48,20 +48,20 @@ public class AlimentoController {
     return new ResponseEntity<>(alimentoCreado, HttpStatus.CREATED);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value="/alimentos/componentes")
+  @RequestMapping(method = RequestMethod.PUT, value="add/alimento/componentes")
   public ResponseEntity<Alimento> addComponentesNutricionalesToAlimento(@RequestParam(name="id_componente") Long idComponente, @RequestParam(name="id_alimento") Long idAlimento) {
     Alimento alimentoActualizado = alimentoService.addComponenteNutricionalToAlimento(idAlimento, idComponente);
     return new ResponseEntity<Alimento>(alimentoActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/alimentos")
-  public ResponseEntity<Alimento> updateAlimento(@RequestBody Alimento alimento, @RequestParam Long id) {
+  public ResponseEntity<Alimento> updateAlimento(@RequestBody Alimento alimento, @RequestParam(name="id_alimento") Long id) {
     Alimento alimentoActualizado = alimentoService.updateAlimento(alimento, id);
     return new ResponseEntity<>(alimentoActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/alimentos")
-  public ResponseEntity<String> deleteAlimento(@RequestParam Long id) {
+  public ResponseEntity<String> deleteAlimento(@RequestParam(name="id_alimento") Long id) {
     alimentoService.deleteAlimento(id);
     return new ResponseEntity<>("Alimento con id " + id + " borrado correctamente", HttpStatus.OK);
   }
