@@ -4,24 +4,28 @@
 
 \section{Estructura de directorios}
 
-\subsection{Estructura de Docker y Docker Compose}
+\subsection{Estructura de los archivos de Docker}
 
 \dirtree{%
 .1 NutriMenu.
 .2 docker-compose.
-.3 docker-compose.yml.
+.3 docker-compose.ci.yml.
+.3 docker-compose.dev.yml.
 .2 webapps.
-.3 nutrimenuclient.
+.3 apirest.
 .4 Dockerfile.
-.4 run-docker.sh.
-.3 nutrimenumanage.
+.4 run\_docker\_ci.sh.
+.4 run\_docker\_dev.sh.
+.3 frontend.
+.4 .dockerignore.
 .4 Dockerfile.
-.4 run-docker.sh.
 }
 
 \section{Manual del programador}
 
 \subsection{Dockerfiles}
+
+\subsubsection{API REST}
 
 \begin{lstlisting}
 FROM eclipse-temurin:17
@@ -32,11 +36,30 @@ RUN mkdir -p $HOME
 WORKDIR $HOME
 \end{lstlisting}
 
-Cada uno de los servicios del \textit{backend} dispone de un \textbf{Dockerfile}, que a la hora del despliegue es el encargado de definir cómo se va a crear la imagen, y qué parámetros y dependencias va a necesitar.
+A la hora de desplegar la parte de \textit{backend} disponemos para ello de un \textbf{Dockerfile}, que va a ser el encargado de definir cómo se va a crear la imagen de Docker, y qué parámetros y dependencias va a necesitar. Es el equivalente al proceso al que todos estamos acostumbrados de crear una máquina virtual, instalar el sistema operativo escogido y configurar todas las dependencias y paquetes necesarios, solo que en este caso todo esto podemos ahorrárnoslo (tanto en esfuerzo como en tiempo, ya que el tiempo de despliegue de una imagen de Docker es de apenas un par de minutos en la mayoría de los casos) escribiendo en este archivo la configuración necesaria que necesitamos para nuestro caso de uso.
 
-En este caso me he basado en otra imagen ya existente, \textit{\textbf{eclipse-temurin}} (\href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}), ya que contiene tanto el JDK como el JRE de Java, además de todos los binarios relacionados. He especificado que quiero usar la etiqueta \textit{\textbf{17}}, puesto que quiero usar Java 17 para este proyecto, ya que es la última versión LTS \textit{(Long Term Support)} disponible en el momento \cite{java:releases}. Existen muchas implementaciones del JDK de Java \cite{foojay:java-jdks}, pero en este caso he usado Eclipse Temurin principalmente por el soporte a arquitecturas \textit{ARMv7} y \textit{ARM64/v8}, lo que permite poder ejecutar los contenedores en plataformas como Apple Silicon, o incluso en mini-computadores como una Raspberry Pi.
+En este caso me he basado en otra imagen ya existente, \textit{\textbf{eclipse-temurin}} (\href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}), ya que contiene tanto el JDK como el JRE de Java, además de una instalación mínima de \textbf{Linux Ubuntu} con todas las dependencias ya instaladas y configuradas. He especificado que quiero usar la etiqueta \textit{\textbf{17}}, puesto que quiero usar Java 17 para este proyecto, ya que es la última versión LTS \textit{(Long Term Support)} disponible en el momento \cite{java:releases}. Existen muchas implementaciones del JDK de Java \cite{foojay:java-jdks}, pero en este caso he usado Eclipse Temurin principalmente por su soporte a arquitecturas \textit{ARMv7} y \textit{ARM64/v8}, lo que permite poder ejecutar los contenedores en plataformas como Apple Silicon, o incluso en mini-computadores como una Raspberry Pi.
 
-Además de esto, también se van a instalar como dependencias \textit{\href{https://github.com/inotify-tools}{inotify-tools}}, una herramienta para monitorizar cambios en el código; y \textit{\href{https://dos2unix.sourceforge.io/}{dos2unix}}, que se encarga de cambiar el tipo de final de línea de \textbf{CRLF} (Windows) a \textbf{LF} (Unix) \cite{medium:spring-boot-in-docker}.
+Aunque la imagen descarga automáticamente la última versión disponible de \href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}, por si acaso cada vez que construyamos la imagen vamos a comprobar si hay actualizaciones disponibles para cualquier paquete del sistema operativo del que dispone la imagen. Además de esto, también se van a instalar como dependencias \textit{\href{https://github.com/inotify-tools}{inotify-tools}}, una herramienta para monitorizar cambios en el código; y \textit{\href{https://dos2unix.sourceforge.io/}{dos2unix}}, que se encarga de cambiar el tipo de final de línea de \textbf{CRLF} (Windows) a \textbf{LF} (Unix) \cite{medium:spring-boot-in-docker}. Indicamos también que, dentro de la imagen, el directorio que vamos a usar para trabajar es \verb,/app,, puesto que esto nos permite que cualquier comando que ejecutemos a continuación se realice dentro de ese directorio \cite{docker:workdir}.
+
+\subsubsection{Frontend}
+
+\begin{lstlisting}
+FROM node:alpine
+ENV HOME=/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+COPY package*.json ./
+RUN npm install
+EXPOSE 3000
+CMD ["npm", "start"]
+\end{lstlisting}
+
+En la parte del \textit{frontend} también disponemos de otro \textbf{Dockerfile}, en este caso con la imagen oficial de \textit{\textbf{Node}}, ya que es el entorno de ejecución que hay debajo de React. He usado la etiqueta \textit{\textbf{alpine}} (\href{https://hub.docker.com/layers/library/node/alpine/images/sha256-923cd6fac65f6892aa8bbb4208ad708c56b35f9ab86eca07ccc7b56dd28c9c77?context=explore}{Docker Hub}), ya que \textbf{Alpine} es una distribución de Linux orientada a ser lo más ligera posible, reduciendo el número de paquetes al mínimo y sustituyendo las herramientas GNU por \textbf{BusyBox} \cite{wikipedia:busybox}, un ejecutable que es capaz de emularlas.
+
+Al igual que en el otro Dockerfile que acabamos de ver, he configurado el entorno de ejecución en el directorio \verb,/app, del contenedor. A continuación he indicado que quiero que se copien los archivos que empiezan por \verb,package, y acaban en \verb,.json, al contenedor, ya que en un proyecto React son los archivos que indican todas las dependencias que necesita el proyecto para poder ejecutarse. Sobre el qué directorio va a usar Docker para coger estos archivos, lo veremos después en el archivo de configuración de \textbf{Docker Compose}, puesto que al construir la imagen con la etiqueta \verb,build:, indicaremos el directorio al que puede acceder Docker durante la construcción de la imagen con el atributo \verb,context:, \cite{docker:build-context}.
+
+Por último, la imagen va a instalar todas las dependencias del proyecto necesarias con \verb,npm install,, se va a abrir el puerto \textit{3000} del contenedor, ya que es el utilizado por React para poder acceder a la aplicación, y se va a iniciar la aplicación con el comando \verb,npm start,. 
 
 \subsection{Docker Compose}
 
