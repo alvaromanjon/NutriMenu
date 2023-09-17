@@ -24,14 +24,16 @@ public class LocalController {
     List<Local> listaLocales = new ArrayList<>();
     if (id != null) {
       listaLocales.add(localService.getLocal(id));
-    } else if (nombre != null) {
-      listaLocales = localService.getLocalByNombre(nombre);
     } else if  (email != null) {
       listaLocales.add(localService.getLocalByEmail(email));
     } else if (telefono != null) {
       listaLocales.add(localService.getLocalByTelefono(telefono));
     } else if (idEmpresa != null) {
-      listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
+      if (nombre != null) {
+        listaLocales = localService.getLocalByNombre(nombre, idEmpresa);
+      } else {
+        listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
+      }
     } else {
       throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
     }

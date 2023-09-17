@@ -40,9 +40,9 @@ public class LocalService {
     return locales;
   }
 
-  public List<Local> getLocalByNombre(String nombre) {
+  public List<Local> getLocalByNombre(String nombre, Long idEmpresa) {
     List<Local> locales = new ArrayList<>();
-    locales.addAll(localRepository.findAllByNombreContainsIgnoreCase(nombre));
+    locales.addAll(localRepository.findAllByNombreContainsIgnoreCaseAndEmpresaId(nombre, idEmpresa));
 
     return locales;
   }
