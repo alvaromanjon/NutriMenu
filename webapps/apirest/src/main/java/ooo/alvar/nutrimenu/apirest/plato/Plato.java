@@ -36,7 +36,7 @@ public class Plato {
   @JsonIgnore
   @ManyToMany(mappedBy = "platos")
   private List<Menu> menus = new ArrayList<>();
-  @OneToMany(mappedBy = "plato")
+  @OneToMany(mappedBy = "plato", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PlatoAlimento> alimentos = new ArrayList<>();
 
   public Plato() {

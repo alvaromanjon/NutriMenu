@@ -33,19 +33,26 @@ public class LocalService {
     return localDevuelto;
   }
 
-  public List<Local> getAllLocales() {
+  public List<Local> getAllLocalesByEmpresa(Long id) {
     List<Local> locales = new ArrayList<>();
-    localRepository.findAll()
-      .forEach(locales::add);
+    locales.addAll(localRepository.findAllByEmpresaId(id));
 
     return locales;
   }
 
-  public List<Local> getAllLocalesByEmpresa(Long id) {
+  public List<Local> getLocalByNombre(String nombre, Long idEmpresa) {
     List<Local> locales = new ArrayList<>();
-    locales.addAll(localRepository.findByEmpresaId(id));
+    locales.addAll(localRepository.findAllByNombreContainsIgnoreCaseAndEmpresaId(nombre, idEmpresa));
 
     return locales;
+  }
+
+  public Local getLocalByEmail(String email) {
+    return localRepository.findByEmail(email);
+  }
+
+  public Local getLocalByTelefono(String telefono) {
+    return localRepository.findByTelefono(telefono);
   }
 
   public Local addLocal(Long idEmpresa, Local local) {
@@ -86,10 +93,18 @@ public class LocalService {
     }
 
     Local nuevoLocal = localAntiguo.get();
-    nuevoLocal.setNombre(local.getNombre());
-    nuevoLocal.setEmail(local.getEmail());
-    nuevoLocal.setDireccion(local.getDireccion());
-    nuevoLocal.setTelefono(local.getTelefono());
+    if (local.getNombre() != null) {
+      nuevoLocal.setNombre(local.getNombre());
+    }
+    if (local.getEmail() != null) {
+      nuevoLocal.setEmail(local.getEmail());
+    }
+    if (local.getDireccion() != null) {
+      nuevoLocal.setDireccion(local.getDireccion());
+    }
+    if (local.getTelefono() != null) {
+      nuevoLocal.setTelefono(local.getTelefono());
+    }
 
     return localRepository.save(nuevoLocal);
   }

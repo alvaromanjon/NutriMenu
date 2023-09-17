@@ -1,6 +1,15 @@
 package ooo.alvar.nutrimenu.apirest.empresa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
+import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
+import ooo.alvar.nutrimenu.apirest.plato.Plato;
+import ooo.alvar.nutrimenu.apirest.usuario.Usuario;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -24,6 +33,21 @@ public class Empresa {
   private String telefono;
   @Column(nullable = false)
   private String cif;
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Menu> menus = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Local> locales = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Plato> platos = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Alimento> alimentos = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Usuario> usuarios = new ArrayList<>();
 
   public Empresa() {
   }

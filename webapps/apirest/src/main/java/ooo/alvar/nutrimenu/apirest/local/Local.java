@@ -9,8 +9,9 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nombre"}),
-        @UniqueConstraint(columnNames = {"email"})
+        @UniqueConstraint(columnNames = {"nombre", "empresa_id"}),
+        @UniqueConstraint(columnNames = {"email"}),
+        @UniqueConstraint(columnNames = {"telefono"})
       })
 public class Local {
 
