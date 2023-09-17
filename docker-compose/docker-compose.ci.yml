@@ -2,7 +2,6 @@ services:
   api-rest:
     build:
       context: ../webapps/apirest
-    restart: always
     ports:
       - ${API_WEB_DOCKER_PORT}:${API_WEB_LOCAL_PORT}
       - ${API_RELOAD_DOCKER_PORT}:${API_RELOAD_LOCAL_PORT}
