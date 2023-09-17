@@ -35,7 +35,7 @@ public class MenuService {
 
   public List<Menu> getAllMenusByEmpresa(Long id) {
     List<Menu> menus = new ArrayList<>();
-    menus.addAll(menuRepository.findByEmpresaId(id));
+    menus.addAll(menuRepository.findAllByEmpresaId(id));
 
     return menus;
   }
@@ -80,8 +80,12 @@ public class MenuService {
     }
 
     Menu nuevoMenu = menuAntiguo.get();
-    nuevoMenu.setNombre(menu.getNombre());
-    nuevoMenu.setDescripcion(menu.getDescripcion());
+    if (menu.getNombre() != null) {
+      nuevoMenu.setNombre(menu.getNombre());
+    }
+    if (menu.getDescripcion() != null) {
+      nuevoMenu.setDescripcion(menu.getDescripcion());
+    }
     nuevoMenu.setFechaModificacion(java.time.Instant.now());
 
     return menuRepository.save(nuevoMenu);
