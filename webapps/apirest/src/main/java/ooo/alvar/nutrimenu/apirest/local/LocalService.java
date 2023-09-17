@@ -40,8 +40,11 @@ public class LocalService {
     return locales;
   }
 
-  public Local getLocalByNombre(String nombre) {
-    return localRepository.findByNombre(nombre);
+  public List<Local> getLocalByNombre(String nombre) {
+    List<Local> locales = new ArrayList<>();
+    locales.addAll(localRepository.findAllByNombreContainsIgnoreCase(nombre));
+
+    return locales;
   }
 
   public Local getLocalByEmail(String email) {

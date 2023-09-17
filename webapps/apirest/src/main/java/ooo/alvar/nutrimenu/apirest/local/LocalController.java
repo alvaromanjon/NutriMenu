@@ -25,7 +25,7 @@ public class LocalController {
     if (id != null) {
       listaLocales.add(localService.getLocal(id));
     } else if (nombre != null) {
-      listaLocales.add(localService.getLocalByNombre(nombre));
+      listaLocales = localService.getLocalByNombre(nombre);
     } else if  (email != null) {
       listaLocales.add(localService.getLocalByEmail(email));
     } else if (telefono != null) {
