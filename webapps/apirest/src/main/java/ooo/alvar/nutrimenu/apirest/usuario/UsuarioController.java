@@ -21,11 +21,11 @@ public class UsuarioController {
   private UsuarioService usuarioService;
 
   @RequestMapping("/usuarios")
-  public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false) Long id,
+  public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false, name="id_usuario") Long id,
                                 @RequestParam(required = false) String email,
                                 @RequestParam(required = false) Rol rol,
-                                @RequestParam(required = false, name="empresa") Long idEmpresa,
-                                @RequestParam(required = false, name="local") Long idLocal) {
+                                @RequestParam(required = false, name="id_empresa") Long idEmpresa,
+                                @RequestParam(required = false, name="id_local") Long idLocal) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
     if (email != null) {
@@ -42,25 +42,26 @@ public class UsuarioController {
       listaUsuarios = usuarioService.getAllUsuarios();
     }
 
-    return new ResponseEntity<List<Usuario>>(listaUsuarios, HttpStatus.OK);
+    return new ResponseEntity<>(listaUsuarios, HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.POST, value="/usuarios")
   public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario,
-                                            @RequestParam(required = false, defaultValue = "-1", name = "empresa") Long idEmpresa,
-                                            @RequestParam(required = false, defaultValue = "-1", name = "local") Long idLocal) {
+                                            @RequestParam(required = false, defaultValue = "-1", name = "id_empresa") Long idEmpresa,
+                                            @RequestParam(required = false, defaultValue = "-1", name = "id_local") Long idLocal) {
     Usuario usuarioCreado = usuarioService.addUsuario(idEmpresa, idLocal, usuario);
     return new ResponseEntity<Usuario>(usuarioCreado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.PUT, value="/usuarios")
-  public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario, @RequestParam Long id) {
+  public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario, @RequestParam(name="id_usuario") Long id) {
     Usuario usuarioActualizado = usuarioService.updateUsuario(usuario, id);
     return new ResponseEntity<Usuario>(usuarioActualizado, HttpStatus.CREATED);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value="/usuarios")
-  public void deleteEmpresa(@RequestParam Long id) {
+  public ResponseEntity<String> deleteUsuario(@RequestParam(name="id_usuario") Long id) {
     usuarioService.deleteUsuario(id);
+    return new ResponseEntity<String>("Usuario con id " + id + " borrado correctamente", HttpStatus.OK);
   }
 }
