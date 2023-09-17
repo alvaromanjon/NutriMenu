@@ -1,48 +1,56 @@
 package ooo.alvar.nutrimenu.apirest.menu;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.plato.Plato;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Menu {
 
   @Id
-  private String id;
-  @ManyToOne
-  private Empresa empresa;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
   private String nombre;
   private String descripcion;
   private Instant fechaCreacion;
   private Instant fechaModificacion;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
+  @JsonIgnore
+  @ManyToMany(mappedBy = "menus")
+  private List<Local> locales = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(
+    name = "menu_plato",
+    joinColumns = @JoinColumn(name = "menu_id"),
+    inverseJoinColumns = @JoinColumn(name = "plato_id")
+  )
+  private List<Plato> platos = new ArrayList<>();
 
   public Menu() {
   }
 
-  public Menu(String idEmpresa, String nombre, String descripcion) {
+  public Menu(String nombre, String descripcion, Empresa empresa) {
     super();
-    this.empresa = new Empresa(idEmpresa, "", "", "", "", "");
     this.nombre = nombre;
     this.descripcion = descripcion;
+    this.empresa = empresa;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
-  }
-
-  public Empresa getEmpresa() {
-    return empresa;
-  }
-
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
   }
 
   public String getNombre() {
@@ -65,15 +73,39 @@ public class Menu {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(Instant fecha_creacion) {
-    this.fechaCreacion = fecha_creacion;
+  public void setFechaCreacion(Instant fechaCreacion) {
+    this.fechaCreacion = fechaCreacion;
   }
 
   public Instant getFechaModificacion() {
     return fechaModificacion;
   }
 
-  public void setFechaModificacion(Instant fecha_modificacion) {
-    this.fechaModificacion = fecha_modificacion;
+  public void setFechaModificacion(Instant fechaModificacion) {
+    this.fechaModificacion = fechaModificacion;
+  }
+
+  public Empresa getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(Empresa empresa) {
+    this.empresa = empresa;
+  }
+
+  public List<Local> getLocales() {
+    return locales;
+  }
+
+  public void setLocales(List<Local> locales) {
+    this.locales = locales;
+  }
+
+  public List<Plato> getPlatos() {
+    return platos;
+  }
+
+  public void setPlatos(List<Plato> platos) {
+    this.platos = platos;
   }
 }

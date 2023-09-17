@@ -1,39 +1,59 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nombre", "empresa_id"}),
+        @UniqueConstraint(columnNames = {"email"}),
+        @UniqueConstraint(columnNames = {"telefono"})
+      })
 public class Local {
 
   @Id
-  private String id;
-  @ManyToOne
-  private Empresa empresa;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
   private String nombre;
+  @Column(nullable = false)
   private String email;
+  @Column(nullable = false)
   private String direccion;
+  @Column(nullable = false)
   private String telefono;
+  @ManyToOne
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
+  @ManyToMany
+  @JoinTable(
+    name = "local_menu",
+    joinColumns = @JoinColumn(name = "local_id"),
+    inverseJoinColumns = @JoinColumn(name = "menu_id")
+  )
+  private List<Menu> menus = new ArrayList<>();
 
   public Local() {
   }
 
-  public Local(String idEmpresa, String nombre, String email, String direccion, String telefono) {
+  public Local(String nombre, String email, String direccion, String telefono, Empresa empresa) {
     super();
-    this.empresa = new Empresa(idEmpresa, "", "", "", "", "");
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
     this.telefono = telefono;
+    this.empresa = empresa;
   }
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -75,5 +95,13 @@ public class Local {
 
   public void setTelefono(String telefono) {
     this.telefono = telefono;
+  }
+
+  public List<Menu> getMenus() {
+    return menus;
+  }
+
+  public void setMenus(List<Menu> menus) {
+    this.menus = menus;
   }
 }

@@ -1,18 +1,53 @@
 package ooo.alvar.nutrimenu.apirest.empresa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
+import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
+import ooo.alvar.nutrimenu.apirest.plato.Plato;
+import ooo.alvar.nutrimenu.apirest.usuario.Usuario;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"nombre"}),
+        @UniqueConstraint(columnNames = {"email"}),
+        @UniqueConstraint(columnNames = {"telefono"}),
+        @UniqueConstraint(columnNames = {"cif"})
+      })
 public class Empresa {
 
   @Id
-  private String id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
   private String nombre;
+  @Column(nullable = false)
   private String email;
+  @Column(nullable = false)
   private String direccion;
+  @Column(nullable = false)
   private String telefono;
+  @Column(nullable = false)
   private String cif;
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Menu> menus = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Local> locales = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Plato> platos = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Alimento> alimentos = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Usuario> usuarios = new ArrayList<>();
 
   public Empresa() {
   }
@@ -26,21 +61,11 @@ public class Empresa {
     this.cif = cif;
   }
 
-  public Empresa(String id, String nombre, String email, String direccion, String telefono, String cif) {
-    super();
-    this.id = id;
-    this.nombre = nombre;
-    this.email = email;
-    this.direccion = direccion;
-    this.telefono = telefono;
-    this.cif = cif;
-  }
-
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
