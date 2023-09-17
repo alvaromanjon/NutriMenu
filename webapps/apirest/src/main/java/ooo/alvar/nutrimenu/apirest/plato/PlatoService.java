@@ -42,13 +42,13 @@ public class PlatoService {
 
   public List<Plato> getAllPlatosByEmpresa(Long id) {
     List<Plato> platos = new ArrayList<>();
-    platos.addAll(platoRepository.findByEmpresaId(id));
+    platos.addAll(platoRepository.findAllByEmpresaId(id));
 
     return platos;
   }
 
   public List<Plato> getAllPlatosByTipoPlato(Long idEmpresa, tipoPlato plato) {
-    return platoRepository.findByEmpresaIdAndTipoPlato(idEmpresa, plato);
+    return platoRepository.findAllByEmpresaIdAndTipoPlato(idEmpresa, plato);
   }
 
   public Plato addPlato(Long idEmpresa, Plato plato) {
@@ -107,14 +107,21 @@ public class PlatoService {
     }
 
     Plato nuevoPlato = platoAntiguo.get();
-    nuevoPlato.setNombre(plato.getNombre());
-    nuevoPlato.setDescripcion(plato.getDescripcion());
-    nuevoPlato.setTipoPlato(plato.getTipoPlato());
+    if (plato.getNombre() != null) {
+      nuevoPlato.setNombre(plato.getNombre());
+    }
+    if (plato.getDescripcion() != null) {
+      nuevoPlato.setDescripcion(plato.getDescripcion());
+    }
+    if (plato.getTipoPlato() != null) {
+      nuevoPlato.setTipoPlato(plato.getTipoPlato());
+    }
     nuevoPlato.setFechaModificacion(java.time.Instant.now());
 
     return platoRepository.save(nuevoPlato);
   }
 
+  @Transactional
   public void deletePlato(Long id) {
     Plato platoActual = platoRepository.findById(id).orElse(null);
     if (platoActual == null) {
