@@ -1,41 +1,24 @@
 services:
-  nutrimenumanage:
+  api-rest:
     build:
-      context: ../webapps/nutrimenumanage
-    restart: on-failure
+      context: ../webapps/apirest
+    restart: always
     ports:
-      - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
-      - ${MANAGE_RELOAD_DOCKER_PORT}:${MANAGE_RELOAD_LOCAL_PORT}
-      - ${MANAGE_DEBUG_DOCKER_PORT}:${MANAGE_DEBUG_LOCAL_PORT}
+      - ${API_WEB_DOCKER_PORT}:${API_WEB_LOCAL_PORT}
+      - ${API_RELOAD_DOCKER_PORT}:${API_RELOAD_LOCAL_PORT}
+      - ${API_DEBUG_DOCKER_PORT}:${API_DEBUG_LOCAL_PORT}
     networks:
       - nutrimenu-net
     env_file:
       - .env
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     working_dir: /app
     command: sh run_docker_ci.sh
     volumes:
-      - ../webapps/nutrimenumanage:/app
-
-  nutrimenuclient:
-    build:
-      context: ../webapps/nutrimenuclient
-    restart: on-failure
-    ports:
-      - ${CLIENT_WEB_DOCKER_PORT}:${CLIENT_WEB_LOCAL_PORT}
-      - ${CLIENT_RELOAD_DOCKER_PORT}:${CLIENT_RELOAD_LOCAL_PORT}
-      - ${CLIENT_DEBUG_DOCKER_PORT}:${CLIENT_DEBUG_LOCAL_PORT}
-    networks:
-      - nutrimenu-net
-    env_file:
-      - .env
-    depends_on:
-      - mysqldb
-    working_dir: /app
-    command: sh run_docker_ci.sh
-    volumes:
-      - ../webapps/nutrimenuclient:/app
+      - ../webapps/apirest:/app
+      - .m2:/root/.m2
 
   mysqldb:
     image: "mysql:8.0"
@@ -48,6 +31,12 @@ services:
       - .env
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
 
 volumes:
   db_data:

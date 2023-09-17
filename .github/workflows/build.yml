@@ -17,17 +17,9 @@ jobs:
         run: |
           cd docker-compose
           docker compose -f docker-compose.ci.yml up -d
-      - name: Wait for 60 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: "60s"
       - name: Check running containers
         run: docker ps -a
-      - name: Check nutrimenuclient logs
+      - name: Check api-rest logs
         run: |
           cd docker-compose
-          docker compose -f docker-compose.ci.yml logs nutrimenuclient
-      - name: Check nutrimenumanage logs
-        run: |
-          cd docker-compose
-          docker compose -f docker-compose.ci.yml logs nutrimenumanage
+          docker compose -f docker-compose.ci.yml logs api-rest
