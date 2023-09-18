@@ -237,7 +237,7 @@ Para hacer más sencillo el cambio de valores en distintos parámetros de la apl
 
 Al ser un fichero que contiene secretos, siguiendo lo que dictan las buenas prácticas no se sincronizará con el repositorio, ya que si se tratase de un entorno de producción o el código se hiciera público, cualquier usuario podría obtener acceso a los datos de los usuarios de la aplicación.
 
-Por lo tanto, antes de desplegar los contenedores, para que la aplicación funcione correctamente el archivo se ha de crear dentro del directorio \verb,/docker-compose,, y se deben de definir las siguientes variables dentro de él:
+Por lo tanto, antes de desplegar los contenedores, para que la aplicación funcione correctamente \textbf{se debe crear este archivo} \verb,.env, \textbf{dentro del directorio} \verb,/docker-compose,, y se deben de definir las siguientes variables dentro de él:
 
 \begin{lstlisting}[language=Bash]
 # Variables de la API REST
@@ -262,31 +262,34 @@ DB_DOCKER_PORT=3306
 DB_LOCAL_PORT=3306
 \end{lstlisting}
 
-Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (indicando los valores escogidos en \verb,MYSQL_USER,, \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
+Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (\textbf{es necesario dar los valores que queramos en las variables} \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
 
 \begin{itemize}
-	\item Los puertos en los que se van a ejecutar cada una de las aplicaciones, que en este caso van a ser el \textbf{8080} para la aplicación de gestión y el \textbf{8081} para la aplicación de los clientes.
-	\item Los puertos en los que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso los puertos van a ser el \textbf{35729} para la aplicación de gestión y el \textbf{35730} para la aplicación de los clientes.
-	\item Los puertos que se van a usar para permitir conectar un debugger remoto a la aplicación, y poder así hacer debug desde el IDE que usemos para el desarrollo. Los puertos serán el \textbf{5005} para la aplicación de gestión y el \textbf{5006} para la aplicación de los clientes.
-	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, \textbf{credenciales de los usuarios de MySQL}, y el puerto escogido para la base de datos, que en este caso va a ser el usado por defecto, \textbf{3306}. 
+	\item Los puertos en los que se van a ejecutar cada uno de los servicios dentro de los contenedores (\verb,LOCAL_PORT,) y el puerto desde el cuál vamos a acceder al servicio correspondiente (\verb,DOCKER_PORT,), que en este caso no hay necesidad de diferenciarlos, y en este ejemplo son el \textbf{8080} para la API REST, el \textbf{3000} para el frontend y el \textbf{3306} para la base de datos.
+	\item El puerto en el que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso el puerto va a ser el \textbf{35729}.
+	\item El puerto que se va a usar para permitir conectar un debugger remoto a la aplicación, y poder así hacer debug desde el IDE que usemos para el desarrollo. El puerto va a ser el \textbf{5005} para la API REST.
+	\item Configuración adicional de la parte del frontend, como la variable \verb,CHOKIDAR_USEPOLLING, que indica que usemos el mecanismo \textit{CHOKIDAR} para observar cambios en los archivos fuente, para así poder aplicar los cambios de forma automática y realizar una recarga de la página de forma instantánea. Es necesario usar este mecanismo en aplicaciones React que se encuentren desplegadas en VMs o dockerizadas, como es este caso \cite{create-react-app:advanced-conf}.
+	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, y \textbf{credenciales de los usuarios de MySQL}.
 \end{itemize}
 
-\subsection{Despliegue de la aplicación}
+\subsection{Despliegue del entorno de desarrollo}
 
 \imagen{Docker/docker-compose-build}{Creación de las imágenes de los contenedores Docker}{0.8}
 
-Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola y accederemos al directorio \verb,/docker-compose,, donde ejecutaremos el siguiente comando:
+Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola y accederemos al directorio \verb,/docker-compose,, (\textbf{TODOS los comandos que veremos a continuación deben ejecutarse dentro del directorio} \verb,docker-compose,), donde ejecutaremos el siguiente comando:
 
 \begin{lstlisting}[language=Bash]
-docker-compose build
+docker compose -f docker-compose.dev.yml build
 \end{lstlisting}
 
 \imagen{Docker/docker-compose-up}{Despliegue de los contenedores Docker}{0.8}
 
-Para desplegar los contenedores y levantar el servicio, ejecutaremos el siguiente comando:
+Este proceso de construcción de imágenes sólo es necesario realizarlo la primera vez que ejecutemos el proyecto, o en caso de realizar cambios en los Dockerfiles, ya que estaríamos cambiando la estructura de las imágenes. Como tanto la capa de \textit{frontend} como la de \textit{backend} disponen de mecanismos para recargarse automáticamente en caso de cambios en el código, no hace falta reiniciar los contenedores cada vez que realicemos cambios en las aplicaciones.
+
+Una vez haya terminado de construir las imágenes, para desplegar los contenedores y levantar el servicio ejecutaremos el siguiente comando:
 
 \begin{lstlisting}[language=Bash]
-docker-compose up -d
+docker compose -f docker-compose.dev.yml up -d
 \end{lstlisting}
 
 \imagen{Docker/docker-desktop-containers}{Ejecución multi-contenedor de la aplicación}{0.8}
@@ -296,5 +299,43 @@ Si todo ha ido bien, podremos ver en Docker Desktop los contenedores corriendo c
 \imagen{Docker/docker-desktop-logs}{Logs de la ejecución de un contenedor en Docker Desktop}{0.8}
 
 Para asegurarnos de que no hay ningún tipo de problema, podemos seleccionar los 3 puntos verticales situados a la derecha de cada contenedor, y hacer click en \textit{View details}, ya que esto nos permite poder ver el log de cada servicio en tiempo real. 
+
+\imagen{Docker/docker-compose-stop}{Parada de los contenedores en ejecución}{0.8}
+
+En caso de querer parar la ejecución de los contenedores, podemos hacerlo con el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+  docker compose -f docker-compose.dev.yml stop
+\end{lstlisting}
+
+\imagen{Docker/docker-desktop-stop}{Contenedores parados pero no borrados en Docker Desktop}{0.8}
+
+Este comando lo que va a hacer es parar los servicios, pero no borrarlos, pudiendo reanudar el servicio otra vez en cualquier momento con \verb,docker compose -f docker-compose.dev.yml up -d,.
+
+\imagen{Docker/docker-compose-down}{Parada y borrado de los contenedores en ejecución}{0.8}
+
+En caso de querer borrar los contenedores, en vez de usar el comando que hemos usado arriba para parar los servicios, usaríamos el siguiente comando, que para y elimina los contenedores:
+
+\begin{lstlisting}[language=Bash]
+  docker compose -f docker-compose.dev.yml down
+\end{lstlisting}
+
+\imagen{Docker/docker-desktop-down}{Contenedores de Docker totalmente eliminados}{0.8}
+
+\imagen{Docker/docker-desktop-down-2}{Persistencia del volumen de la base de datos}{0.8}
+
+En el caso de nuestra aplicación, como el código se monta desde nuestro equipo en todos los servicios como un volumen externo, y la base de datos se encuentra en un volumen de Docker, borrar los contenedores no supondría ninguna pérdida de datos, así que realmente no habría diferencia respecto a simplemente parar los servicios, al menos a nivel de datos. Si reconstruyésemos las imágenes entonces sí que tendría más sentido borrar los contenedores primero, ya que así la próxima vez que los desplegásemos lo harían con la nueva imagen.
+
+\imagen{Docker/docker-compose-down-volumes}{Parada y borrado de contenedores y volúmenes existentes}{0.8}
+
+En caso de querer borrar los contenedores y los volúmenes asociados (en nuestro caso, el volumen de la base de datos), deberíamos de ejecutar el siguiente comando:
+
+\begin{lstlisting}[language=Bash]
+  docker compose -f docker-compose.dev.yml down --volumes
+\end{lstlisting}
+
+\imagen{Docker/docker-desktop-down-volumes}{Volumen de la base de datos totalmente eliminado}{0.8}
+
+Hay que tener en mente que ejecutar este comando \textbf{hará que se pierdan todos los datos de la base de datos}.
 
 \section{Pruebas del sistema}
