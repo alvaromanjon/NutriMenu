@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { Form, Button, Container, Card } from "react-bootstrap";
+import { useHistory, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,6 +22,7 @@ const Login = () => {
       >
         <Card.Body>
           <h2 className="text-center mt-5">NutriMenu</h2>
+          <h5 className="text-center mt-1">Inicio de sesión</h5>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label className=" mt-3 mb-1">Introduce tu correo electrónico</Form.Label>
@@ -42,8 +43,11 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Group>
+            <Button className="mt-3 text-decoration-none" variant="link" as={Link} to="/forgot-password">
+              ¿Has olvidado tu contraseña?
+            </Button>
 
-            <Button className="d-flex justify-content-center mx-auto mt-4 mb-3 px-3" variant="dark" type="submit">
+            <Button className="d-flex justify-content-center mx-auto mt-2 mb-3 px-3" variant="dark" type="submit">
               Iniciar sesión
             </Button>
           </Form>

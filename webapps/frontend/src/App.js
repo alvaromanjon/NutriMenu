@@ -5,6 +5,7 @@ import Login from "./Login";
 import Register from "./Register";
 import SeleccionLocal from "./SeleccionLocal";
 import NotFound from "./NotFound";
+import ForgotPassword from "./ForgotPassword";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route exact path="/register">
             <Register />
+          </Route>
+          <Route exact path="/forgot-password">
+            <ForgotPassword />
           </Route>
           <Route exact path="/empresas/choose">
             <SeleccionEmpresa />

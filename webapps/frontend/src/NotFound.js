@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
@@ -10,7 +10,7 @@ const NotFound = () => {
       >
         <Card.Body>
           <h2 className="px-6">Creo que te has equivocado 🤕</h2>
-          <p className="px-6">La página a la que acabas de intentar acceder no existe :(</p>
+          <p className="px-6 mt-3">La página a la que acabas de intentar acceder no existe :(</p>
           <Button className="mt-2 mb-3" as={Link} to="/">
             Vuelve a la página de inicio
           </Button>

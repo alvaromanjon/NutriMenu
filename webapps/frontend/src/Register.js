@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Form, Button, Container, Row, Col, Card, InputGroup } from "react-bootstrap";
+import { Form, Button, Container, Card, InputGroup } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
   const [usuario, setUsuario] = useState("");
@@ -9,6 +10,7 @@ const Register = () => {
   const [rol, setRol] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [local, setLocal] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,6 +118,17 @@ const Register = () => {
 
             <Button className="d-flex justify-content-center mx-auto mt-4 mb-3 px-3" variant="dark" type="submit">
               Registrarme
+            </Button>
+            <Button
+              className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
+              variant="light"
+              type="submit"
+              size="sm"
+              onClick={() => {
+                history.go(-1);
+              }}
+            >
+              Volver
             </Button>
           </Form>
         </Card.Body>
