@@ -240,26 +240,22 @@ Al ser un fichero que contiene secretos, siguiendo lo que dictan las buenas prá
 Por lo tanto, antes de desplegar los contenedores, para que la aplicación funcione correctamente el archivo se ha de crear dentro del directorio \verb,/docker-compose,, y se deben de definir las siguientes variables dentro de él:
 
 \begin{lstlisting}[language=Bash]
-# Variables del backend de la parte de los clientes
-CLIENT_WEB_DOCKER_PORT=8081
-CLIENT_WEB_LOCAL_PORT=8081
-CLIENT_RELOAD_DOCKER_PORT=35730
-CLIENT_RELOAD_LOCAL_PORT=35730
-CLIENT_DEBUG_DOCKER_PORT=5006
-CLIENT_DEBUG_LOCAL_PORT=5006
+# Variables de la API REST
+API_WEB_DOCKER_PORT=8080
+API_WEB_LOCAL_PORT=8080
+API_RELOAD_DOCKER_PORT=35729
+API_RELOAD_LOCAL_PORT=35729
+API_DEBUG_DOCKER_PORT=5005
+API_DEBUG_LOCAL_PORT=5005
 
-# Variables del backend de la parte de gestion
-MANAGE_WEB_DOCKER_PORT=8080
-MANAGE_WEB_LOCAL_PORT=8080
-MANAGE_RELOAD_DOCKER_PORT=35729
-MANAGE_RELOAD_LOCAL_PORT=35729
-MANAGE_DEBUG_DOCKER_PORT=5005
-MANAGE_DEBUG_LOCAL_PORT=5005
+# Variables del frontend
+FRONTEND_DOCKER_PORT=3000
+CHOKIDAR_USEPOLLING=true
 
 # Variables de la base de datos
 DATABASE_HOST=mysqldb
 MYSQL_DATABASE=nutri_db
-MYSQL_USER=<MySQL user> # Introduce el nombre del usuario de MySQL
+MYSQL_USER=dbadmin
 MYSQL_PASSWORD=<MySQL password> # Introduce la pass escogida para el usuario creado en el paso anterior
 MYSQL_ROOT_PASSWORD=<MySQL root password> # Introduce la pass escogida para el usuario root de MySQL
 DB_DOCKER_PORT=3306
