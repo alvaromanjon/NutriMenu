@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +51,9 @@ const Login = () => {
                 variant="light"
                 type="submit"
                 size="sm"
+                onClick={() => {
+                  history.push("/register");
+                }}
               >
                 Registro
               </Button>
