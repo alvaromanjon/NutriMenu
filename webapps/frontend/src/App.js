@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SeleccionEmpresa from "./SeleccionEmpresa";
 import SelectRole from "./SelectRole";
+import Login from "./Login";
+import Register from "./Register";
 import SeleccionLocal from "./SeleccionLocal";
 import NotFound from "./NotFound";
 
@@ -9,8 +11,11 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/">
-            <SelectRole />
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
           </Route>
           <Route exact path="/empresas/choose">
             <SeleccionEmpresa />

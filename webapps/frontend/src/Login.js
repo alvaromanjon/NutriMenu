@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { useState } from "react";
+import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,15 +8,15 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('Email:', email);
-    console.log('Password:', password);
+    console.log("Email:", email);
+    console.log("Password:", password);
   };
 
   return (
     <Container className="d-flex flex-column min-vh-100 justify-content-center">
       <Row className="justify-content-md-center">
         <Col md="4">
-          <Card className="px-5" style={{ width: '30rem' }}>
+          <Card className="px-5 shadow-lg" style={{ width: "30rem" }}>
             <Card.Body>
               <h2 className="text-center mt-5">NutriMenu</h2>
               <Form onSubmit={handleSubmit}>
@@ -44,7 +44,12 @@ const Login = () => {
                   Iniciar sesión
                 </Button>
               </Form>
-              <Button className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3" variant="light" type="submit" size="sm">
+              <Button
+                className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
+                variant="light"
+                type="submit"
+                size="sm"
+              >
                 Registro
               </Button>
             </Card.Body>
@@ -53,6 +58,6 @@ const Login = () => {
       </Row>
     </Container>
   );
-}
+};
 
 export default Login;
