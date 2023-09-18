@@ -42,7 +42,7 @@ En este caso me he basado en otra imagen ya existente, \textit{\textbf{eclipse-t
 
 Aunque la imagen descarga automáticamente la última versión disponible de \href{https://hub.docker.com/layers/library/eclipse-temurin/17/images/sha256-b0faf02bf7acfc65be1c2d0a291140300bd129620f145bf1013a1da748295d0c?context=explore}{Docker Hub}, por si acaso cada vez que construyamos la imagen vamos a comprobar si hay actualizaciones disponibles para cualquier paquete del sistema operativo del que dispone la imagen. Además de esto, también se van a instalar como dependencias \textit{\href{https://github.com/inotify-tools}{inotify-tools}}, una herramienta para monitorizar cambios en el código; y \textit{\href{https://dos2unix.sourceforge.io/}{dos2unix}}, que se encarga de cambiar el tipo de final de línea de \textbf{CRLF} (Windows) a \textbf{LF} (Unix) \cite{medium:spring-boot-in-docker}. Indicamos también que, dentro de la imagen, el directorio que vamos a usar para trabajar es \verb,/app,, puesto que esto nos permite que cualquier comando que ejecutemos a continuación se realice dentro de ese directorio \cite{docker:workdir}.
 
-\subsubsection{Frontend}
+\subsubsection{Frontend} \label{dockerfile-frontend}
 
 \begin{lstlisting}
 FROM node:alpine
@@ -63,47 +63,85 @@ Por último, la imagen va a instalar todas las dependencias del proyecto necesar
 
 \subsection{Docker Compose}
 
-\subsubsection{Backend}
+Dentro de los archivos de configuración de Docker Compose, situados en la carpeta \verb,docker-compose, del directorio raíz del proyecto, tenemos dos archivos distintos:
+
+\begin{itemize}
+	\item \verb,docker-compose.ci.yml,: Es el encargado de configurar los contenedores que se van a desplegar en el \textbf{entorno CI/CD configurado}, es decir, \textit{GitHub Actions}. Es prácticamente idéntico al entorno de desarrollo, tan sólo cambian las referencias a los scripts de arranque, como veremos a continuación.
+	\item \verb,docker-compose.dev.yml,: Es el \textbf{entorno de desarrollo} utilizado durante la creación de esta aplicación, ya que está configurado de tal forma que permite interactuar con la aplicación y aplicar y compilar los cambios en el código en tiempo real, sin necesidad de reiniciar los contenedores, usando \textit{LiveReload} \cite{codejava:livereload}.
+\end{itemize}
+
+\subsubsection{Frontend}
 
 \begin{lstlisting}
-services:
-  nutrimenumanage:
+  frontend:
     build:
-      context: ../webapps/nutrimenumanage
+      context: ../webapps/frontend
     restart: always
     ports:
-      - ${MANAGE_WEB_DOCKER_PORT}:${MANAGE_WEB_LOCAL_PORT}
-      - ${MANAGE_RELOAD_DOCKER_PORT}:${MANAGE_RELOAD_LOCAL_PORT}
-      - ${MANAGE_DEBUG_DOCKER_PORT}:${MANAGE_DEBUG_LOCAL_PORT}
+      - ${FRONTEND_DOCKER_PORT}:3000
     networks:
       - nutrimenu-net
     env_file:
       - .env
     depends_on:
-      - mysqldb
-    working_dir: /app
-    command: sh run_docker.sh
+      - api-rest
     volumes:
-      - ../webapps/nutrimenumanage:/app
+      - ../webapps/frontend:/app:rw
+      - /app/node_modules
+    stdin_open: true	
+\end{lstlisting}
+
+Dentro de nuestro archivo de configuración \verb,docker-compose.dev.yml, el primer servicio con el que nos encontramos es el correspondiente al contenedor encargado de desplegar la parte del \textit{frontend}. Esta parte no aparece dentro de \verb,docker-compose.ci.yml,, ya que GitHub Actions sólo está configurado para la parte del \textit{backend} y la base de datos. 
+
+Dentro de este archivo de configuración podemos destacar algunos elementos:
+
+\begin{itemize}
+	\item Como hemos mencionado anteriormente en el apartado de los \textit{Dockerfile} \ref{dockerfile-frontend}, la etiqueta \verb,context:, en \verb,build:, indica el \textbf{directorio al que vamos a dar acceso a Docker a la hora de construir la imagen}, que en este caso es \verb,webapps/frontend,. Los dos puntos antes del directorio significan que ese directorio se encuentra fuera de la carpeta actual, \verb,docker-compose,.
+	\item El contenedor está configurado para \textbf{reiniciarse de forma automática} en caso de fallo \cite{baeldung:restart-policies}.
+	\item El contenedor \textbf{va a estar conectado a una red} creada también en el fichero de Docker Compose, la cual veremos a continuación.
+	\item Se va a usar el fichero de \textbf{variables de entorno} descrito en el apartado \ref{entorno-desarrollo} para definir las distintas variables especificadas en este archivo.
+	\item El contenedor va a esperar a que el contenedor de la \textbf{API REST} esté en estado \textit{ready} para arrancar \cite{docker:depends-on}.
+	\item \textbf{Se van a crear dos volúmenes}, uno encargado de \textbf{mapear los archivos de la aplicación en local} (\verb,../webapps/frontend,) \textbf{con el directorio de trabajo dentro del contenedor} (\verb,/app,) ,indicando que este directorio va a ser tanto de lectura como de escritura; y otro volumen específico para \verb,node_modules,, \textbf{la carpeta que contiene todas las dependencias descargadas}. Este primer volumen es lo que nos permite poder realizar modificaciones sin tener que reiniciar servicios ni volver a construir imágenes, mientras que el segundo volumen se monta debido a que, cuando montamos este primer volumen, el contenido que hubiera en nuestro directorio de trabajo del contenedor (\verb,/app,) se sobreescribe por el del directorio mapeado, así que con este segundo volumen montado podemos recuperar la carpeta \verb,node_modules, generada al crear la imagen con el comando \verb,npm install,, puesto que sin esta carpeta \textbf{no podemos ejecutar la aplicación} (a no ser que hubiéramos ejecutado la app en local anteriormente y ya tuviésemos una carpeta \verb,node_modules,) \cite{stack-overflow:node_modules-folder}.
+		\item \textbf{Se mantiene una entrada abierta para el contenedor}, lo que nos puede servir para poder instalar paquetes usando \verb,npm,.
+\end{itemize}
+
+\subsubsection{Backend}
+
+\begin{lstlisting}
+  api-rest:
+    build:
+      context: ../webapps/apirest
+    restart: always
+    ports:
+      - ${API_WEB_DOCKER_PORT}:${API_WEB_LOCAL_PORT}
+      - ${API_RELOAD_DOCKER_PORT}:${API_RELOAD_LOCAL_PORT}
+      - ${API_DEBUG_DOCKER_PORT}:${API_DEBUG_LOCAL_PORT}
+    networks:
+      - nutrimenu-net
+    env_file:
+      - .env
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    working_dir: /app
+    command: sh run_docker_dev.sh
+    volumes:
+      - ../webapps/apirest:/app
       - .m2:/root/.m2
 \end{lstlisting}
 
-Vamos a crear dos contenedores distintos, uno por cada parte del \textit{backend} (parte de clientes y parte de gestión). Cada uno de ellos va a crear una imagen usando los \textit{Dockerfiles} descritos en el anterior punto, y van a contener una serie de parámetros:
+Para la parte del \textit{backend} muchos de los elementos del Dockerfile son similares a los vistos en la parte del \textit{frontend}, así que simplemente destacaré aquellos que varían respecto a este:
 
 \begin{itemize}
-	\item Van a estar configurados para \textbf{reiniciarse de forma automática} en caso de fallo \cite{baeldung:restart-policies}.
 	\item Se van a \textbf{configurar los puertos} descritos en el apartado \ref{entorno-desarrollo}.
-	\item \textbf{Se van a conectar a una red} creada también en el fichero de Docker Compose, la cual veremos a continuación.
-	\item Van a usar el archivo de \textbf{variables de entorno} descrito en el apartado \ref{entorno-desarrollo}.
-	\item \textbf{Dependen del contenedor de la base de datos al arrancar}, esto es que hasta que no arranque este contenedor, no lo van a hacer ellos, para evitar así problemas de conexión.
-	\item Nada más arrancar \textbf{van a ejecutar el comando \texttt{run\_docker.sh}}. Este comando lo que hace es levantar el servicio de backend y estar a su vez a la espera de cambios en los ficheros del código fuente para, en caso de que suceda, recompilar el código de forma transparente.
-	\item Se van a conectar dos volúmenes a cada contenedor: uno va a ser \textbf{el que contiene el código del servicio} (ya que si simplemente copiáramos el código al contenedor, cada vez que hubiera cambios en el código habría que volver a desplegar los contenedores, y de esta forma podemos realizar cambios en tiempo real); y otro va a ser \textbf{el volumen encargado de almacenar las dependencias de Maven}, para no tener que descargarlas cada vez que ejecutemos el código.
+	\item A la hora de depender del contenedor de la base de datos para arrancar, he especificado la condición \verb,service_healthy,, que hace que no sólo el contenedor de la API espere a que el de la base de datos esté en estado \textit{ready}, sino que además \textbf{va a ejecutar un \textit{healthcheck} para comprobar que la base de datos se encuentra accesible}. Esto es \textbf{MUY importante} para el correcto funcionamiento de la app, ya que sin este \textit{healthcheck}, se puede dar el caso de que la API REST arranque antes que la base de datos, causando un error en la ejecución.
+	\item Nada más arrancar \textbf{va a ejecutar el comando} \verb,run_docker_dev.sh,. Este comando lo que hace es levantar el servicio de \textit{backend} y estar a su vez a la espera de cambios en los ficheros del código fuente para, en caso de que suceda, recompilar el código de forma transparente. Este apartado es distinto en el archivo \verb,docker-compose.ci.yml,, puesto que hace referencia a \verb,run_docker_ci.sh, que simplemente compila la aplicación y la ejecuta.
+	\item Se van a conectar dos volúmenes al contenedor: uno va a ser \textbf{el que contiene el código del servicio} (ya que si simplemente copiáramos el código al contenedor, cada vez que hubiera cambios en el código habría que volver a desplegar los contenedores, y de esta forma podemos realizar cambios en tiempo real); y otro va a ser \textbf{el volumen encargado de almacenar las dependencias de Maven}, para no tener que descargarlas cada vez que ejecutemos el código.
 \end{itemize}
 
 \subsubsection{Base de datos}
 
 \begin{lstlisting}
-services:
   mysqldb:
     image: "mysql:8.0"
     restart: always
@@ -115,6 +153,12 @@ services:
       - .env
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
 \end{lstlisting}
 
 La base de datos también va a disponer de su propio contenedor, con ciertos parámetros similares a los de los servicios del \textit{backend}. Podemos destacar de aquí algunos elementos:
@@ -122,6 +166,7 @@ La base de datos también va a disponer de su propio contenedor, con ciertos par
 \begin{itemize}
 	\item Vamos a usar la \textbf{imagen oficial de MySQL} (\href{https://hub.docker.com/layers/library/mysql/8/images/sha256-1717a37c2adc7772b569eb727bb198b6792f7d50c2adb4839ba637b5c9d88f42?context=explore}{Docker Hub}), concretamente la versión \textbf{8} (con los últimos parches). 
 	\item Se va a conectar un volumen a la base de datos, que no es más que \textbf{el volumen encargado de almacenar todos los datos} de la base de datos. Esto es para no tener que inicializar la base de datos cada vez que la despleguemos, y mantener así persistencia entre sesiones.
+	\item Se ha definido el \textit{healthcheck} del que hemos hablado en el apartado del \textit{backend}, que lanza un comando para comprobar que el servicio esté totalmente arrancado. Este comando se va a lanzar un máximo de 3 veces en un intervalo de 15 segundos entre una y otra, siendo la primera 10 segundos después de que arranque el contenedor, y con un timeout de 5 segundos.
 \end{itemize} 
 
 \subsubsection{Volúmenes}
