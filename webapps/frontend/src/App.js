@@ -1,17 +1,20 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SeleccionEmpresa from "./SeleccionEmpresa";
-import SelectRole from "./SelectRole";
-import Login from "./Login";
-import Register from "./Register";
+import GlobalAdmin from "./Home/GlobalAdmin/GlobalAdmin";
+import Login from "./Login/Login";
+import Register from "./Login/Register";
 import SeleccionLocal from "./SeleccionLocal";
 import NotFound from "./NotFound";
-import ForgotPassword from "./ForgotPassword";
+import ForgotPassword from "./Login/ForgotPassword";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route exact path="/">
+            <GlobalAdmin />
+          </Route>
           <Route exact path="/login">
             <Login />
           </Route>

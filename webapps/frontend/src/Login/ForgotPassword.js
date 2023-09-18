@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Card, InputGroup, Alert, Row, Col } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import "./styles.css";
 
 const ForgotPassword = () => {
   const [userExists, setUserExists] = useState(false);
@@ -106,29 +107,31 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container fluid className="d-flex justify-content-center align-items-center vh-100">
-      <Card
-        className="d-flex flex-column justify-content-center align-items-center py-4 shadow-lg"
-        style={{ width: "25rem" }}
-      >
-        <Card.Body>
-          <h2 className="text-center mt-5">NutriMenu</h2>
-          <h5 className="text-center mt-1">Recuperar contraseña</h5>
-          {!userExists ? showCheckUser() : showSetPassword()}
-          <Button
-            className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
-            variant="light"
-            type="submit"
-            size="sm"
-            onClick={() => {
-              history.go(-1);
-            }}
-          >
-            Volver
-          </Button>
-        </Card.Body>
-      </Card>
-    </Container>
+    <div className="gradient">
+      <Container fluid className="d-flex justify-content-center align-items-center vh-100">
+        <Card
+          className="d-flex flex-column justify-content-center align-items-center py-4 shadow-lg"
+          style={{ width: "25rem" }}
+        >
+          <Card.Body>
+            <h2 className="text-center mt-5">NutriMenu</h2>
+            <h5 className="text-center mt-1">Recuperar contraseña</h5>
+            {!userExists ? showCheckUser() : showSetPassword()}
+            <Button
+              className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
+              variant="light"
+              type="submit"
+              size="sm"
+              onClick={() => {
+                history.go(-1);
+              }}
+            >
+              Volver
+            </Button>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
 };
 

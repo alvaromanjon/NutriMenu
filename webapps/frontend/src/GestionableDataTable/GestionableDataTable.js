@@ -8,7 +8,7 @@ const GestionableDataTable = ({ title, data, type }) => {
 
   return (
     <div className="gestionable-data-table">
-      <div className="gestionable-data-title">
+      <div className="mt-4">
         <h2>{title}</h2>
       </div>
       <GestionableDataTableType data={data} type={type} />
