@@ -15,52 +15,51 @@ const Login = () => {
   };
 
   return (
-    <Container className="d-flex flex-column min-vh-100 justify-content-center">
-      <Row className="justify-content-md-center">
-        <Col md="4">
-          <Card className="px-5 shadow-lg" style={{ width: "30rem" }}>
-            <Card.Body>
-              <h2 className="text-center mt-5">NutriMenu</h2>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label className=" mt-3 mb-1">Introduce tu correo electrónico</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Correo electrónico"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+    <Container fluid className="d-flex justify-content-center align-items-center vh-100">
+      <Card
+        className="d-flex flex-column justify-content-center align-items-center py-4 shadow-lg"
+        style={{ width: "25rem" }}
+      >
+        <Card.Body>
+          <h2 className="text-center mt-5">NutriMenu</h2>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label className=" mt-3 mb-1">Introduce tu correo electrónico</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Correo electrónico"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label className=" mt-3 mb-1">Introduce tu contraseña</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label className=" mt-3 mb-1">Introduce tu contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Form.Group>
 
-                <Button className="d-flex justify-content-center mx-auto mt-4 mb-3 px-3" variant="dark" type="submit">
-                  Iniciar sesión
-                </Button>
-              </Form>
-              <Button
-                className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
-                variant="light"
-                type="submit"
-                size="sm"
-                onClick={() => {
-                  history.push("/register");
-                }}
-              >
-                Registro
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+            <Button className="d-flex justify-content-center mx-auto mt-4 mb-3 px-3" variant="dark" type="submit">
+              Iniciar sesión
+            </Button>
+          </Form>
+          <Button
+            className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
+            variant="light"
+            type="submit"
+            size="sm"
+            onClick={() => {
+              history.push("/register");
+            }}
+          >
+            Registro
+          </Button>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };
