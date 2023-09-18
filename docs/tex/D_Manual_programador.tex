@@ -189,7 +189,7 @@ Esta es la red creada para conectar todos los contenedores y que no existan prob
 
 \subsection{Configuración del debugger remoto}
 
-Como veremos en el apartado \ref{entorno-desarrollo}, se van a configurar distintos puertos por cada uno de los servicios, y uno de estos va a ser el puerto de debug. Como vamos a ejecutar la aplicación usando Docker Compose y no compilando el código directamente desde nuestro IDE, por defecto no podemos hacer debug como haríamos con cualquier código compilado localmente. 
+Como veremos en el apartado \ref{entorno-desarrollo}, se van a configurar distintos puertos para el servicio de \textit{backend}, y uno de estos va a ser el puerto de \textit{debug}. Como vamos a ejecutar la aplicación usando Docker Compose y no compilando el código directamente desde nuestro IDE, por defecto no podemos hacer debug como haríamos con cualquier código compilado localmente. 
 
 Sin embargo, con los pasos que vamos a ver a continuación \cite{medium:spring-boot-in-docker}, \textbf{vamos a ser capaces de conectarnos a nuestro entorno \textit{contenerizado} y realizar debug del código como lo haríamos de forma normal}. En este caso voy a demostrar cómo funcionaría en IntelliJ IDEA, pero mientras que el IDE disponga de un \textit{debugger remoto} y sigamos correctamente las instrucciones del desarrollador del IDE para usarlo, no debería de haber ningún problema.
 
@@ -207,11 +207,11 @@ A continuación daremos nombre a la configuración, indicaremos el puerto corres
 
 \imagen{IntelliJ/debug-edit-conf-4}{Creación de un módulo para un servicio}{0.6}
 
-En caso de que el módulo correspondiente no aparezca, deberemos seleccionar en la barra de herramientas \textit{File > New > Module from Existing Sources...}, seleccionar el directorio en el que se encuentre la carpeta con el servicio correspondiente, y escoger Maven dentro de \textit{Import module from external model}. Si sí que nos aparece el módulo podemos ignorar este paso.
+En caso de que el módulo correspondiente no aparezca, deberemos seleccionar en la barra de herramientas \textit{File > New > Module from Existing Sources...}, seleccionar el directorio \verb,/webapps/apirest,, y escoger Maven dentro de \textit{Import module from external model}. Si sí que nos aparece el módulo podemos ignorar este paso.
 
-\imagen{IntelliJ/debug-edit-conf-5}{Debug del servicio}{0.9}
+\imagen{IntelliJ/debug-edit-conf-5}{Debug del servicio}{1}
 
-Una vez hayamos completado estos pasos, podemos guardar la configuración y ejecutar el proyecto (asegurándonos de que la configuración deseada está seleccionada) desde el botón de Debug, como haríamos de normal. Si todo ha ido bien, el IDE nos devolverá en la consola el mensaje \textit{Connected to the target VM, address: 'localhost:5005', transport: 'socket'}. Hay que tener en cuenta que estos pasos se deben repetir para cada uno de los servicios, seleccionando en cada caso el puerto y módulo indicados.
+Una vez hayamos completado estos pasos, podemos guardar la configuración y ejecutar el proyecto (asegurándonos de que la configuración deseada está seleccionada) desde el botón de Debug, como haríamos de normal. Si todo ha ido bien, el IDE nos devolverá en la consola el mensaje \textit{Connected to the target VM, address: 'localhost:5005', transport: 'socket'}.
 
 \section{Compilación, despliegue y ejecución del proyecto}
 
