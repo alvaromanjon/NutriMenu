@@ -43,6 +43,13 @@ public class UsuarioController {
   }
 
   @CrossOrigin(origins = "http://localhost:3000")
+  @RequestMapping(method = RequestMethod.POST, value="/login")
+  public ResponseEntity<Usuario> checkUsuario(@RequestBody Usuario usuario) {
+    usuarioService.checkUsuario(usuario);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/usuarios")
   public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario,
                                             @RequestParam(required = false, defaultValue = "-1", name = "id_empresa") Long idEmpresa,

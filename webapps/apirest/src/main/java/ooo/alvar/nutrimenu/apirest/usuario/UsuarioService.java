@@ -7,6 +7,7 @@ import java.util.Optional;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
+import ooo.alvar.nutrimenu.apirest.excepciones.PasswordNotCorrectException;
 import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,18 @@ public class UsuarioService {
       .forEach(usuarios::add);
 
     return usuarios;
+  }
+
+  public void checkUsuario(Usuario usuario) { 
+    Usuario usuarioDB = usuarioRepository.findByUsuario(usuario.getUsuario());
+
+    if (usuarioDB == null) {
+      throw new EntityDoesntExistsException("No existe ningún usuario llamado " + usuario);
+    }
+
+    if (!usuarioDB.getPassword().equals(usuario.getPassword())) {
+      throw new PasswordNotCorrectException("La contraseña para el usuario " + usuario.getUsuario() + " es incorrecta");
+    }
   }
 
   public Usuario addUsuario(Long idEmpresa, Long idLocal, Usuario usuario) {

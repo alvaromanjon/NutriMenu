@@ -1,19 +1,49 @@
 import { useState } from "react";
-import { Form, Button, Container, Card } from "react-bootstrap";
+import { Alert, Form, Button, Container, Card, InputGroup } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
 import "./styles.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
+  const [userNotExists, setUserNotExists] = useState(false);
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const history = useHistory();
 
-  const handleSubmit = (e) => {
+  const handleCheckPassword = async (e) => {
     e.preventDefault();
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-  };
+
+    const response = await fetch("http://localhost:8080/login", {
+      method: 'POST',
+      body: JSON.stringify({
+        "usuario": usuario,
+        "password": password
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    if (response.ok) {
+      if (response.status === 200) {
+        history.push("/")
+        //console.log("Usuario y pass correctos");
+      }
+    } else {
+      if (response.status === 400) {
+        setUserNotExists(true);
+        setPasswordsDontMatch(false);
+        console.log("No existe el usuario");
+      } else if (response.status === 401) {
+        setUserNotExists(false);
+        setPasswordsDontMatch(true);
+        console.log("Contraseña incorrecta");
+      } else {
+        console.error(response.status);
+      }
+    }
+  }
 
   return (
     <div className="gradient">
@@ -25,27 +55,42 @@ const Login = () => {
           <Card.Body>
             <h2 className="text-center mt-5">NutriMenu</h2>
             <h5 className="text-center mt-1">Inicio de sesión</h5>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label className=" mt-3 mb-1">Introduce tu correo electrónico</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Correo electrónico"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Form.Group>
+            <Form onSubmit={handleCheckPassword}>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label className=" mt-3 mb-1">Introduce tu contraseña</Form.Label>
+              <InputGroup className="mt-3 mb-1">
+                <InputGroup.Text id="usuario-at">@</InputGroup.Text>
+                <Form.Control
+                  type="username"
+                  placeholder="Nombre de usuario"
+                  aria-label="Nombre de usuario"
+                  aria-describedby="usuario-at"
+                  value={usuario}
+                  onChange={(e) => setUsuario(e.target.value)}
+                />
+              </InputGroup>
+
+              <Form.Group className="mt-2 mb-1" controlId="formBasicPassword">
+
                 <Form.Control
                   type="password"
                   placeholder="Contraseña"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+
+                {userNotExists && (
+                  <Alert className="mt-3 mb-1" variant="danger">
+                    No hay ningún usuario con este nombre de usuario
+                  </Alert>
+                )}
+
+                {passwordsDontMatch && (
+                  <Alert className="mt-3 mb-1" variant="danger">
+                    La contraseña es incorrecta
+                  </Alert>
+                )}
               </Form.Group>
-              <Button className="mt-3 text-decoration-none" variant="link" as={Link} to="/forgot-password">
+              <Button className="mt-1 text-decoration-none" variant="link" as={Link} to="/forgot-password">
                 ¿Has olvidado tu contraseña?
               </Button>
 
