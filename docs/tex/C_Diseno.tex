@@ -6,6 +6,151 @@
 
 \section{Diseño procedimental}
 
+Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. A continuación voy a proceder a detallar y documentar cada uno de los distintos endpoints a los cuáles se puede hacer llamadas HTTP:
+
+% TODO Indicar cómo hacer llamadas a la API %
+% TODO Indicar el endpoint al que hacer las llamadas %
+
+\subsection{Empresas}
+
+\begin{apiRoute}{get}{/empresas}{Devuelve todas las empresas existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Devuelve la empresa con el ID correspondiente}
+		\routeParamItem{nombre}{Devuelve todas las empresas cuyo nombre contengan el valor pasado por parámetro}
+		\routeParamItem{email}{Devuelve la empresa con el email correspondiente}
+		\routeParamItem{telefono}{Devuelve la empresa con el teléfono correspondiente}
+		\routeParamItem{cif}{Devuelve la empresa con el CIF correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "UBU",
+	"email": "cafeterias@ubu.es",
+	"direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+	"telefono": "947258060",
+	"cif": "123456789"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{EntityDoesntExistsException: No existe una empresa con id}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/empresas}{Añade una nueva empresa}
+	\begin{routeParameter}
+		\noRouteParameter{No hay parámetros}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Vips",
+	"email": "empresa@vips.com",
+	"direccion": "Puerta del Sol, Madrid",
+	"telefono": "900123123",
+	"cif": "123456787"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 3,
+	"nombre": "Vips",
+	"email": "empresa@vips.com",
+	"direccion": "Puerta del Sol, Madrid",
+	"telefono": "900123123",
+	"cif": "123456787"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/empresas}{Actualiza la información de una empresa ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Modifica cualquier valor de la empresa con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Universidad de Burgos"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "UBU",
+	"email": "cafeterias@ubu.es",
+	"direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+	"telefono": "947258060",
+	"cif": "123456789"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{EntityDoesntExistsException: No existe una empresa con id}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/empresas}{Elimina una empresa de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Elimina la empresa con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Empresa con id eliminada correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{EntityDoesntExistsException: No existe una empresa con id}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+
 \section{Diseño arquitectónico}
 
 
