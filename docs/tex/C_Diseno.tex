@@ -157,7 +157,7 @@ Empresa con id eliminada correctamente
 	\begin{routeParameter}
 		\routeParamItem{id\_local}{Devuelve el local con el ID correspondiente}
 		\routeParamItem{id\_empresa}{Devuelve todos los locales correspondientes a la empresa con el ID correspondiente}
-		\routeParamItem{nombre}{Devuelve todos los locales de una empresa cuyo nombre contengan el valor pasado por parámetro (se debe usar junto al parámetro id\_empresa)}
+		\routeParamItem{nombre}{Devuelve todos los locales cuyo nombre contengan el valor pasado por parámetro}
 		\routeParamItem{email}{Devuelve el local con el email correspondiente}
 		\routeParamItem{telefono}{Devuelve el local con el teléfono correspondiente}
 	\end{routeParameter}
@@ -294,6 +294,49 @@ Empresa con id eliminada correctamente
 	\end{routeResponse}
 \end{apiRoute}
 
+\begin{apiRoute}{put}{/add/local/menus}{Añade un menú a un local}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{ID del local al que se le va a añadir un menú}
+		\routeParamItem{id\_menu}{ID del menú que va a ser añadido al local}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Menu del miercoles",
+    "descripcion": "Menu del martes",
+    "fechaCreacion": "2023-09-19T19:00:14.998139Z",
+    "fechaModificacion": "2023-09-19T19:22:57.314517Z",
+    "platos": [
+        {
+            "id": 1,
+            "tipoPlato": "PRIMER_PLATO",
+            "nombre": "Kevin Bacon",
+            "descripcion": "Hamburguesa rellena de bacon",
+            "fechaCreacion": "2023-09-19T19:00:59.387553Z",
+            "fechaModificacion": "2023-09-19T19:00:59.387556Z"
+        }
+    ]
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/add/local/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
 \begin{apiRoute}{delete}{/locales}{Elimina un local de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_local}{Elimina el local con el ID correspondiente}
@@ -314,6 +357,199 @@ Local con id eliminado correctamente
     "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
     "message": "No existe un local con id 3",
     "path": "/locales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Menús}
+
+\begin{apiRoute}{get}{/menus}{Devuelve todos los menús existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{Devuelve el menú con el ID correspondiente}
+		\routeParamItem{id\_local}{Devuelve todos los menús del local con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: LackOfParametersException}
+			\begin{routeResponseItemBody}
+No se ha especificado ningun parametro de busqueda
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/menus}{Añade un nuevo menú}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Indica a qué local pertenece el menú}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/menus}{Actualiza la información de un menú ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Modifica cualquier valor del menú con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Menu del miercoles"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del miercoles",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/menu/platos}{Añade un plato a un menú}
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{ID del menú al que se le va a añadir un plato}
+		\routeParamItem{id\_plato}{ID del plato que va a ser añadido al menú}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Menu del miercoles",
+    "descripcion": "Menu del martes",
+    "fechaCreacion": "2023-09-19T19:00:14.998139Z",
+    "fechaModificacion": "2023-09-19T19:22:57.314517Z",
+    "platos": [
+        {
+            "id": 1,
+            "tipoPlato": "PRIMER_PLATO",
+            "nombre": "Kevin Bacon",
+            "descripcion": "Hamburguesa rellena de bacon",
+            "fechaCreacion": "2023-09-19T19:00:59.387553Z",
+            "fechaModificacion": "2023-09-19T19:00:59.387556Z"
+        }
+    ]
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/add/menu/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/menus}{Elimina un menú de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{Elimina el menú con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Menu con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
 }
 			\end{routeResponseItemBody}
 		\end{routeResponseItem}
