@@ -1,23 +1,46 @@
 import DataTableHeader from "../DataTableHeader";
-import DataTableRow from "../DataTableRow";
-import Table from "react-bootstrap/Table";
+import DataTableRowEmpresas from "./DataTableRowEmpresas";
+import { Table, Container } from "react-bootstrap";
+import { useState, useEffect } from 'react';
+import Loading from "../../Loading";
 
-const DataTableEmpresas = ({ data }) => {
-  const valores = ["ID", "Nombre", "Email", "Dirección", "Teléfono", "CIF"];
+const DataTableEmpresas = () => {
+  const valores = ["CIF", "Nombre", "Email", "Dirección", "Teléfono"];
+  const [data, setData] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/empresas')
+      .then(res => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data)
+        setIsPending(false);
+      })
+      .catch((error) => {
+        console.error("Ha habido un error obteniendo los datos: ", error);
+        setIsPending("false");
+      })
+  }, []);
+
+  if (isPending) {
+    return <Loading />
+  }
 
   return (
-    <div>
-      <Table className="mt-4" responsive="sm" striped bordered hover variant="tertiary">
+    <Container className="mt-3">
+      <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
         <tbody>
-          <DataTableRow data={data} />
+          {data && <DataTableRowEmpresas data={data} />}
         </tbody>
       </Table>
-    </div>
+    </Container>
   );
 };
 

@@ -1,16 +1,16 @@
 import DataTableHeader from "../DataTableHeader";
-import DataTableRowLocales from "./DataTableRowLocales";
+import DataTableRowAlimentos from "./DataTableRowAlimentos"
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from 'react';
 import Loading from "../../Loading";
 
-const DataTableLocales = () => {
-  const valores = ["Nombre", "Email", "Dirección", "Teléfono", "Empresa"];
+const DataTableAlimentos = () => {
+  const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración", "Empresa"];
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8080/locales')
+    fetch('http://localhost:8080/alimentos')
       .then(res => {
         return res.json();
       })
@@ -37,11 +37,11 @@ const DataTableLocales = () => {
           </tr>
         </thead>
         <tbody>
-          {data && <DataTableRowLocales data={data} />}
+          {data && <DataTableRowAlimentos data={data} />}
         </tbody>
       </Table>
     </Container>
   );
 };
 
-export default DataTableLocales;
+export default DataTableAlimentos;

@@ -1,14 +1,13 @@
 import { Button } from "react-bootstrap"
 
-const DataTableRowLocales = ({ data }) => {
+const DataTableRowAlimentos = ({ data }) => {
   return (
     <>
       {data && data.map && data.map((item) => (
         <tr key={item.id}>
           <td>{item.nombre}</td>
-          <td>{item.email}</td>
-          <td>{item.direccion}</td>
-          <td>{item.telefono}</td>
+          <td>{item.grupoAlimento}</td>
+          <td>{item.gramosPorRacion}</td>
           <td>{item.empresa.nombre}</td>
           <td>
             <Button className="mx-1 my-1" variant="secondary" size="sm">Editar</Button>
@@ -20,4 +19,4 @@ const DataTableRowLocales = ({ data }) => {
   );
 };
 
-export default DataTableRowLocales;
+export default DataTableRowAlimentos;

@@ -9,122 +9,30 @@ const GlobalAdmin = () => {
     setTab(value);
   };
 
-  const data_empresas = [
-    {
-      id: "goiko_grill",
-      nombre: "Goiko Grill",
-      email: "goiko@gmail.com",
-      direccion: "Calle Mayor 2",
-      telefono: "900123123",
-      cif: "1111111",
-    },
-    {
-      id: "taco_bell",
-      nombre: "Taco Bell",
-      email: "tacobell@gmail.com",
-      direccion: "Calle Mayor 2",
-      telefono: "900123123",
-      cif: "1111111",
-    },
-  ];
-
-  const data_locales = [
-    {
-      id: "goiko_grill-local_burgos",
-      empresa: {
-        id: "goiko_grill",
-        nombre: "Goiko Grill",
-        email: "goiko@gmail.com",
-        direccion: "Calle Mayor 2",
-        telefono: "900123123",
-        cif: "1111111",
-      },
-      nombre: "Local Burgos",
-      email: "goiko@gmail.com",
-      direccion: "Calle Mayor 2",
-      telefono: "900123123",
-    },
-    {
-      id: "goiko_grill-local_madrid",
-      empresa: {
-        id: "goiko_grill",
-        nombre: "Goiko Grill",
-        email: "goiko@gmail.com",
-        direccion: "Calle Mayor 2",
-        telefono: "900123123",
-        cif: "1111111",
-      },
-      nombre: "Local Madrid",
-      email: "goiko@gmail.com",
-      direccion: "Calle Mayor 2",
-      telefono: "900123123",
-    },
-  ];
-
-  const data_menus = [
-    {
-      id: "goiko_grill-menú_lunes-1",
-      empresa: {
-        id: "goiko_grill",
-        nombre: "Goiko Grill",
-        email: "goiko@gmail.com",
-        direccion: "Calle Mayor 2",
-        telefono: "900123123",
-        cif: "1111111",
-      },
-      nombre: "Menú lunes",
-      descripcion: "Menú del lunes",
-      fechaCreacion: "2023-09-14T18:42:08.799605Z",
-      fechaModificacion: "2023-09-14T18:42:08.799606Z",
-    },
-  ];
-
-  const data_platos = [
-    {
-      id: "goiko_grill-teques",
-      empresa: {
-        id: "goiko_grill",
-        nombre: "Goiko Grill",
-        email: "goiko@gmail.com",
-        direccion: "Calle Mayor 2",
-        telefono: "900123123",
-        cif: "1111111",
-      },
-      tipoPlato: "ENTRANTE",
-      nombre: "Teques",
-      fechaCreacion: "2023-09-14T18:46:58.497747Z",
-      fechaModificacion: "2023-09-14T18:46:58.497747Z",
-    },
-  ];
-
   return (
     <div>
       <GlobalAdminNavbar handleClick={handleClick} />
       {tab != null && (
         <GlobalAdminContent
           tab={tab}
-          data_empresas={data_empresas}
-          data_locales={data_locales}
-          data_menus={data_menus}
-          data_platos={data_platos}
         />
       )}
     </div>
   );
 };
 
-const GlobalAdminContent = ({ tab, data_empresas, data_locales, data_menus, data_platos }) => {
+const GlobalAdminContent = ({ tab }) => {
   switch (tab) {
     case "gestion_empresas":
-      return <GestionableDataTable title="Gestión de empresas" data={data_empresas} type="empresas" />;
+      return <GestionableDataTable title="Gestión de empresas" type="empresas" />;
     case "gestion_locales":
-      return <GestionableDataTable title="Gestión de locales" data={data_locales} type="locales" />;
-    case "gestion_menus":
-      return <GestionableDataTable title="Gestión de menús" data={data_menus} type="menus" />;
-    case "gestion_platos":
-      return <GestionableDataTable title="Gestión de platos" data={data_platos} type="platos" />;
+      return <GestionableDataTable title="Gestión de locales" type="locales" />;
+    case "gestion_usuarios":
+      return <GestionableDataTable title="Gestión de usuarios" type="usuarios" />;
+    case "gestion_alimentos":
+      return <GestionableDataTable title="Gestión de alimentos" type="alimentos" />;
     default:
-      <p>Hola</p>;
+      break
   }
 };
 

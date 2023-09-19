@@ -1,34 +1,33 @@
 import DataTableEmpresas from "./Empresas/DataTableEmpresas";
 import DataTableLocales from "./Locales/DataTableLocales";
-import DataTableMenus from "./Menus/DataTableMenus";
-import DataTablePlatos from "./Platos/DataTablePlatos";
+import DataTableUsuarios from "./Usuarios/DataTableUsuarios"
+import DataTableAlimentos from "./Alimentos/DataTableAlimentos"
 
-const GestionableDataTable = ({ title, data, type }) => {
-  let content;
+const GestionableDataTable = ({ title, type }) => {
 
   return (
     <div className="gestionable-data-table">
       <div className="mt-4">
-        <h2>{title}</h2>
+        <h2 className="ms-3">{title}</h2>
       </div>
-      <GestionableDataTableType data={data} type={type} />
-    </div>
+      <GestionableDataTableType type={type} />
+    </div >
   );
 };
 
-const GestionableDataTableType = ({ data, type }) => {
+const GestionableDataTableType = ({ type }) => {
   switch (type) {
     case "empresas":
-      return <DataTableEmpresas data={data} />;
+      return <DataTableEmpresas />;
 
     case "locales":
-      return <DataTableLocales data={data} />;
+      return <DataTableLocales />;
 
-    case "menus":
-      return <DataTableMenus data={data} />;
+    case "usuarios":
+      return <DataTableUsuarios />;
 
-    case "platos":
-      return <DataTablePlatos data={data} />;
+    case "alimentos":
+      return <DataTableAlimentos />;
 
     default:
       break;
