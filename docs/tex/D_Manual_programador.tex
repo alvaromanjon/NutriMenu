@@ -270,11 +270,13 @@ CHOKIDAR_USEPOLLING=true
 DATABASE_HOST=mysqldb
 MYSQL_DATABASE=nutri_db
 MYSQL_USER=dbadmin
-MYSQL_PASSWORD=<MySQL password> # Introduce la pass escogida para el usuario creado en el paso anterior
-MYSQL_ROOT_PASSWORD=<MySQL root password> # Introduce la pass escogida para el usuario root de MySQL
+MYSQL_PASSWORD=<MySQL password> # Introduce la password que desees para el usuario dbadmin
+MYSQL_ROOT_PASSWORD=<MySQL root password> # Introduce la password que desees para el usuario root
 DB_DOCKER_PORT=3306
 DB_LOCAL_PORT=3306
 \end{lstlisting}
+
+\textbf{NOTA:} Para crear un documento oculto en Windows, como un fichero \verb,.env,, podemos usar \href{https://notepad-plus-plus.org/}{Notepad++}. Para ello, abriremos el programa, escribiremos el contenido del fichero \verb,.env,, daremos a \verb,Save > Save As,, seleccionaremos en tipo de fichero \verb,All files,, y nombraremos el fichero como \verb,.env, \cite{stack-overflow:env-file-windows}.
 
 Los valores pueden ser modificados si es necesario, pero se recomienda usar los valores dados (\textbf{es necesario dar los valores que queramos en las variables} \verb,MYSQL_PASSWORD, y \verb,MYSQL_ROOT_PASSWORD,). Con estos valores lo que estamos indicando es:
 
