@@ -969,6 +969,261 @@ Alimento con id eliminado correctamente
 	\end{routeResponse}
 \end{apiRoute}
 
+\subsection{Componentes nutricionales}
+
+\begin{apiRoute}{get}{/componentes}{Devuelve información sobre componentes nutricionales}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Devuelve el componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "calorias": 566.20,
+    "grasas": 30.00,
+    "grasasSaturadas": 10.00,
+    "hidratosCarbono": 15.00,
+    "azucares": 7.00,
+    "fibra": 2.00,
+    "proteinas": 3.00,
+    "sal": 2.00,
+    "vitaminas": {
+        ...
+    },
+    "minerales": {
+        ...
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: LackOfParametersException}
+			\begin{routeResponseItemBody}
+No se ha especificado ningun parametro de busqueda
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/componentes}{Añade un nuevo componente nutricional}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "calorias": 566.2
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "calorias": 566.2,
+    "grasas": 0,
+    "grasasSaturadas": 0,
+    "hidratosCarbono": 0,
+    "azucares": 0,
+    "fibra": 0,
+    "proteinas": 0,
+    "sal": 0,
+    "vitaminas": 
+    	{...},
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/componentes}{Actualiza la información de un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Modifica cualquier valor del componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"calorias": 900
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "calorias": 900,
+    "grasas": 0,
+    "grasasSaturadas": 0,
+    "hidratosCarbono": 0,
+    "azucares": 0,
+    "fibra": 0,
+    "proteinas": 0,
+    "sal": 0,
+    "vitaminas": 
+    	{...},
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/componente/vitaminas}{Añade vitaminas a un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{ID del componente nutricional al que se le van a añadir las vitaminas}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"vitaminaA": 10
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    ...
+    "vitaminas": {
+        "id": 3,
+        "vitaminaA": 10,
+        "vitaminaD": 0,
+        "vitaminaE": 0,
+        "vitaminaB9": 0,
+        "vitaminaB3": 0,
+        "vitaminaB2": 0,
+        "vitaminaB1": 0,
+        "vitaminaB12": 0,
+        "vitaminaB6": 0,
+        "vitaminaC": 0
+    },
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/add/componente/vitaminas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/componente/minerales}{Añade minerales a un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{ID del componente nutricional al que se le van a añadir los minerales}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"fosforo": 20
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    ...
+    "vitaminas":
+        {...},
+    "minerales": {
+        "id": 3,
+        "calcio": 0,
+        "hierro": 0,
+        "potasio": 0,
+        "magnesio": 0,
+        "sodio": 0,
+        "fosforo": 20,
+        "selenio": 0,
+        "zinc": 0
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/add/componente/minerales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/componentes}{Elimina un componente nutricional de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Elimina el componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Componentes nutricionales con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
 
 \section{Diseño arquitectónico}
 
