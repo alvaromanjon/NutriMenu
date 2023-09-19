@@ -2,7 +2,6 @@ package ooo.alvar.nutrimenu.apirest.alimento;
 
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionalesRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
@@ -21,9 +20,6 @@ public class AlimentoService {
   private AlimentoRepository alimentoRepository;
 
   @Autowired
-  private EmpresaRepository empresaRepository;
-
-  @Autowired
   private ComponentesNutricionalesRepository componentesNutricionalesRepository;
 
   @Autowired
@@ -37,9 +33,10 @@ public class AlimentoService {
     return alimentoDevuelto;
   }
 
-  public List<Alimento> getAllAlimentosByEmpresa(Long id) {
+  public List<Alimento> getAllAlimentos() {
     List<Alimento> alimentos = new ArrayList<>();
-    alimentos.addAll(alimentoRepository.findAllByEmpresaId(id));
+    alimentoRepository.findAll()
+      .forEach(alimentos::add);
 
     return alimentos;
   }
@@ -58,15 +55,7 @@ public class AlimentoService {
     return alimentos;
   }
 
-  public Alimento addAlimento(Long idEmpresa, Alimento alimento) {
-    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
-
-    if (!empresa.isPresent()) {
-      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
-    }
-
-    alimento.setEmpresa(empresa.get());
-
+  public Alimento addAlimento(Alimento alimento) {
     return alimentoRepository.save(alimento);
   }
 
