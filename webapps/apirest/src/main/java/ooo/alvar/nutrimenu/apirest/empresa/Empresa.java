@@ -44,9 +44,6 @@ public class Empresa {
   private List<Plato> platos = new ArrayList<>();
   @JsonIgnore
   @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<Alimento> alimentos = new ArrayList<>();
-  @JsonIgnore
-  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Usuario> usuarios = new ArrayList<>();
 
   public Empresa() {

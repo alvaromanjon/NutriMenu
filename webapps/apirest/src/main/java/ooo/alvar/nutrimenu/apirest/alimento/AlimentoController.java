@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
-import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,7 @@ public class AlimentoController {
   @RequestMapping("/alimentos")
   public ResponseEntity<List<Alimento>> getAlimentos(@RequestParam(required = false, name="id_alimento") Long id,
                                                      @RequestParam(required = false) String nombre,
-                                                     @RequestParam(required = false, name = "tipo_alimento") grupoAlimento grupoAlimento,
-                                                     @RequestParam(required = false, name = "id_empresa") Long idEmpresa) {
+                                                     @RequestParam(required = false, name = "tipo_alimento") grupoAlimento grupoAlimento) {
     List<Alimento> listaAlimentos = new ArrayList<>();
 
     if (id != null) {
@@ -31,10 +29,8 @@ public class AlimentoController {
       listaAlimentos = alimentoService.getAllAlimentosByNombre(nombre);
     } else if (grupoAlimento != null) {
       listaAlimentos = alimentoService.getAllAlimentosByGrupoAlimento(grupoAlimento);
-    } else if (idEmpresa != null) {
-      listaAlimentos = alimentoService.getAllAlimentosByEmpresa(idEmpresa);
     } else {
-      throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
+      listaAlimentos = alimentoService.getAllAlimentos();
     }
 
     return new ResponseEntity<>(listaAlimentos, HttpStatus.OK);
@@ -42,8 +38,8 @@ public class AlimentoController {
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/alimentos")
-  public ResponseEntity<Alimento> addAlimento(@RequestBody Alimento alimento, @RequestParam(name = "id_empresa") Long idEmpresa) {
-    Alimento alimentoCreado = alimentoService.addAlimento(idEmpresa, alimento);
+  public ResponseEntity<Alimento> addAlimento(@RequestBody Alimento alimento) {
+    Alimento alimentoCreado = alimentoService.addAlimento(alimento);
     return new ResponseEntity<>(alimentoCreado, HttpStatus.CREATED);
   }
 

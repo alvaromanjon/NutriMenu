@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Loading from "../../Loading";
 
 const DataTableAlimentos = () => {
-  const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración", "Empresa"];
+  const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración"];
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 

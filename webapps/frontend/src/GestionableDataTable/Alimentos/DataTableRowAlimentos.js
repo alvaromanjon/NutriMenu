@@ -8,7 +8,6 @@ const DataTableRowAlimentos = ({ data }) => {
           <td>{item.nombre}</td>
           <td>{item.grupoAlimento}</td>
           <td>{item.gramosPorRacion}</td>
-          <td>{item.empresa.nombre}</td>
           <td>
             <Button className="mx-1 my-1" variant="secondary" size="sm">Editar</Button>
             <Button className="mx-1 my-1" variant="danger" size="sm">Borrar</Button>
