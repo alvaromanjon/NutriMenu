@@ -804,6 +804,172 @@ Plato con id eliminado correctamente
 	\end{routeResponse}
 \end{apiRoute}
 
+\subsection{Alimentos}
+
+\begin{apiRoute}{get}{/alimentos}{Devuelve todos los alimentos existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Devuelve el alimento con el ID correspondiente}
+		\routeParamItem{nombre}{Devuelve todos los alimentos que contienen ese nombre}
+		\routeParamItem{tipo\_alimento}{Devuelve todos los alimentos de un tipo determinado}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+[
+    {
+        "id": 1,
+        "nombre": "Tequenos",
+        "grupoAlimento": "CEREALES",
+        "gramosPorRacion": 125.0,
+        "componentesNutricionales": null
+    },
+    ...
+]
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/alimentos}{Añade un nuevo alimento}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "nombre": "Arroz",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "nombre": "Arroz",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/alimentos}{Actualiza la información de un alimento ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Modifica cualquier valor del alimento con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Teques"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Teques",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/alimento/componentes}{Añade componentes nutricionales a un plato}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{ID del alimento al que se le va a añadir unos componentes nutricionales}
+		\routeParamItem{id\_componente}{ID de los componentes nutricionales que van a ser añadidos a un plato}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Teques",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/alimentos}{Elimina un alimento de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Elimina el alimento con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Alimento con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+
 \section{Diseño arquitectónico}
 
 
