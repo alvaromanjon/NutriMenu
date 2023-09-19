@@ -28,12 +28,10 @@ public class LocalController {
       listaLocales.add(localService.getLocalByEmail(email));
     } else if (telefono != null) {
       listaLocales.add(localService.getLocalByTelefono(telefono));
+    } else if (nombre != null) {
+      listaLocales = localService.getLocalByNombre(nombre, idEmpresa);
     } else if (idEmpresa != null) {
-      if (nombre != null) {
-        listaLocales = localService.getLocalByNombre(nombre, idEmpresa);
-      } else {
-        listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
-      }
+      listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
     } else {
       listaLocales = localService.getAllLocales();
     }

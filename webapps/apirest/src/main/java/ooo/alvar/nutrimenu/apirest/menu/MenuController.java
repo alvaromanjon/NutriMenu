@@ -18,12 +18,12 @@ public class MenuController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/menus")
   public ResponseEntity<List<Menu>> getMenus(@RequestParam(required=false, name="id_menu") Long id,
-                                         @RequestParam(required=false, name="id_empresa") Long idEmpresa) {
+                                         @RequestParam(required=false, name="id_local") Long idLocal) {
     List<Menu> listaMenus = new ArrayList<>();
     if (id != null) {
       listaMenus.add(menuService.getMenu(id));
-    } else if (idEmpresa != null) {
-      listaMenus = menuService.getAllMenusByEmpresa(idEmpresa);
+    } else if (idLocal != null) {
+      listaMenus = menuService.getAllMenusByLocal(idLocal);
     } else {
       throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
     }
@@ -32,8 +32,8 @@ public class MenuController {
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/menus")
-  public ResponseEntity<Menu> addMenu(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody Menu menu) {
-    Menu menuCreado = menuService.addMenu(idEmpresa, menu);
+  public ResponseEntity<Menu> addMenu(@RequestParam(name= "id_local") Long idLocal, @RequestBody Menu menu) {
+    Menu menuCreado = menuService.addMenu(idLocal, menu);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
   }
 

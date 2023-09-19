@@ -2,10 +2,9 @@ package ooo.alvar.nutrimenu.apirest.usuario.rol;
 
 public enum Rol {
 
-  ADMINISTRADOR_GLOBAL(0, "Administrador global"),
-  ADMINISTRADOR_EMPRESA(1, "Administrador de empresa"),
-  ADMINISTRADOR_LOCAL(2, "Administrador de local"),
-  CAMARERO(3, "Camarero");
+  ADMINISTRADOR(0, "Administrador global"),
+  EDITOR(1, "Editor del local"),
+  CAMARERO(2, "Camarero");
 
   private final int codigo;
   private final String rol;

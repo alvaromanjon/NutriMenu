@@ -81,7 +81,7 @@ public class UsuarioService {
     return usuarios;
   }
 
-  public Usuario checkUsuario(Usuario usuario) { 
+  public Usuario checkUsuario(Usuario usuario) {
     Usuario usuarioDB = usuarioRepository.findByUsuario(usuario.getUsuario());
 
     if (usuarioDB == null) {
@@ -99,13 +99,7 @@ public class UsuarioService {
     Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
     Optional<Local> local = localRepository.findById(idLocal);
 
-    if (usuario.getRol() == Rol.ADMINISTRADOR_EMPRESA) {
-      if (!empresa.isPresent()) {
-        throw new EntityDoesntExistsException("Por favor, añade el id de la empresa a la petición");
-      }
-
-      usuario.setEmpresa(empresa.get());
-    } else if (usuario.getRol() == Rol.ADMINISTRADOR_LOCAL || usuario.getRol() == Rol.CAMARERO) {
+    if (usuario.getRol() == Rol.EDITOR || usuario.getRol() == Rol.CAMARERO) {
       if (!empresa.isPresent()) {
         throw new LackOfParametersException("Por favor, añade el id de la empresa a la petición");
       }

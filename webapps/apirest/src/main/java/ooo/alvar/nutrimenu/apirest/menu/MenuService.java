@@ -1,9 +1,8 @@
 package ooo.alvar.nutrimenu.apirest.menu;
 
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
-import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
 import ooo.alvar.nutrimenu.apirest.plato.Plato;
 import ooo.alvar.nutrimenu.apirest.plato.PlatoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class MenuService {
   private MenuRepository menuRepository;
 
   @Autowired
-  private EmpresaRepository empresaRepository;
+  private LocalRepository localRepository;
 
   @Autowired
   private PlatoRepository platoRepository;
@@ -33,21 +32,21 @@ public class MenuService {
     return menuDevuelto;
   }
 
-  public List<Menu> getAllMenusByEmpresa(Long id) {
+  public List<Menu> getAllMenusByLocal(Long id) {
     List<Menu> menus = new ArrayList<>();
-    menus.addAll(menuRepository.findAllByEmpresaId(id));
+    menus.addAll(menuRepository.findAllByLocalId(id));
 
     return menus;
   }
 
-  public Menu addMenu(Long idEmpresa, Menu menu) {
-    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
+  public Menu addMenu(Long idLocal, Menu menu) {
+    Optional<Local> local = localRepository.findById(idLocal);
 
-    if (!empresa.isPresent()) {
-      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
+    if (!local.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
     }
 
-    menu.setEmpresa(empresa.get());
+    menu.setLocal(local.get());
     menu.setFechaCreacion(java.time.Instant.now());
     menu.setFechaModificacion(java.time.Instant.now());
 
@@ -97,11 +96,6 @@ public class MenuService {
       throw new EntityDoesntExistsException("No existe un menú con id " + id);
     }
 
-    for (Local local : menuActual.getLocales()) {
-      local.getMenus().remove(menuActual);
-    }
-
-    menuActual.getLocales().clear();
     menuRepository.deleteById(id);
   }
 }

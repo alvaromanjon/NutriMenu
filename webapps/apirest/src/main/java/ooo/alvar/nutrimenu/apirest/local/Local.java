@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
+import ooo.alvar.nutrimenu.apirest.plato.Plato;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,11 @@ public class Local {
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
   @JsonIgnore
-  @ManyToMany
-  @JoinTable(
-    name = "local_menu",
-    joinColumns = @JoinColumn(name = "local_id"),
-    inverseJoinColumns = @JoinColumn(name = "menu_id")
-  )
+  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Menu> menus = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Plato> platos = new ArrayList<>();
 
   public Local() {
   }
@@ -57,14 +56,6 @@ public class Local {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Empresa getEmpresa() {
-    return empresa;
-  }
-
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
   }
 
   public String getNombre() {
@@ -99,11 +90,27 @@ public class Local {
     this.telefono = telefono;
   }
 
+  public Empresa getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(Empresa empresa) {
+    this.empresa = empresa;
+  }
+
   public List<Menu> getMenus() {
     return menus;
   }
 
   public void setMenus(List<Menu> menus) {
     this.menus = menus;
+  }
+
+  public List<Plato> getPlatos() {
+    return platos;
+  }
+
+  public void setPlatos(List<Plato> platos) {
+    this.platos = platos;
   }
 }

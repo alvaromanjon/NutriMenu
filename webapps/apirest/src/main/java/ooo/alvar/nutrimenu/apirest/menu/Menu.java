@@ -2,7 +2,6 @@ package ooo.alvar.nutrimenu.apirest.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.plato.Plato;
 
@@ -21,12 +20,10 @@ public class Menu {
   private String descripcion;
   private Instant fechaCreacion;
   private Instant fechaModificacion;
-  @ManyToOne
-  @JoinColumn(name = "empresa_id")
-  private Empresa empresa;
   @JsonIgnore
-  @ManyToMany(mappedBy = "menus")
-  private List<Local> locales = new ArrayList<>();
+  @ManyToOne
+  @JoinColumn(name = "local_id")
+  private Local local;
   @ManyToMany
   @JoinTable(
     name = "menu_plato",
@@ -38,11 +35,11 @@ public class Menu {
   public Menu() {
   }
 
-  public Menu(String nombre, String descripcion, Empresa empresa) {
+  public Menu(String nombre, String descripcion, Local local) {
     super();
     this.nombre = nombre;
     this.descripcion = descripcion;
-    this.empresa = empresa;
+    this.local = local;
   }
 
   public Long getId() {
@@ -85,20 +82,12 @@ public class Menu {
     this.fechaModificacion = fechaModificacion;
   }
 
-  public Empresa getEmpresa() {
-    return empresa;
+  public Local getLocal() {
+    return local;
   }
 
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
-  }
-
-  public List<Local> getLocales() {
-    return locales;
-  }
-
-  public void setLocales(List<Local> locales) {
-    this.locales = locales;
+  public void setLocal(Local local) {
+    this.local = local;
   }
 
   public List<Plato> getPlatos() {
