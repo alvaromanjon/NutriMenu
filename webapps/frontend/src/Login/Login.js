@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Form, Button, Container, Card, InputGroup } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
 import "./styles.css";
@@ -8,42 +8,52 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [userNotExists, setUserNotExists] = useState(false);
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
+  const [userObj, setUserObj] = useState([]);
+  const [errorData, setErrorData] = useState([]);
   const history = useHistory();
 
   const handleCheckPassword = async (e) => {
     e.preventDefault();
 
+    try {
+      const response = await fetch("http://localhost:8080/login", {
+        method: 'POST',
+        body: JSON.stringify({
+          "usuario": usuario,
+          "password": password
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+      })
 
-    const response = await fetch("http://localhost:8080/login", {
-      method: 'POST',
-      body: JSON.stringify({
-        "usuario": usuario,
-        "password": password
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
+      const responseData = await response.json();
 
-    if (response.ok) {
-      if (response.status === 200) {
-        history.push("/")
-        //console.log("Usuario y pass correctos");
-      }
-    } else {
-      if (response.status === 400) {
-        setUserNotExists(true);
-        setPasswordsDontMatch(false);
-        console.log("No existe el usuario");
-      } else if (response.status === 401) {
-        setUserNotExists(false);
-        setPasswordsDontMatch(true);
-        console.log("Contraseña incorrecta");
+      if (response.ok) {
+        if (response.status === 200) {
+          setUserObj(responseData);
+          history.push("/");
+        }
       } else {
-        console.error(response.status);
+        setErrorData(responseData)
+        if (response.status === 400) {
+          setUserNotExists(true);
+          setPasswordsDontMatch(false);
+          console.error("No existe el usuario: ", errorData);
+        } else if (response.status === 401) {
+          setUserNotExists(false);
+          setPasswordsDontMatch(true);
+          console.error("Contraseña incorrecta: ", errorData);
+        }
       }
+    } catch (error) {
+      console.error("Error desconocido: ", error);
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('usuario', JSON.stringify(userObj));
+  }, [userObj])
 
   return (
     <div className="gradient">

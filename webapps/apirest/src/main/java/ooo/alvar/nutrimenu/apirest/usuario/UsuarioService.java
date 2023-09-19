@@ -81,7 +81,7 @@ public class UsuarioService {
     return usuarios;
   }
 
-  public void checkUsuario(Usuario usuario) { 
+  public Usuario checkUsuario(Usuario usuario) { 
     Usuario usuarioDB = usuarioRepository.findByUsuario(usuario.getUsuario());
 
     if (usuarioDB == null) {
@@ -91,6 +91,8 @@ public class UsuarioService {
     if (!usuarioDB.getPassword().equals(usuario.getPassword())) {
       throw new PasswordNotCorrectException("La contraseña para el usuario " + usuario.getUsuario() + " es incorrecta");
     }
+
+    return usuarioDB;
   }
 
   public Usuario addUsuario(Long idEmpresa, Long idLocal, Usuario usuario) {
