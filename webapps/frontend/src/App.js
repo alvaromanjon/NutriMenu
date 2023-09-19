@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import SeleccionEmpresa from "./SeleccionEmpresa";
 import GlobalAdmin from "./Home/GlobalAdmin/GlobalAdmin";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
-import SeleccionLocal from "./SeleccionLocal";
-import NotFound from "./NotFound";
+import NotFound from "./Utils/NotFound";
 import ForgotPassword from "./Login/ForgotPassword";
 
 function App() {
@@ -23,12 +21,6 @@ function App() {
           </Route>
           <Route exact path="/forgot-password">
             <ForgotPassword />
-          </Route>
-          <Route exact path="/empresas/choose">
-            <SeleccionEmpresa />
-          </Route>
-          <Route path="/empresas/choose/:id">
-            <SeleccionLocal />
           </Route>
           <Route path="*">
             <NotFound />

@@ -2,7 +2,7 @@ import DataTableHeader from "../DataTableHeader";
 import DataTableRowAlimentos from "./DataTableRowAlimentos"
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from 'react';
-import Loading from "../../Loading";
+import Loading from "../../Utils/Loading";
 
 const DataTableAlimentos = () => {
   const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración"];

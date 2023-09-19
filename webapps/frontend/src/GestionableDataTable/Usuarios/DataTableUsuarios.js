@@ -2,7 +2,7 @@ import DataTableHeader from "../DataTableHeader";
 import DataTableRowUsuarios from "./DataTableRowUsuarios";
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from 'react';
-import Loading from "../../Loading";
+import Loading from "../../Utils/Loading";
 
 const DataTableUsuarios = () => {
   const valores = ["Usuario", "Contraseña", "Nombre", "Email", "Rol", "Empresa", "Local"];

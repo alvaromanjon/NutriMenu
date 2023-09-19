@@ -2,7 +2,7 @@ import DataTableHeader from "../DataTableHeader";
 import DataTableRowEmpresas from "./DataTableRowEmpresas";
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from 'react';
-import Loading from "../../Loading";
+import Loading from "../../Utils/Loading";
 
 const DataTableEmpresas = () => {
   const valores = ["CIF", "Nombre", "Email", "Dirección", "Teléfono"];
