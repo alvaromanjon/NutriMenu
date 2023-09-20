@@ -1,8 +1,8 @@
-import DataTableHeader from "../DataTableHeader";
+import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowLocales from "./DataTableRowLocales";
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import Loading from "../../utils/Loading";
+import Loading from "../../../utils/Loading";
 
 const DataTableLocales = () => {
   const valores = ["Nombre", "Email", "Dirección", "Teléfono", "Empresa"];

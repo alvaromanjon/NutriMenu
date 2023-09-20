@@ -1,16 +1,18 @@
-import DataTableHeader from "../DataTableHeader";
-import DataTableRowUsuarios from "./DataTableRowUsuarios";
+import DataTableHeader from "../../../utils/DataTableHeader";
+import DataTableRowMenus from "./DataTableRowMenus";
+import { UserContext } from "../../../contexts/UserContext";
 import { Table, Container } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import Loading from "../../utils/Loading";
+import { useState, useEffect, useContext } from "react";
+import Loading from "../../../utils/Loading";
 
-const DataTableUsuarios = () => {
-  const valores = ["Usuario", "Contraseña", "Nombre", "Email", "Rol", "Empresa", "Local"];
+const DataTableMenus = () => {
+  const valores = ["Nombre", "Descripción", "Fecha de creación", "Fecha de modificación"];
+  const { usuario, setUsuario } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/usuarios")
+    fetch(`http://localhost:8080/menus?id_local=${usuario.local.id}`)
       .then((res) => {
         return res.json();
       })
@@ -36,10 +38,10 @@ const DataTableUsuarios = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>{data && <DataTableRowUsuarios data={data} />}</tbody>
+        <tbody>{data && <DataTableRowMenus data={data} />}</tbody>
       </Table>
     </Container>
   );
 };
 
-export default DataTableUsuarios;
+export default DataTableMenus

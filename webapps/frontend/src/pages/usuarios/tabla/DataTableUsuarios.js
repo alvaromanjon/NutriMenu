@@ -1,16 +1,16 @@
-import DataTableHeader from "../DataTableHeader";
-import DataTableRowAlimentos from "./DataTableRowAlimentos";
+import DataTableHeader from "../../../utils/DataTableHeader";
+import DataTableRowUsuarios from "./DataTableRowUsuarios";
 import { Table, Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import Loading from "../../utils/Loading";
+import Loading from "../../../utils/Loading";
 
-const DataTableAlimentos = () => {
-  const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración"];
+const DataTableUsuarios = () => {
+  const valores = ["Usuario", "Nombre", "Email", "Rol", "Empresa", "Local"];
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/alimentos")
+    fetch("http://localhost:8080/usuarios")
       .then((res) => {
         return res.json();
       })
@@ -36,10 +36,10 @@ const DataTableAlimentos = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>{data && <DataTableRowAlimentos data={data} />}</tbody>
+        <tbody>{data && <DataTableRowUsuarios data={data} />}</tbody>
       </Table>
     </Container>
   );
 };
 
-export default DataTableAlimentos;
+export default DataTableUsuarios;

@@ -1,16 +1,18 @@
-import DataTableHeader from "../DataTableHeader";
-import DataTableRowEmpresas from "./DataTableRowEmpresas";
+import DataTableHeader from "../../../utils/DataTableHeader";
+import DataTableRowPlatos from "./DataTableRowPlatos";
+import { UserContext } from "../../../contexts/UserContext";
 import { Table, Container } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import Loading from "../../utils/Loading";
+import { useState, useEffect, useContext } from "react";
+import Loading from "../../../utils/Loading";
 
-const DataTableEmpresas = () => {
-  const valores = ["CIF", "Nombre", "Email", "Dirección", "Teléfono"];
+const DataTablePlatos = () => {
+  const valores = ["Nombre", "Tipo de plato", "Fecha de creación", "Fecha de modificación"];
+  const { usuario, setUsuario } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/empresas")
+    fetch(`http://localhost:8080/platos?id_local=${usuario.local.id}`)
       .then((res) => {
         return res.json();
       })
@@ -36,10 +38,10 @@ const DataTableEmpresas = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>{data && <DataTableRowEmpresas data={data} />}</tbody>
+        <tbody>{data && <DataTableRowPlatos data={data} />}</tbody>
       </Table>
     </Container>
   );
 };
 
-export default DataTableEmpresas;
+export default DataTablePlatos;
