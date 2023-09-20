@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import { Alert, Form, Button, Container, Card, InputGroup } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import "./styles.css";
+import { UserContext } from "../../contexts/UserContext";
 
 const Login = () => {
-  const [usuario, setUsuario] = useState("");
-  const [password, setPassword] = useState("");
+  const [usuarioValue, setUsuarioValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
   const [userNotExists, setUserNotExists] = useState(false);
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
-  const [userObj, setUserObj] = useState([]);
   const [errorData, setErrorData] = useState([]);
+  const { usuario, setUsuario } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleCheckPassword = async (e) => {
@@ -19,8 +20,8 @@ const Login = () => {
       const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         body: JSON.stringify({
-          usuario: usuario,
-          password: password,
+          usuario: usuarioValue,
+          password: passwordValue,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -31,8 +32,8 @@ const Login = () => {
 
       if (response.ok) {
         if (response.status === 200) {
-          setUserObj(responseData);
-          navigate.push("/");
+          setUsuario(responseData);
+          navigate('/');
         }
       } else {
         setErrorData(responseData);
@@ -50,10 +51,6 @@ const Login = () => {
       console.error("Error desconocido: ", error);
     }
   };
-
-  useEffect(() => {
-    localStorage.setItem("usuario", JSON.stringify(userObj));
-  }, [userObj]);
 
   return (
     <div className="gradient">
@@ -73,8 +70,8 @@ const Login = () => {
                   placeholder="Nombre de usuario"
                   aria-label="Nombre de usuario"
                   aria-describedby="usuario-at"
-                  value={usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
+                  value={usuarioValue}
+                  onChange={(e) => setUsuarioValue(e.target.value)}
                 />
               </InputGroup>
 
@@ -82,8 +79,8 @@ const Login = () => {
                 <Form.Control
                   type="password"
                   placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={passwordValue}
+                  onChange={(e) => setPasswordValue(e.target.value)}
                 />
 
                 {userNotExists && (
@@ -112,7 +109,7 @@ const Login = () => {
               type="submit"
               size="sm"
               onClick={() => {
-                navigate.push("/register");
+                navigate('/register');
               }}
             >
               Registro
