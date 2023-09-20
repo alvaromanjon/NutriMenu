@@ -17,16 +17,16 @@ const RootLayout = () => {
     return (
       <>
         <Nav className="mr-auto">
-          <Nav.Link className="ms-3" as={NavLink} to={"/empresas"}>Gestión de empresas</Nav.Link>
+          <Nav.Link className="ms-3" as={NavLink} to={"/empresas/table"}>Gestión de empresas</Nav.Link>
           <Nav.Link className="ms-3" as={NavLink} to={"/locales"}>Gestión de locales</Nav.Link>
           <Nav.Link className="ms-3" as={NavLink} to={"/usuarios"}>Gestión de usuarios</Nav.Link>
-          <Nav.Link className="ms-3" as={NavLink} to={"/alimentos"}>Gestión de alimentos</Nav.Link>
+          <Nav.Link className="ms-3" as={NavLink} to={"/alimentos/table"}>Gestión de alimentos</Nav.Link>
         </Nav>
         <Nav className="ms-auto">
           <Button className="mx-3 my-2" variant="outline-light" onClick={() => handleLogout()}>Cerrar sesión</Button>
         </Nav>
       </>
-    );
+    )
   }
 
   const editorNavBar = () => {
@@ -40,7 +40,7 @@ const RootLayout = () => {
           <Button className="mx-3 my-2" variant="outline-light" onClick={() => handleLogout()}>Cerrar sesión</Button>
         </Nav>
       </>
-    );
+    )
   }
 
   const camareroNavBar = () => {
@@ -63,7 +63,7 @@ const RootLayout = () => {
           <Button className="mx-3 my-2" variant="outline-light" as={NavLink} to="/login">Iniciar sesión</Button>
         </Nav>
       </>
-    );
+    )
   }
 
   return (

@@ -8,16 +8,23 @@ import Home from "./pages/home/Home"
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound"
-import Empresas from "./pages/empresas/Empresas";
 import Locales from "./pages/locales/Locales";
-import Alimentos from "./pages/alimentos/Alimentos";
 import Menus from "./pages/menus/Menus";
 import Usuarios from "./pages/usuarios/Usuarios";
 import Platos from "./pages/platos/Platos";
 
+// Tablas
+import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
+import DataTableAlimentos from "./pages/alimentos/tabla/DataTableAlimentos";
+
+// Nuevo item
+import NewAlimento from "./pages/alimentos/new/NewAlimento";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout"
+import EmpresasLayout from "./layouts/EmpresasLayout";
+import AlimentosLayout from "./layouts/AlimentosLayout";
+import NewAlimentoSearch from "./pages/alimentos/NewAlimentoSearch";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,14 +32,24 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
-      <Route path="empresas" element={<Empresas />} />
-      <Route path="locales" element={<Locales />} />
-      <Route path="usuarios" element={<Usuarios />} />
-      <Route path="menus" element={<Menus />} />
-      <Route path="platos" element={<Platos />} />
-      <Route path="alimentos" element={<Alimentos />} />
-      <Route path="*" element={<NotFound />} />
-    </Route>
+      <Route path="empresas" element={< EmpresasLayout />}>
+        <Route path="table" element={<DataTableEmpresas />} />
+      </Route>
+      < Route path="locales" element={< Locales />} />
+      < Route path="usuarios" element={< Usuarios />} />
+      < Route path="menus" element={< Menus />} />
+      < Route path="platos" element={< Platos />} />
+
+      < Route path="alimentos" element={< AlimentosLayout />}>
+        <Route path="table" element={<DataTableAlimentos />} />
+        <Route path="new" element={<NewAlimento />}>
+          <Route path="search" element={<NewAlimentoSearch />} />
+        </Route>
+
+      </Route>
+
+      < Route path="*" element={< NotFound />} />
+    </Route >
   )
 );
 

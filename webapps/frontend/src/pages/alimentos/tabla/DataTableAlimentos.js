@@ -1,7 +1,8 @@
 import DataTableHeader from "../../../utils/DataTableHeader"
 import DataTableRowAlimentos from "./DataTableRowAlimentos";
-import { Table, Container } from "react-bootstrap";
+import { Button, Table, Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"
 import Loading from "../../../utils/Loading";
 
 const DataTableAlimentos = () => {
@@ -30,6 +31,7 @@ const DataTableAlimentos = () => {
 
   return (
     <Container className="mt-3">
+      <Button className="mb-3" variant="primary" as={Link} to="/alimentos/new">Crear un nuevo alimento</Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>

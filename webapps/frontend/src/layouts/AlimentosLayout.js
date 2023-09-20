@@ -1,15 +1,15 @@
-import DataTableAlimentos from "./tabla/DataTableAlimentos";
+import { Outlet } from "react-router-dom";
 
-const Alimentos = () => {
+const AlimentosLayout = () => {
   return (
     <div className="gestionable-data-table">
       <div className="mt-4">
         <h2 className="ms-3">Gestión de alimentos</h2>
       </div>
-      <DataTableAlimentos />
+      <Outlet />
     </div >
 
   );
 }
 
-export default Alimentos;
+export default AlimentosLayout;
