@@ -99,20 +99,20 @@ const Login = () => {
                 ¿Has olvidado tu contraseña?
               </Button>
 
-              <Button className="d-flex justify-content-center mx-auto mt-2 mb-3 px-3" variant="dark" type="submit">
+              <Button className="d-flex justify-content-center mx-auto mt-2 mb-2 px-3" variant="dark" type="submit">
                 Iniciar sesión
               </Button>
             </Form>
             <Button
-              className="d-flex justify-content-center mx-auto mt-2 mb-4 px-3"
+              className="d-flex justify-content-center mx-auto mt-1 mb-4 px-3"
               variant="light"
               type="submit"
               size="sm"
               onClick={() => {
-                navigate('/register');
+                navigate('/');
               }}
             >
-              Registro
+              Acceder como cliente
             </Button>
           </Card.Body>
         </Card>

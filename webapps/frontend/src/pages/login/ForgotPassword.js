@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Container, Card, InputGroup, Alert, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Card, InputGroup, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
@@ -8,39 +8,71 @@ const ForgotPassword = () => {
   const [userNotExists, setUserNotExists] = useState(false);
   const [usuario, setUsuario] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [usuarioActualizar, setUsuarioActualizar] = useState([]);
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [errorData, setErrorData] = useState([]);
   const navigate = useNavigate();
 
-  const handleCheckUser = (e) => {
-    e.preventDefault();
-
-    if (usuario === "exampleUser") {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    fetch(`http://localhost:8080/usuarios?usuario=${usuario}`, {
+      method: 'GET'
+    }).then(res => {
+      if (!res.ok) {
+        setErrorData(res);
+        if (res.status === 400) {
+          setUserNotExists(true);
+          console.error("No existe el usuario: ", errorData);
+        }
+      }
       setUserExists(true);
-    } else {
-      setUserNotExists(true);
-    }
-  };
+      return res.json()
+    }).then(data => {
+      setUsuarioActualizar(data[0]);
+    });
+  }
 
-  const handleComprobePasswords = (e) => {
-    e.preventDefault();
-
+  const handleChange = async (e) => {
+    e.preventDefault()
     if (newPassword !== repeatNewPassword) {
       setPasswordsDontMatch(true);
       setPasswordsMatch(false);
     } else {
       setPasswordsDontMatch(false);
       setPasswordsMatch(true);
-      setTimeout(() => {
-        navigate.push("/login");
-      }, 800);
+
+      fetch(`http://localhost:8080/usuarios?id_usuario=${usuarioActualizar.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          password: newPassword,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        }
+      }).then(res => {
+        if (!res.ok) {
+          setErrorData(res);
+          if (res.status === 400) {
+            setUserNotExists(true);
+            console.error("No existe el usuario: ", errorData);
+          }
+        }
+        return res.json()
+      }).then(data => {
+        setUsuarioActualizar(data);
+      });
     }
-  };
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 800);
+  }
 
   const showCheckUser = () => {
     return (
-      <Form onSubmit={handleCheckUser}>
+      <Form onSubmit={handleSubmit}>
         <Form.Label className=" mt-3 mb-1">Introduce tu nombre de usuario actual</Form.Label>
         <InputGroup>
           <InputGroup.Text id="usuario-at">@</InputGroup.Text>
@@ -69,7 +101,7 @@ const ForgotPassword = () => {
 
   const showSetPassword = () => {
     return (
-      <Form onSubmit={handleComprobePasswords}>
+      <Form onSubmit={handleChange}>
         <Form.Group controlId="formPassword">
           <Form.Label className=" mt-1 mb-1">Introduce tu nueva contraseña</Form.Label>
           <Form.Control
@@ -80,7 +112,7 @@ const ForgotPassword = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formPassword">
+        <Form.Group controlId="formRepeatPassword">
           <Form.Label className=" mt-3 mb-1">Repite tu nueva contraseña</Form.Label>
           <Form.Control
             type="password"

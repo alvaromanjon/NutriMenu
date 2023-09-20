@@ -48,6 +48,16 @@ public class UsuarioService {
     return usuarioDevuelto;
   }
 
+  public Usuario getUsuarioByUsuario(String usuario) {
+    Usuario usuarioDevuelto = usuarioRepository.findByUsuario(usuario);
+
+    if (usuarioDevuelto == null) {
+      throw new EntityDoesntExistsException("No existe un usuario con usuario " + usuario);
+    }
+
+    return usuarioDevuelto;
+  }
+
   public List<Usuario> getAllUsuariosByRol(Rol rol) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
@@ -122,11 +132,22 @@ public class UsuarioService {
     }
 
     Usuario nuevoUsuario = usuarioAntiguo.get();
-    nuevoUsuario.setUsuario(usuario.getUsuario());
-    nuevoUsuario.setPassword(usuario.getPassword());
-    nuevoUsuario.setNombre(usuario.getNombre());
-    nuevoUsuario.setEmail(usuario.getEmail());
-    nuevoUsuario.setRol(usuario.getRol());
+    
+    if (usuario.getUsuario() != null) {
+      nuevoUsuario.setUsuario(usuario.getUsuario());
+    }
+    if (usuario.getPassword() != null) {
+     nuevoUsuario.setPassword(usuario.getPassword());
+    }
+    if (usuario.getNombre() != null) {
+     nuevoUsuario.setNombre(usuario.getNombre());
+    }
+    if (usuario.getEmail() != null) {
+     nuevoUsuario.setEmail(usuario.getEmail());
+    }
+    if (usuario.getRol() != null) {
+      nuevoUsuario.setRol(usuario.getRol());
+    }
 
     return usuarioRepository.save(nuevoUsuario);
   }

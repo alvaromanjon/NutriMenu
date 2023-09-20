@@ -19,13 +19,16 @@ public class UsuarioController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/usuarios")
   public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false, name="id_usuario") Long id,
+                                @RequestParam(required = false) String usuario,
                                 @RequestParam(required = false) String email,
                                 @RequestParam(required = false) Rol rol,
                                 @RequestParam(required = false, name="id_empresa") Long idEmpresa,
                                 @RequestParam(required = false, name="id_local") Long idLocal) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
-    if (email != null) {
+    if (usuario != null) {
+      listaUsuarios.add(usuarioService.getUsuarioByUsuario(usuario));
+    } else if (email != null) {
       listaUsuarios.add(usuarioService.getUsuarioByEmail(email));
     } else if (id != null) {
       listaUsuarios.add(usuarioService.getUsuarioById(id));
