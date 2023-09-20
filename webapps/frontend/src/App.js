@@ -1,44 +1,32 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import { UserProvider } from "./contexts/UserContext";
+
+// Pages
 import GlobalAdmin from "./Home/GlobalAdmin/GlobalAdmin";
-import Login from "./Login/Login";
-import Register from "./Login/Register";
-import NotFound from "./Utils/NotFound";
-import ForgotPassword from "./Login/ForgotPassword";
-import { useEffect, useState } from "react";
+import Login from "./pages/login/Login";
+import Register from "./pages/login/Register";
+import ForgotPassword from "./pages/login/ForgotPassword";
+import NotFound from "./utils/NotFound";
+
+// Layouts
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route index element={<GlobalAdmin />} />
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+      <Route path="forgot-password" element={<ForgotPassword />} />
+      <Route path="*" element={<NotFound />} />
+    </Route>
+  )
+);
 
 function App() {
-  const [usuario, setUsuario] = useState([]);
-
-  useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-    console.log(localStorage.getItem('usuario'));
-    if (usuario) {
-      setUsuario(usuario);
-    }
-  }, [])
-
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <GlobalAdmin />
-          </Route>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/register">
-            <Register />
-          </Route>
-          <Route exact path="/forgot-password">
-            <ForgotPassword />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <UserProvider>
+      <RouterProvider router={router} />;
+    </UserProvider>
   );
 }
 

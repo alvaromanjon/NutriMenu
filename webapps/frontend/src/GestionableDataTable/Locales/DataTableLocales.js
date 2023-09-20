@@ -1,8 +1,8 @@
 import DataTableHeader from "../DataTableHeader";
 import DataTableRowLocales from "./DataTableRowLocales";
 import { Table, Container } from "react-bootstrap";
-import { useState, useEffect } from 'react';
-import Loading from "../../Utils/Loading";
+import { useState, useEffect } from "react";
+import Loading from "../../utils/Loading";
 
 const DataTableLocales = () => {
   const valores = ["Nombre", "Email", "Dirección", "Teléfono", "Empresa"];
@@ -10,22 +10,22 @@ const DataTableLocales = () => {
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8080/locales')
-      .then(res => {
+    fetch("http://localhost:8080/locales")
+      .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setData(data)
+        setData(data);
         setIsPending(false);
       })
       .catch((error) => {
         console.error("Ha habido un error obteniendo los datos: ", error);
         setIsPending("false");
-      })
+      });
   }, []);
 
   if (isPending) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -36,9 +36,7 @@ const DataTableLocales = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>
-          {data && <DataTableRowLocales data={data} />}
-        </tbody>
+        <tbody>{data && <DataTableRowLocales data={data} />}</tbody>
       </Table>
     </Container>
   );

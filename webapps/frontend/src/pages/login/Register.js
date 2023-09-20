@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Container, Card, InputGroup } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 const Register = () => {
@@ -11,7 +11,7 @@ const Register = () => {
   const [rol, setRol] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [local, setLocal] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ const Register = () => {
   };
 
   const showSeleccionEmpresa = () => {
-    if (rol != "" && rol != 1) {
+    if (rol !== "" && rol !== 1) {
       return (
         <Form.Group controlId="formSeleccionEmpresa">
           <Form.Label className=" mt-3 mb-1">Selecciona tu empresa</Form.Label>
@@ -127,7 +127,7 @@ const Register = () => {
                 type="submit"
                 size="sm"
                 onClick={() => {
-                  history.go(-1);
+                  navigate.go(-1);
                 }}
               >
                 Volver

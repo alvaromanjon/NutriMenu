@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Container, Card, InputGroup, Alert, Row, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
 
 const ForgotPassword = () => {
@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleCheckUser = (e) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ const ForgotPassword = () => {
       setPasswordsDontMatch(false);
       setPasswordsMatch(true);
       setTimeout(() => {
-        history.push("/login");
+        navigate.push("/login");
       }, 800);
     }
   };
@@ -123,7 +123,7 @@ const ForgotPassword = () => {
               type="submit"
               size="sm"
               onClick={() => {
-                history.go(-1);
+                navigate.go(-1);
               }}
             >
               Volver

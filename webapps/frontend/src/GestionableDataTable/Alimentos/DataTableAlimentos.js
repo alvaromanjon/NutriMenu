@@ -1,8 +1,8 @@
 import DataTableHeader from "../DataTableHeader";
-import DataTableRowAlimentos from "./DataTableRowAlimentos"
+import DataTableRowAlimentos from "./DataTableRowAlimentos";
 import { Table, Container } from "react-bootstrap";
-import { useState, useEffect } from 'react';
-import Loading from "../../Utils/Loading";
+import { useState, useEffect } from "react";
+import Loading from "../../utils/Loading";
 
 const DataTableAlimentos = () => {
   const valores = ["Nombre", "Grupo alimenticio", "Gramos por ración"];
@@ -10,22 +10,22 @@ const DataTableAlimentos = () => {
   const [isPending, setIsPending] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8080/alimentos')
-      .then(res => {
+    fetch("http://localhost:8080/alimentos")
+      .then((res) => {
         return res.json();
       })
       .then((data) => {
-        setData(data)
+        setData(data);
         setIsPending(false);
       })
       .catch((error) => {
         console.error("Ha habido un error obteniendo los datos: ", error);
         setIsPending("false");
-      })
+      });
   }, []);
 
   if (isPending) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
@@ -36,9 +36,7 @@ const DataTableAlimentos = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>
-          {data && <DataTableRowAlimentos data={data} />}
-        </tbody>
+        <tbody>{data && <DataTableRowAlimentos data={data} />}</tbody>
       </Table>
     </Container>
   );

@@ -1,6 +1,6 @@
 import { Container, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "../Login/styles.css";
+import "../pages/login/styles.css";
 
 const NotFound = () => {
   return (
@@ -20,7 +20,6 @@ const NotFound = () => {
         </Card>
       </Container>
     </div>
-
   );
 };
 
