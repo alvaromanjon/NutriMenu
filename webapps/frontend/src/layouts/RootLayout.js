@@ -9,8 +9,8 @@ const RootLayout = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('usuario-sesion');
+    navigate("/");
     window.location.reload();
-    //navigate("/");
   }
 
   const adminNavBar = () => {
