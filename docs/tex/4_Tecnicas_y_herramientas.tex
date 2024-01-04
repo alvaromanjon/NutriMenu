@@ -1,5 +1,28 @@
 \capitulo{4}{Técnicas y herramientas}
 
+\section{Patrón de diseño Modelo-Vista-Controlador (MVC)}
+
+\imagen{MVC/diagrama-mvc}{Diagrama del patrón Modelo-Vista-Controlador}{0.9}
+
+La función del patrón de diseño conocido como \textbf{Modelo-Vista-Controlador} es la de organizar de forma estructurada los componentes fundamentales de un determinado \textit{sistema de software}, estableciendo relaciones entre ellos.
+
+Como metodología de trabajo, fue propuesta por Trygve Reenskaug en 1979, basándose su utilidad en tres ideas fundamentales \cite{campusmvp:mvc}:
+
+\begin{itemize}
+\item La organización y clasificación de la información que se aporta al sistema.
+\item La unificación y gestión de la lógica del sistema.
+\item La presentación de datos al usuario mediante una interfaz comprensible y asequible.
+\end{itemize}
+
+Los tres componentes fundamentales de este patrón tienen misiones diferenciadas sobre la forma en cómo tratan la información \cite{easyappcode:mvc}: 
+
+\begin{itemize}
+\item \textbf{Modelo}: Es el componente cuya misión es únicamente la de gestionar el contenido de una base de datos, incluida su manipulación y utilización. Es la parte que se va a encargar de la \textbf{gestión de los datos}.
+\item \textbf{Vista}: Es el componente que sirve para acceder al contenido de la base de datos y presentar los datos al usuario. Va a ser \textbf{la parte con la que va a interactuar el usuario}.
+\item \textbf{Controlador}: Este componente es el que pone en conexión el modelo y la vista, gestionando y procesando las instrucciones que se reciben para obtener un resultado. Su forma básica de trabajar consiste en acceder a la base de datos, manipularlos con una determinada finalidad y presentar los resultados de esa manipulación de los datos. Se va a encargar de gestionar \textbf{la lógica y la gestión de los datos}.
+\end{itemize}
+El motivo por el cual he decidido utilizar este patrón es porque permite trabajar de una forma precisa y eficaz, haciendo que la estructura del sistema sea clara, ordenada y separada, lo que facilita su comprensión y posterior mantenimiento.  
+
 \section{Contenerización}
 
 \begin{comment}
