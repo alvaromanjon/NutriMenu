@@ -1,5 +1,12 @@
 \capitulo{4}{Técnicas y herramientas}
 
+\begin{comment}
+	Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
+No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+\end{comment}
+
+% TODO: Hacer introducción de esta sección %
+
 \section{Patrón de diseño Modelo-Vista-Controlador (MVC)}
 
 \imagen{MVC/diagrama-mvc}{Diagrama del patrón Modelo-Vista-Controlador}{0.9}
@@ -24,15 +31,6 @@ Los tres componentes fundamentales de este patrón tienen misiones diferenciadas
 El motivo por el cual he decidido utilizar este patrón es porque permite trabajar de una forma precisa y eficaz, haciendo que la estructura del sistema sea clara, ordenada y separada, lo que facilita su comprensión y posterior mantenimiento.  
 
 \section{Contenerización}
-
-\begin{comment}
-	Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
-\end{comment}
-
-\begin{comment}
-	TODO: Hacer introducción de esta sección
-\end{comment}
 
 Se conoce como contenerización a la tecnología de virtualización que permite ejecutar \textbf{contenedores}, entornos completamente aislados del resto de la máquina que los está ejecutando, y que contienen todo lo necesario (bibliotecas, código, archivos de configuración, dependencias...) para que se pueda ejecutar una aplicación en cualquier entorno.\cite{microsoft:contenedores}
 
@@ -65,4 +63,104 @@ He decidido usar esta herramienta ya que facilita bastante la conexión e integr
 \item \textbf{Creación de entornos aislados y consistentes}, lo que nos permite desplegar entornos de desarrollo locales, así como entornos CI/CD de validación y pruebas, y que estos repliquen la infraestructura de producción, que también puede ser desplegada usando Docker Compose.
 \item \textbf{Escalabilidad de infraestructura}, puesto que con un sólo comando podemos aumentar o disminuir el número de instancias de las que dispone un servicio.	
 \end{itemize}
+
+\section{Frameworks}
+
+% TODO: Hacer esta parte %
+
+\subsection{Spring Boot}
+
+% TODO: Hacer esta parte %
+
+\subsection{React}
+
+% TODO: Hacer esta parte %
+
+\subsection{JPA}
+
+% TODO: Hacer esta parte %
+
+\subsection{Bootstrap}
+
+% TODO: Hacer esta parte %
+
+\section{Gestores de paquetes}
+
+% TODO: Hacer esta parte %
+
+\subsection{Maven}
+
+% TODO: Hacer esta parte %
+
+\subsection{Node}
+
+% TODO: Hacer esta parte %
+
+\section{API}
+
+% TODO: Hacer esta parte %
+
+\subsection{Nutritionix}
+
+% TODO: Hacer esta parte %
+
+\section{Lenguajes de programación}
+
+% TODO: Hacer esta parte %
+
+\subsection{HTML}
+
+El lenguaje HTML (\textit{HyperText Markup Language}) hoy en día es la base de internet, ya que es prácticamente imposible encontrar una página web que no tenga definido su contenido usando este lenguaje. Como \textbf{lenguaje de marcado} que es, utiliza marcas (etiquetas) que indican qué tipo de contenido se está representando en el navegador, lo que permite identificar y estructurar mejor este contenido, así como ser más precisos posteriormente a la hora de dar estilo a este contenido \cite{mdn:html}.
+
+Otro de los valores fundamentales del lenguaje HTML es el \textbf{hipertexto}, que es lo que permite enlazar fácilmente contenidos, ya sea dentro de la misma página web o con otras distintas. Esto permite mejorar la forma de acceso a la información e interconectar el conocimiento, algo muy importante puesto que este es uno de los pilares básicos de internet.
+
+Un archivo HTML sólo contiene (o debería contener, según las buenas prácticas \cite{midudev:html}) \textbf{información referente a la estructura y el contenido de la página web}, pero no información relacionada con el cómo se va a ver estructurada esta información o cómo se van a procesar los datos y se van a interactuar con ellos, puesto que eso es tarea de otros lenguajes, como CSS y JavaScript. Esto hace que, si visualizamos un archivo HTML desde el navegador que no contiene referencias a ningún otro archivo de otro lenguaje, veamos la información mostrada de forma cruda, sin ningún tipo de estilo ni distribución aplicadas mas allá que los que vienen por defecto en los navegadores.
+
+\subsection{CSS}
+
+% TODO: Hacer esta parte %
+
+\subsection{Java}
+
+% TODO: Hacer esta parte %
+
+\subsection{JavaScript}
+
+% TODO: Hacer esta parte %
+
+\section{Herramientas de desarrollo}
+
+% TODO: Hacer esta parte %
+
+\subsection{Visual Studio Code}
+
+% TODO: Hacer esta parte %
+
+\subsection{IntelliJ IDEA}
+
+% TODO: Hacer esta parte %
+
+\section{Sistema gestor de bases de datos}
+
+% TODO: Hacer esta parte %
+
+\subsection{MySQL}
+
+% TODO: Hacer esta parte %
+
+\section{Herramientas de gestión}
+
+% TODO: Hacer esta parte %
+
+\subsection{Metodología SCRUM}
+
+% TODO: Hacer esta parte %
+
+\subsection{Git}
+
+% TODO: Hacer esta parte %
+
+\subsection{GitHub}
+
+% TODO: Hacer esta parte %
 
