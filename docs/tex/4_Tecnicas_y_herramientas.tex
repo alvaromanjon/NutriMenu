@@ -210,13 +210,21 @@ La base de Git son \textbf{los repositorios}, el lugar donde \textit{se va a alm
 
 Cada desarrollador va a disponer de su propio \textbf{repositorio local}, que no es más que \textit{su copia local del código y sus cambios}, sumado a los cambios que este mismo desarrollador haya realizado. 
 
+\imagen{git/repositorios_locales_y_remotos}{Un repositorio central y otro local, cada uno con distintos commits}{1}
+
 Además de esto, va a haber un \textbf{repositorio central}, que va a ser \textit{el lugar donde se unifican todos los cambios} que realicen los distintos desarrolladores. Los repositorios locales van a ser un \textit{clon} de este repositorio principal. Como veremos en el siguiente punto, en el caso de este proyecto el repositorio central se trata de GitHub.
 
+\imagen{git/commits}{Distintos commits en un repositorio}{1}
+
 Los desarrolladores van a realizar los cambios e implementaciones pertinentes sobre el código, y una vez estén satisfechos con estos, van a realizar lo que se denomina como \textbf{commit}, \textit{una instantánea del código} en ese preciso momento.
+
+\imagen{git/branches}{Ramas en un repositorio}{1}
 
 Para poder realizar modificaciones en el código sin pisar el desarrollo de otros compañeros, ni modificar el código principal de la aplicación, se da uso de lo que se denomina como \textbf{ramas o \textit{branches}}, que son \textit{versiones independientes del código en un estado concreto} (para seleccionar este momento indicamos de qué \textit{commit} partimos). Las ramas son un elemento fundamental a la hora de realizar implementaciones, experimentar con el código o simplemente hacer cambios, y son uno de los puntos clave en las buenas prácticas del desarrollo de software.
 
 Una vez nuestros cambios estén listos, todo funcione correctamente y tengamos nuestros \textit{commits} hechos, podemos subir el código de nuestro repositorio local al repositorio central haciendo \textit{\textbf{push}}. De la misma forma, si nuestros compañeros han estado realizando cambios y queremos descargarlos a nuestro repositorio local, podemos hacerlo mediante \textit{\textbf{pull}}.
+
+\imagen{git/merge}{Diagrama de una operación merge básica}{1}
 
 En caso de que hayamos terminado con el trabajo de una rama concreta y queramos unificar estas modificaciones a la rama principal, usaremos la operación \textit{\textbf{merge}}, que se encargará de fusionar e integrar los cambios a la rama principal. \cite{git:git-basics}
 
