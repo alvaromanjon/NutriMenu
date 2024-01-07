@@ -162,11 +162,22 @@ Esta aplicación dispone de una versión gratuita y otra de pago, pero al ser es
 
 \section{Sistema gestor de bases de datos}
 
-% TODO: Hacer esta parte %
+En esta sección voy a describir los sistemas que he usado para todo lo que conlleva la gestión y almacenamiento de los datos de la aplicación:
 
 \subsection{MySQL}
 
-% TODO: Hacer esta parte %
+MySQL es un sistema RDBMS (\textit{Relational Database Management System}) gratuito (aunque dispone de una licencia empresarial) y de código abierto, y es \textbf{uno de los sistemas de administración y gestión de bases de datos más populares y utilizados}, motivo por el que lo he escogido como herramienta de trabajo.
+
+Su funcionamiento se basa en las \textbf{bases de datos relacionales}, en las que los datos se organizan y almacenan en tablas que pueden relacionarse entre sí; y en el \textbf{modelo cliente-servidor}, en el que el servidor es el encargado de gestionar las bases de datos, y el cliente interactúa con el servidor para solicitar información, modificarla, insertarla o eliminarla mediante el uso del lenguaje SQL, permitiendo así que múltiples clientes puedan interactuar con una base de datos centralizada. \cite{wikipedia:mysql}
+
+Algunas de las ventajas que me han hecho decantarme por este sistema son:
+
+\begin{itemize}
+  \item \textbf{Es un proyecto de código abierto, activo y con gran soporte de la comunidad}, lo que significa que va a disponer de prácticamente cualquier característica que necesite, y cualquier error va a ser solucionado lo más pronto posible.
+  \item Este sistema es \textbf{conocido por su rendimiento y eficiencia}, por lo que va a poder soportar las cargas de mi aplicación sin problema alguno.
+  \item \textbf{Es un sistema altamente escalable}, por lo que si en algún momento la aplicación creciese y necesitase de más potencia de procesamiento o de opciones de clusterización, sé que con este gestor no tendría ningún problema.
+\end{itemize}
+
 
 \section{Herramientas de gestión}
 
