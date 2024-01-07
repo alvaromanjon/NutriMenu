@@ -9,7 +9,7 @@ No se pretende que este apartado se convierta en un capítulo de un libro dedica
 
 \section{Patrón de diseño Modelo-Vista-Controlador (MVC)}
 
-\imagen{MVC/diagrama-mvc}{Diagrama del patrón Modelo-Vista-Controlador}{0.9}
+\imagen{MVC/diagrama-mvc}{Diagrama del patrón Modelo-Vista-Controlador \cite{easyappcode:mvc}}{0.9}
 
 La función del patrón de diseño conocido como \textbf{Modelo-Vista-Controlador} es la de organizar de forma estructurada los componentes fundamentales de un determinado \textit{sistema de software}, estableciendo relaciones entre ellos.
 
@@ -42,7 +42,7 @@ Docker es una plataforma de código abierto que permite el desarrollo, ejecució
 
 \subsubsection{Arquitectura de Docker}
 
-\imagen{Docker/docker_architecture}{Arquitectura de Docker}{0.75}
+\imagen{Docker/docker_architecture}{Arquitectura de Docker \cite{docker:overview-architecture}}{0.75}
 
 La arquitectura de Docker es una arquitectura \textbf{cliente-servidor} \cite{docker:overview-architecture}. El cliente de Docker, que es con lo que interactúa el usuario, habla con el \textit{daemon} haciendo llamadas API REST, y este se encarga de gestionar las peticiones y los objetos de Docker, como son las imágenes, los contenedores, los volúmenes y las redes. Finalmente, para conseguir las imágenes, el \textit{daemon} habla con \textit{Docker Registry}, el repositorio que contiene todas las imágenes necesarias para el despliegue. Por defecto se usa \textbf{Docker Hub}, un repositorio público en el que cualquiera puede subir y descargar imágenes, pero se puede usar también un repositorio privado.
 
@@ -210,21 +210,21 @@ La base de Git son \textbf{los repositorios}, el lugar donde \textit{se va a alm
 
 Cada desarrollador va a disponer de su propio \textbf{repositorio local}, que no es más que \textit{su copia local del código y sus cambios}, sumado a los cambios que este mismo desarrollador haya realizado. 
 
-\imagen{git/repositorios_locales_y_remotos}{Un repositorio central y otro local, cada uno con distintos commits}{1}
+\imagen{git/repositorios_locales_y_remotos}{Un repositorio central y otro local, cada uno con distintos commits \cite{git:git-basics}}{1}
 
 Además de esto, va a haber un \textbf{repositorio central}, que va a ser \textit{el lugar donde se unifican todos los cambios} que realicen los distintos desarrolladores. Los repositorios locales van a ser un \textit{clon} de este repositorio principal. Como veremos en el siguiente punto, en el caso de este proyecto el repositorio central se trata de GitHub.
 
-\imagen{git/commits}{Distintos commits en un repositorio}{1}
+\imagen{git/commits}{Distintos commits en un repositorio \cite{git:git-basics}}{1}
 
 Los desarrolladores van a realizar los cambios e implementaciones pertinentes sobre el código, y una vez estén satisfechos con estos, van a realizar lo que se denomina como \textbf{commit}, \textit{una instantánea del código} en ese preciso momento.
 
-\imagen{git/branches}{Ramas en un repositorio}{1}
+\imagen{git/branches}{Ramas en un repositorio \cite{git:git-basics}}{1}
 
 Para poder realizar modificaciones en el código sin pisar el desarrollo de otros compañeros, ni modificar el código principal de la aplicación, se da uso de lo que se denomina como \textbf{ramas o \textit{branches}}, que son \textit{versiones independientes del código en un estado concreto} (para seleccionar este momento indicamos de qué \textit{commit} partimos). Las ramas son un elemento fundamental a la hora de realizar implementaciones, experimentar con el código o simplemente hacer cambios, y son uno de los puntos clave en las buenas prácticas del desarrollo de software.
 
 Una vez nuestros cambios estén listos, todo funcione correctamente y tengamos nuestros \textit{commits} hechos, podemos subir el código de nuestro repositorio local al repositorio central haciendo \textit{\textbf{push}}. De la misma forma, si nuestros compañeros han estado realizando cambios y queremos descargarlos a nuestro repositorio local, podemos hacerlo mediante \textit{\textbf{pull}}.
 
-\imagen{git/merge}{Diagrama de una operación merge básica}{1}
+\imagen{git/merge}{Diagrama de una operación merge básica \cite{git:git-basics}}{1}
 
 En caso de que hayamos terminado con el trabajo de una rama concreta y queramos unificar estas modificaciones a la rama principal, usaremos la operación \textit{\textbf{merge}}, que se encargará de fusionar e integrar los cambios a la rama principal. \cite{git:git-basics}
 
