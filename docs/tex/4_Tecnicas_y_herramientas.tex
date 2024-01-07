@@ -7,6 +7,7 @@ No se pretende que este apartado se convierta en un capítulo de un libro dedica
 
 % TODO: Hacer introducción de esta sección %
 
+
 \section{Patrón de diseño Modelo-Vista-Controlador (MVC)}
 
 \imagen{MVC/diagrama-mvc}{Diagrama del patrón Modelo-Vista-Controlador \cite{easyappcode:mvc}}{0.9}
@@ -29,6 +30,7 @@ Los tres componentes fundamentales de este patrón tienen misiones diferenciadas
 \item \textbf{Controlador}: Este componente es el que pone en conexión el modelo y la vista, gestionando y procesando las instrucciones que se reciben para obtener un resultado. Su forma básica de trabajar consiste en acceder a la base de datos, manipularlos con una determinada finalidad y presentar los resultados de esa manipulación de los datos. Se va a encargar de gestionar \textbf{la lógica y la gestión de los datos}.
 \end{itemize}
 El motivo por el cual he decidido utilizar este patrón es porque permite trabajar de una forma precisa y eficaz, haciendo que la estructura del sistema sea clara, ordenada y separada, lo que facilita su comprensión y posterior mantenimiento.  
+
 
 \section{Contenerización}
 
@@ -64,45 +66,6 @@ He decidido usar esta herramienta ya que facilita bastante la conexión e integr
 \item \textbf{Escalabilidad de infraestructura}, puesto que con un sólo comando podemos aumentar o disminuir el número de instancias de las que dispone un servicio.	
 \end{itemize}
 
-\section{Frameworks}
-
-% TODO: Hacer esta parte %
-
-\subsection{Spring Boot}
-
-% TODO: Hacer esta parte %
-
-\subsection{React}
-
-% TODO: Hacer esta parte %
-
-\subsection{JPA}
-
-% TODO: Hacer esta parte %
-
-\subsection{Bootstrap}
-
-% TODO: Hacer esta parte %
-
-\section{Gestores de paquetes}
-
-% TODO: Hacer esta parte %
-
-\subsection{Maven}
-
-% TODO: Hacer esta parte %
-
-\subsection{Node}
-
-% TODO: Hacer esta parte %
-
-\section{API}
-
-% TODO: Hacer esta parte %
-
-\subsection{Nutritionix}
-
-% TODO: Hacer esta parte %
 
 \section{Lenguajes de programación}
 
@@ -140,25 +103,42 @@ Java es un \textbf{lenguaje de programación orientado a objetos basado en C y C
  
  En mi caso he usado este lenguaje para el desarrollo del \textit{backend}, puesto que al ser un lenguaje que ya conozco y con el que tengo experiencia, sabía 	que el usar un \textit{framework} como \textbf{Spring Boot}, así como distintas librerías como \textbf{JPA}, no iba a suponer un problema, puesto que el ecosistema Java es de los más extensos y robustos que hay ahora mismo, por lo que no voy a tener problema a la hora de buscar documentación o investigar cómo añadir una funcionalidad que me interese.
 
-\section{Herramientas de desarrollo}
+\subsection{SQL}
 
-A continuación voy a proceder a describir las herramientas que me han ayudado a la hora de desarrollar este proyecto:
+% TODO: Hacer esta parte %
 
-\subsection{Visual Studio Code}
+\section{Frameworks y librerías}
 
-Visual Studio Code es un \textbf{editor de código fuente gratuito y de código abierto} desarrollado por Microsoft y disponible para macOS, Windows y Linux, así como recientemente también \href{https://vscode.dev}{en versión web}.
+% TODO: Hacer esta parte %
 
-Al ser una herramienta bastante enfocada en el desarrollo web (aunque está adaptada para el desarrollo de cualquier lenguaje), puesto que la propia aplicación está desarrollada en JavaScript, y además dispone de gran soporte en cuanto a extensiones y personalización por parte de la comunidad de desarrolladores, es una herramienta perfecta para un desarrollo como el de este proyecto, ya que dispone de un montón de herramientas que pueden agilizar y facilitar el trabajo. En mi caso esto ha sido especialmente útil a la hora de desarrollar el \textbf{frontend}, puesto que gracias al alto número de extensiones que existen en el \textit{marketplace} de Visual Studio Code he encontrado bastantes integraciones con React, como \href{https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets}{Simple React Snippets}, una extensión que permite usar abreviaciones para insertar bloques de código comunes en el desarrollo de React.
+\subsection{Spring Boot}
 
-Como ya he mencionado, este IDE dispone de un montón de opciones a la hora de personalizar el entorno de programación, lo cuál sumado a las propias características de la aplicación (integración con \textit{Git}, autocompletado y resaltado de sintaxis con \textit{IntelliSense}, herramientas de debugging...) la convierten en una aplicación muy versátil \cite{vscode:main}.
+% TODO: Hacer esta parte %
 
-\subsection{IntelliJ IDEA}
+\subsection{React}
 
-Otro IDE que he usado para poder llevar a cabo este trabajo es IntelliJ IDEA, \textbf{un editor que permite escribir código Java de forma eficaz y rápida}. 
+% TODO: Hacer esta parte %
 
-Gracias a ser un editor de código principalmente enfocado en el lenguaje Java, presenta \textbf{características e integraciones que de normal no encontraríamos en otros editores} (aunque en editores como Visual Studio Code las podríamos llegar a asemejar mediante el uso de extensiones, pero en este editor tenemos la ventaja de que ya encontramos todo esto por defecto), como integración con los paquetes Maven, detección automática de errores, autocompletado inteligente del código... \cite{jetbrains:idea}
+\subsubsection{React Router}
 
-Esta aplicación dispone de una versión gratuita y otra de pago, pero al ser estudiante he tenido acceso a la versión completa sin coste adicional, disponiendo de todas las funcionalidades que ofrece esta herramienta. \cite{jetbrains:students}
+% TODO: Hacer esta parte %
+
+\subsubsection{React Context}
+
+% TODO: Hacer esta parte %
+
+\subsection{JPA}
+
+% TODO: Hacer esta parte %
+
+\subsection{Bootstrap}
+
+% TODO: Hacer esta parte %
+
+\subsubsection{React Bootstrap}
+
+% TODO: Hacer esta parte %
+
 
 \section{Sistema gestor de bases de datos}
 
@@ -179,9 +159,34 @@ Algunas de las ventajas que me han hecho decantarme por este sistema son:
 \end{itemize}
 
 
-\section{Herramientas de gestión}
+\section{Herramientas de desarrollo}
+
+A continuación voy a proceder a describir las herramientas que me han ayudado a la hora de desarrollar este proyecto:
+
+\subsection{Visual Studio Code}
+
+Visual Studio Code es un \textbf{editor de código fuente gratuito y de código abierto} desarrollado por Microsoft y disponible para macOS, Windows y Linux, así como recientemente también \href{https://vscode.dev}{en versión web}.
+
+Al ser una herramienta bastante enfocada en el desarrollo web (aunque está adaptada para el desarrollo de cualquier lenguaje), puesto que la propia aplicación está desarrollada en JavaScript, y además dispone de gran soporte en cuanto a extensiones y personalización por parte de la comunidad de desarrolladores, es una herramienta perfecta para un desarrollo como el de este proyecto, ya que dispone de un montón de herramientas que pueden agilizar y facilitar el trabajo. En mi caso esto ha sido especialmente útil a la hora de desarrollar el \textbf{frontend}, puesto que gracias al alto número de extensiones que existen en el \textit{marketplace} de Visual Studio Code he encontrado bastantes integraciones con React, como \href{https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets}{Simple React Snippets}, una extensión que permite usar abreviaciones para insertar bloques de código comunes en el desarrollo de React.
+
+Como ya he mencionado, este IDE dispone de un montón de opciones a la hora de personalizar el entorno de programación, lo cuál sumado a las propias características de la aplicación (integración con \textit{Git}, autocompletado y resaltado de sintaxis con \textit{IntelliSense}, herramientas de debugging...) la convierten en una aplicación muy versátil \cite{vscode:main}.
+
+\subsection{IntelliJ IDEA}
+
+Otro IDE que he usado para poder llevar a cabo este trabajo es IntelliJ IDEA, \textbf{un editor que permite escribir código Java de forma eficaz y rápida}. 
+
+Gracias a ser un editor de código principalmente enfocado en el lenguaje Java, presenta \textbf{características e integraciones que de normal no encontraríamos en otros editores} (aunque en editores como Visual Studio Code las podríamos llegar a asemejar mediante el uso de extensiones, pero en este editor tenemos la ventaja de que ya encontramos todo esto por defecto), como integración con los paquetes Maven, detección automática de errores, autocompletado inteligente del código... \cite{jetbrains:idea}
+
+Esta aplicación dispone de una versión gratuita y otra de pago, pero al ser estudiante he tenido acceso a la versión completa sin coste adicional, disponiendo de todas las funcionalidades que ofrece esta herramienta. \cite{jetbrains:students}
+
+\subsection{Postman}
 
 % TODO: Hacer esta parte %
+
+
+\section{Herramientas de gestión}
+
+A continuación voy a proceder a hablar de las herramientas que me han ayudado a gestionar y organizar este proyecto:
 
 \subsection{Metodología Scrum}
 
@@ -237,4 +242,26 @@ GitHub es una plataforma web de Microsoft que permite \textbf{alojar el código 
 Como GitHub actúa como un repositorio basado en Git, mediante GitHub se puede examinar todo el historial de versiones por las que ha pasado el código, volver hacia atrás en el tiempo y analizar la evolución de este. Además de esto, también permite hacer gestión de las ramas de los repositorios, con herramientas como las \textit{\textbf{pull requests}}, que permiten hacer solicitudes de \textit{merge} a los administradores de los proyectos, siendo esto un pilar fundamental en la comunidad de código abierto.
 
 Aparte de las funciones relacionadas con Git, GitHub también ofrece herramientas para gestionar tareas, como son los \textit{\textbf{issues}}, e incluso integración con la \textit{metodología Scrum} mediante el uso de \textit{\textbf{sprints}}, lo que ha hecho que haya terminado siendo mi herramienta de elección a la hora de gestionar este proyecto, tanto a nivel de código como de gestión de trabajo y tareas \cite{wikipedia:github}.
+
+
+\section{Gestores de paquetes}
+
+% TODO: Hacer esta parte %
+
+\subsection{Maven}
+
+% TODO: Hacer esta parte %
+
+\subsection{Node}
+
+% TODO: Hacer esta parte %
+
+
+\section{API}
+
+% TODO: Hacer esta parte %
+
+\subsection{Nutritionix}
+
+% TODO: Hacer esta parte %
 
