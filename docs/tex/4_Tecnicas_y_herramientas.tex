@@ -111,9 +111,23 @@ Java es un \textbf{lenguaje de programación orientado a objetos basado en C y C
 
 % TODO: Hacer esta parte %
 
-\subsection{Spring Boot}
+\subsection{Spring y Spring Boot}
 
-% TODO: Hacer esta parte %
+Spring Boot es una herramienta que \textbf{simplifica y agiliza el desarrollo de aplicaciones web basadas en Spring}, un framework de código abierto para Java.
+
+Spring es un \textbf{framework que facilita el desarrollo de aplicaciones en Java}, añadiendo soporte para el patrón MVC, inyección de dependencias, inversión de control, y demás herramientas esenciales. Sin embargo, las aplicaciones basadas en Spring son difíciles de configurar, así que el objetivo de Spring Boot es proporcionar un conjunto de herramientas para crear rápidamente y de forma fácil \textbf{aplicaciones Spring mantenibles y sencillas de entender}. \cite{spring:spring-boot}
+
+Antiguamente, cuando queríamos desarrollar un proyecto en Spring, los pasos a seguir eran: 
+
+\begin{enumerate}
+  \item Crear un proyecto en Maven o Gradle y seleccionar y añadir al proyecto las dependencias necesarias.
+  \item Configurar la aplicación mediante ficheros XML o anotaciones complejas.
+  \item Desplegar la aplicación en el tipo de servidor que escogiésemos.
+\end{enumerate}
+
+Sin embargo, Spring Boot se encarga de reducir significativamente la complejidad de este proceso, ofreciendo configuraciones automáticas que podemos desplegar prácticamente sin tener que tocar nada, integración con servidores HTTP, mejor gestión de las dependencias... \cite{arquitectura-java:spring-boot}
+
+Son todas estas ventajas las que me han hecho decantarme por usar esta tecnología para desarrollar el \textit{backend} de la aplicación, ya que me permite usar toda la potencia que ofrece Spring sin necesidad de desarrollos ni configuraciones complejas que puedan entorpecer mi proyecto.
 
 \subsection{React}
 
