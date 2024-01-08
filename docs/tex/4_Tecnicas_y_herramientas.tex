@@ -131,15 +131,18 @@ Son todas estas ventajas las que me han hecho decantarme por usar esta tecnolog�
 
 \subsection{React}
 
-% TODO: Hacer esta parte %
+React es una librería de JavaScript y TypeScript creada por Meta para el desarrollo de aplicaciones web y móviles. Esta librería \textbf{permite construir interfaces de usuario a partir de componentes independientes y reutilizables}, y esto hace que el desarrollo se facilite bastante, ya que ahorra repetir código y hace que la interfaz sea modular, lo que le da bastante escalabilidad y ayuda a la hora de añadir nuevas implementaciones.
 
-\subsubsection{React Router}
+Los componentes interactúan entre ellos de tal forma que el flujo de los datos es unidireccional, puesto que se crea un \textbf{árbol de componentes} en el que el estado se transfiere del componente principal hacia los componentes secundarios. Esto hace que sea más fácil rastrear y depurar el estado de la aplicación \cite{kinsta:react}.
 
-% TODO: Hacer esta parte %
+\imagen{React/component_tree}{Cada componente dispone de su propio estado, y los componentes padre son capaces de enviar propiedades a los componentes hijo \cite{atomikod:react}}{0.75}
 
-\subsubsection{React Context}
+Además de este elemento, \textbf{React dispone también de un Virtual DOM} que ayuda a mejorar el rendimiento de las aplicaciones web. En lugar de actualizar directamente el DOM (\textit{Document Object Model}) del navegador cada vez que cambia el estado de la aplicación, React crea una representación virtual del DOM y sólo actualiza las partes que han cambiado. Esto hace que se reduzca la carga en el navegador y mejore la velocidad de la aplicación \cite{geeksforgeeks:virtual-dom}.
 
-% TODO: Hacer esta parte %
+
+React utiliza JSX (\textit{JavaScript XML}), una \textbf{extensión de la sintaxis de JavaScript que se utiliza para escribir código HTML} dentro de React, permitiéndonos insertar y evaluar expresiones de JavaScript dentro del código HTML, algo esencial a la hora de crear las vistas de nuestra aplicación \cite{react-docs:jsx}.
+
+Aparte de todas estas funciones, React también está dotado de librerías y componentes adicionales, como \textbf{React Router}, que da \textit{soporte de enrutado} a React para poder crear URLs personalizadas; y \textbf{React Context}, que \textit{dota a nuestras aplicaciones React de un estado global compartido} entre los distintos componentes. Esto ha hecho que React haya terminado siendo mi elección a la hora de desarrollar el \textit{frontend} de la aplicación.
 
 \subsection{JPA}
 
