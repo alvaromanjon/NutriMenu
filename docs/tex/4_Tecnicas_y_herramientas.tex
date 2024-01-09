@@ -103,10 +103,6 @@ Java es un \textbf{lenguaje de programación orientado a objetos basado en C y C
  
  En mi caso he usado este lenguaje para el desarrollo del \textit{backend}, puesto que al ser un lenguaje que ya conozco y con el que tengo experiencia, sabía 	que el usar un \textit{framework} como \textbf{Spring Boot}, así como distintas librerías como \textbf{JPA}, no iba a suponer un problema, puesto que el ecosistema Java es de los más extensos y robustos que hay ahora mismo, por lo que no voy a tener problema a la hora de buscar documentación o investigar cómo añadir una funcionalidad que me interese.
 
-\subsection{SQL}
-
-% TODO: Hacer esta parte %
-
 \section{Frameworks y librerías}
 
 En este apartado voy a proceder a hablar sobre las librerías y \textit{frameworks} que me han ayudado y he utilizado en el desarrollo de este proyecto:
@@ -146,7 +142,10 @@ Aparte de todas estas funciones, React también está dotado de librerías y com
 
 \subsection{JPA}
 
-% TODO: Hacer esta parte %
+JPA (\textit{Java Persistence API}) es una especificación de Java que nos permite integrar en nuestro código Java \textbf{conexiones e interacciones con bases de datos, persistencia de objetos y mapeo de estos con un modelo relacional}.
+
+Esto nos permite no tener que escribir \textit{queries} SQL directamente dentro de nuestro código, ya que una vez establezcamos con anotaciones las relaciones entre el modelo relacional de la base de datos que estemos usando y las clases de nuestro proyecto, vamos a poder usar una implementación concreta de JPA, como  Hibernate o en mi caso el propio Spring Boot (puesto que JPA no deja de ser una especificación, no una implementación), para interactuar con los datos mediante el uso de interfaces y llamadas a métodos \cite{campusmvp:jpa}.
+
 
 \subsection{Bootstrap}
 
