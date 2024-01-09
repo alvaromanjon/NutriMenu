@@ -1,15 +1,38 @@
 \capitulo{4}{Técnicas y herramientas}
 
-\section{Contenerización}
-
 \begin{comment}
 	Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
 No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
 \end{comment}
 
-\begin{comment}
-	TODO: Hacer introducción de esta sección
-\end{comment}
+En este apartado voy a proceder a introducir y destacar las herramientas, metodologías y tecnologías que me han ayudado a poder desarrollar este proyecto:
+
+\section{Patrón de diseño Modelo-Vista-Controlador (MVC)}
+
+La función del patrón de diseño conocido como \textbf{Modelo-Vista-Controlador} es la de organizar de forma estructurada los componentes fundamentales de un determinado \textit{sistema de software}, estableciendo relaciones entre ellos.
+
+Como metodología de trabajo, fue propuesta por Trygve Reenskaug en 1979, basándose su utilidad en tres ideas fundamentales \cite{campusmvp:mvc}:
+
+\begin{itemize}
+\item La organización y clasificación de la información que se aporta al sistema.
+\item La unificación y gestión de la lógica del sistema.
+\item La presentación de datos al usuario mediante una interfaz comprensible y asequible.
+\end{itemize}
+
+Los tres componentes fundamentales de este patrón tienen misiones diferenciadas sobre la forma en cómo tratan la información \cite{easyappcode:mvc}: 
+
+\begin{itemize}
+\item \textbf{Modelo}: Es el componente cuya misión es únicamente la de gestionar el contenido de una base de datos, incluida su manipulación y utilización. Es la parte que se va a encargar de la \textbf{gestión de los datos}.
+\item \textbf{Vista}: Es el componente que sirve para acceder al contenido de la base de datos y presentar los datos al usuario. Va a ser \textbf{la parte con la que va a interactuar el usuario}.
+\item \textbf{Controlador}: Este componente es el que pone en conexión el modelo y la vista, gestionando y procesando las instrucciones que se reciben para obtener un resultado. Su forma básica de trabajar consiste en acceder a la base de datos, manipularlos con una determinada finalidad y presentar los resultados de esa manipulación de los datos. Se va a encargar de gestionar \textbf{la lógica y la gestión de los datos}.
+\end{itemize}
+
+\imagen{MVC/diagrama-mvc}{Cada componente interactúa con los otros dos en el patrón MVC \cite{easyappcode:mvc}}{0.9}
+
+El motivo por el cual he decidido utilizar este patrón es porque permite trabajar de una forma precisa y eficaz, haciendo que la estructura del sistema sea clara, ordenada y separada, lo que facilita su comprensión y posterior mantenimiento.  
+
+
+\section{Contenerización}
 
 Se conoce como contenerización a la tecnología de virtualización que permite ejecutar \textbf{contenedores}, entornos completamente aislados del resto de la máquina que los está ejecutando, y que contienen todo lo necesario (bibliotecas, código, archivos de configuración, dependencias...) para que se pueda ejecutar una aplicación en cualquier entorno.\cite{microsoft:contenedores}
 
@@ -21,9 +44,9 @@ Docker es una plataforma de código abierto que permite el desarrollo, ejecució
 
 \subsubsection{Arquitectura de Docker}
 
-\imagen{Docker/docker_architecture}{Arquitectura de Docker}{0.75}
-
 La arquitectura de Docker es una arquitectura \textbf{cliente-servidor} \cite{docker:overview-architecture}. El cliente de Docker, que es con lo que interactúa el usuario, habla con el \textit{daemon} haciendo llamadas API REST, y este se encarga de gestionar las peticiones y los objetos de Docker, como son las imágenes, los contenedores, los volúmenes y las redes. Finalmente, para conseguir las imágenes, el \textit{daemon} habla con \textit{Docker Registry}, el repositorio que contiene todas las imágenes necesarias para el despliegue. Por defecto se usa \textbf{Docker Hub}, un repositorio público en el que cualquiera puede subir y descargar imágenes, pero se puede usar también un repositorio privado.
+
+\imagen{Docker/docker_architecture}{Diagrama de cómo interactúan los elementos dentro de la arquitectura de Docker \cite{docker:overview-architecture}}{0.75}
 
 \subsubsection{Imágenes}
 
@@ -43,3 +66,208 @@ He decidido usar esta herramienta ya que facilita bastante la conexión e integr
 \item \textbf{Escalabilidad de infraestructura}, puesto que con un sólo comando podemos aumentar o disminuir el número de instancias de las que dispone un servicio.	
 \end{itemize}
 
+
+\section{Lenguajes de programación}
+
+\subsection{HTML}
+
+El lenguaje HTML (\textit{HyperText Markup Language}) hoy en día es la base de internet, ya que es prácticamente imposible encontrar una página web que no tenga definido su contenido usando este lenguaje. Como \textbf{lenguaje de marcado} que es, utiliza marcas (etiquetas) que indican qué tipo de contenido se está representando en el navegador, lo que permite identificar y estructurar mejor este contenido, así como ser más precisos posteriormente a la hora de dar estilo a este contenido \cite{mdn:html}.
+
+Otro de los valores fundamentales del lenguaje HTML es el \textbf{hipertexto}, que es lo que permite enlazar fácilmente contenidos, ya sea dentro de la misma página web o con otras distintas. Esto permite mejorar la forma de acceso a la información e interconectar el conocimiento, algo muy importante puesto que este es uno de los pilares básicos de internet.
+
+Un archivo HTML sólo contiene (o debería contener, según las buenas prácticas \cite{midudev:html}) \textbf{información referente a la estructura y el contenido de la página web}, pero no información relacionada con el cómo se va a ver estructurada esta información o cómo se van a procesar los datos y se van a interactuar con ellos, puesto que eso es tarea de otros lenguajes, como CSS y JavaScript. Esto hace que, si visualizamos un archivo HTML desde el navegador que no contiene referencias a ningún otro archivo de otro lenguaje, veamos la información mostrada de forma cruda, sin ningún tipo de estilo ni distribución aplicadas mas allá que los que vienen por defecto en los navegadores.
+
+\subsection{CSS}
+
+Como complemento óptimo del lenguaje HTML, el lenguaje CSS (\textit{Cascading Style Sheets}) define \textbf{la estructura y los estilos utilizados en la presentación} de documentos escritos con HTML.
+
+CSS no es un lenguaje de programación propiamente dicho ni tampoco un lenguaje de marcado, sino que es lo que se ha dado en llamar un \textbf{lenguaje de hojas de estilo}. Su funcionalidad principal es la de definir y mejorar la presentación de páginas web creadas con HTML, creando estilos y formatos que les son de aplicación \cite{mdn:css}.
+
+De la misma forma que HTML, CSS es uno de los lenguajes más usados hoy día en el diseño de los estilos de páginas web, ya sea de forma pura o mediante el uso de distintos frameworks que facilitan su uso.
+
+\subsection{JavaScript}
+
+La funcionalidad principal del lenguaje JavaScript es la de mejorar la experiencia de los usuarios de páginas web, haciendo que las páginas dejen de ser estáticas para pasar a ser \textbf{interactivas y dinámicas}, lo que indudablemente las hace más atractivas e incrementa exponencialmente su funcionalidad \cite{aws:javascript}.
+
+A diferencia de HTML, que es un lenguaje de marcado; y CSS, que es un lenguaje de hojas de estilo; JavaScript es un lenguaje de programación propiamente dicho con \textbf{compilación just-in-time}, es decir, compilación en tiempo de ejecución \cite{mdn:javascript}. Este lenguaje consta de todo lo que podríamos esperar a la hora de escribir código, desde funciones y estructuras de lógica hasta la implementación de programación orientada a objetos.
+
+Al ser un lenguaje de programación con funcionalidad completa, no sólo se usa JavaScript para añadir funciones a las páginas web, sino que hoy en día hay aplicaciones y entornos construidos en JavaScript, como son \href{https://nodejs.org/en}{Node.js}, \href{https://code.visualstudio.com/}{Visual Studio Code}, o \href{https://www.adobe.com/es/acrobat.html}{Adobe Acrobat}. JavaScript también puede ser usado tanto en el \textbf{lado del cliente}, para añadir interactividad a la web; o en el \textbf{lado del servidor}, para manejar la lógica de la aplicación y modificar los datos de esta.
+
+\subsection{Java}
+
+Java es un \textbf{lenguaje de programación orientado a objetos basado en C y C++}, buscando ser similar a estos lenguajes pero haciéndolo más universal, ya que la idea de este lenguaje es que \textbf{se pueda compilar una vez y funcionar en cualquier sistema}, gracias a la implementación de la máquina virtual de Java.
+
+ Este lenguaje es uno de los más populares y utilizados hoy en día, ya que podemos encontrarlo en prácticamente cualquier campo y ámbito, gracias a su compatibilidad, robustez, y gran cantidad de librerías y \textit{frameworks} de terceros. \cite{aws:java}
+ 
+ En mi caso he usado este lenguaje para el desarrollo del \textit{backend}, puesto que al ser un lenguaje que ya conozco y con el que tengo experiencia, sabía 	que el usar un \textit{framework} como \textbf{Spring Boot}, así como distintas librerías como \textbf{JPA}, no iba a suponer un problema, puesto que el ecosistema Java es de los más extensos y robustos que hay ahora mismo, por lo que no voy a tener problema a la hora de buscar documentación o investigar cómo añadir una funcionalidad que me interese.
+
+\section{Frameworks y librerías}
+
+\subsection{Spring y Spring Boot}
+
+Spring Boot es una herramienta que \textbf{simplifica y agiliza el desarrollo de aplicaciones web basadas en Spring}, un framework de código abierto para Java.
+
+Spring es un \textbf{framework que facilita el desarrollo de aplicaciones en Java}, añadiendo soporte para el patrón MVC, inyección de dependencias, inversión de control, y demás herramientas esenciales. Sin embargo, las aplicaciones basadas en Spring son difíciles de configurar, así que el objetivo de Spring Boot es proporcionar un conjunto de herramientas para crear rápidamente y de forma fácil \textbf{aplicaciones Spring mantenibles y sencillas de entender}. \cite{spring:spring-boot}
+
+Antiguamente, cuando queríamos desarrollar un proyecto en Spring, los pasos a seguir eran: 
+
+\begin{enumerate}
+  \item Crear un proyecto en Maven o Gradle y seleccionar y añadir al proyecto las dependencias necesarias.
+  \item Configurar la aplicación mediante ficheros XML o anotaciones complejas.
+  \item Desplegar la aplicación en el tipo de servidor que escogiésemos.
+\end{enumerate}
+
+Sin embargo, Spring Boot se encarga de reducir significativamente la complejidad de este proceso, ofreciendo configuraciones automáticas que podemos desplegar prácticamente sin tener que tocar nada, integración con servidores HTTP, mejor gestión de las dependencias... \cite{arquitectura-java:spring-boot}
+
+Son todas estas ventajas las que me han hecho decantarme por usar esta tecnología para desarrollar el \textit{backend} de la aplicación, ya que me permite usar toda la potencia que ofrece Spring sin necesidad de desarrollos ni configuraciones complejas que puedan entorpecer mi proyecto.
+
+\subsection{React}
+
+React es una librería de JavaScript y TypeScript creada por Meta para el desarrollo de aplicaciones web y móviles. Esta librería \textbf{permite construir interfaces de usuario a partir de componentes independientes y reutilizables}, y esto hace que el desarrollo se facilite bastante, ya que ahorra repetir código y hace que la interfaz sea modular, lo que le da bastante escalabilidad y ayuda a la hora de añadir nuevas implementaciones.
+
+Los componentes interactúan entre ellos de tal forma que el flujo de los datos es unidireccional, puesto que se crea un \textbf{árbol de componentes} en el que el estado se transfiere del componente principal hacia los componentes secundarios. Esto hace que sea más fácil rastrear y depurar el estado de la aplicación \cite{kinsta:react}.
+
+\imagen{React/component_tree}{Cada componente dispone de su propio estado, y los componentes padre son capaces de enviar propiedades a los componentes hijo \cite{atomikod:react}}{0.75}
+
+Además de este elemento, \textbf{React dispone también de un Virtual DOM} que ayuda a mejorar el rendimiento de las aplicaciones web. En lugar de actualizar directamente el DOM (\textit{Document Object Model}) del navegador cada vez que cambia el estado de la aplicación, React crea una representación virtual del DOM y sólo actualiza las partes que han cambiado. Esto hace que se reduzca la carga en el navegador y mejore la velocidad de la aplicación \cite{geeksforgeeks:virtual-dom}.
+
+
+React utiliza JSX (\textit{JavaScript XML}), una \textbf{extensión de la sintaxis de JavaScript que se utiliza para escribir código HTML} dentro de React, permitiéndonos insertar y evaluar expresiones de JavaScript dentro del código HTML, algo esencial a la hora de crear las vistas de nuestra aplicación \cite{react-docs:jsx}.
+
+Aparte de todas estas funciones, React también está dotado de librerías y componentes adicionales, como \textbf{React Router}, que da \textit{soporte de enrutado} a React para poder crear URLs personalizadas; y \textbf{React Context}, que \textit{dota a nuestras aplicaciones React de un estado global compartido} entre los distintos componentes. Esto ha hecho que React haya terminado siendo mi elección a la hora de desarrollar el \textit{frontend} de la aplicación.
+
+\subsection{JPA}
+
+JPA (\textit{Java Persistence API}) es una especificación de Java que nos permite integrar en nuestro código Java \textbf{conexiones e interacciones con bases de datos, persistencia de objetos y mapeo de estos con un modelo relacional}.
+
+Esto nos permite no tener que escribir \textit{queries} SQL directamente dentro de nuestro código, ya que una vez establezcamos con anotaciones las relaciones entre el modelo relacional de la base de datos que estemos usando y las clases de nuestro proyecto, vamos a poder usar una implementación concreta de JPA, como  Hibernate o en mi caso el propio Spring Boot (puesto que JPA no deja de ser una especificación, no una implementación), para interactuar con los datos mediante el uso de interfaces y llamadas a métodos \cite{campusmvp:jpa}.
+
+
+\subsection{Bootstrap}
+
+Bootstrap es un \textit{framework} CSS, inicialmente desarrollado por Twitter y después convertido en un proyecto de código abierto, usado para \textbf{facilitar el desarrollo de interfaces \textit{responsive} para aplicaciones web y sitios móviles} \cite{w3schools:bootstrap}.
+
+Este framework proporciona plantillas de elementos tales como \textit{botones, formularios, tablas, carruseles...} ya estilizados pero personalizables, lo que me ha permitido ahorrarme bastante tiempo a la hora de dar estilo a los distintos elementos HTML de la web, aparte que \textbf{hace que no sea necesario disponer de conocimientos extensos de CSS} para conseguir un diseño agradable, adaptable y funcional.
+
+Además de esto, Bootstrap \textbf{usa el sistema \textit{CSS Grid} para colocar los elementos}, lo que ayuda bastante a posicionar los elementos donde nosotros queramos.
+
+Bootstrap se puede integrar en prácticamente cualquier librería o framework, pero en el caso de React además existe una librería llamada \textbf{React Bootstrap}, que lo que hace es integrar Bootstrap dentro de los componentes y el enfoque usado en React, por lo que lo hace aún más simple \cite{react-bootstrap:main}.
+
+
+\section{Sistema gestor de bases de datos}
+
+\subsection{MySQL}
+
+MySQL es un sistema RDBMS (\textit{Relational Database Management System}) gratuito (aunque dispone de una licencia empresarial) y de código abierto, y es \textbf{uno de los sistemas de administración y gestión de bases de datos más populares y utilizados}, motivo por el que lo he escogido como herramienta de trabajo.
+
+Su funcionamiento se basa en las \textbf{bases de datos relacionales}, en las que los datos se organizan y almacenan en tablas que pueden relacionarse entre sí; y en el \textbf{modelo cliente-servidor}, en el que el servidor es el encargado de gestionar las bases de datos, y el cliente interactúa con el servidor para solicitar información, modificarla, insertarla o eliminarla mediante el uso del lenguaje SQL, permitiendo así que múltiples clientes puedan interactuar con una base de datos centralizada. \cite{wikipedia:mysql}
+
+Algunas de las ventajas que me han hecho decantarme por este sistema son:
+
+\begin{itemize}
+  \item \textbf{Es un proyecto de código abierto, activo y con gran soporte de la comunidad}, lo que significa que va a disponer de prácticamente cualquier característica que necesite, y cualquier error va a ser solucionado lo más pronto posible.
+  \item Este sistema es \textbf{conocido por su rendimiento y eficiencia}, por lo que va a poder soportar las cargas de mi aplicación sin problema alguno.
+  \item \textbf{Es un sistema altamente escalable}, por lo que si en algún momento la aplicación creciese y necesitase de más potencia de procesamiento o de opciones de clusterización, sé que con este gestor no tendría ningún problema.
+\end{itemize}
+
+
+\section{Herramientas de desarrollo}
+
+\subsection{Visual Studio Code}
+
+Visual Studio Code es un \textbf{editor de código fuente gratuito y de código abierto} desarrollado por Microsoft y disponible para macOS, Windows y Linux, así como recientemente también \href{https://vscode.dev}{en versión web}.
+
+Al ser una herramienta bastante enfocada en el desarrollo web (aunque está adaptada para el desarrollo de cualquier lenguaje), puesto que la propia aplicación está desarrollada en JavaScript, y además dispone de gran soporte en cuanto a extensiones y personalización por parte de la comunidad de desarrolladores, es una herramienta perfecta para un desarrollo como el de este proyecto, ya que dispone de un montón de herramientas que pueden agilizar y facilitar el trabajo. En mi caso esto ha sido especialmente útil a la hora de desarrollar el \textbf{frontend}, puesto que gracias al alto número de extensiones que existen en el \textit{marketplace} de Visual Studio Code he encontrado bastantes integraciones con React, como \href{https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets}{Simple React Snippets}, una extensión que permite usar abreviaciones para insertar bloques de código comunes en el desarrollo de React.
+
+Como ya he mencionado, este IDE dispone de un montón de opciones a la hora de personalizar el entorno de programación, lo cuál sumado a las propias características de la aplicación (integración con \textit{Git}, autocompletado y resaltado de sintaxis con \textit{IntelliSense}, herramientas de debugging...) la convierten en una aplicación muy versátil \cite{vscode:main}.
+
+\subsection{IntelliJ IDEA}
+
+Otro IDE que he usado para poder llevar a cabo este trabajo es IntelliJ IDEA, \textbf{un editor que permite escribir código Java de forma eficaz y rápida}. 
+
+Gracias a ser un editor de código principalmente enfocado en el lenguaje Java, presenta \textbf{características e integraciones que de normal no encontraríamos en otros editores} (aunque en editores como Visual Studio Code las podríamos llegar a asemejar mediante el uso de extensiones, pero en este editor tenemos la ventaja de que ya encontramos todo esto por defecto), como integración con los paquetes Maven, detección automática de errores, autocompletado inteligente del código... \cite{jetbrains:idea}
+
+Esta aplicación dispone de una versión gratuita y otra de pago, pero al ser estudiante he tenido acceso a la versión completa sin coste adicional, disponiendo de todas las funcionalidades que ofrece esta herramienta. \cite{jetbrains:students}
+
+\subsection{Postman}
+
+Postman es una herramienta diseñada para \textbf{construir, probar y usar APIs} (\textit{Application Programming Interfaces}).
+
+Esta herramienta soporta la \textbf{creación de colecciones de APIs}, lo cual es bastante útil a la hora de probar una API y sus distintos \textit{endpoints}, ya que sólo necesitas guardarlos una vez para poder hacer después todas las pruebas que desees.
+
+Postman también permite\textbf{ hacer solicitudes mediante cualquier método HTTP}, y tiene la capacidad de \textbf{ejecutar pruebas automatizadas}, lo cuál puede llegar a ser bastante útil en un desarrollo como este, en el que por un lado se dispone de una API propia (el \textit{backend}) y por otro lado se está usando una API externa (\textit{Nutritionix}) para obtener la información nutricional \cite{postman:main}.
+
+
+\section{Herramientas de gestión}
+
+\subsection{Metodología Scrum}
+
+Para el desarrollo de este proyecto he seguido la metodología Scrum, que es una forma de trabajo que permite \textbf{gran agilidad, flexibilidad y eficiencia en la gestión de proyectos de software} \cite{atlassian:scrum}.
+
+Un proceso Scrum \textbf{se ejecuta en base a la realización de sesiones de trabajo (\textit{sprints})} que suelen tener dos semanas de duración. Al finalizar cada sprint, se realiza la entrega específica que se ha definido y marcado inicialmente.
+
+Previamente al inicio del sprint, se realiza \textbf{una reunión de planificación} dirigida por el responsable del proyecto (\textit{Scrum Master}), que en este caso serían los tutores del TFG, en la que se marca al \textit{Equipo de Desarrollo}, es decir, a mí, \textbf{los objetivos a cumplir durante el sprint}, la metodología de trabajo a utilizar, o se analizan y solventan las dudas y obstáculos que puedan presentarse durante el mismo.
+
+Durante el periodo que dura el sprint, \textbf{se pueden realizar breves reuniones diarias}. En ellas se analizan los obstáculos surgidos en el día anterior y se sincronizan las actividades a realizar en ese día.
+
+Al finalizar el sprint, \textbf{se analiza si el trabajo realizado es óptimo y se ajusta a los objetivos} planteados inicialmente. Para ello se realiza una reunión retrospectiva en la que se analiza qué ha funcionado o no, y qué es mejorable.
+
+La utilidad de la metodología Scrum radica en varios aspectos destacables:
+\begin{itemize}
+  \item \textbf{Es flexible} y permite adaptarse a los cambios.
+  \item Es transparente y \textbf{fomenta la comunicación entre los miembros del equipo}, lo que además redunda en una mayor colaboración entre ellos.
+  \item Al final de cada sprint, \textbf{el producto final resulta mejorado e incrementado gracias a un proceso de retroalimentación}, lo que permite su mejora continua.
+\end{itemize}
+
+\subsection{Git}
+
+Git es una herramienta inicialmente diseñada por \textit{Linus Torvalds}, la cual permite el \textbf{control de versiones} de un proyecto de software. Este sistema de control gestiona los cambios y los diferentes estados y versiones por los que pasa el código de un proyecto, por lo que es una herramienta esencial para el desarrollo de cualquier proyecto, ya sea individual o colaborativo. \cite{atlassian:git}
+
+La base de Git son \textbf{los repositorios}, el lugar donde \textit{se va a almacenar todo el código y el histórico de cambios} que se ha producido sobre este. 
+
+Cada desarrollador va a disponer de su propio \textbf{repositorio local}, que no es más que \textit{su copia local del código y sus cambios}, sumado a los cambios que este mismo desarrollador haya realizado. 
+
+Además de esto, va a haber un \textbf{repositorio central}, que va a ser \textit{el lugar donde se unifican todos los cambios} que realicen los distintos desarrolladores. Los repositorios locales van a ser un \textit{clon} de este repositorio principal. Como veremos en el siguiente punto, en el caso de este proyecto el repositorio central se trata de GitHub.
+
+\imagen{git/repositorios_locales_y_remotos}{Los dos repositorios pueden llegar a estar en distintos puntos dentro de la misma rama \cite{git:git-basics}}{1}
+
+Los desarrolladores van a realizar los cambios e implementaciones pertinentes sobre el código, y una vez estén satisfechos con estos, van a realizar lo que se denomina como \textbf{commit}, \textit{una instantánea del código} en ese preciso momento.
+
+\imagen{git/commits}{Cada commit va a ser hijo del commit anterior a este \cite{git:git-basics}}{1}
+
+Para poder realizar modificaciones en el código sin pisar el desarrollo de otros compañeros, ni modificar el código principal de la aplicación, se da uso de lo que se denomina como \textbf{ramas o \textit{branches}}, que son \textit{versiones independientes del código en un estado concreto} (para seleccionar este momento indicamos de qué \textit{commit} partimos). Las ramas son un elemento fundamental a la hora de realizar implementaciones, experimentar con el código o simplemente hacer cambios, y son uno de los puntos clave en las buenas prácticas del desarrollo de software.
+
+\imagen{git/branches}{A partir de un commit pueden surgir varias ramas distintas \cite{git:git-basics}}{1}
+
+Una vez nuestros cambios estén listos, todo funcione correctamente y tengamos nuestros \textit{commits} hechos, podemos subir el código de nuestro repositorio local al repositorio central haciendo \textit{\textbf{push}}. De la misma forma, si nuestros compañeros han estado realizando cambios y queremos descargarlos a nuestro repositorio local, podemos hacerlo mediante \textit{\textbf{pull}}.
+
+En caso de que hayamos terminado con el trabajo de una rama concreta y queramos unificar estas modificaciones a la rama principal, usaremos la operación \textit{\textbf{merge}}, que se encargará de fusionar e integrar los cambios a la rama principal. \cite{git:git-basics}
+
+\imagen{git/merge}{Diagrama de una operación merge básica \cite{git:git-basics}}{1}
+
+\subsection{GitHub}
+
+GitHub es una plataforma web de Microsoft que permite \textbf{alojar el código de proyectos software que usen el sistema de control de versiones Git}, gestionar estos proyectos y sus tareas, y facilitar la colaboración entre usuarios.
+
+\imagen{GitHub/github-repo}{Repositorio de NutriMenu en GitHub}{1}
+
+Como GitHub actúa como un repositorio basado en Git, mediante GitHub se puede examinar todo el historial de versiones por las que ha pasado el código, volver hacia atrás en el tiempo y analizar la evolución de este. Además de esto, también permite hacer gestión de las ramas de los repositorios, con herramientas como las \textit{\textbf{pull requests}}, que permiten hacer solicitudes de \textit{merge} a los administradores de los proyectos, siendo esto un pilar fundamental en la comunidad de código abierto.
+
+Aparte de las funciones relacionadas con Git, GitHub también ofrece herramientas para gestionar tareas, como son los \textit{\textbf{issues}}, e incluso integración con la \textit{metodología Scrum} mediante el uso de \textit{\textbf{sprints}}, lo que ha hecho que haya terminado siendo mi herramienta de elección a la hora de gestionar este proyecto, tanto a nivel de código como de gestión de trabajo y tareas \cite{wikipedia:github}.
+
+\subsubsection{GitHub Actions}
+
+GitHub también ofrece \textbf{GitHub Actions}, una \textbf{plataforma de automatización que permite crear flujos de \textit{testing} personalizados}. Esto puede ser configurado para hacer que estas pruebas se ejecuten cada vez que hagamos un \textit{commit}, una \textit{pull request}... \cite{github-actions:docs}
+
+En caso de mi proyecto, cada vez que hago un \textit{commit} se ejecutan unas pruebas de \textit{build y ejecución} para asegurarme de que todo funciona correctamente, lo cuál me ha ayudado a evitar errores que podía haber llegado a pasar por alto.
+
+
+\section{API}
+
+\subsection{Nutritionix}
+
+Nutritionix es una de las \textbf{plataformas de información nutricional más grandes del mundo}, disponiendo de información verificada de más de 600.000 alimentos \cite{nutritionix:main}.
+
+La base de datos de la que dispone este servicio es usada por una gran cantidad de aplicaciones de salud y \textit{fitness}, y además de esto el servicio está dotado de \textbf{bases de datos regionales y especializadas} con los alimentos de cada lugar, lo cuál ha sido un punto muy a tener en cuenta, ya que al final el público base de este proyecto es el español, y no tiene sentido usar datos de una fuente de información en la que los alimentos van a venir en otro idioma o no va a disponer de los alimentos de esa zona.
+
+La API pública de la que disponen tiene opciones bastante competitivas si la comparamos con el resto de competidores en el mercado, especialmente el nivel gratuito, así que creo que es la opción perfecta para un proyecto de este nivel.
