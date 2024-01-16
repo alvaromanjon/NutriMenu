@@ -1,7 +1,8 @@
 import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowEmpresas from "./DataTableRowEmpresas";
-import { Table, Container } from "react-bootstrap";
+import { Table, Container, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Loading from "../../../utils/Loading";
 
 const DataTableEmpresas = () => {
@@ -30,6 +31,7 @@ const DataTableEmpresas = () => {
 
   return (
     <Container className="mt-3">
+      <Button className="mb-3" variant="primary" as={Link} to="/empresas/new">Crear una nueva empresa</Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>

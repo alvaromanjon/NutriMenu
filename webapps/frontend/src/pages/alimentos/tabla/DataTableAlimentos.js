@@ -2,7 +2,7 @@ import DataTableHeader from "../../../utils/DataTableHeader"
 import DataTableRowAlimentos from "./DataTableRowAlimentos";
 import { Button, Table, Container } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import Loading from "../../../utils/Loading";
 
 const DataTableAlimentos = () => {

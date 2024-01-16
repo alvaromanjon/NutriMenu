@@ -19,6 +19,7 @@ import DataTableAlimentos from "./pages/alimentos/tabla/DataTableAlimentos";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
+import NewEmpresa from "./pages/empresas/new/NewEmpresa";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
@@ -33,6 +34,9 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
       <Route path="empresas" element={<EmpresasLayout />}>
+        <Route path="new" element={<NewEmpresa />}>
+
+        </Route>
         <Route path="table" element={<DataTableEmpresas />} />
       </Route>
       <Route path="locales" element={<Locales />} />
@@ -55,7 +59,7 @@ const router = createBrowserRouter(
 function App() {
   return (
     <UserProvider>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </UserProvider>
   );
 }
