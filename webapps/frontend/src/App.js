@@ -16,15 +16,18 @@ import Platos from "./pages/platos/Platos";
 // Tablas
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
 import DataTableAlimentos from "./pages/alimentos/tabla/DataTableAlimentos";
+import DataTableLocales from "./pages/locales/tabla/DataTableLocales";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
 import NewEmpresa from "./pages/empresas/new/NewEmpresa";
+import NewLocal from "./pages/locales/new/NewLocal";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
 import EmpresasLayout from "./layouts/EmpresasLayout";
 import AlimentosLayout from "./layouts/AlimentosLayout";
+import LocalesLayout from "./layouts/LocalesLayout";
 import NewAlimentoSearch from "./pages/alimentos/new/NewAlimentoSearch";
 
 const router = createBrowserRouter(
@@ -33,15 +36,21 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
-      <Route path="empresas" element={<EmpresasLayout />}>
-        <Route path="new" element={<NewEmpresa />}>
 
-        </Route>
+      <Route path="empresas" element={<EmpresasLayout />}>
+        <Route path="new" element={<NewEmpresa />} />
         <Route path="table" element={<DataTableEmpresas />} />
       </Route>
-      <Route path="locales" element={<Locales />} />
+
+      <Route path="locales" element={<LocalesLayout />}>
+        <Route path="table" element={<DataTableLocales />} />
+        <Route path="new" element={<NewLocal />} />
+      </Route>
+
       <Route path="usuarios" element={<Usuarios />} />
+
       <Route path="menus" element={<Menus />} />
+
       <Route path="platos" element={<Platos />} />
 
       <Route path="alimentos" element={<AlimentosLayout />}>

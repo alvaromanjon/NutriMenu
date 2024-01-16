@@ -20,7 +20,7 @@ const RootLayout = () => {
           <Nav.Link className="ms-3" as={NavLink} to={"/empresas/table"}>
             Gestión de empresas
           </Nav.Link>
-          <Nav.Link className="ms-3" as={NavLink} to={"/locales"}>
+          <Nav.Link className="ms-3" as={NavLink} to={"/locales/table"}>
             Gestión de locales
           </Nav.Link>
           <Nav.Link className="ms-3" as={NavLink} to={"/usuarios"}>
