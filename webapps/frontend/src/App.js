@@ -17,17 +17,20 @@ import Platos from "./pages/platos/Platos";
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
 import DataTableAlimentos from "./pages/alimentos/tabla/DataTableAlimentos";
 import DataTableLocales from "./pages/locales/tabla/DataTableLocales";
+import DataTableUsuarios from "./pages/usuarios/tabla/DataTableUsuarios";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
 import NewEmpresa from "./pages/empresas/new/NewEmpresa";
 import NewLocal from "./pages/locales/new/NewLocal";
+import NewUsuario from "./pages/usuarios/new/NewUsuario";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
 import EmpresasLayout from "./layouts/EmpresasLayout";
 import AlimentosLayout from "./layouts/AlimentosLayout";
 import LocalesLayout from "./layouts/LocalesLayout";
+import UsuariosLayout from "./layouts/UsuariosLayout";
 import NewAlimentoSearch from "./pages/alimentos/new/NewAlimentoSearch";
 
 const router = createBrowserRouter(
@@ -47,7 +50,10 @@ const router = createBrowserRouter(
         <Route path="new" element={<NewLocal />} />
       </Route>
 
-      <Route path="usuarios" element={<Usuarios />} />
+      <Route path="usuarios" element={<UsuariosLayout />}>
+        <Route path="table" element={<DataTableUsuarios />} />
+        <Route path="new" element={<NewUsuario />} />
+      </Route>
 
       <Route path="menus" element={<Menus />} />
 

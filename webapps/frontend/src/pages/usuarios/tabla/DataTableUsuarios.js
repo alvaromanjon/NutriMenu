@@ -1,6 +1,7 @@
 import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowUsuarios from "./DataTableRowUsuarios";
-import { Table, Container } from "react-bootstrap";
+import { Table, Container, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loading from "../../../utils/Loading";
 
@@ -30,6 +31,7 @@ const DataTableUsuarios = () => {
 
   return (
     <Container className="mt-3">
+      <Button className="mb-3" variant="primary" as={Link} to="/usuarios/new">Crear un nuevo usuario</Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>
