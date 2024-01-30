@@ -7,8 +7,8 @@ const UsuariosLayout = () => {
         <h2 className="ms-3">Gestión de usuarios</h2>
       </div>
       <Outlet />
-    </div >
+    </div>
   );
-}
+};
 
 export default UsuariosLayout;

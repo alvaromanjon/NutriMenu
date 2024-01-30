@@ -7,8 +7,8 @@ const Platos = () => {
         <h2 className="ms-3">Gestión de platos</h2>
       </div>
       <DataTablePlatos />
-    </div >
+    </div>
   );
-}
+};
 
 export default Platos;

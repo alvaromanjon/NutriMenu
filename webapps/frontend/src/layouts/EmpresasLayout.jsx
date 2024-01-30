@@ -7,8 +7,8 @@ const EmpresasLayout = () => {
         <h2 className="ms-3">Gestión de empresas</h2>
       </div>
       <Outlet />
-    </div >
+    </div>
   );
-}
+};
 
 export default EmpresasLayout;

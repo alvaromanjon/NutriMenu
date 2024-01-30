@@ -4,10 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 const Home = () => {
   const { usuario, setUsuario } = useContext(UserContext);
 
-  return (
-    <>
-    </>
-  )
-}
+  return <></>;
+};
 
 export default Home;

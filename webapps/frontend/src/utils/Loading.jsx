@@ -1,4 +1,4 @@
-import { Spinner, Container } from 'react-bootstrap'
+import { Spinner, Container } from "react-bootstrap";
 
 const Loading = () => {
   return (
@@ -7,8 +7,7 @@ const Loading = () => {
         <span className="visually-hidden">Cargando...</span>
       </Spinner>
     </Container>
-
   );
-}
+};
 
 export default Loading;

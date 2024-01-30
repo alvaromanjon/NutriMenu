@@ -31,7 +31,9 @@ const DataTableUsuarios = () => {
 
   return (
     <Container className="mt-3">
-      <Button className="mb-3" variant="primary" as={Link} to="/usuarios/new">Crear un nuevo usuario</Button>
+      <Button className="mb-3" variant="primary" as={Link} to="/usuarios/new">
+        Crear un nuevo usuario
+      </Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>

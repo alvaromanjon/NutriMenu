@@ -44,4 +44,4 @@ const DataTableMenus = () => {
   );
 };
 
-export default DataTableMenus
+export default DataTableMenus;

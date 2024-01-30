@@ -7,8 +7,8 @@ const LocalesLayout = () => {
         <h2 className="ms-3">Gestión de locales</h2>
       </div>
       <Outlet />
-    </div >
+    </div>
   );
-}
+};
 
 export default LocalesLayout;

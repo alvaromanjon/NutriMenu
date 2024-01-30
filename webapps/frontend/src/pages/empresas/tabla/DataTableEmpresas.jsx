@@ -31,7 +31,9 @@ const DataTableEmpresas = () => {
 
   return (
     <Container className="mt-3">
-      <Button className="mb-3" variant="primary" as={Link} to="/empresas/new">Crear una nueva empresa</Button>
+      <Button className="mb-3" variant="primary" as={Link} to="/empresas/new">
+        Crear una nueva empresa
+      </Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>

@@ -65,8 +65,8 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 function App() {

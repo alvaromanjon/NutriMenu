@@ -7,8 +7,8 @@ const Menus = () => {
         <h2 className="ms-3">Gestión de menús</h2>
       </div>
       <DataTableMenus />
-    </div >
+    </div>
   );
-}
+};
 
 export default Menus;

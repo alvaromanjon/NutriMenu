@@ -16,26 +16,28 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     fetch(`http://localhost:8080/usuarios?usuario=${usuario}`, {
-      method: 'GET'
-    }).then(res => {
-      if (!res.ok) {
-        setErrorData(res);
-        if (res.status === 400) {
-          setUserNotExists(true);
-          console.error("No existe el usuario: ", errorData);
+      method: "GET",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          setErrorData(res);
+          if (res.status === 400) {
+            setUserNotExists(true);
+            console.error("No existe el usuario: ", errorData);
+          }
         }
-      }
-      setUserExists(true);
-      return res.json()
-    }).then(data => {
-      setUsuarioActualizar(data[0]);
-    });
-  }
+        setUserExists(true);
+        return res.json();
+      })
+      .then((data) => {
+        setUsuarioActualizar(data[0]);
+      });
+  };
 
   const handleChange = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (newPassword !== repeatNewPassword) {
       setPasswordsDontMatch(true);
       setPasswordsMatch(false);
@@ -44,31 +46,33 @@ const ForgotPassword = () => {
       setPasswordsMatch(true);
 
       fetch(`http://localhost:8080/usuarios?id_usuario=${usuarioActualizar.id}`, {
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify({
           password: newPassword,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-        }
-      }).then(res => {
-        if (!res.ok) {
-          setErrorData(res);
-          if (res.status === 400) {
-            setUserNotExists(true);
-            console.error("No existe el usuario: ", errorData);
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            setErrorData(res);
+            if (res.status === 400) {
+              setUserNotExists(true);
+              console.error("No existe el usuario: ", errorData);
+            }
           }
-        }
-        return res.json()
-      }).then(data => {
-        setUsuarioActualizar(data);
-      });
+          return res.json();
+        })
+        .then((data) => {
+          setUsuarioActualizar(data);
+        });
     }
 
     setTimeout(() => {
       navigate("/login");
     }, 800);
-  }
+  };
 
   const showCheckUser = () => {
     return (

@@ -33,7 +33,7 @@ const Login = () => {
       if (response.ok) {
         if (response.status === 200) {
           setUsuario(responseData);
-          navigate('/');
+          navigate("/");
         }
       } else {
         setErrorData(responseData);
@@ -109,7 +109,7 @@ const Login = () => {
               type="submit"
               size="sm"
               onClick={() => {
-                navigate('/');
+                navigate("/");
               }}
             >
               Acceder como cliente

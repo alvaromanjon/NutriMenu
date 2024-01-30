@@ -7,8 +7,8 @@ const Usuarios = () => {
         <h2 className="ms-3">Gestión de usuarios</h2>
       </div>
       <DataTableUsuarios />
-    </div >
+    </div>
   );
-}
+};
 
 export default Usuarios;

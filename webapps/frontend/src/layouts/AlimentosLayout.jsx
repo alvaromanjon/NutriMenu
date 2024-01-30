@@ -7,9 +7,8 @@ const AlimentosLayout = () => {
         <h2 className="ms-3">Gestión de alimentos</h2>
       </div>
       <Outlet />
-    </div >
-
+    </div>
   );
-}
+};
 
 export default AlimentosLayout;
