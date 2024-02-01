@@ -159,7 +159,7 @@ const ForgotPassword = () => {
               type="submit"
               size="sm"
               onClick={() => {
-                navigate.go(-1);
+                navigate(-1);
               }}
             >
               Volver
