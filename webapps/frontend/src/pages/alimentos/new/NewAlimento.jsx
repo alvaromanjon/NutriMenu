@@ -17,7 +17,7 @@ const NewAlimento = () => {
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col md={6}>
+        <Col md={10}>
           <Card>
             <Card.Body className="p-4">
               <Outlet />

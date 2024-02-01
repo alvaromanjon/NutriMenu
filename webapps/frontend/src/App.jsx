@@ -5,7 +5,7 @@ import { UserProvider } from "./contexts/UserContext";
 
 // Pages
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
+import { Login } from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
 import Menus from "./pages/menus/Menus";
@@ -22,6 +22,11 @@ import NewAlimento from "./pages/alimentos/new/NewAlimento";
 import NewEmpresa from "./pages/empresas/new/NewEmpresa";
 import NewLocal from "./pages/locales/new/NewLocal";
 import NewUsuario from "./pages/usuarios/new/NewUsuario";
+import NewAlimentoSearch from "./pages/alimentos/new/NewAlimentoSearch";
+import NewAlimentoCreate from "./pages/alimentos/new/NewAlimentoCreate";
+import NewAlimentoCreateComponents from "./pages/alimentos/new/NewAlimentoCreateComponents";
+import NewAlimentoCreateMinerals from "./pages/alimentos/new/NewAlimentoCreateMinerals";
+import NewAlimentoCreateVitamins from "./pages/alimentos/new/NewAlimentoCreateVitamins";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
@@ -29,7 +34,6 @@ import EmpresasLayout from "./layouts/EmpresasLayout";
 import AlimentosLayout from "./layouts/AlimentosLayout";
 import LocalesLayout from "./layouts/LocalesLayout";
 import UsuariosLayout from "./layouts/UsuariosLayout";
-import NewAlimentoSearch from "./pages/alimentos/new/NewAlimentoSearch";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,6 +65,10 @@ const router = createBrowserRouter(
         <Route path="table" element={<DataTableAlimentos />} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
+          <Route path="create" element={<NewAlimentoCreate />} />
+          <Route path="createComponents" element={<NewAlimentoCreateComponents />} />
+          <Route path="createVitamins" element={<NewAlimentoCreateVitamins />} />
+          <Route path="createMinerals" element={<NewAlimentoCreateMinerals />} />
         </Route>
       </Route>
 
