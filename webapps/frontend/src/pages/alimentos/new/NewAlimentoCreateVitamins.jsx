@@ -1,75 +1,96 @@
+import { useState } from "react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-
-const NewAlimentoVitaminsElements = () => {
-  return (
-    <>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina A</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina D</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina E</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B9</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B3</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B2</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B1</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B12</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina B6</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Vitamina C</Form.Label>
-        <Form.Control type="number" placeholder="100" required="true" />
-        <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
-      </Form.Group>
-    </>
-  );
-};
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NewAlimentoCreateVitamins = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const alimentoData = location.state.alimento || {};
+  const componentesData = location.state.componentes || {};
+  const [vitaminasData, setVitaminasData] = useState({
+    vitaminaA: 0,
+    vitaminaD: 0,
+    vitaminaE: 0,
+    vitaminaB9: 0,
+    vitaminaB3: 0,
+    vitaminaB2: 0,
+    vitaminaB1: 0,
+    vitaminaB12: 0,
+    vitaminaB6: 0,
+    vitaminaC: 0,
+  });
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setVitaminasData({ ...vitaminasData, [name]: value });
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    navigate("/alimentos/new/createMinerals", {
+      state: { alimento: alimentoData, componentes: componentesData, vitaminas: vitaminasData },
+    });
+  };
+
   return (
     <Container fluid="xxl">
       <Row>
         <Col className="col-2"></Col>
         <Col>
           <h1 className="h2 text-center my-4">Vitaminas del alimento</h1>
-          <Form className="justify-content-md-center">
-            {<NewAlimentoVitaminsElements />}
+          <Form className="justify-content-md-center" onSubmit={handleNext}>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina A</Form.Label>
+              <Form.Control name="vitaminaA" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina D</Form.Label>
+              <Form.Control name="vitaminaD" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina E</Form.Label>
+              <Form.Control name="vitaminaE" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B9</Form.Label>
+              <Form.Control name="vitaminaB9" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B3</Form.Label>
+              <Form.Control name="vitaminaB3" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B2</Form.Label>
+              <Form.Control name="vitaminaB2" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B1</Form.Label>
+              <Form.Control name="vitaminaB1" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B12</Form.Label>
+              <Form.Control name="vitaminaB12" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina B6</Form.Label>
+              <Form.Control name="vitaminaB6" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Vitamina C</Form.Label>
+              <Form.Control name="vitaminaC" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
+            </Form.Group>
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
-              <Button className="btn-primary" as={Link} to="/alimentos/new/createMinerals">
+              <Button className="btn-primary" type="submit">
                 Continuar
               </Button>
               <Button
