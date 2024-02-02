@@ -38,90 +38,42 @@ const NewAlimentoCreateComponents = () => {
           <Form className="justify-content-md-center" onSubmit={handleNext}>
             <Form.Group className="mb-3">
               <Form.Label>Calorías</Form.Label>
-              <Form.Control
-                name="calorias"
-                type="number"
-                placeholder="100"
-                value={componentesData.calorias}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="calorias" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en kilocalorías (kcal)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Grasas</Form.Label>
-              <Form.Control
-                name="grasas"
-                type="number"
-                placeholder="100"
-                value={componentesData.grasas}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="grasas" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Grasas saturadas</Form.Label>
-              <Form.Control
-                name="grasasSaturadas"
-                type="number"
-                placeholder="100"
-                value={componentesData.grasasSaturadas}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="grasasSaturadas" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Hidratos de carbono</Form.Label>
-              <Form.Control
-                name="hidratosCarbono"
-                type="number"
-                placeholder="100"
-                value={componentesData.hidratosCarbono}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="hidratosCarbono" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Azúcares</Form.Label>
-              <Form.Control
-                name="azucares"
-                type="number"
-                placeholder="100"
-                value={componentesData.azucares}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="azucares" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Fibra</Form.Label>
-              <Form.Control
-                name="fibra"
-                type="number"
-                placeholder="100"
-                value={componentesData.fibra}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="fibra" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Proteínas</Form.Label>
-              <Form.Control
-                name="proteinas"
-                type="number"
-                placeholder="100"
-                value={componentesData.proteinas}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="proteinas" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Sal</Form.Label>
-              <Form.Control
-                name="sal"
-                type="number"
-                placeholder="100"
-                value={componentesData.sal}
-                onChange={handleFormChange}
-              />
+              <Form.Control name="sal" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en gramos (g)</Form.Text>
             </Form.Group>
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">

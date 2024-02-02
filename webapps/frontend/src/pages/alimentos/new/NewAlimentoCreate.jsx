@@ -37,7 +37,6 @@ const NewAlimentoCreate = () => {
                 id="nombreAlimento"
                 type="text"
                 placeholder="Lentejas"
-                value={alimentoData.nombre}
                 onChange={handleFormChange}
               />
             </div>
@@ -45,13 +44,7 @@ const NewAlimentoCreate = () => {
               <label htmlFor="grupoAlimenticio" className="form-label">
                 Grupo alimenticio
               </label>
-              <select
-                name="grupoAlimento"
-                id="grupoAlimenticio"
-                className="form-select"
-                value={alimentoData.grupoAlimento}
-                onChange={handleFormChange}
-              >
+              <select name="grupoAlimento" id="grupoAlimenticio" className="form-select" onChange={handleFormChange}>
                 <option value="LACTEOS">Lácteos</option>
                 <option value="PROTEICOS">Alimentos proteicos</option>
                 <option value="FRUTA">Fruta</option>
