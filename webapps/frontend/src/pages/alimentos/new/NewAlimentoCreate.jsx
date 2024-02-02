@@ -4,19 +4,20 @@ import { useNavigate } from "react-router-dom";
 
 const NewAlimentoCreate = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [alimentoData, setAlimentoData] = useState({
     nombre: "",
-    grupoAlimenticio: "Lácteos",
+    grupoAlimento: "Lácteos",
+    componentesNutricionales: null,
   });
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setAlimentoData({ ...alimentoData, [name]: value });
   };
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate("/alimentos/new/createComponents", { state: { formData } });
+    navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
   };
 
   return (
@@ -31,12 +32,12 @@ const NewAlimentoCreate = () => {
                 Nombre del alimento
               </label>
               <input
-                className="form-control"
                 name="nombre"
+                className="form-control"
                 id="nombreAlimento"
                 type="text"
                 placeholder="Lentejas"
-                value={formData.nombre}
+                value={alimentoData.nombre}
                 onChange={handleFormChange}
               />
             </div>
@@ -45,21 +46,21 @@ const NewAlimentoCreate = () => {
                 Grupo alimenticio
               </label>
               <select
-                name="grupoAlimenticio"
+                name="grupoAlimento"
                 id="grupoAlimenticio"
                 className="form-select"
-                value={formData.grupoAlimenticio}
+                value={alimentoData.grupoAlimento}
                 onChange={handleFormChange}
               >
-                <option>Lácteos</option>
-                <option>Alimentos proteicos</option>
-                <option>Fruta</option>
-                <option>Verduras</option>
-                <option>Cereales</option>
-                <option>Grasas</option>
-                <option>Legumbres</option>
-                <option>Combinación de alimentos</option>
-                <option>No aplica</option>
+                <option value="LACTEOS">Lácteos</option>
+                <option value="PROTEICOS">Alimentos proteicos</option>
+                <option value="FRUTA">Fruta</option>
+                <option value="VERDURAS">Verduras</option>
+                <option value="CEREALES">Cereales</option>
+                <option value="GRASAS">Grasas</option>
+                <option value="LEGUMBRES">Legumbres</option>
+                <option value="COMBINACION">Combinación de alimentos</option>
+                <option value="NO_APLICA">No aplica</option>
               </select>
             </div>
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
