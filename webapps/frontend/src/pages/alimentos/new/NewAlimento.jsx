@@ -1,5 +1,5 @@
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
 const NewAlimento = () => {
   return (
@@ -8,10 +8,10 @@ const NewAlimento = () => {
       <h5 className="text-center mt-3">¿Cómo quieres crear el alimento?</h5>
       <Row className="justify-content-center mb-4">
         <Col xs="auto">
-          <Button variant="primary" as={Link} to="search" className="me-2 mt-2">
+          <Button variant="primary" as={NavLink} to="search" className="me-2 mt-2">
             Buscar en Nutritionix
           </Button>
-          <Button variant="secondary" className="ms-2 mt-2" as={Link} to="create">
+          <Button variant="primary" className="ms-2 mt-2" as={NavLink} to="create">
             Crear a mano
           </Button>
         </Col>
