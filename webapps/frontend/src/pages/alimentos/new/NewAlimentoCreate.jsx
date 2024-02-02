@@ -18,6 +18,7 @@ const NewAlimentoCreate = () => {
   const handleNext = (e) => {
     e.preventDefault();
     navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
+    window.scrollTo(0, 0);
   };
 
   return (
