@@ -1,18 +1,15 @@
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { Form, Button, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { useState } from "react";
 import NewAlimentoSearchList from "./NewAlimentoSearchList";
 
 const NewAlimentoSearch = () => {
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [searchResults, setSearchResults] = useState(null);
-  const [errorData, setErrorData] = useState(null);
 
-  // Para obtener la informacion completa
-
-  // Para obtener la informacion completa
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    fetch(`https://trackapi.nutritionix.com/v2/search/instant?query=${search}&locale=es_ES`, {
+  const searchData = async () => {
+    const requestOptions = {
       method: "GET",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -20,21 +17,41 @@ const NewAlimentoSearch = () => {
         "x-app-key": import.meta.env.VITE_NUTRI_X_APP_KEY,
         "x-remote-user-id": import.meta.env.VITE_NUTRI_X_REMOTE_USER_ID,
       },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          setErrorData(res);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setSearchResults(data || []);
-      });
+    };
+
+    const response = await fetch(
+      `https://trackapi.nutritionix.com/v2/search/instant?query=${search}&locale=es_ES`,
+      requestOptions,
+    );
+    const data = await response.json();
+
+    setLoading(false);
+    if (!response.ok) {
+      setLoading(false);
+      setError(true);
+      return null;
+    } else {
+      setLoading(false);
+      setError(false);
+      return data;
+    }
+  };
+
+  const handleSearch = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    if (search !== "") {
+      setSearchResults(await searchData());
+    } else {
+      setLoading(false);
+      setError(true);
+      setSearchResults(null);
+    }
   };
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSearch}>
         <Row className="align-items-center">
           <Col>
             <Form.Group className="mb-0" controlId="formSearch">
@@ -51,7 +68,19 @@ const NewAlimentoSearch = () => {
           </Col>
         </Row>
       </Form>
+      <Row className="justify-content-center mt-4">
+        {loading && (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
+      </Row>
 
+      {error && (
+        <Alert className="mt-3 mb-1" variant="danger">
+          Introduce un valor en la barra de búsqueda{" "}
+        </Alert>
+      )}
       {searchResults && <NewAlimentoSearchList data={searchResults} />}
     </>
   );
