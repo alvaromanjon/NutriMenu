@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const NewAlimentoCreateVitamins = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const firstInput = useRef(null);
   const alimentoData = location.state.alimento || {};
   const componentesData = location.state.componentes || {};
   const [vitaminasData, setVitaminasData] = useState({
@@ -19,6 +20,10 @@ const NewAlimentoCreateVitamins = () => {
     vitaminaB6: 0,
     vitaminaC: 0,
   });
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, []);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +47,13 @@ const NewAlimentoCreateVitamins = () => {
           <Form className="justify-content-md-center" onSubmit={handleNext}>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina A</Form.Label>
-              <Form.Control name="vitaminaA" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                ref={firstInput}
+                name="vitaminaA"
+                type="number"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">

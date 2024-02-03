@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const NewAlimentoCreateComponents = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const firstInput = useRef(null);
   const alimentoData = location.state.alimento || {};
   const [componentesData, setComponentesData] = useState({
     calorias: 0,
@@ -18,6 +19,10 @@ const NewAlimentoCreateComponents = () => {
     vitaminas: null,
     minerales: null,
   });
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, []);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +44,13 @@ const NewAlimentoCreateComponents = () => {
           <Form className="justify-content-md-center" onSubmit={handleNext}>
             <Form.Group className="mb-3">
               <Form.Label>Calorías</Form.Label>
-              <Form.Control name="calorias" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                ref={firstInput}
+                name="calorias"
+                type="number"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en kilocalorías (kcal)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">

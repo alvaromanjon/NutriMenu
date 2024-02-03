@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, Row, Col, Container, Button, Alert } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const NewAlimentoCreateMinerals = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const firstInput = useRef(null);
   const [error, setError] = useState(false);
   const alimentoData = location.state.alimento || {};
   const componentesData = location.state.componentes || {};
@@ -19,6 +20,10 @@ const NewAlimentoCreateMinerals = () => {
     selenio: 0,
     zinc: 0,
   });
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, []);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +69,7 @@ const NewAlimentoCreateMinerals = () => {
           <Form className="justify-content-md-center" onSubmit={handleNext}>
             <Form.Group className="mb-3">
               <Form.Label>Calcio</Form.Label>
-              <Form.Control name="calcio" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control ref={firstInput} name="calcio" type="number" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
