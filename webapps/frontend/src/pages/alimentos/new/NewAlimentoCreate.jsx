@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const NewAlimentoCreate = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
   const [alimentoData, setAlimentoData] = useState({
     nombre: "",
-    grupoAlimento: "Lácteos",
+    grupoAlimento: "LACTEOS",
     componentesNutricionales: null,
   });
 
@@ -15,10 +16,24 @@ const NewAlimentoCreate = () => {
     setAlimentoData({ ...alimentoData, [name]: value });
   };
 
-  const handleNext = (e) => {
+  const checkData = async () => {
+    const response = await fetch(`http://localhost:8080/alimentos?nombre=${alimentoData.nombre}`);
+    const data = await response.json();
+
+    if (response.ok) {
+      if (data.length !== 0) {
+        setError(true);
+      } else {
+        setError(false);
+        navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
+        window.scrollTo(0, 0);
+      }
+    }
+  };
+
+  const handleNext = async (e) => {
     e.preventDefault();
-    navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
-    window.scrollTo(0, 0);
+    checkData();
   };
 
   return (
@@ -57,6 +72,11 @@ const NewAlimentoCreate = () => {
                 <option value="NO_APLICA">No aplica</option>
               </select>
             </div>
+            {error && (
+              <Alert className="mt-3 mb-1" variant="danger">
+                Ya existe un alimento con este nombre
+              </Alert>
+            )}
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
               <button className="btn btn-primary" type="submit">
                 Continuar

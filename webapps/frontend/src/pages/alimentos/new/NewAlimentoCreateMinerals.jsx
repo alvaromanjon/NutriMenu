@@ -48,6 +48,7 @@ const NewAlimentoCreateMinerals = () => {
     const response = await fetch("http://localhost:8080/alimentos", requestOptions);
 
     if (response.ok) {
+      setError(false);
       navigate("/alimentos/table");
     } else {
       setError(true);
