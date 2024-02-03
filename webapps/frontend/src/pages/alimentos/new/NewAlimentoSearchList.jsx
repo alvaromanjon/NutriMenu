@@ -41,7 +41,7 @@ const NewAlimentoSearchList = ({ data }) => {
   };
 
   return (
-    <ListGroup>
+    <ListGroup className="mt-4">
       {data &&
         data.common.map &&
         data.common.map((result, index) => (

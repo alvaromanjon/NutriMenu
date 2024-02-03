@@ -68,13 +68,14 @@ const NewAlimentoSearch = () => {
           </Col>
         </Row>
       </Form>
-      <Row className="justify-content-center mt-4">
-        {loading && (
+
+      {loading && (
+        <Row className="justify-content-center mt-4">
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
-        )}
-      </Row>
+        </Row>
+      )}
 
       {error && (
         <Alert className="mt-3 mb-1" variant="danger">
