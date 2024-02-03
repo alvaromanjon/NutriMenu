@@ -1,6 +1,7 @@
-import { ListGroup, Button } from "react-bootstrap";
+import { ListGroup, Button, Row, Col } from "react-bootstrap";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./styles.css";
 
 const NewAlimentoSearchList = ({ data }) => {
   const [alimentoEscogido, setAlimentoEscogido] = useState(null);
@@ -44,18 +45,28 @@ const NewAlimentoSearchList = ({ data }) => {
       {data &&
         data.common.map &&
         data.common.map((result, index) => (
-          <ListGroup.Item key={index} className="mt-3 d-flex justify-content-between align-items-center">
-            {capitalizeFirstLetter(result.food_name)}
-            <Button
-              className="ms-5 my-3"
-              variant="primary"
-              onClick={() => {
-                setAlimentoEscogido(data.common[index]);
-                handleSubmitPost(result);
-              }}
-            >
-              Añadir
-            </Button>
+          <ListGroup.Item key={index}>
+            <Row className="align-items-center">
+              <Col className="col-auto ms-3">
+                <img
+                  className="list-images img-thumbnail rounded float-left"
+                  src={result.photo.thumb}
+                  alt={"Imagen de " + capitalizeFirstLetter(result.food_name)}
+                />
+              </Col>
+              <Col className="ms-3">{capitalizeFirstLetter(result.food_name)}</Col>
+              <Col className="col-auto me-3">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setAlimentoEscogido(data.common[index]);
+                    handleSubmitPost(result);
+                  }}
+                >
+                  Añadir
+                </Button>
+              </Col>
+            </Row>
           </ListGroup.Item>
         ))}
     </ListGroup>
