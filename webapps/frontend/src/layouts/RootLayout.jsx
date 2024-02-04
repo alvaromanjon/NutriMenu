@@ -18,16 +18,16 @@ const RootLayout = () => {
     return (
       <>
         <Nav className="mr-auto">
-          <Nav.Link className="ms-3" as={NavLink} to={"/empresas/table"} onClick={() => setExpanded(false)}>
+          <Nav.Link className="ms-3" as={NavLink} to={"/empresas"} onClick={() => setExpanded(false)}>
             Gestión de empresas
           </Nav.Link>
-          <Nav.Link className="ms-3" as={NavLink} to={"/locales/table"} onClick={() => setExpanded(false)}>
+          <Nav.Link className="ms-3" as={NavLink} to={"/locales"} onClick={() => setExpanded(false)}>
             Gestión de locales
           </Nav.Link>
-          <Nav.Link className="ms-3" as={NavLink} to={"/usuarios/table"} onClick={() => setExpanded(false)}>
+          <Nav.Link className="ms-3" as={NavLink} to={"/usuarios"} onClick={() => setExpanded(false)}>
             Gestión de usuarios
           </Nav.Link>
-          <Nav.Link className="ms-3" as={NavLink} to={"/alimentos/table"} onClick={() => setExpanded(false)}>
+          <Nav.Link className="ms-3" as={NavLink} to={"/alimentos"} onClick={() => setExpanded(false)}>
             Gestión de alimentos
           </Nav.Link>
         </Nav>

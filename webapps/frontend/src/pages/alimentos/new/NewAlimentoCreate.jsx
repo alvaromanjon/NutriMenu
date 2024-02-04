@@ -28,7 +28,7 @@ const NewAlimentoCreate = () => {
         setErrorMessage("Ya existe un alimento con este nombre");
       } else {
         setErrorFlag(false);
-        navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
+        navigate("/alimentos/new/create/components", { state: { alimento: alimentoData } });
         window.scrollTo(0, 0);
       }
     }
@@ -108,7 +108,7 @@ const NewAlimentoCreate = () => {
               <Button
                 className="btn-secondary"
                 onClick={() => {
-                  navigate("/alimentos/table");
+                  navigate("/alimentos");
                 }}
               >
                 Volver

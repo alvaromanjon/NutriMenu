@@ -124,7 +124,7 @@ const NewAlimentoSearchList = ({ data }) => {
 
       if (response.ok) {
         setErrorFlag(false);
-        navigate("/alimentos/table");
+        navigate("/alimentos");
       } else {
         setErrorFlag(true);
         setErrorMessage("Ya existe un alimento con ese nombre en la base de datos");

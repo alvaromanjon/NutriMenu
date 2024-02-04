@@ -49,7 +49,7 @@ const NewAlimentoCreateMinerals = () => {
 
     if (response.ok) {
       setError(false);
-      navigate("/alimentos/table");
+      navigate("/alimentos");
     } else {
       setError(true);
     }

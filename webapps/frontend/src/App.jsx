@@ -43,34 +43,34 @@ const router = createBrowserRouter(
       <Route path="forgot-password" element={<ForgotPassword />} />
 
       <Route path="empresas" element={<EmpresasLayout />}>
+        <Route index element={<DataTableEmpresas />} />
         <Route path="new" element={<NewEmpresa />} />
-        <Route path="table" element={<DataTableEmpresas />} />
       </Route>
 
       <Route path="locales" element={<LocalesLayout />}>
-        <Route path="table" element={<DataTableLocales />} />
+        <Route index element={<DataTableLocales />} />
         <Route path="new" element={<NewLocal />} />
       </Route>
 
       <Route path="usuarios" element={<UsuariosLayout />}>
-        <Route path="table" element={<DataTableUsuarios />} />
+        <Route index element={<DataTableUsuarios />} />
         <Route path="new" element={<NewUsuario />} />
+      </Route>
+
+      <Route path="alimentos" element={<AlimentosLayout />}>
+        <Route index element={<DataTableAlimentos />} />
+        <Route path="new" element={<NewAlimento />}>
+          <Route path="search" element={<NewAlimentoSearch />} />
+          <Route path="create" element={<NewAlimentoCreate />} />
+          <Route path="create/components" element={<NewAlimentoCreateComponents />} />
+          <Route path="create/vitamins" element={<NewAlimentoCreateVitamins />} />
+          <Route path="create/minerals" element={<NewAlimentoCreateMinerals />} />
+        </Route>
       </Route>
 
       <Route path="menus" element={<Menus />} />
 
       <Route path="platos" element={<Platos />} />
-
-      <Route path="alimentos" element={<AlimentosLayout />}>
-        <Route path="table" element={<DataTableAlimentos />} />
-        <Route path="new" element={<NewAlimento />}>
-          <Route path="search" element={<NewAlimentoSearch />} />
-          <Route path="create" element={<NewAlimentoCreate />} />
-          <Route path="createComponents" element={<NewAlimentoCreateComponents />} />
-          <Route path="createVitamins" element={<NewAlimentoCreateVitamins />} />
-          <Route path="createMinerals" element={<NewAlimentoCreateMinerals />} />
-        </Route>
-      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Route>,

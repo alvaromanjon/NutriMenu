@@ -31,7 +31,7 @@ const NewAlimentoCreateComponents = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate("/alimentos/new/createVitamins", { state: { alimento: alimentoData, componentes: componentesData } });
+    navigate("/alimentos/new/create/vitamins", { state: { alimento: alimentoData, componentes: componentesData } });
     window.scrollTo(0, 0);
   };
 

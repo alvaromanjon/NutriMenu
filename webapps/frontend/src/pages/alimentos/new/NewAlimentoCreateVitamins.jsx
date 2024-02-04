@@ -32,7 +32,7 @@ const NewAlimentoCreateVitamins = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate("/alimentos/new/createMinerals", {
+    navigate("/alimentos/new/create/minerals", {
       state: { alimento: alimentoData, componentes: componentesData, vitaminas: vitaminasData },
     });
     window.scrollTo(0, 0);
