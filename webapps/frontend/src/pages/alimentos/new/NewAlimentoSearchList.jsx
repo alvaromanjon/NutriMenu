@@ -1,4 +1,4 @@
-import { ListGroup, Button, Row, Col } from "react-bootstrap";
+import { ListGroup, Button, Row, Col, Alert } from "react-bootstrap";
 import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
 import { useEffect, useState } from "react";
 import "./styles.css";
@@ -8,7 +8,8 @@ const NewAlimentoSearchList = ({ data }) => {
   const navigate = useNavigate();
   const [alimentoEscogido, setAlimentoEscogido] = useState(null);
   let infoAlimento = null;
-  const [error, setError] = useState(false);
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const transformData = (alimentoAPI) => {
     let transformedData = {};
@@ -73,8 +74,14 @@ const NewAlimentoSearchList = ({ data }) => {
       fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", requestOptions)
         .then((response) => response.json())
         .then((data) => {
+          setErrorFlag(false);
           infoAlimento = transformData(data);
           sendData(infoAlimento);
+        })
+        .catch((error) => {
+          setErrorFlag(true);
+          setErrorMessage("Se ha producido un error a la hora de obtener la información de Nutritionix");
+          console.error(error);
         });
     };
 
@@ -90,10 +97,11 @@ const NewAlimentoSearchList = ({ data }) => {
       const response = await fetch("http://localhost:8080/alimentos", requestOptions);
 
       if (response.ok) {
-        setError(false);
+        setErrorFlag(false);
         navigate("/alimentos/table");
       } else {
-        setError(true);
+        setErrorFlag(true);
+        setErrorMessage("Ya existe un alimento con ese nombre en la base de datos");
       }
     };
 
@@ -108,38 +116,44 @@ const NewAlimentoSearchList = ({ data }) => {
   };
 
   return (
-    <ListGroup className="mt-4">
-      {data &&
-        data.common.map &&
-        data.common.map((result, index) => (
-          <ListGroup.Item key={index}>
-            <Row className="align-items-center">
-              <Col className="col-3 col-lg-2">
-                <img
-                  className="list-images img-thumbnail ms-lg-2"
-                  src={result.photo.thumb}
-                  alt={"Imagen de " + capitalizeFirstLetter(result.food_name)}
-                />
-              </Col>
-              <Col className="col-5 col-lg-7">
-                <span className="ms-lg-5">{capitalizeFirstLetter(result.food_name)}</span>
-              </Col>
-              <Col className="col-4 col-lg-3 d-flex justify-content-end">
-                <Button
-                  variant="primary"
-                  className="me-lg-3"
-                  onClick={() => {
-                    setAlimentoEscogido(data.common[index]);
-                    //handleSubmitPost(result);
-                  }}
-                >
-                  Añadir
-                </Button>
-              </Col>
-            </Row>
-          </ListGroup.Item>
-        ))}
-    </ListGroup>
+    <>
+      {errorFlag && (
+        <Alert className="mt-3 mb-1" variant="danger">
+          {errorMessage}
+        </Alert>
+      )}
+      <ListGroup className="mt-4">
+        {data &&
+          data.common.map &&
+          data.common.map((result, index) => (
+            <ListGroup.Item key={index}>
+              <Row className="align-items-center">
+                <Col className="col-3 col-lg-2">
+                  <img
+                    className="list-images img-thumbnail ms-lg-2"
+                    src={result.photo.thumb}
+                    alt={"Imagen de " + capitalizeFirstLetter(result.food_name)}
+                  />
+                </Col>
+                <Col className="col-5 col-lg-7">
+                  <span className="ms-lg-5">{capitalizeFirstLetter(result.food_name)}</span>
+                </Col>
+                <Col className="col-4 col-lg-3 d-flex justify-content-end">
+                  <Button
+                    variant="primary"
+                    className="me-lg-3"
+                    onClick={() => {
+                      setAlimentoEscogido(data.common[index]);
+                    }}
+                  >
+                    Añadir
+                  </Button>
+                </Col>
+              </Row>
+            </ListGroup.Item>
+          ))}
+      </ListGroup>
+    </>
   );
 };
 
