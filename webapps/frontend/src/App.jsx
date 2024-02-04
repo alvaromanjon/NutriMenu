@@ -8,8 +8,6 @@ import Home from "./pages/home/Home";
 import { Login } from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
-import Menus from "./pages/menus/Menus";
-import Platos from "./pages/platos/Platos";
 
 // Tablas
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
@@ -30,10 +28,7 @@ import NewAlimentoCreateVitamins from "./pages/alimentos/new/NewAlimentoCreateVi
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
-import EmpresasLayout from "./layouts/EmpresasLayout";
-import AlimentosLayout from "./layouts/AlimentosLayout";
-import LocalesLayout from "./layouts/LocalesLayout";
-import UsuariosLayout from "./layouts/UsuariosLayout";
+import GestionLayout from "./layouts/Gestionlayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,22 +37,22 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
 
-      <Route path="empresas" element={<EmpresasLayout />}>
+      <Route path="empresas" element={<GestionLayout title="Gestión de empresas" />}>
         <Route index element={<DataTableEmpresas />} />
         <Route path="new" element={<NewEmpresa />} />
       </Route>
 
-      <Route path="locales" element={<LocalesLayout />}>
+      <Route path="locales" element={<GestionLayout title="Gestión de locales" />}>
         <Route index element={<DataTableLocales />} />
         <Route path="new" element={<NewLocal />} />
       </Route>
 
-      <Route path="usuarios" element={<UsuariosLayout />}>
+      <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>
         <Route index element={<DataTableUsuarios />} />
         <Route path="new" element={<NewUsuario />} />
       </Route>
 
-      <Route path="alimentos" element={<AlimentosLayout />}>
+      <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>
         <Route index element={<DataTableAlimentos />} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
@@ -68,9 +63,9 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-      <Route path="menus" element={<Menus />} />
+      <Route path="menus" element={<GestionLayout title="Gestión de menús" />}></Route>
 
-      <Route path="platos" element={<Platos />} />
+      <Route path="platos" element={<GestionLayout title="Gestión de platos" />}></Route>
 
       <Route path="*" element={<NotFound />} />
     </Route>,
