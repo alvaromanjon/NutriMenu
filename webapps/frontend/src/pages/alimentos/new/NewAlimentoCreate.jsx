@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const NewAlimentoCreate = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [alimentoData, setAlimentoData] = useState({
     nombre: "",
     grupoAlimento: "LACTEOS",
+    gramosPorRacion: 100,
     componentesNutricionales: null,
   });
 
@@ -22,9 +24,10 @@ const NewAlimentoCreate = () => {
 
     if (response.ok) {
       if (data.length !== 0) {
-        setError(true);
+        setErrorFlag(true);
+        setErrorMessage("Ya existe un alimento con este nombre");
       } else {
-        setError(false);
+        setErrorFlag(false);
         navigate("/alimentos/new/createComponents", { state: { alimento: alimentoData } });
         window.scrollTo(0, 0);
       }
@@ -33,7 +36,13 @@ const NewAlimentoCreate = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
-    checkData();
+    if (alimentoData.nombre !== "") {
+      setErrorFlag(false);
+      checkData();
+    } else {
+      setErrorFlag(true);
+      setErrorMessage("El nombre del alimento no puede quedar vacío");
+    }
   };
 
   return (
@@ -52,10 +61,25 @@ const NewAlimentoCreate = () => {
                 className="form-control"
                 id="nombreAlimento"
                 type="text"
-                placeholder="Lentejas"
+                placeholder="Queso"
                 onChange={handleFormChange}
               />
             </div>
+
+            <div className="mb-3">
+              <label htmlFor="gramosPorRacion" className="form-label">
+                Gramos por ración
+              </label>
+              <input
+                name="gramosPorRacion"
+                className="form-control"
+                id="gramosPorRacion"
+                type="number"
+                placeholder="100"
+                onChange={handleFormChange}
+              />
+            </div>
+
             <div className="mb-3">
               <label htmlFor="grupoAlimenticio" className="form-label">
                 Grupo alimenticio
@@ -72,9 +96,9 @@ const NewAlimentoCreate = () => {
                 <option value="NO_APLICA">No aplica</option>
               </select>
             </div>
-            {error && (
+            {errorFlag && (
               <Alert className="mt-3 mb-1" variant="danger">
-                Ya existe un alimento con este nombre
+                {errorMessage}
               </Alert>
             )}
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
@@ -84,7 +108,7 @@ const NewAlimentoCreate = () => {
               <Button
                 className="btn-secondary"
                 onClick={() => {
-                  navigate(-2);
+                  navigate("/alimentos/table");
                 }}
               >
                 Volver
