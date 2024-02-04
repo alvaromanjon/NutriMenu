@@ -5,7 +5,7 @@ import { UserProvider } from "./contexts/UserContext";
 
 // Pages
 import Home from "./pages/home/Home";
-import { Login } from "./pages/login/Login";
+import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
 
@@ -14,6 +14,8 @@ import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
 import DataTableAlimentos from "./pages/alimentos/tabla/DataTableAlimentos";
 import DataTableLocales from "./pages/locales/tabla/DataTableLocales";
 import DataTableUsuarios from "./pages/usuarios/tabla/DataTableUsuarios";
+import DataTablePlatos from "./pages/platos/tabla/DataTablePlatos";
+import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -63,9 +65,13 @@ const router = createBrowserRouter(
         </Route>
       </Route>
 
-      <Route path="menus" element={<GestionLayout title="Gestión de menús" />}></Route>
+      <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
+        <Route index element={<DataTableMenus />} />
+      </Route>
 
-      <Route path="platos" element={<GestionLayout title="Gestión de platos" />}></Route>
+      <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
+        <Route index element={<DataTablePlatos />} />
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Route>,
