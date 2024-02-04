@@ -7,7 +7,7 @@ import Loading from "../../../utils/Loading";
 
 const DataTableMenus = () => {
   const valores = ["Nombre", "Descripción", "Fecha de creación", "Fecha de modificación"];
-  const { usuario, setUsuario } = useContext(UserContext);
+  const { usuario } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
@@ -24,7 +24,7 @@ const DataTableMenus = () => {
         console.error("Ha habido un error obteniendo los datos: ", error);
         setIsPending("false");
       });
-  }, []);
+  });
 
   if (isPending) {
     return <Loading />;

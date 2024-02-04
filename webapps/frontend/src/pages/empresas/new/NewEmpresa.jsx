@@ -8,13 +8,13 @@ const NewEmpresaElements = () => {
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Nombre de la empresa</Form.Label>
-            <Form.Control type="text" placeholder="Pepito SL" required="true" />
+            <Form.Control type="text" placeholder="Pepito SL"  />
           </Form.Group>
         </Col>
         <Col md="6" xl="4">
           <Form.Group className="mb-3">
             <Form.Label>CIF</Form.Label>
-            <Form.Control type="text" placeholder="A29268166" required="true" />
+            <Form.Control type="text" placeholder="A29268166"  />
           </Form.Group>
         </Col>
       </Row>

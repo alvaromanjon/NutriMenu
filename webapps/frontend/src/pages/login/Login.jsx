@@ -10,7 +10,7 @@ const Login = () => {
   const [userNotExists, setUserNotExists] = useState(false);
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const [errorData, setErrorData] = useState([]);
-  const { usuario, setUsuario } = useContext(UserContext);
+  const { setUsuario } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleCheckPassword = async (e) => {
@@ -31,10 +31,8 @@ const Login = () => {
       const responseData = await response.json();
 
       if (response.ok) {
-        if (response.status === 200) {
-          setUsuario(responseData);
-          navigate("/");
-        }
+        setUsuario(responseData);
+        navigate("/");
       } else {
         setErrorData(responseData);
         if (response.status === 400) {

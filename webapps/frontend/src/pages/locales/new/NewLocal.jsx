@@ -8,13 +8,13 @@ const NewLocalElements = () => {
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Nombre del local</Form.Label>
-            <Form.Control type="text" placeholder="Pepito Avenida Cantabria" required="true" />
+            <Form.Control type="text" placeholder="Pepito Avenida Cantabria"  />
           </Form.Group>
         </Col>
         <Col md="6" xl="4">
           <Form.Group className="mb-3">
             <Form.Label>Empresa a la que pertenece</Form.Label>
-            <Form.Select required="true">
+            <Form.Select >
               <option>Pepito SL</option>
             </Form.Select>
           </Form.Group>
