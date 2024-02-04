@@ -16,7 +16,7 @@ const NewAlimentoSearchList = ({ data }) => {
 
     transformedData = {
       nombre: capitalizeFirstLetter(alimentoAPI.foods[0].food_name),
-      grupoAlimento: "CEREALES", // TODO mapear
+      grupoAlimento: assignFoodGroup(alimentoAPI.foods[0].tags.food_group),
       gramosPorRacion: alimentoAPI.foods[0].serving_weight_grams,
       componentesNutricionales: {
         calorias: alimentoAPI.foods[0].nf_calories,
@@ -53,6 +53,32 @@ const NewAlimentoSearchList = ({ data }) => {
     };
 
     return transformedData;
+  };
+
+  const assignFoodGroup = (foodId) => {
+    switch (foodId) {
+      case 1:
+        return "LACTEOS";
+      case 2:
+        return "PROTEICOS";
+      case 3:
+        return "FRUTA";
+      case 4:
+        return "VERDURAS";
+      case 5:
+        return "CEREALES";
+      case 6:
+        return "GRASAS";
+      case 7:
+        return "LEGUMBRES";
+      case 8:
+        return "COMBINACION";
+      case 9:
+        return "NO_APLICA";
+
+      default:
+        return "NO_APLICA";
+    }
   };
 
   useEffect(() => {
