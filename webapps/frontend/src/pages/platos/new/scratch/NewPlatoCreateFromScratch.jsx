@@ -29,7 +29,6 @@ const NewPlatoCreateFromScratch = () => {
       } else {
         setErrorFlag(false);
         navigate("/platos/new/create/components", { state: { alimento: alimentoData } });
-        window.scrollTo(0, 0);
       }
     }
   };

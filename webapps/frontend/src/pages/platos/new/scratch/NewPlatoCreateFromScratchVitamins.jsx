@@ -35,7 +35,6 @@ const NewPlatoCreateFromScratchVitamins = () => {
     navigate("/platos/new/create/minerals", {
       state: { alimento: alimentoData, componentes: componentesData, vitaminas: vitaminasData },
     });
-    window.scrollTo(0, 0);
   };
 
   return (

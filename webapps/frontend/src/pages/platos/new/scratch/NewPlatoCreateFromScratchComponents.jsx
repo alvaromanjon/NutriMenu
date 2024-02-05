@@ -32,7 +32,6 @@ const NewPlatoCreateFromScratchComponents = () => {
   const handleNext = (e) => {
     e.preventDefault();
     navigate("/platos/new/create/vitamins", { state: { alimento: alimentoData, componentes: componentesData } });
-    window.scrollTo(0, 0);
   };
 
   return (
