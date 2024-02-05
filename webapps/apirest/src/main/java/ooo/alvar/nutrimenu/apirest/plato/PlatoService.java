@@ -6,9 +6,9 @@ import ooo.alvar.nutrimenu.apirest.alimento.AlimentoRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.minerales.Minerales;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.vitaminas.Vitaminas;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.local.Local;
-import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
@@ -28,7 +28,7 @@ public class PlatoService {
   private PlatoRepository platoRepository;
 
   @Autowired
-  private LocalRepository localRepository;
+  private EmpresaRepository empresaRepository;
 
   @Autowired
   private AlimentoRepository alimentoRepository;
@@ -44,25 +44,25 @@ public class PlatoService {
     return platoDevuelto;
   }
 
-  public List<Plato> getAllPlatosByLocal(Long id) {
+  public List<Plato> getAllPlatosByEmpresa(Long id) {
     List<Plato> platos = new ArrayList<>();
-    platos.addAll(platoRepository.findAllByLocalId(id));
+    platos.addAll(platoRepository.findAllByEmpresaId(id));
 
     return platos;
   }
 
-  public List<Plato> getAllPlatosByTipoPlato(Long idLocal, tipoPlato plato) {
-    return platoRepository.findAllByLocalIdAndTipoPlato(idLocal, plato);
+  public List<Plato> getAllPlatosByTipoPlato(Long idEmpresa, tipoPlato plato) {
+    return platoRepository.findAllByEmpresaIdAndTipoPlato(idEmpresa, plato);
   }
 
-  public Plato addPlato(Long idLocal, Plato plato) {
-    Optional<Local> local = localRepository.findById(idLocal);
+  public Plato addPlato(Long idEmpresa, Plato plato) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
 
-    if (!local.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
     }
 
-    plato.setLocal(local.get());
+    plato.setEmpresa(empresa.get());
     plato.setFechaCreacion(java.time.Instant.now());
     plato.setFechaModificacion(java.time.Instant.now());
 

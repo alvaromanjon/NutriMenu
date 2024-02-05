@@ -21,15 +21,15 @@ public class PlatoController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/platos")
   public ResponseEntity<List<Plato>> getPlatos(@RequestParam(required = false, name="id_plato") Long idPlato,
-                                               @RequestParam(required = false, name="id_local") Long idLocal,
+                                               @RequestParam(required = false, name="id_empresa") Long idEmpresa,
                                                @RequestParam(required = false, name="tipo_plato") tipoPlato plato) {
     List<Plato> listaPlatos = new ArrayList<>();
     if (idPlato != null) {
       listaPlatos.add(platoService.getPlato(idPlato));
-    } else if (idLocal != null && plato != null) {
-      listaPlatos = platoService.getAllPlatosByTipoPlato(idLocal, plato);
-    } else if (idLocal != null) {
-      listaPlatos = platoService.getAllPlatosByLocal(idLocal);
+    } else if (idEmpresa != null && plato != null) {
+      listaPlatos = platoService.getAllPlatosByTipoPlato(idEmpresa, plato);
+    } else if (idEmpresa != null) {
+      listaPlatos = platoService.getAllPlatosByEmpresa(idEmpresa);
     } else {
       throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
     }
@@ -39,8 +39,8 @@ public class PlatoController {
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/platos")
-  public ResponseEntity<Plato> addPlato(@RequestParam(name="id_local") Long idLocal, @RequestBody Plato plato) {
-    Plato platoCreado = platoService.addPlato(idLocal, plato);
+  public ResponseEntity<Plato> addPlato(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody Plato plato) {
+    Plato platoCreado = platoService.addPlato(idEmpresa, plato);
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 

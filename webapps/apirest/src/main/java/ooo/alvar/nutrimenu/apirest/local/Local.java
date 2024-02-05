@@ -34,9 +34,6 @@ public class Local {
   @JsonIgnore
   @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Menu> menus = new ArrayList<>();
-  @JsonIgnore
-  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<Plato> platos = new ArrayList<>();
 
   public Local() {
   }
@@ -104,13 +101,5 @@ public class Local {
 
   public void setMenus(List<Menu> menus) {
     this.menus = menus;
-  }
-
-  public List<Plato> getPlatos() {
-    return platos;
-  }
-
-  public void setPlatos(List<Plato> platos) {
-    this.platos = platos;
   }
 }
