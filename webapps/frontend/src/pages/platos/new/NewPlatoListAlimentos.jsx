@@ -1,7 +1,9 @@
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Table } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
+import DataTableHeader from "../../../utils/DataTableHeader";
 
 const NewPlatoListAlimentos = () => {
+  const valores = ["Nombre", "Cantidad"];
   return (
     <Card className="mb-4">
       <Card.Header>
@@ -9,32 +11,34 @@ const NewPlatoListAlimentos = () => {
         <Card.Subtitle className="text-center text-muted">Composición del plato</Card.Subtitle>
       </Card.Header>
       <Card.Body className="p-4">
-        <Row className="align-items-center">
-          <Col className="d-flex justify-content-start">
-            <span>Arroz</span>
-          </Col>
-          <Col className="d-flex justify-content-center">
-            <span>150 g</span>
-          </Col>
-          <Col className="d-flex justify-content-end">
-            <Button className="btn-light">
-              <Trash />
-            </Button>
-          </Col>
-        </Row>
-        <Row className="align-items-center">
-          <Col className="d-flex justify-content-start">
-            <span>Berenjenas con tomate</span>
-          </Col>
-          <Col className="d-flex justify-content-center">
-            <span>150 g</span>
-          </Col>
-          <Col className="d-flex justify-content-end">
-            <Button className="btn-light">
-              <Trash />
-            </Button>
-          </Col>
-        </Row>
+        <Table responsive>
+          <thead>
+            <tr>
+              <DataTableHeader valores={valores} />
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ verticalAlign: "middle" }}>Arroz</td>
+              <td style={{ verticalAlign: "middle" }}>
+                <input
+                  className="form-control"
+                  type="number"
+                  min="0"
+                  step="10"
+                  placeholder="100"
+                  style={{ maxWidth: "75px" }}
+                />
+              </td>
+
+              <td style={{ verticalAlign: "middle" }}>
+                <Button variant="light" size="sm">
+                  <Trash />
+                </Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </Card.Body>
     </Card>
   );
