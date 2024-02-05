@@ -1,11 +1,13 @@
-import { Form, Button, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { Form, Button, Row, Col, Alert } from "react-bootstrap";
 import { useState } from "react";
-import NewAlimentoSearchList from "./NewAlimentoSearchList";
+import NewPlatoAddFromNutritionixList from "./NewPlatoAddFromNutritionixList";
+import Loading from "../../../../utils/Loading";
 
-const NewAlimentoSearch = () => {
+const NewPlatoAddFromNutritionix = () => {
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [searchResults, setSearchResults] = useState(null);
 
   const searchData = async () => {
@@ -25,26 +27,28 @@ const NewAlimentoSearch = () => {
     );
     const data = await response.json();
 
-    setLoading(false);
+    setIsLoading(false);
     if (!response.ok) {
-      setLoading(false);
-      setError(true);
+      setIsLoading(false);
+      setErrorFlag(true);
+      setErrorMessage("Se ha producido un error a la hora de obtener la información de Nutritionix");
       return null;
     } else {
-      setLoading(false);
-      setError(false);
+      setIsLoading(false);
+      setErrorFlag(false);
       return data;
     }
   };
 
   const handleSearch = async (e) => {
-    setLoading(true);
+    setIsLoading(true);
     e.preventDefault();
     if (search !== "") {
       setSearchResults(await searchData());
     } else {
-      setLoading(false);
-      setError(true);
+      setIsLoading(false);
+      setErrorFlag(true);
+      setErrorMessage("Introduce un valor en la barra de búsqueda");
       setSearchResults(null);
     }
   };
@@ -69,22 +73,16 @@ const NewAlimentoSearch = () => {
         </Row>
       </Form>
 
-      {loading && (
-        <Row className="justify-content-center mt-4">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </Row>
-      )}
+      {isLoading && <Loading />}
 
-      {error && (
+      {errorFlag && (
         <Alert className="mt-3 mb-1" variant="danger">
-          Introduce un valor en la barra de búsqueda{" "}
+          {errorMessage}
         </Alert>
       )}
-      {searchResults && <NewAlimentoSearchList data={searchResults} />}
+      {searchResults && <NewPlatoAddFromNutritionixList data={searchResults} />}
     </>
   );
 };
 
-export default NewAlimentoSearch;
+export default NewPlatoAddFromNutritionix;

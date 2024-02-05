@@ -1,11 +1,9 @@
 import { ListGroup, Button, Row, Col, Alert } from "react-bootstrap";
-import capitalizeFirstLetter from "../../../utils/capitalizeFirstLetter";
+import capitalizeFirstLetter from "../../../../utils/capitalizeFirstLetter";
 import { useEffect, useState } from "react";
 import "./styles.css";
-import { useNavigate } from "react-router-dom";
 
-const NewAlimentoSearchList = ({ data }) => {
-  const navigate = useNavigate();
+const NewPlatoAddFromNutritionixList = ({ data }) => {
   const [alimentoEscogido, setAlimentoEscogido] = useState(null);
   let infoAlimento = null;
   const [errorFlag, setErrorFlag] = useState(false);
@@ -124,7 +122,7 @@ const NewAlimentoSearchList = ({ data }) => {
 
       if (response.ok) {
         setErrorFlag(false);
-        navigate("/alimentos");
+        //navigate("/alimentos"); TODO - añadir a la lista de alimentos del plato
       } else {
         setErrorFlag(true);
         setErrorMessage("Ya existe un alimento con ese nombre en la base de datos");
@@ -183,4 +181,4 @@ const NewAlimentoSearchList = ({ data }) => {
   );
 };
 
-export default NewAlimentoSearchList;
+export default NewPlatoAddFromNutritionixList;

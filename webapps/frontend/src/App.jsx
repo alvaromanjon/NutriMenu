@@ -19,14 +19,21 @@ import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
+import NewAlimentoSearch from "./pages/alimentos/new/nutritionix/NewAlimentoSearch";
+import NewAlimentoCreate from "./pages/alimentos/new/scratch/NewAlimentoCreate";
+import NewAlimentoCreateComponents from "./pages/alimentos/new/scratch/NewAlimentoCreateComponents";
+import NewAlimentoCreateVitamins from "./pages/alimentos/new/scratch/NewAlimentoCreateVitamins";
+import NewAlimentoCreateMinerals from "./pages/alimentos/new/scratch/NewAlimentoCreateMinerals";
 import NewEmpresa from "./pages/empresas/new/NewEmpresa";
 import NewLocal from "./pages/locales/new/NewLocal";
 import NewUsuario from "./pages/usuarios/new/NewUsuario";
-import NewAlimentoSearch from "./pages/alimentos/new/NewAlimentoSearch";
-import NewAlimentoCreate from "./pages/alimentos/new/NewAlimentoCreate";
-import NewAlimentoCreateComponents from "./pages/alimentos/new/NewAlimentoCreateComponents";
-import NewAlimentoCreateMinerals from "./pages/alimentos/new/NewAlimentoCreateMinerals";
-import NewAlimentoCreateVitamins from "./pages/alimentos/new/NewAlimentoCreateVitamins";
+import NewPlato from "./pages/platos/new/NewPlato";
+import NewPlatoAddFromList from "./pages/platos/new/list/NewPlatoAddFromList";
+import NewPlatoAddFromNutritionix from "./pages/platos/new/nutritionix/NewPlatoAddFromNutritionix";
+import NewPlatoCreateFromScratch from "./pages/platos/new/scratch/NewPlatoCreateFromScratch";
+import NewPlatoCreateFromScratchComponents from "./pages/platos/new/scratch/NewPlatoCreateFromScratchComponents";
+import NewPlatoCreateFromScratchVitamins from "./pages/platos/new/scratch/NewPlatoCreateFromScratchVitamins";
+import NewPlatoCreateFromScratchMinerals from "./pages/platos/new/scratch/NewPlatoCreateFromScratchMinerals";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
@@ -71,6 +78,14 @@ const router = createBrowserRouter(
 
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
+        <Route path="new" element={<NewPlato />}>
+          <Route path="list" element={<NewPlatoAddFromList />} />
+          <Route path="search" element={<NewPlatoAddFromNutritionix />} />
+          <Route path="create" element={<NewPlatoCreateFromScratch />} />
+          <Route path="create/components" element={<NewPlatoCreateFromScratchComponents />} />
+          <Route path="create/vitamins" element={<NewPlatoCreateFromScratchVitamins />} />
+          <Route path="create/minerals" element={<NewPlatoCreateFromScratchMinerals />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFound />} />
