@@ -38,6 +38,7 @@ import NewPlatoCreateFromScratchMinerals from "./pages/platos/new/scratch/NewPla
 // Layouts
 import RootLayout from "./layouts/RootLayout";
 import GestionLayout from "./layouts/Gestionlayout";
+import { listAlimentosLoader } from "./loaders/ListAlimentosLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -79,7 +80,7 @@ const router = createBrowserRouter(
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
         <Route path="new" element={<NewPlato />}>
-          <Route path="list" element={<NewPlatoAddFromList />} />
+          <Route path="list" element={<NewPlatoAddFromList />} loader={listAlimentosLoader} />
           <Route path="search" element={<NewPlatoAddFromNutritionix />} />
           <Route path="create" element={<NewPlatoCreateFromScratch />} />
           <Route path="create/components" element={<NewPlatoCreateFromScratchComponents />} />
