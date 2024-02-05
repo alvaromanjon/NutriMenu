@@ -31,6 +31,7 @@ public class Plato {
   private Instant fechaCreacion;
   private Instant fechaModificacion;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
