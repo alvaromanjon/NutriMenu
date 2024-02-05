@@ -75,6 +75,8 @@ const NewAlimentoCreate = () => {
                 className="form-control"
                 id="gramosPorRacion"
                 type="number"
+                min="0"
+                step="10"
                 placeholder="100"
                 onChange={handleFormChange}
               />

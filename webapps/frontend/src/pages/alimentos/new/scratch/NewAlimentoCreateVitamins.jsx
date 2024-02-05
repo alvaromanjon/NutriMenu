@@ -51,6 +51,7 @@ const NewAlimentoCreateVitamins = () => {
                 ref={firstInput}
                 name="vitaminaA"
                 type="number"
+                min="0"
                 placeholder="0"
                 onChange={handleFormChange}
               />
@@ -58,47 +59,47 @@ const NewAlimentoCreateVitamins = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina D</Form.Label>
-              <Form.Control name="vitaminaD" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaD" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina E</Form.Label>
-              <Form.Control name="vitaminaE" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaE" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B9</Form.Label>
-              <Form.Control name="vitaminaB9" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB9" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B3</Form.Label>
-              <Form.Control name="vitaminaB3" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB3" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B2</Form.Label>
-              <Form.Control name="vitaminaB2" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB2" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B1</Form.Label>
-              <Form.Control name="vitaminaB1" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB1" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B12</Form.Label>
-              <Form.Control name="vitaminaB12" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB12" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina B6</Form.Label>
-              <Form.Control name="vitaminaB6" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaB6" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Vitamina C</Form.Label>
-              <Form.Control name="vitaminaC" type="number" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="vitaminaC" type="number" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
