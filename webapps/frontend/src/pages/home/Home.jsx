@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import HomeLoggedIn from "./HomeLoggedIn";
+import HomeNotLoggedIn from "./HomeNotLoggedIn";
 
 const Home = () => {
-  const { usuario, setUsuario } = useContext(UserContext);
+  const { usuario } = useContext(UserContext);
 
-  return <></>;
+  return <>{usuario.rol === "" ? <HomeNotLoggedIn /> : <HomeLoggedIn />}</>;
 };
 
 export default Home;
