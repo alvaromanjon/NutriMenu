@@ -42,6 +42,7 @@ import GestionLayout from "./layouts/Gestionlayout";
 // Loaders
 import { listAlimentosLoader } from "./loaders/ListAlimentosLoader";
 import { listUsuariosLoader } from "./loaders/listUsuariosLoader";
+import { listLocalesLoader } from "./loaders/listLocalesLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,7 +57,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="locales" element={<GestionLayout title="Gestión de locales" />}>
-        <Route index element={<DataTableLocales />} />
+        <Route index element={<DataTableLocales />} loader={listLocalesLoader} />
         <Route path="new" element={<NewLocal />} />
       </Route>
 

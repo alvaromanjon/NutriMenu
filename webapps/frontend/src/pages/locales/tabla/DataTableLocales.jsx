@@ -1,33 +1,23 @@
 import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowLocales from "./DataTableRowLocales";
 import { Table, Container, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Loading from "../../../utils/Loading";
+import { Link, useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { DeleteModal } from "../../../utils/DeleteModal";
+import { handleDeleteLocal } from "../../../utils/delete/handleDeleteLocal";
 
 const DataTableLocales = () => {
   const valores = ["Nombre", "Email", "Dirección", "Teléfono", "Empresa"];
-  const [data, setData] = useState([]);
-  const [isPending, setIsPending] = useState(true);
+  const data = useLoaderData();
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/locales")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-        setIsPending(false);
-      })
-      .catch((error) => {
-        console.error("Ha habido un error obteniendo los datos: ", error);
-        setIsPending("false");
-      });
-  }, []);
-
-  if (isPending) {
-    return <Loading />;
-  }
+  const handleDeleteButton = (item) => {
+    setSelectedItem(item);
+    handleShowModal();
+  };
 
   return (
     <Container className="mt-3">
@@ -40,7 +30,18 @@ const DataTableLocales = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>{data && <DataTableRowLocales data={data} />}</tbody>
+        <tbody>
+          {data && data.map((item) => <DataTableRowLocales key={item.id} data={item} onDelete={handleDeleteButton} />)}
+        </tbody>
+        {showModal && (
+          <DeleteModal
+            item={selectedItem}
+            show={showModal}
+            name="local"
+            handleClose={handleCloseModal}
+            deleteFunction={handleDeleteLocal}
+          />
+        )}
       </Table>
     </Container>
   );
