@@ -37,7 +37,7 @@ const DataTableUsuarios = () => {
           <DeleteModal
             item={selectedItem}
             show={showModal}
-            name="alimento"
+            name="usuario"
             handleClose={handleCloseModal}
             deleteFunction={handleDeleteUsuario}
           />

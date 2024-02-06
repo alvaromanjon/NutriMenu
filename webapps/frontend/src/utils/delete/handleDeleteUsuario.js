@@ -1,4 +1,4 @@
-export const handleDeleteUsuario = (item) => {
+export const handleDeleteUsuario = async (item) => {
   fetch(`http://localhost:8080/usuarios?id_usuario=${item.id}`, { method: "DELETE" })
     .then((res) => {
       console.log(res);

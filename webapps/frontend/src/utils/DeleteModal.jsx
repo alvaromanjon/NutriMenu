@@ -18,8 +18,8 @@ export const DeleteModal = ({ item, show, name, handleClose, deleteFunction }) =
             variant="danger"
             onClick={() => {
               handleClose();
-              deleteFunction(item);
-              navigate(0);
+              deleteFunction(item).then(navigate(0));
+              //navigate(0);
             }}
           >
             Sí, borrar

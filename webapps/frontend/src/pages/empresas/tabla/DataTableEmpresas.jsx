@@ -1,33 +1,23 @@
 import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowEmpresas from "./DataTableRowEmpresas";
 import { Table, Container, Button } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Loading from "../../../utils/Loading";
+import { useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
+import { DeleteModal } from "../../../utils/DeleteModal";
+import { handleDeleteEmpresa } from "../../../utils/delete/handleDeleteEmpresa";
 
 const DataTableEmpresas = () => {
   const valores = ["CIF", "Nombre", "Email", "Dirección", "Teléfono"];
-  const [data, setData] = useState([]);
-  const [isPending, setIsPending] = useState(true);
+  const data = useLoaderData();
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/empresas")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-        setIsPending(false);
-      })
-      .catch((error) => {
-        console.error("Ha habido un error obteniendo los datos: ", error);
-        setIsPending("false");
-      });
-  }, []);
-
-  if (isPending) {
-    return <Loading />;
-  }
+  const handleDeleteButton = (item) => {
+    setSelectedItem(item);
+    handleShowModal();
+  };
 
   return (
     <Container className="mt-3">
@@ -40,7 +30,18 @@ const DataTableEmpresas = () => {
             <DataTableHeader valores={valores} />
           </tr>
         </thead>
-        <tbody>{data && <DataTableRowEmpresas data={data} />}</tbody>
+        <tbody>
+          {data && data.map((item) => <DataTableRowEmpresas key={item.id} data={item} onDelete={handleDeleteButton} />)}
+        </tbody>
+        {showModal && (
+          <DeleteModal
+            item={selectedItem}
+            show={showModal}
+            name="empresa"
+            handleClose={handleCloseModal}
+            deleteFunction={handleDeleteEmpresa}
+          />
+        )}
       </Table>
     </Container>
   );

@@ -1,5 +1,5 @@
-export const handleDeleteLocal = async (item) => {
-  fetch(`http://localhost:8080/locales?id_local=${item.id}`, { method: "DELETE" })
+export const handleDeleteEmpresa = async (item) => {
+  fetch(`http://localhost:8080/empresas?id_empresa=${item.id}`, { method: "DELETE" })
     .then((res) => {
       console.log(res);
     })

@@ -43,6 +43,7 @@ import GestionLayout from "./layouts/Gestionlayout";
 import { listAlimentosLoader } from "./loaders/ListAlimentosLoader";
 import { listUsuariosLoader } from "./loaders/listUsuariosLoader";
 import { listLocalesLoader } from "./loaders/listLocalesLoader";
+import { listEmpresasLoader } from "./loaders/listEmpresasLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,7 +53,7 @@ const router = createBrowserRouter(
       <Route path="forgot-password" element={<ForgotPassword />} />
 
       <Route path="empresas" element={<GestionLayout title="Gestión de empresas" />}>
-        <Route index element={<DataTableEmpresas />} />
+        <Route index element={<DataTableEmpresas />} loader={listEmpresasLoader} />
         <Route path="new" element={<NewEmpresa />} />
       </Route>
 

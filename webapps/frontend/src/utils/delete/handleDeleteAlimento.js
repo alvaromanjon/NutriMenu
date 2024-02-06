@@ -1,4 +1,4 @@
-export const handleDeleteAlimento = (item) => {
+export const handleDeleteAlimento = async (item) => {
   fetch(`http://localhost:8080/alimentos?id_alimento=${item.id}`, { method: "DELETE" })
     .then((res) => {
       console.log(res);
