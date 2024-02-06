@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import Loading from "../../../utils/Loading";
 import { Link } from "react-router-dom";
 import { DeleteModal } from "../../../utils/DeleteModal";
-import { handleDeletePlato } from "../../../utils/platos/handleDeletePlato";
+import { handleDeletePlato } from "../../../utils/delete/handleDeletePlato";
 
 const DataTablePlatos = () => {
   const valores = ["Nombre", "Tipo de plato", "Fecha de creación", "Fecha de modificación"];

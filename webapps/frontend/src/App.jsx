@@ -63,7 +63,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>
-        <Route index element={<DataTableAlimentos />} />
+        <Route index element={<DataTableAlimentos />} loader={listAlimentosLoader} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
           <Route path="create" element={<NewAlimentoCreate />} />

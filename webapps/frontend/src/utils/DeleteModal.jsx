@@ -1,6 +1,8 @@
 import { Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export const DeleteModal = ({ item, show, name, handleClose, deleteFunction }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -17,6 +19,7 @@ export const DeleteModal = ({ item, show, name, handleClose, deleteFunction }) =
             onClick={() => {
               handleClose();
               deleteFunction(item);
+              navigate(0);
             }}
           >
             Sí, borrar
