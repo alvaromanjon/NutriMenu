@@ -38,7 +38,10 @@ import NewPlatoCreateFromScratchMinerals from "./pages/platos/new/scratch/NewPla
 // Layouts
 import RootLayout from "./layouts/RootLayout";
 import GestionLayout from "./layouts/Gestionlayout";
+
+// Loaders
 import { listAlimentosLoader } from "./loaders/ListAlimentosLoader";
+import { listUsuariosLoader } from "./loaders/listUsuariosLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +61,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>
-        <Route index element={<DataTableUsuarios />} />
+        <Route index element={<DataTableUsuarios />} loader={listUsuariosLoader} />
         <Route path="new" element={<NewUsuario />} />
       </Route>
 
