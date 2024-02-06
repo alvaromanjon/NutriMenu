@@ -1,11 +1,18 @@
 import { Button, Table } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import DataTableHeader from "../../../../utils/DataTableHeader";
+import { useAlimentosPlato } from "../../../../store/alimentosPlato";
+import { useEffect } from "react";
 
 const NewPlatoAddFromList = () => {
   const listaAlimentos = useLoaderData();
   const valores = ["Nombre", "Grupo"];
-  // TODO - hacer que los alimentos se añadan a la lista de alimentos del plato
+  const [alimentos, addAlimento] = useAlimentosPlato((state) => [state.alimentos, state.addAlimento]);
+
+  useEffect(() => {
+    console.log(alimentos);
+  }, [alimentos]);
+
   return (
     <>
       <Table responsive>
@@ -21,7 +28,19 @@ const NewPlatoAddFromList = () => {
               <td style={{ verticalAlign: "middle" }}>{alimento.grupoAlimento}</td>
 
               <td style={{ verticalAlign: "middle" }}>
-                <Button className="mx-1 my-1" variant="success" size="sm">
+                <Button
+                  className="mx-1 my-1"
+                  variant="success"
+                  size="sm"
+                  onClick={() => {
+                    const alimentoEscogido = {
+                      id: alimento.id,
+                      nombre: alimento.nombre,
+                      cantidad: alimento.gramosPorRacion,
+                    };
+                    addAlimento(alimentoEscogido);
+                  }}
+                >
                   Añadir
                 </Button>
               </td>
