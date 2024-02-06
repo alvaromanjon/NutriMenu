@@ -1,9 +1,18 @@
 import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import NewPlatoListAlimentos from "./NewPlatoListAlimentos";
 import NewPlatoInformation from "./NewPlatoInformation";
+import { useAlimentosPlato } from "../../../store/alimentosPlato";
+import { useState } from "react";
+import { WarningActionModal } from "../../../utils/WarningActionModal";
 
 const NewPlato = () => {
+  const resetState = useAlimentosPlato((state) => state.reset);
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <>
       <Container className="mt-5">
@@ -66,7 +75,22 @@ const NewPlato = () => {
           <Button className="btn-primary" type="submit">
             Guardar
           </Button>
-          <Button className="btn-danger">Cancelar</Button>
+          <Button className="btn-danger" onClick={handleShowModal}>
+            Cancelar
+          </Button>
+
+          <WarningActionModal
+            show={showModal}
+            handleClose={handleCloseModal}
+            title="Cancelar creación del plato"
+            message="¿Estás seguro de que quieres cancelar la creación del plato?"
+            firstButton="No"
+            secondButton="Sí, cancelar"
+            action={() => {
+              resetState();
+              navigate("/platos");
+            }}
+          />
         </div>
       </Container>
     </>

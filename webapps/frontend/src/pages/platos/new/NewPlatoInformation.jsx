@@ -2,7 +2,10 @@ import { Card, Form } from "react-bootstrap";
 import { useAlimentosPlato } from "../../../store/alimentosPlato";
 
 const NewPlatoInformation = () => {
-  const [setNombre, setDescripcion, setTipoPlato] = useAlimentosPlato((state) => [
+  const [nombre, descripcion, tipoPlato, setNombre, setDescripcion, setTipoPlato] = useAlimentosPlato((state) => [
+    state.nombre,
+    state.descripcion,
+    state.tipoPlato,
     state.setNombre,
     state.setDescripcion,
     state.setTipoPlato,
@@ -21,6 +24,7 @@ const NewPlatoInformation = () => {
               name="nombre"
               type="text"
               placeholder="Berenjenas gratinadas"
+              value={nombre}
               onChange={(e) => setNombre(e.currentTarget.value)}
             />
           </Form.Group>
@@ -30,12 +34,13 @@ const NewPlatoInformation = () => {
               name="descripcion"
               type="text"
               placeholder="Plato riquísimo"
+              value={descripcion}
               onChange={(e) => setDescripcion(e.currentTarget.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Tipo de plato</Form.Label>
-            <Form.Select name="tipoPlato" onChange={(e) => setTipoPlato(e.currentTarget.value)}>
+            <Form.Select name="tipoPlato" value={tipoPlato} onChange={(e) => setTipoPlato(e.currentTarget.value)}>
               <option value="ENTRANTE">Entrante</option>
               <option value="PRIMER_PLATO">Primer plato</option>
               <option value="SEGUNDO_PLATO">Segundo plato</option>
