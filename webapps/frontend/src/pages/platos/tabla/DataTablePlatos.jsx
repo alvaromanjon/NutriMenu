@@ -5,7 +5,8 @@ import { Table, Container, Button } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import Loading from "../../../utils/Loading";
 import { Link } from "react-router-dom";
-import { DeleteModalPlato } from "../../../utils/platos/DeleteModalPlato";
+import { DeleteModal } from "../../../utils/DeleteModal";
+import { handleDeletePlato } from "../../../utils/platos/handleDeletePlato";
 
 const DataTablePlatos = () => {
   const valores = ["Nombre", "Tipo de plato", "Fecha de creación", "Fecha de modificación"];
@@ -55,7 +56,15 @@ const DataTablePlatos = () => {
         <tbody>
           {data && data.map((item) => <DataTableRowPlatos key={item.id} data={item} onDelete={handleDeleteButton} />)}
         </tbody>
-        {showModal && <DeleteModalPlato item={selectedItem} show={showModal} handleClose={handleCloseModal} />}
+        {showModal && (
+          <DeleteModal
+            item={selectedItem}
+            show={showModal}
+            name="plato"
+            handleClose={handleCloseModal}
+            deleteFunction={handleDeletePlato}
+          />
+        )}
       </Table>
     </Container>
   );

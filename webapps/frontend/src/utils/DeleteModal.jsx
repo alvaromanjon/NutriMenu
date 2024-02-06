@@ -1,14 +1,13 @@
 import { Button, Modal } from "react-bootstrap";
-import { handleDeletePlato } from "./handleDeletePlato";
 
-export const DeleteModalPlato = ({ item, show, handleClose }) => {
+export const DeleteModal = ({ item, show, name, handleClose, deleteFunction }) => {
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Borrar plato</Modal.Title>
+          <Modal.Title>Borrar {name}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>¿Realmente quieres borrar el plato {item.nombre}?</Modal.Body>
+        <Modal.Body>¿Realmente quieres borrar el elemento {item.nombre}?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             No
@@ -17,7 +16,7 @@ export const DeleteModalPlato = ({ item, show, handleClose }) => {
             variant="danger"
             onClick={() => {
               handleClose();
-              handleDeletePlato(item);
+              deleteFunction(item);
             }}
           >
             Sí, borrar
