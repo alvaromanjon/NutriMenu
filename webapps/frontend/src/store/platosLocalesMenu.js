@@ -12,6 +12,6 @@ export const usePlatosLocalesMenu = create((set) => ({
   addLocal: (local) => set((state) => ({ locales: [...state.locales, local] })),
   addPlato: (plato) => set((state) => ({ platos: [...state.platos, plato] })),
   removeLocal: (id) => set((state) => ({ locales: state.locales.filter((local) => local.id !== id) })),
-  removePlato: (id) => set((state) => ({ plato: state.platos.filter((plato) => plato.id !== id) })),
+  removePlato: (id) => set((state) => ({ platos: state.platos.filter((plato) => plato.id !== id) })),
   reset: () => set({ nombre: "", descripcion: "", fechaPublicacion: "", locales: [], platos: [] }),
 }));
