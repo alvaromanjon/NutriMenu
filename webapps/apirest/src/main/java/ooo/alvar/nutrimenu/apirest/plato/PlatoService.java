@@ -91,6 +91,11 @@ public class PlatoService {
     return platoAlimentoRepository.save(platoAlimento);
   }
 
+  public PlatoAlimento addAlimentoAndCantidadToPlato(Long idPlato, Long idAlimento, double cantidad) {
+    addAlimentoToPlato(idPlato, idAlimento);
+    return actualizaCantidad(idPlato, idAlimento, cantidad);
+  }
+
   public PlatoAlimento actualizaCantidad(Long idPlato, Long idAlimento, double cantidad) {
     PlatoAlimento relacion = platoAlimentoRepository.findByPlatoIdAndAlimentoId(idPlato, idAlimento);
 
