@@ -34,6 +34,7 @@ import NewPlatoCreateFromScratch from "./pages/platos/new/scratch/NewPlatoCreate
 import NewPlatoCreateFromScratchComponents from "./pages/platos/new/scratch/NewPlatoCreateFromScratchComponents";
 import NewPlatoCreateFromScratchVitamins from "./pages/platos/new/scratch/NewPlatoCreateFromScratchVitamins";
 import NewPlatoCreateFromScratchMinerals from "./pages/platos/new/scratch/NewPlatoCreateFromScratchMinerals";
+import NewMenu from "./pages/menus/new/NewMenu";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
@@ -80,6 +81,7 @@ const router = createBrowserRouter(
 
       <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
         <Route index element={<DataTableMenus />} />
+        <Route path="new" element={<NewMenu />}></Route>
       </Route>
 
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>

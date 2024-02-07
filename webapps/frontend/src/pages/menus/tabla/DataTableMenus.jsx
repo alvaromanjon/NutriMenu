@@ -1,11 +1,12 @@
 import DataTableHeader from "../../../utils/DataTableHeader";
 import DataTableRowMenus from "./DataTableRowMenus";
 import { UserContext } from "../../../contexts/UserContext";
-import { Table, Container } from "react-bootstrap";
+import { Table, Container, Button } from "react-bootstrap";
 import { useState, useEffect, useContext } from "react";
 import Loading from "../../../utils/Loading";
 import { DeleteModal } from "../../../utils/DeleteModal";
 import { handleDeleteMenu } from "../../../utils/delete/handleDeleteMenu";
+import { Link } from "react-router-dom";
 
 const DataTableMenus = () => {
   const valores = ["Nombre", "Descripción", "Fecha de creación", "Fecha de modificación"];
@@ -43,6 +44,9 @@ const DataTableMenus = () => {
 
   return (
     <Container className="mt-3">
+      <Button className="mb-3" variant="primary" as={Link} to="/menus/new">
+        Crear un nuevo menú
+      </Button>
       <Table responsive striped bordered hover variant="tertiary">
         <thead>
           <tr>
