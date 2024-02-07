@@ -1,17 +1,62 @@
-import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
+import { Alert, Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import NewPlatoListAlimentos from "./NewPlatoListAlimentos";
 import NewPlatoInformation from "./NewPlatoInformation";
 import { useAlimentosPlato } from "../../../store/alimentosPlato";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { WarningActionModal } from "../../../utils/WarningActionModal";
+import { UserContext } from "../../../contexts/UserContext";
 
 const NewPlato = () => {
   const resetState = useAlimentosPlato((state) => state.reset);
+  const [nombre, descripcion, tipoPlato, alimentos] = useAlimentosPlato((state) => [
+    state.nombre,
+    state.descripcion,
+    state.tipoPlato,
+    state.alimentos,
+  ]);
   const navigate = useNavigate();
+  const { usuario } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+  const [errorFlag, setErrorFlag] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const prepareData = () => {
+    const data = {
+      nombre,
+      descripcion,
+      tipoPlato,
+      alimentos: alimentos.map((alimento) => {
+        return { id: alimento.id, cantidad: alimento.cantidad };
+      }),
+    };
+    return data;
+  };
+
+  const sendData = async () => {
+    const platoData = prepareData();
+
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(platoData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    };
+
+    const response = await fetch(`http://localhost:8080/platos?id_empresa=${usuario.empresa.id}`, requestOptions);
+
+    if (response.ok) {
+      setErrorFlag(false);
+      resetState();
+      navigate("/platos");
+    } else {
+      setErrorFlag(true);
+      setErrorMessage("Se ha producido un error a la hora de guardar el plato");
+    }
+  };
 
   return (
     <>
@@ -71,8 +116,13 @@ const NewPlato = () => {
             </Card>
           </Col>
         </Row>
+        {errorFlag && (
+          <Alert className="mt-3 mb-1" variant="danger">
+            {errorMessage}
+          </Alert>
+        )}
         <div className="d-grid gap-3 mt-4 col-lg-4 col-xxl-3 mx-auto">
-          <Button className="btn-primary" type="submit">
+          <Button className="btn-primary" type="submit" onClick={sendData}>
             Guardar
           </Button>
           <Button className="btn-danger" onClick={handleShowModal}>
