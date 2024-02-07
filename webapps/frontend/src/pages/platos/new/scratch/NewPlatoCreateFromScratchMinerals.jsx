@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Form, Row, Col, Container, Button, Alert } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAlimentosPlato } from "../../../../store/alimentosPlato";
 
 const NewPlatoCreateFromScratchMinerals = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const NewPlatoCreateFromScratchMinerals = () => {
     selenio: 0,
     zinc: 0,
   });
+  const [addAlimento] = useAlimentosPlato((state) => [state.addAlimento]);
 
   useEffect(() => {
     firstInput.current.focus();
@@ -49,6 +51,14 @@ const NewPlatoCreateFromScratchMinerals = () => {
 
     if (response.ok) {
       setError(false);
+      const data = await response.json().then((data) => data);
+      const alimentoToList = {
+        id: data.id,
+        nombre: data.nombre,
+        cantidad: data.gramosPorRacion,
+      };
+      addAlimento(alimentoToList);
+
       //navigate("/alimentos"); TODO - añadir a la lista de alimentos del plato
     } else {
       setError(true);
