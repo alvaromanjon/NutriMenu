@@ -2,16 +2,11 @@ import { Button, Table } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import DataTableHeader from "../../../../utils/DataTableHeader";
 import { useAlimentosPlato } from "../../../../store/alimentosPlato";
-import { useEffect } from "react";
 
 const NewPlatoAddFromList = () => {
   const listaAlimentos = useLoaderData();
   const valores = ["Nombre", "Grupo"];
-  const [alimentos, addAlimento] = useAlimentosPlato((state) => [state.alimentos, state.addAlimento]);
-
-  useEffect(() => {
-    console.log(alimentos);
-  }, [alimentos]);
+  const [addAlimento] = useAlimentosPlato((state) => [state.addAlimento]);
 
   return (
     <>
