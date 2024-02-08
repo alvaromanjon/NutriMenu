@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
-import ooo.alvar.nutrimenu.apirest.plato.Plato;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class Local {
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
   @JsonIgnore
-  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @ManyToMany(mappedBy = "locales")
   private List<Menu> menus = new ArrayList<>();
 
   public Local() {

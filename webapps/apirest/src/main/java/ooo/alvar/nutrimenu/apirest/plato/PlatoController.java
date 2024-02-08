@@ -2,9 +2,9 @@ package ooo.alvar.nutrimenu.apirest.plato;
 
 import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
-import ooo.alvar.nutrimenu.apirest.relaciones.AlimentoDTO;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoDTO;
+import ooo.alvar.nutrimenu.apirest.plato.DTOs.AlimentosDTO;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.plato.DTOs.PlatoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,8 +51,8 @@ public class PlatoController {
 
     Plato platoInicial = platoService.addPlato(idEmpresa, plato);
 
-    for (AlimentoDTO alimentoDTO : platoDTO.getAlimentos()) {
-      platoCreado = platoService.addAlimentoAndCantidadToPlato(platoInicial.getId(), alimentoDTO.getId(), alimentoDTO.getCantidad());
+    for (AlimentosDTO alimentosDTO : platoDTO.getAlimentos()) {
+      platoCreado = platoService.addAlimentoAndCantidadToPlato(platoInicial.getId(), alimentosDTO.getId(), alimentosDTO.getCantidad());
     }
 
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);

@@ -9,10 +9,9 @@ import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.vitaminas.V
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
-import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimentoRepository;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -184,12 +183,6 @@ public class PlatoService {
     if (platoActual == null) {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
     }
-
-    for (Menu menu : platoActual.getMenus()) {
-      menu.getPlatos().remove(platoActual);
-    }
-
-    platoActual.getMenus().clear();
 
     platoAlimentoRepository.deleteByPlatoId(id);
     platoRepository.deleteById(id);

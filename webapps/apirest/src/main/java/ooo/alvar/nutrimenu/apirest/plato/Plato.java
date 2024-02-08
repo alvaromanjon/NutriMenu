@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
-
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +29,14 @@ public class Plato {
   private String descripcion;
   private Instant fechaCreacion;
   private Instant fechaModificacion;
-
   @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
-
   @JsonIgnore
   @ManyToMany(mappedBy = "platos")
   private List<Menu> menus = new ArrayList<>();
-
-  @OneToMany(mappedBy = "plato", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(mappedBy = "plato")
   private List<PlatoAlimento> alimentos = new ArrayList<>();
 
   public Plato() {

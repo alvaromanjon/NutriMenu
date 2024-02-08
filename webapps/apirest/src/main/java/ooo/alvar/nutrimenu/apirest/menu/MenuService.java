@@ -1,5 +1,8 @@
 package ooo.alvar.nutrimenu.apirest.menu;
 
+import jakarta.transaction.Transactional;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
 import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
@@ -19,10 +22,13 @@ public class MenuService {
   private MenuRepository menuRepository;
 
   @Autowired
-  private LocalRepository localRepository;
+  private EmpresaRepository empresaRepository;
 
   @Autowired
   private PlatoRepository platoRepository;
+
+  @Autowired
+  private LocalRepository localRepository;
 
   public Menu getMenu(Long id) {
     Menu menuDevuelto = menuRepository.findById(id).orElse(null);
@@ -32,6 +38,13 @@ public class MenuService {
     return menuDevuelto;
   }
 
+  public List<Menu> getAllMenusByEmpresa(Long id) {
+    List<Menu> menus = new ArrayList<>();
+    menus.addAll(menuRepository.findAllByEmpresaId(id));
+
+    return menus;
+  }
+
   public List<Menu> getAllMenusByLocal(Long id) {
     List<Menu> menus = new ArrayList<>();
     menus.addAll(menuRepository.findAllByLocalId(id));
@@ -39,16 +52,15 @@ public class MenuService {
     return menus;
   }
 
-  public Menu addMenu(Long idLocal, Menu menu) {
-    Optional<Local> local = localRepository.findById(idLocal);
+  public Menu addMenu(Long idEmpresa, Menu menu) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
 
-    if (!local.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
     }
 
-    menu.setLocal(local.get());
-    menu.setFechaCreacion(java.time.Instant.now());
-    menu.setFechaModificacion(java.time.Instant.now());
+    menu.setEmpresa(empresa.get());
+    menu.setFechaCreacion(java.time.LocalDate.now());
 
     return menuRepository.save(menu);
   }
@@ -71,6 +83,24 @@ public class MenuService {
     return menuRepository.save(menuAntiguo.get());
   }
 
+  public Menu addLocalToMenu(Long idMenu, Long idLocal) {
+    Optional<Menu> menuAntiguo = menuRepository.findById(idMenu);
+
+    if (!menuAntiguo.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un menú con id " + idMenu);
+    }
+
+    Optional<Local> local = localRepository.findById(idLocal);
+
+    if (!local.isPresent()) {
+      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
+    }
+
+    menuAntiguo.get().getLocales().add(local.get());
+
+    return menuRepository.save(menuAntiguo.get());
+  }
+
   public Menu updateMenu(Menu menu, Long id) {
     Optional<Menu> menuAntiguo = menuRepository.findById(id);
 
@@ -85,11 +115,14 @@ public class MenuService {
     if (menu.getDescripcion() != null) {
       nuevoMenu.setDescripcion(menu.getDescripcion());
     }
-    nuevoMenu.setFechaModificacion(java.time.Instant.now());
+    if (menu.getFechaPublicacion() != null) {
+      nuevoMenu.setFechaPublicacion(menu.getFechaPublicacion());
+    }
 
     return menuRepository.save(nuevoMenu);
   }
 
+  @Transactional
   public void deleteMenu(Long id) {
     Menu menuActual = menuRepository.findById(id).orElse(null);
     if (menuActual == null) {

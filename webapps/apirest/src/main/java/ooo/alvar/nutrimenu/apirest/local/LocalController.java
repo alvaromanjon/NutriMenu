@@ -47,13 +47,6 @@ public class LocalController {
   }
 
   @CrossOrigin(origins = "http://localhost:3000")
-  @RequestMapping(method = RequestMethod.PUT, value="/add/local/menus")
-  public ResponseEntity<Local> addMenuToLocal(@RequestParam(name="id_local") Long idLocal, @RequestParam(name="id_menu") Long idMenu) {
-    Local localCreado = localService.addMenuToLocal(idLocal, idMenu);
-    return new ResponseEntity<>(localCreado, HttpStatus.CREATED);
-  }
-
-  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/locales")
   public ResponseEntity<Local> updateLocal(@RequestParam(name="id_local") Long idLocal, @RequestBody Local local) {
     Local localActualizado = localService.updateLocal(local, idLocal);

@@ -1,4 +1,4 @@
-package ooo.alvar.nutrimenu.apirest.relaciones;
+package ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
 
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.alimento.Alimento;
