@@ -44,7 +44,7 @@ const DataTablePlatos = () => {
 
   return (
     <Container className="mt-3">
-      <Button className="mb-3" variant="primary" as={Link} to="/platos/new">
+      <Button className="mb-3" variant="primary" as={Link} to="/platos/new/list">
         Crear un nuevo plato
       </Button>
       <Table responsive striped bordered hover variant="tertiary">

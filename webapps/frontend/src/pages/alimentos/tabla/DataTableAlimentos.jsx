@@ -21,7 +21,7 @@ const DataTableAlimentos = () => {
 
   return (
     <Container className="mt-3">
-      <Button className="mb-3" variant="primary" as={Link} to="/alimentos/new">
+      <Button className="mb-3" variant="primary" as={Link} to="/alimentos/new/search">
         Crear un nuevo alimento
       </Button>
       <Table responsive striped bordered hover variant="tertiary">
