@@ -16,12 +16,20 @@ const NewUsuario = () => {
 
   const [errorFlag, setErrorFlag] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isAdministradorSelected, setIsAdministradorSelected] = useState(true);
 
   const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setUsuarioData({ ...usuarioData, [name]: value });
+    if (name === "rol") {
+      if (value === "ADMINISTRADOR") {
+        setIsAdministradorSelected(true);
+      } else {
+        setIsAdministradorSelected(false);
+      }
+    }
   };
 
   const handleNext = async (e) => {
@@ -73,11 +81,12 @@ const NewUsuario = () => {
       backAction={() => navigate("/usuarios")}
       errorFlag={errorFlag}
       errorMessage={errorMessage}
+      conditionDisabled={isAdministradorSelected}
     />
   );
 };
 
-const NewUsuarioElements = (selectorData, handleFormChange, errorFlag, errorMessage) => {
+const NewUsuarioElements = (handleFormChange, errorFlag, errorMessage, selectorData, conditionDisabled) => {
   return (
     <>
       <Form.Group className="mb-3">
@@ -109,18 +118,6 @@ const NewUsuarioElements = (selectorData, handleFormChange, errorFlag, errorMess
         />
       </Form.Group>
       <Row>
-        <Col>
-          <Form.Group className="mb-3">
-            <Form.Label>Empresa a la que pertenece</Form.Label>
-            <Form.Select name="empresa" onChange={handleFormChange}>
-              {selectorData.map((empresa) => (
-                <option key={empresa.id} value={empresa.id}>
-                  {empresa.nombre}
-                </option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-        </Col>
         <Col md="6">
           <Form.Group className="mb-3">
             <Form.Label>Rol (*)</Form.Label>
@@ -128,6 +125,18 @@ const NewUsuarioElements = (selectorData, handleFormChange, errorFlag, errorMess
               <option value="ADMINISTRADOR">Administrador</option>
               <option value="EDITOR">Editor</option>
               <option value="CAMARERO">Camarero</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group className="mb-3">
+            <Form.Label>Empresa a la que pertenece</Form.Label>
+            <Form.Select name="empresa" onChange={handleFormChange} disabled={conditionDisabled}>
+              {selectorData.map((empresa) => (
+                <option key={empresa.id} value={empresa.id}>
+                  {empresa.nombre}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
         </Col>

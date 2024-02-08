@@ -4,7 +4,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const NewElementLayout = ({ title, formElements, selectorData, formChange, handleSubmit, backAction, errorFlag, errorMessage }) => {
+const NewElementLayout = ({
+  title,
+  formElements,
+  selectorData,
+  formChange,
+  handleSubmit,
+  backAction,
+  errorFlag,
+  errorMessage,
+  conditionDisabled,
+}) => {
   return (
     <Container fluid="xxl">
       <Row>
@@ -12,7 +22,7 @@ const NewElementLayout = ({ title, formElements, selectorData, formChange, handl
         <Col>
           <h1 className="h2 text-center my-4">{title}</h1>
           <Form className="justify-content-md-center" onSubmit={handleSubmit}>
-            {formElements(selectorData, formChange, errorFlag, errorMessage)}
+            {formElements(formChange, errorFlag, errorMessage, selectorData, conditionDisabled)}
             <Form.Text className="text-muted">Los campos marcados con (*) son obligatorios</Form.Text>
             <div className="d-grid gap-3 mt-4 col-xl-4 col-xxl-2 mx-auto">
               <Button className="btn-primary" type="submit">

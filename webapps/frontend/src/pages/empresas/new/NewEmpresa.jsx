@@ -64,7 +64,7 @@ const NewEmpresa = () => {
   );
 };
 
-const NewEmpresaElements = (selectorData, handleFormChange, errorFlag, errorMessage) => {
+const NewEmpresaElements = (handleFormChange, errorFlag, errorMessage) => {
   return (
     <>
       <Row>

@@ -72,7 +72,7 @@ const NewLocal = () => {
   );
 };
 
-const NewLocalElements = (selectorData, handleFormChange, errorFlag, errorMessage) => {
+const NewLocalElements = (handleFormChange, errorFlag, errorMessage, selectorData) => {
   return (
     <>
       <Row>
