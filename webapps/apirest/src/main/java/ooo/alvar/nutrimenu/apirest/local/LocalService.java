@@ -92,6 +92,12 @@ public class LocalService {
     if (local.getDireccion() != null) {
       nuevoLocal.setDireccion(local.getDireccion());
     }
+    if (local.getCiudad() != null) {
+      nuevoLocal.setCiudad(local.getCiudad());
+    }
+    if (local.getCodigoPostal() != null) {
+      nuevoLocal.setCodigoPostal(local.getCodigoPostal());
+    }
     if (local.getTelefono() != null) {
       nuevoLocal.setTelefono(local.getTelefono());
     }

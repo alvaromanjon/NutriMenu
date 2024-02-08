@@ -1,6 +1,7 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
@@ -25,6 +26,10 @@ public class Local {
   @Column(nullable = false)
   private String direccion;
   @Column(nullable = false)
+  private String ciudad;
+  @Column(nullable = false)
+  private Long codigoPostal;
+  @Column(nullable = false)
   private String telefono;
   @ManyToOne
   @JoinColumn(name = "empresa_id")
@@ -36,11 +41,13 @@ public class Local {
   public Local() {
   }
 
-  public Local(String nombre, String email, String direccion, String telefono, Empresa empresa) {
+  public Local(String nombre, String email, String direccion, String ciudad, Long codigoPostal, String telefono, Empresa empresa) {
     super();
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
+    this.ciudad = ciudad;
+    this.codigoPostal = codigoPostal;
     this.telefono = telefono;
     this.empresa = empresa;
   }
@@ -75,6 +82,22 @@ public class Local {
 
   public void setDireccion(String direccion) {
     this.direccion = direccion;
+  }
+
+  public String getCiudad() {
+    return ciudad;
+  }
+
+  public void setCiudad(String ciudad) {
+    this.ciudad = ciudad;
+  }
+
+  public Long getCodigoPostal() {
+    return codigoPostal;
+  }
+
+  public void setCodigoPostal(Long codigoPostal) {
+    this.codigoPostal = codigoPostal;
   }
 
   public String getTelefono() {
