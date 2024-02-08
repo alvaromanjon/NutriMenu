@@ -67,8 +67,8 @@ public class PlatoService {
     }
 
     plato.setEmpresa(empresa.get());
-    plato.setFechaCreacion(java.time.Instant.now());
-    plato.setFechaModificacion(java.time.Instant.now());
+    plato.setFechaCreacion(java.time.LocalDate.now());
+    plato.setFechaModificacion(java.time.LocalDate.now());
 
     return platoRepository.save(plato);
   }
@@ -86,7 +86,7 @@ public class PlatoService {
     if (!alimento.isPresent()) {
       throw new EntityDoesntExistsException("No existe un alimento con id " + idAlimento);
     }
-    platoAntiguo.get().setFechaModificacion(java.time.Instant.now());
+    platoAntiguo.get().setFechaModificacion(java.time.LocalDate.now());
 
     PlatoAlimento platoAlimento = new PlatoAlimento();
     platoAlimento.setAlimento(alimento.get());
@@ -177,7 +177,7 @@ public class PlatoService {
     if (plato.getTipoPlato() != null) {
       nuevoPlato.setTipoPlato(plato.getTipoPlato());
     }
-    nuevoPlato.setFechaModificacion(java.time.Instant.now());
+    nuevoPlato.setFechaModificacion(java.time.LocalDate.now());
 
     return platoRepository.save(nuevoPlato);
   }

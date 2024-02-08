@@ -8,7 +8,7 @@ import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class Plato {
   @Column(nullable = false)
   private String nombre;
   private String descripcion;
-  private Instant fechaCreacion;
-  private Instant fechaModificacion;
+  private LocalDate fechaCreacion;
+  private LocalDate fechaModificacion;
   @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "empresa_id")
@@ -82,19 +82,19 @@ public class Plato {
     this.descripcion = descripcion;
   }
 
-  public Instant getFechaCreacion() {
+  public LocalDate getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(Instant fechaCreacion) {
+  public void setFechaCreacion(LocalDate fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 
-  public Instant getFechaModificacion() {
+  public LocalDate getFechaModificacion() {
     return fechaModificacion;
   }
 
-  public void setFechaModificacion(Instant fechaModificacion) {
+  public void setFechaModificacion(LocalDate fechaModificacion) {
     this.fechaModificacion = fechaModificacion;
   }
 
