@@ -41,10 +41,12 @@ import RootLayout from "./layouts/RootLayout";
 import GestionLayout from "./layouts/Gestionlayout";
 
 // Loaders
-import { listAlimentosLoader } from "./loaders/ListAlimentosLoader";
-import { listUsuariosLoader } from "./loaders/listUsuariosLoader";
-import { listLocalesLoader } from "./loaders/listLocalesLoader";
-import { listEmpresasLoader } from "./loaders/listEmpresasLoader";
+import { listAlimentosLoader } from "./loaders/list/listAlimentosLoader";
+import { listUsuariosLoader } from "./loaders/list/listUsuariosLoader";
+import { listLocalesLoader } from "./loaders/list/listLocalesLoader";
+import { listEmpresasLoader } from "./loaders/list/listEmpresasLoader";
+import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
+import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,6 +72,7 @@ const router = createBrowserRouter(
 
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>
         <Route index element={<DataTableAlimentos />} loader={listAlimentosLoader} />
+        <Route path=":id" element={<AlimentoDetails />} loader={alimentoDetailsLoader} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
           <Route path="create" element={<NewAlimentoCreate />} />
