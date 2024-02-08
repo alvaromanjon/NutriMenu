@@ -29,14 +29,11 @@ public class Usuario {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
-  @ManyToOne
-  @JoinColumn(name = "local_id")
-  private Local local;
 
   public Usuario() {
   }
 
-  public Usuario(String usuario, String password, String nombre, String email, Rol rol, Empresa empresa, Local local) {
+  public Usuario(String usuario, String password, String nombre, String email, Rol rol, Empresa empresa) {
     super();
     this.usuario = usuario;
     this.password = password;
@@ -44,7 +41,6 @@ public class Usuario {
     this.email = email;
     this.rol = rol;
     this.empresa = empresa;
-    this.local = local;
   }
 
   public Long getId() {
@@ -101,13 +97,5 @@ public class Usuario {
 
   public void setEmpresa(Empresa empresa) {
     this.empresa = empresa;
-  }
-
-  public Local getLocal() {
-    return local;
-  }
-
-  public void setLocal(Local local) {
-    this.local = local;
   }
 }
