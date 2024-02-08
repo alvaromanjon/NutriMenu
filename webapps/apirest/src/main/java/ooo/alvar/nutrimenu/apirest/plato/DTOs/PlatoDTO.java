@@ -1,4 +1,4 @@
-package ooo.alvar.nutrimenu.apirest.relaciones;
+package ooo.alvar.nutrimenu.apirest.plato.DTOs;
 
 import java.util.List;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
@@ -7,7 +7,7 @@ public class PlatoDTO {
   private tipoPlato tipoPlato;
   private String nombre;
   private String descripcion;
-  private List<AlimentoDTO> alimentos;
+  private List<AlimentosDTO> alimentos;
 
   public tipoPlato getTipoPlato() {
     return tipoPlato;
@@ -33,11 +33,11 @@ public class PlatoDTO {
     this.descripcion = descripcion;
   }
 
-  public List<AlimentoDTO> getAlimentos() {
+  public List<AlimentosDTO> getAlimentos() {
     return alimentos;
   }
 
-  public void setAlimentos(List<AlimentoDTO> alimentos) {
+  public void setAlimentos(List<AlimentosDTO> alimentos) {
     this.alimentos = alimentos;
   }
 }

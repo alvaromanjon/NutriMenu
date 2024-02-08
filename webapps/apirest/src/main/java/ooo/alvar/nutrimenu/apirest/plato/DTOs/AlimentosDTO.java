@@ -1,6 +1,6 @@
-package ooo.alvar.nutrimenu.apirest.relaciones;
+package ooo.alvar.nutrimenu.apirest.plato.DTOs;
 
-public class AlimentoDTO {
+public class AlimentosDTO {
   private Long id;
   private Double cantidad;
 
