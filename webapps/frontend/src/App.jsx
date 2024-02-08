@@ -60,7 +60,7 @@ const router = createBrowserRouter(
 
       <Route path="locales" element={<GestionLayout title="Gestión de locales" />}>
         <Route index element={<DataTableLocales />} loader={listLocalesLoader} />
-        <Route path="new" element={<NewLocal />} />
+        <Route path="new" element={<NewLocal />} loader={listEmpresasLoader} />
       </Route>
 
       <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>

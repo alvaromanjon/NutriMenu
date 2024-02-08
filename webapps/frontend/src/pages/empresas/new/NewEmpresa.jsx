@@ -38,8 +38,6 @@ const NewEmpresa = () => {
       },
     };
 
-    console.log(empresaData);
-
     const response = await fetch("http://localhost:8080/empresas", requestOptions);
 
     if (response.ok) {
@@ -66,7 +64,7 @@ const NewEmpresa = () => {
   );
 };
 
-const NewEmpresaElements = (handleFormChange, errorFlag, errorMessage) => {
+const NewEmpresaElements = (selectorData, handleFormChange, errorFlag, errorMessage) => {
   return (
     <>
       <Row>
@@ -111,7 +109,7 @@ const NewEmpresaElements = (handleFormChange, errorFlag, errorMessage) => {
           </Form.Group>
         </Col>
       </Row>
-      <Form.Text className="text-muted">Los campos marcados con (*) son obligatorios</Form.Text>
+
       {errorFlag && (
         <Alert className="mt-3 mb-1" variant="danger">
           {errorMessage}
