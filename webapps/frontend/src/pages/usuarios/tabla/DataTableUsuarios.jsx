@@ -7,7 +7,7 @@ import { DeleteModal } from "../../../utils/DeleteModal";
 import { handleDeleteUsuario } from "../../../utils/delete/handleDeleteUsuario";
 
 const DataTableUsuarios = () => {
-  const valores = ["Usuario", "Nombre", "Email", "Rol", "Empresa", "Local"];
+  const valores = ["Usuario", "Nombre", "Email", "Rol", "Empresa"];
   const data = useLoaderData();
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);

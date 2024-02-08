@@ -10,8 +10,6 @@ const DataTableRowUsuarios = ({ data, onDelete }) => {
         <td>{data.rol}</td>
         {data.rol != "ADMINISTRADOR" && <td>{data.empresa.nombre}</td>}
         {data.rol == "ADMINISTRADOR" && <td>-</td>}
-        {data.rol != "ADMINISTRADOR" && <td>{data.local.nombre}</td>}
-        {data.rol == "ADMINISTRADOR" && <td>-</td>}
 
         <td>
           <Button className="mx-1 my-1" variant="secondary" size="sm">
