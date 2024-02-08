@@ -65,7 +65,7 @@ const router = createBrowserRouter(
 
       <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>
         <Route index element={<DataTableUsuarios />} loader={listUsuariosLoader} />
-        <Route path="new" element={<NewUsuario />} />
+        <Route path="new" element={<NewUsuario />} loader={listEmpresasLoader} />
       </Route>
 
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>

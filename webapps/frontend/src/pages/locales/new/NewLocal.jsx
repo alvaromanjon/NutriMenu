@@ -27,7 +27,6 @@ const NewLocal = () => {
 
   const handleNext = async (e) => {
     e.preventDefault();
-    console.log(localData);
     sendData();
   };
 
