@@ -1,5 +1,6 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
+import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionalesRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
@@ -95,6 +96,7 @@ public class AlimentoService {
     return alimentoRepository.save(nuevoAlimento);
   }
 
+  @Transactional
   public void deleteAlimento(Long id) {
     Alimento alimentoActual = alimentoRepository.findById(id).orElse(null);
     if (alimentoActual ==null) {
