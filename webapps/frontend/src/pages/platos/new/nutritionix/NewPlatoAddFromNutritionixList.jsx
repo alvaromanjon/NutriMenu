@@ -52,7 +52,7 @@ const NewPlatoAddFromNutritionixList = ({ data }) => {
           azucares: alimentoAPI.foods[0].nf_sugars,
           fibra: alimentoAPI.foods[0].nf_dietary_fiber,
           proteinas: alimentoAPI.foods[0].nf_protein,
-          sal: alimentoAPI.foods[0].nf_sodium,
+          sal: alimentoAPI.foods[0].nf_sodium / 1000,
           vitaminas: {
             vitaminaA: getValUsingId(alimentoAPI, 320),
             vitaminaD: getValUsingId(alimentoAPI, 324),
