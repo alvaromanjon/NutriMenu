@@ -7,7 +7,7 @@ const DataTableRowMenus = ({ data, onDelete }) => {
         <td>{data.nombre}</td>
         <td>{data.descripcion}</td>
         <td>{data.fechaCreacion}</td>
-        <td>{data.fechaModificacion}</td>
+        <td>{data.fechaPublicacion}</td>
 
         <td>
           <Button className="mx-1 my-1" variant="secondary" size="sm">

@@ -1,12 +1,12 @@
 import { Alert, Button, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../contexts/UserContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { WarningActionModal } from "../../../utils/WarningActionModal";
 import NewMenuInformation from "./NewMenuInformation";
 import NewMenuListLocales from "./NewMenuListLocales";
 import NewMenuAddFromList from "./NewMenuAddFromList";
 import { usePlatosLocalesMenu } from "../../../store/platosLocalesMenu";
+import { UserContext } from "../../../contexts/UserContext";
 
 const NewMenu = () => {
   const resetState = usePlatosLocalesMenu((state) => state.reset);
@@ -25,13 +25,43 @@ const NewMenu = () => {
   const [errorFlag, setErrorFlag] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    console.log("Nombre: ", nombre);
-    console.log("Descripción: ", descripcion);
-    console.log("Fecha de publicación: ", fechaPublicacion);
-    console.log("Locales: ", locales);
-    console.log("Platos: ", platos);
-  }, [nombre, descripcion, fechaPublicacion, locales, platos]);
+  const prepareData = () => {
+    const data = {
+      nombre,
+      descripcion,
+      fechaPublicacion,
+      locales: locales.map((local) => {
+        return { id: local.id };
+      }),
+      platos: platos.map((plato) => {
+        return { id: plato.id };
+      }),
+    };
+    return data;
+  };
+
+  const sendData = async () => {
+    const menuData = prepareData();
+
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(menuData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    };
+
+    const response = await fetch(`http://localhost:8080/menus?id_empresa=${usuario.empresa.id}`, requestOptions);
+
+    if (response.ok) {
+      setErrorFlag(false);
+      resetState();
+      navigate("/menus");
+    } else {
+      setErrorFlag(true);
+      setErrorMessage("Se ha producido un error a la hora de guardar el menú");
+    }
+  };
 
   return (
     <>
@@ -53,7 +83,7 @@ const NewMenu = () => {
           </Alert>
         )}
         <div className="d-grid gap-3 mt-4 col-lg-4 col-xxl-3 mx-auto">
-          <Button className="btn-primary" type="submit">
+          <Button className="btn-primary" type="submit" onClick={sendData}>
             Guardar
           </Button>
           <Button className="btn-danger" onClick={handleShowModal}>

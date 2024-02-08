@@ -9,7 +9,7 @@ import { handleDeleteMenu } from "../../../utils/delete/handleDeleteMenu";
 import { Link } from "react-router-dom";
 
 const DataTableMenus = () => {
-  const valores = ["Nombre", "Descripción", "Fecha de creación", "Fecha de modificación"];
+  const valores = ["Nombre", "Descripción", "Fecha de creación", "Fecha de publicación"];
   const { usuario } = useContext(UserContext);
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
@@ -24,7 +24,7 @@ const DataTableMenus = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/menus?id_local=${usuario.local.id}`)
+    fetch(`http://localhost:8080/menus?id_empresa=${usuario.empresa.id}`)
       .then((res) => {
         return res.json();
       })
