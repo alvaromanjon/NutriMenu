@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
+import ooo.alvar.nutrimenu.apirest.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,9 @@ public class LocalService {
 
   @Autowired
   private EmpresaRepository empresaRepository;
+
+  @Autowired
+  private MenuRepository menuRepository;
 
   public Local getLocal(Long id) {
     Local localDevuelto = localRepository.findById(id).orElse(null);
@@ -96,8 +101,15 @@ public class LocalService {
 
   @Transactional
   public void deleteLocal(Long id) {
-    if (!localRepository.existsById(id)) {
+    Local localActual = localRepository.findById(id).orElse(null);
+    if (localActual == null) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
+    }
+
+    List <Menu> menus = menuRepository.findAllByLocalId(id);
+    for (Menu menu : menus) {
+      menu.getLocales().remove(localActual);
+      menuRepository.save(menu);
     }
 
     localRepository.deleteById(id);
