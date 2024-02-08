@@ -7,53 +7,8 @@ import { useNavigate } from "react-router-dom";
 const NewAlimentoSearchList = ({ data }) => {
   const navigate = useNavigate();
   const [alimentoEscogido, setAlimentoEscogido] = useState(null);
-  let infoAlimento = null;
   const [errorFlag, setErrorFlag] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const transformData = (alimentoAPI) => {
-    let transformedData = {};
-
-    transformedData = {
-      nombre: capitalizeFirstLetter(alimentoAPI.foods[0].food_name),
-      grupoAlimento: assignFoodGroup(alimentoAPI.foods[0].tags.food_group),
-      gramosPorRacion: alimentoAPI.foods[0].serving_weight_grams,
-      componentesNutricionales: {
-        calorias: alimentoAPI.foods[0].nf_calories,
-        grasas: alimentoAPI.foods[0].nf_total_fat,
-        grasasSaturadas: alimentoAPI.foods[0].nf_saturated_fat,
-        hidratosCarbono: alimentoAPI.foods[0].nf_total_carbohydrate,
-        azucares: alimentoAPI.foods[0].nf_sugars,
-        fibra: alimentoAPI.foods[0].nf_dietary_fiber,
-        proteinas: alimentoAPI.foods[0].nf_protein,
-        sal: alimentoAPI.foods[0].nf_sodium,
-        vitaminas: {
-          vitaminaA: getValUsingId(alimentoAPI, 320),
-          vitaminaD: getValUsingId(alimentoAPI, 324),
-          vitaminaE: getValUsingId(alimentoAPI, 573),
-          vitaminaB9: getValUsingId(alimentoAPI, 431),
-          vitaminaB3: getValUsingId(alimentoAPI, 406),
-          vitaminaB2: getValUsingId(alimentoAPI, 405),
-          vitaminaB1: getValUsingId(alimentoAPI, 404),
-          vitaminaB12: getValUsingId(alimentoAPI, 418),
-          vitaminaB6: getValUsingId(alimentoAPI, 415),
-          vitaminaC: getValUsingId(alimentoAPI, 401),
-        },
-        minerales: {
-          calcio: getValUsingId(alimentoAPI, 301),
-          hierro: getValUsingId(alimentoAPI, 303),
-          potasio: getValUsingId(alimentoAPI, 306),
-          magnesio: getValUsingId(alimentoAPI, 304),
-          sodio: getValUsingId(alimentoAPI, 307),
-          fosforo: getValUsingId(alimentoAPI, 305),
-          selenio: getValUsingId(alimentoAPI, 317),
-          zinc: getValUsingId(alimentoAPI, 309),
-        },
-      },
-    };
-
-    return transformedData;
-  };
 
   const assignFoodGroup = (foodId) => {
     switch (foodId) {
@@ -82,6 +37,50 @@ const NewAlimentoSearchList = ({ data }) => {
   };
 
   useEffect(() => {
+    const transformData = (alimentoAPI) => {
+      let transformedData = {};
+
+      transformedData = {
+        nombre: capitalizeFirstLetter(alimentoAPI.foods[0].food_name),
+        grupoAlimento: assignFoodGroup(alimentoAPI.foods[0].tags.food_group),
+        gramosPorRacion: alimentoAPI.foods[0].serving_weight_grams,
+        componentesNutricionales: {
+          calorias: alimentoAPI.foods[0].nf_calories,
+          grasas: alimentoAPI.foods[0].nf_total_fat,
+          grasasSaturadas: alimentoAPI.foods[0].nf_saturated_fat,
+          hidratosCarbono: alimentoAPI.foods[0].nf_total_carbohydrate,
+          azucares: alimentoAPI.foods[0].nf_sugars,
+          fibra: alimentoAPI.foods[0].nf_dietary_fiber,
+          proteinas: alimentoAPI.foods[0].nf_protein,
+          sal: alimentoAPI.foods[0].nf_sodium,
+          vitaminas: {
+            vitaminaA: getValUsingId(alimentoAPI, 320),
+            vitaminaD: getValUsingId(alimentoAPI, 324),
+            vitaminaE: getValUsingId(alimentoAPI, 573),
+            vitaminaB9: getValUsingId(alimentoAPI, 431),
+            vitaminaB3: getValUsingId(alimentoAPI, 406),
+            vitaminaB2: getValUsingId(alimentoAPI, 405),
+            vitaminaB1: getValUsingId(alimentoAPI, 404),
+            vitaminaB12: getValUsingId(alimentoAPI, 418),
+            vitaminaB6: getValUsingId(alimentoAPI, 415),
+            vitaminaC: getValUsingId(alimentoAPI, 401),
+          },
+          minerales: {
+            calcio: getValUsingId(alimentoAPI, 301),
+            hierro: getValUsingId(alimentoAPI, 303),
+            potasio: getValUsingId(alimentoAPI, 306),
+            magnesio: getValUsingId(alimentoAPI, 304),
+            sodio: getValUsingId(alimentoAPI, 307),
+            fosforo: getValUsingId(alimentoAPI, 305),
+            selenio: getValUsingId(alimentoAPI, 317),
+            zinc: getValUsingId(alimentoAPI, 309),
+          },
+        },
+      };
+
+      return transformedData;
+    };
+
     const getFullInfo = async (alimentoEscogido) => {
       const requestOptions = {
         method: "POST",
@@ -101,7 +100,7 @@ const NewAlimentoSearchList = ({ data }) => {
         .then((response) => response.json())
         .then((data) => {
           setErrorFlag(false);
-          infoAlimento = transformData(data);
+          const infoAlimento = transformData(data);
           sendData(infoAlimento);
         })
         .catch((error) => {
@@ -134,7 +133,7 @@ const NewAlimentoSearchList = ({ data }) => {
     if (alimentoEscogido !== null) {
       getFullInfo(alimentoEscogido);
     }
-  }, [alimentoEscogido]);
+  }, [alimentoEscogido, navigate]);
 
   const getValUsingId = (alimentoAPI, id) => {
     const item = alimentoAPI.foods[0].full_nutrients.find((item) => item.attr_id === id);
