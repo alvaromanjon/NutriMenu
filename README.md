@@ -16,6 +16,10 @@ API_DEBUG_LOCAL_PORT=5005
 # Frontend variables
 FRONTEND_DOCKER_PORT=3000
 CHOKIDAR_USEPOLLING=true
+# API Keys to support Nutritionix API integration
+REACT_APP_NUTRI_X_APP_ID=<x_app_id value>
+REACT_APP_NUTRI_X_APP_KEY=<x_app_key value>
+REACT_APP_NUTRI_X_REMOTE_USER_ID=<x_remote_user_id value>
 
 # DB variables
 DATABASE_HOST=mysqldb

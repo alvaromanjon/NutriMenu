@@ -1,11 +1,11 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
+import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionalesRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
-import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimentoRepository;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +96,7 @@ public class AlimentoService {
     return alimentoRepository.save(nuevoAlimento);
   }
 
+  @Transactional
   public void deleteAlimento(Long id) {
     Alimento alimentoActual = alimentoRepository.findById(id).orElse(null);
     if (alimentoActual ==null) {

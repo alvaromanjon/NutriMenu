@@ -25,9 +25,6 @@ public class UsuarioService {
   @Autowired
   private EmpresaRepository empresaRepository;
 
-  @Autowired
-  private LocalRepository localRepository;
-
   public Usuario getUsuarioById(Long id) {
     Usuario usuarioDevuelto = usuarioRepository.findById(id).orElse(null);
 
@@ -48,6 +45,16 @@ public class UsuarioService {
     return usuarioDevuelto;
   }
 
+  public Usuario getUsuarioByUsuario(String usuario) {
+    Usuario usuarioDevuelto = usuarioRepository.findByUsuario(usuario);
+
+    if (usuarioDevuelto == null) {
+      throw new EntityDoesntExistsException("No existe un usuario con usuario " + usuario);
+    }
+
+    return usuarioDevuelto;
+  }
+
   public List<Usuario> getAllUsuariosByRol(Rol rol) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
@@ -60,14 +67,6 @@ public class UsuarioService {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
     listaUsuarios.addAll(usuarioRepository.findAllByEmpresaId(id));
-
-    return listaUsuarios;
-  }
-
-  public List<Usuario> getAllUsuariosByLocal(Long id) {
-    List<Usuario> listaUsuarios = new ArrayList<>();
-
-    listaUsuarios.addAll(usuarioRepository.findAllByLocalId(id));
 
     return listaUsuarios;
   }
@@ -95,20 +94,15 @@ public class UsuarioService {
     return usuarioDB;
   }
 
-  public Usuario addUsuario(Long idEmpresa, Long idLocal, Usuario usuario) {
+  public Usuario addUsuario(Long idEmpresa, Usuario usuario) {
     Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
-    Optional<Local> local = localRepository.findById(idLocal);
 
     if (usuario.getRol() == Rol.EDITOR || usuario.getRol() == Rol.CAMARERO) {
       if (!empresa.isPresent()) {
         throw new LackOfParametersException("Por favor, añade el id de la empresa a la petición");
       }
-      if (!local.isPresent()) {
-        throw new LackOfParametersException("Por favor, añade el id del local a la petición");
-      }
 
       usuario.setEmpresa(empresa.get());
-      usuario.setLocal(local.get());
     }
 
     return usuarioRepository.save(usuario);
@@ -122,11 +116,22 @@ public class UsuarioService {
     }
 
     Usuario nuevoUsuario = usuarioAntiguo.get();
-    nuevoUsuario.setUsuario(usuario.getUsuario());
-    nuevoUsuario.setPassword(usuario.getPassword());
-    nuevoUsuario.setNombre(usuario.getNombre());
-    nuevoUsuario.setEmail(usuario.getEmail());
-    nuevoUsuario.setRol(usuario.getRol());
+
+    if (usuario.getUsuario() != null) {
+      nuevoUsuario.setUsuario(usuario.getUsuario());
+    }
+    if (usuario.getPassword() != null) {
+     nuevoUsuario.setPassword(usuario.getPassword());
+    }
+    if (usuario.getNombre() != null) {
+     nuevoUsuario.setNombre(usuario.getNombre());
+    }
+    if (usuario.getEmail() != null) {
+     nuevoUsuario.setEmail(usuario.getEmail());
+    }
+    if (usuario.getRol() != null) {
+      nuevoUsuario.setRol(usuario.getRol());
+    }
 
     return usuarioRepository.save(nuevoUsuario);
   }

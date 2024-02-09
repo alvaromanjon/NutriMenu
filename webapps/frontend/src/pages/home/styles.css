@@ -1,0 +1,30 @@
+.arrow-bounce {
+  position: absolute;
+  top: 30px;
+  left: 200px;
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+}
+
+@media (max-width: 991px) {
+  .arrow-bounce {
+    left: auto; /* Reset left positioning */
+    right: 30px; /* Position from the right */
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}

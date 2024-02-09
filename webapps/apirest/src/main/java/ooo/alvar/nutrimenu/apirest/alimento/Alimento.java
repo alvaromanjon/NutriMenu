@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
 
 import java.util.ArrayList;
 import java.util.List;

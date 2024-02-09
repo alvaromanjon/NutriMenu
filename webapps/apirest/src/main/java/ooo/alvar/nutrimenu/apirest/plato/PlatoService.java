@@ -6,13 +6,14 @@ import ooo.alvar.nutrimenu.apirest.alimento.AlimentoRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.minerales.Minerales;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.vitaminas.Vitaminas;
+import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.local.Local;
-import ooo.alvar.nutrimenu.apirest.local.LocalRepository;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
+import ooo.alvar.nutrimenu.apirest.menu.MenuRepository;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimentoRepository;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,10 @@ public class PlatoService {
   private PlatoRepository platoRepository;
 
   @Autowired
-  private LocalRepository localRepository;
+  private EmpresaRepository empresaRepository;
+
+  @Autowired
+  private MenuRepository menuRepository;
 
   @Autowired
   private AlimentoRepository alimentoRepository;
@@ -44,27 +48,27 @@ public class PlatoService {
     return platoDevuelto;
   }
 
-  public List<Plato> getAllPlatosByLocal(Long id) {
+  public List<Plato> getAllPlatosByEmpresa(Long id) {
     List<Plato> platos = new ArrayList<>();
-    platos.addAll(platoRepository.findAllByLocalId(id));
+    platos.addAll(platoRepository.findAllByEmpresaId(id));
 
     return platos;
   }
 
-  public List<Plato> getAllPlatosByTipoPlato(Long idLocal, tipoPlato plato) {
-    return platoRepository.findAllByLocalIdAndTipoPlato(idLocal, plato);
+  public List<Plato> getAllPlatosByTipoPlato(Long idEmpresa, tipoPlato plato) {
+    return platoRepository.findAllByEmpresaIdAndTipoPlato(idEmpresa, plato);
   }
 
-  public Plato addPlato(Long idLocal, Plato plato) {
-    Optional<Local> local = localRepository.findById(idLocal);
+  public Plato addPlato(Long idEmpresa, Plato plato) {
+    Optional<Empresa> empresa = empresaRepository.findById(idEmpresa);
 
-    if (!local.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
+    if (!empresa.isPresent()) {
+      throw new EntityDoesntExistsException("No existe una empresa con id " + idEmpresa);
     }
 
-    plato.setLocal(local.get());
-    plato.setFechaCreacion(java.time.Instant.now());
-    plato.setFechaModificacion(java.time.Instant.now());
+    plato.setEmpresa(empresa.get());
+    plato.setFechaCreacion(java.time.LocalDate.now());
+    plato.setFechaModificacion(java.time.LocalDate.now());
 
     return platoRepository.save(plato);
   }
@@ -82,13 +86,18 @@ public class PlatoService {
     if (!alimento.isPresent()) {
       throw new EntityDoesntExistsException("No existe un alimento con id " + idAlimento);
     }
-    platoAntiguo.get().setFechaModificacion(java.time.Instant.now());
+    platoAntiguo.get().setFechaModificacion(java.time.LocalDate.now());
 
     PlatoAlimento platoAlimento = new PlatoAlimento();
     platoAlimento.setAlimento(alimento.get());
     platoAlimento.setPlato(platoAntiguo.get());
 
     return platoAlimentoRepository.save(platoAlimento);
+  }
+
+  public PlatoAlimento addAlimentoAndCantidadToPlato(Long idPlato, Long idAlimento, double cantidad) {
+    addAlimentoToPlato(idPlato, idAlimento);
+    return actualizaCantidad(idPlato, idAlimento, cantidad);
   }
 
   public PlatoAlimento actualizaCantidad(Long idPlato, Long idAlimento, double cantidad) {
@@ -168,7 +177,7 @@ public class PlatoService {
     if (plato.getTipoPlato() != null) {
       nuevoPlato.setTipoPlato(plato.getTipoPlato());
     }
-    nuevoPlato.setFechaModificacion(java.time.Instant.now());
+    nuevoPlato.setFechaModificacion(java.time.LocalDate.now());
 
     return platoRepository.save(nuevoPlato);
   }
@@ -180,11 +189,11 @@ public class PlatoService {
       throw new EntityDoesntExistsException("No existe un plato con id " + id);
     }
 
-    for (Menu menu : platoActual.getMenus()) {
+    List <Menu> menus = menuRepository.findAllByPlatoId(id);
+    for (Menu menu : menus) {
       menu.getPlatos().remove(platoActual);
+      menuRepository.save(menu);
     }
-
-    platoActual.getMenus().clear();
 
     platoAlimentoRepository.deleteByPlatoId(id);
     platoRepository.deleteById(id);

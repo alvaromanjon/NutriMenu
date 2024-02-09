@@ -1,11 +1,10 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.empresa.*;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
-import ooo.alvar.nutrimenu.apirest.plato.Plato;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,25 +26,28 @@ public class Local {
   @Column(nullable = false)
   private String direccion;
   @Column(nullable = false)
+  private String ciudad;
+  @Column(nullable = false)
+  private Long codigoPostal;
+  @Column(nullable = false)
   private String telefono;
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
   @JsonIgnore
-  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @ManyToMany(mappedBy = "locales")
   private List<Menu> menus = new ArrayList<>();
-  @JsonIgnore
-  @OneToMany(mappedBy="local", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<Plato> platos = new ArrayList<>();
 
   public Local() {
   }
 
-  public Local(String nombre, String email, String direccion, String telefono, Empresa empresa) {
+  public Local(String nombre, String email, String direccion, String ciudad, Long codigoPostal, String telefono, Empresa empresa) {
     super();
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
+    this.ciudad = ciudad;
+    this.codigoPostal = codigoPostal;
     this.telefono = telefono;
     this.empresa = empresa;
   }
@@ -82,6 +84,22 @@ public class Local {
     this.direccion = direccion;
   }
 
+  public String getCiudad() {
+    return ciudad;
+  }
+
+  public void setCiudad(String ciudad) {
+    this.ciudad = ciudad;
+  }
+
+  public Long getCodigoPostal() {
+    return codigoPostal;
+  }
+
+  public void setCodigoPostal(Long codigoPostal) {
+    this.codigoPostal = codigoPostal;
+  }
+
   public String getTelefono() {
     return telefono;
   }
@@ -104,13 +122,5 @@ public class Local {
 
   public void setMenus(List<Menu> menus) {
     this.menus = menus;
-  }
-
-  public List<Plato> getPlatos() {
-    return platos;
-  }
-
-  public void setPlatos(List<Plato> platos) {
-    this.platos = platos;
   }
 }

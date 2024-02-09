@@ -19,13 +19,15 @@ public class UsuarioController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/usuarios")
   public ResponseEntity<List<Usuario>> getUsuarios(@RequestParam(required = false, name="id_usuario") Long id,
+                                @RequestParam(required = false) String usuario,
                                 @RequestParam(required = false) String email,
                                 @RequestParam(required = false) Rol rol,
-                                @RequestParam(required = false, name="id_empresa") Long idEmpresa,
-                                @RequestParam(required = false, name="id_local") Long idLocal) {
+                                @RequestParam(required = false, name="id_empresa") Long idEmpresa) {
     List<Usuario> listaUsuarios = new ArrayList<>();
 
-    if (email != null) {
+    if (usuario != null) {
+      listaUsuarios.add(usuarioService.getUsuarioByUsuario(usuario));
+    } else if (email != null) {
       listaUsuarios.add(usuarioService.getUsuarioByEmail(email));
     } else if (id != null) {
       listaUsuarios.add(usuarioService.getUsuarioById(id));
@@ -33,8 +35,6 @@ public class UsuarioController {
       listaUsuarios = usuarioService.getAllUsuariosByRol(rol);
     } else if (idEmpresa != null) {
       listaUsuarios = usuarioService.getAllUsuariosByEmpresa(idEmpresa);
-    } else if (idLocal != null) {
-      listaUsuarios = usuarioService.getAllUsuariosByLocal(idLocal);
     } else {
       listaUsuarios = usuarioService.getAllUsuarios();
     }
@@ -52,9 +52,8 @@ public class UsuarioController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/usuarios")
   public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario,
-                                            @RequestParam(required = false, defaultValue = "-1", name = "id_empresa") Long idEmpresa,
-                                            @RequestParam(required = false, defaultValue = "-1", name = "id_local") Long idLocal) {
-    Usuario usuarioCreado = usuarioService.addUsuario(idEmpresa, idLocal, usuario);
+                                            @RequestParam(required = false, defaultValue = "-1", name = "id_empresa") Long idEmpresa) {
+    Usuario usuarioCreado = usuarioService.addUsuario(idEmpresa, usuario);
     return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
   }
 

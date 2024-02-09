@@ -2,7 +2,9 @@ package ooo.alvar.nutrimenu.apirest.plato;
 
 import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.plato.DTOs.AlimentosDTO;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimento;
+import ooo.alvar.nutrimenu.apirest.plato.DTOs.PlatoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +23,15 @@ public class PlatoController {
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/platos")
   public ResponseEntity<List<Plato>> getPlatos(@RequestParam(required = false, name="id_plato") Long idPlato,
-                                               @RequestParam(required = false, name="id_local") Long idLocal,
+                                               @RequestParam(required = false, name="id_empresa") Long idEmpresa,
                                                @RequestParam(required = false, name="tipo_plato") tipoPlato plato) {
     List<Plato> listaPlatos = new ArrayList<>();
     if (idPlato != null) {
       listaPlatos.add(platoService.getPlato(idPlato));
-    } else if (idLocal != null && plato != null) {
-      listaPlatos = platoService.getAllPlatosByTipoPlato(idLocal, plato);
-    } else if (idLocal != null) {
-      listaPlatos = platoService.getAllPlatosByLocal(idLocal);
+    } else if (idEmpresa != null && plato != null) {
+      listaPlatos = platoService.getAllPlatosByTipoPlato(idEmpresa, plato);
+    } else if (idEmpresa != null) {
+      listaPlatos = platoService.getAllPlatosByEmpresa(idEmpresa);
     } else {
       throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
     }
@@ -39,8 +41,20 @@ public class PlatoController {
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.POST, value="/platos")
-  public ResponseEntity<Plato> addPlato(@RequestParam(name="id_local") Long idLocal, @RequestBody Plato plato) {
-    Plato platoCreado = platoService.addPlato(idLocal, plato);
+  public ResponseEntity<PlatoAlimento> addPlato(@RequestParam(name="id_empresa") Long idEmpresa, @RequestBody PlatoDTO platoDTO) {
+    Plato plato = new Plato();
+    PlatoAlimento platoCreado = new PlatoAlimento();
+
+    plato.setNombre(platoDTO.getNombre());
+    plato.setDescripcion(platoDTO.getDescripcion());
+    plato.setTipoPlato(platoDTO.getTipoPlato());
+
+    Plato platoInicial = platoService.addPlato(idEmpresa, plato);
+
+    for (AlimentosDTO alimentosDTO : platoDTO.getAlimentos()) {
+      platoCreado = platoService.addAlimentoAndCantidadToPlato(platoInicial.getId(), alimentosDTO.getId(), alimentosDTO.getCantidad());
+    }
+
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 

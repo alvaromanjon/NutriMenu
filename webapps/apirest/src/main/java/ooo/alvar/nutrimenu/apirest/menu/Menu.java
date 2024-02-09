@@ -2,10 +2,11 @@ package ooo.alvar.nutrimenu.apirest.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.plato.Plato;
-
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +19,34 @@ public class Menu {
   @Column(nullable = false)
   private String nombre;
   private String descripcion;
-  private Instant fechaCreacion;
-  private Instant fechaModificacion;
+  private LocalDate fechaCreacion;
+  private LocalDate fechaPublicacion;
   @JsonIgnore
   @ManyToOne
-  @JoinColumn(name = "local_id")
-  private Local local;
+  @JoinColumn(name = "empresa_id")
+  private Empresa empresa;
   @ManyToMany
   @JoinTable(
-    name = "menu_plato",
-    joinColumns = @JoinColumn(name = "menu_id"),
-    inverseJoinColumns = @JoinColumn(name = "plato_id")
-  )
+      name = "menu_local",
+      joinColumns = @JoinColumn(name = "menu_id"),
+      inverseJoinColumns = @JoinColumn(name = "local_id"))
+  private List<Local> locales = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(
+      name = "menu_plato",
+      joinColumns = @JoinColumn(name = "menu_id"),
+      inverseJoinColumns = @JoinColumn(name = "plato_id"))
   private List<Plato> platos = new ArrayList<>();
 
   public Menu() {
   }
 
-  public Menu(String nombre, String descripcion, Local local) {
+  public Menu(String nombre, String descripcion, LocalDate fechaPublicacion, Empresa empresa) {
     super();
     this.nombre = nombre;
     this.descripcion = descripcion;
-    this.local = local;
+    this.fechaPublicacion = fechaPublicacion;
+    this.empresa = empresa;
   }
 
   public Long getId() {
@@ -66,28 +73,28 @@ public class Menu {
     this.descripcion = descripcion;
   }
 
-  public Instant getFechaCreacion() {
+  public LocalDate getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(Instant fechaCreacion) {
+  public void setFechaCreacion(LocalDate fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 
-  public Instant getFechaModificacion() {
-    return fechaModificacion;
+  public LocalDate getFechaPublicacion() {
+    return fechaPublicacion;
   }
 
-  public void setFechaModificacion(Instant fechaModificacion) {
-    this.fechaModificacion = fechaModificacion;
+  public void setFechaPublicacion(LocalDate fechaPublicacion) {
+    this.fechaPublicacion = fechaPublicacion;
   }
 
-  public Local getLocal() {
-    return local;
+  public List<Local> getLocales() {
+    return locales;
   }
 
-  public void setLocal(Local local) {
-    this.local = local;
+  public void setLocales(List<Local> locales) {
+    this.locales = locales;
   }
 
   public List<Plato> getPlatos() {
@@ -96,5 +103,13 @@ public class Menu {
 
   public void setPlatos(List<Plato> platos) {
     this.platos = platos;
+  }
+
+  public Empresa getEmpresa() {
+    return empresa;
+  }
+
+  public void setEmpresa(Empresa empresa) {
+    this.empresa = empresa;
   }
 }

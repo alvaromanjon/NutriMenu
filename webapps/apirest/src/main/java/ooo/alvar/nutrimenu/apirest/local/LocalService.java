@@ -1,12 +1,13 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
+import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ public class LocalService {
 
   @Autowired
   private MenuRepository menuRepository;
-
 
   public Local getLocal(Long id) {
     Local localDevuelto = localRepository.findById(id).orElse(null);
@@ -75,24 +75,6 @@ public class LocalService {
     return localRepository.save(local);
   }
 
-  public Local addMenuToLocal(Long idLocal, Long idMenu) {
-    Optional<Local> localAntiguo = localRepository.findById(idLocal);
-
-    if (!localAntiguo.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un local con id " + idLocal);
-    }
-
-    Optional<Menu> menu = menuRepository.findById(idMenu);
-
-    if (!menu.isPresent()) {
-      throw new EntityDoesntExistsException("No existe un menú con id " + idMenu);
-    }
-
-    localAntiguo.get().getMenus().add(menu.get());
-
-    return localRepository.save(localAntiguo.get());
-  }
-
   public Local updateLocal(Local local, Long id) {
     Optional<Local> localAntiguo = localRepository.findById(id);
 
@@ -110,6 +92,12 @@ public class LocalService {
     if (local.getDireccion() != null) {
       nuevoLocal.setDireccion(local.getDireccion());
     }
+    if (local.getCiudad() != null) {
+      nuevoLocal.setCiudad(local.getCiudad());
+    }
+    if (local.getCodigoPostal() != null) {
+      nuevoLocal.setCodigoPostal(local.getCodigoPostal());
+    }
     if (local.getTelefono() != null) {
       nuevoLocal.setTelefono(local.getTelefono());
     }
@@ -117,9 +105,17 @@ public class LocalService {
     return localRepository.save(nuevoLocal);
   }
 
+  @Transactional
   public void deleteLocal(Long id) {
-    if (!localRepository.existsById(id)) {
+    Local localActual = localRepository.findById(id).orElse(null);
+    if (localActual == null) {
       throw new EntityDoesntExistsException("No existe un local con id " + id);
+    }
+
+    List <Menu> menus = menuRepository.findAllByLocalId(id);
+    for (Menu menu : menus) {
+      menu.getLocales().remove(localActual);
+      menuRepository.save(menu);
     }
 
     localRepository.deleteById(id);

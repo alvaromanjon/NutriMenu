@@ -38,14 +38,6 @@ public class EmpresaService {
     return empresas;
   }
 
-  public Empresa getEmpresaByEmail(String email) {
-    return empresaRepository.findByEmail(email);
-  }
-
-  public Empresa getEmpresaByTelefono(String telefono) {
-    return empresaRepository.findByTelefono(telefono);
-  }
-
   public Empresa getEmpresaByCif(String cif) {
     return empresaRepository.findByCif(cif);
   }
@@ -70,6 +62,12 @@ public class EmpresaService {
     }
     if (empresa.getDireccion() != null) {
       nuevaEmpresa.setDireccion(empresa.getDireccion());
+    }
+    if (empresa.getCiudad() != null) {
+      nuevaEmpresa.setCiudad(empresa.getCiudad());
+    }
+    if (empresa.getCodigoPostal() != null) {
+      nuevaEmpresa.setCodigoPostal(empresa.getCodigoPostal());
     }
     if (empresa.getTelefono() != null) {
       nuevaEmpresa.setTelefono(empresa.getTelefono());
