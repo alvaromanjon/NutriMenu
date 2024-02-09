@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Alert, Form, Button, Container, Card, InputGroup } from "react-bootstrap";
+import { Alert, Form, Button, Container, Card, InputGroup, Row, Col } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import "./styles.css";
 import { UserContext } from "../../contexts/UserContext";
@@ -51,71 +51,70 @@ const Login = () => {
   };
 
   return (
-    <div className="gradient">
-      <Container fluid className="d-flex justify-content-center align-items-center vh-100">
-        <Card
-          className="d-flex flex-column justify-content-center align-items-center py-4 shadow-lg"
-          style={{ width: "25rem" }}
-        >
-          <Card.Body>
-            <h2 className="text-center mt-5">NutriMenu</h2>
-            <h5 className="text-center mt-1">Inicio de sesión</h5>
-            <Form onSubmit={handleCheckPassword}>
-              <InputGroup className="mt-3 mb-1">
-                <InputGroup.Text id="usuario-at">@</InputGroup.Text>
-                <Form.Control
-                  type="username"
-                  placeholder="Nombre de usuario"
-                  aria-label="Nombre de usuario"
-                  aria-describedby="usuario-at"
-                  value={usuarioValue}
-                  onChange={(e) => setUsuarioValue(e.target.value)}
-                />
-              </InputGroup>
+    <Container fluid className="position-relative">
+      <Row className="justify-content-center align-items-center" style={{ height: "80vh" }}>
+        <Col>
+          <Card className="align-items-center py-4 shadow-lg mx-auto" style={{ maxWidth: "500px" }}>
+            <Card.Body>
+              <h2 className="text-center mt-5">NutriMenu</h2>
+              <h5 className="text-center mt-1">Inicio de sesión</h5>
+              <Form onSubmit={handleCheckPassword}>
+                <InputGroup className="mt-3 mb-1">
+                  <InputGroup.Text id="usuario-at">@</InputGroup.Text>
+                  <Form.Control
+                    type="username"
+                    placeholder="Nombre de usuario"
+                    aria-label="Nombre de usuario"
+                    aria-describedby="usuario-at"
+                    value={usuarioValue}
+                    onChange={(e) => setUsuarioValue(e.target.value)}
+                  />
+                </InputGroup>
 
-              <Form.Group className="mt-2 mb-1" controlId="formBasicPassword">
-                <Form.Control
-                  type="password"
-                  placeholder="Contraseña"
-                  value={passwordValue}
-                  onChange={(e) => setPasswordValue(e.target.value)}
-                />
+                <Form.Group className="mt-2 mb-1" controlId="formBasicPassword">
+                  <Form.Control
+                    type="password"
+                    placeholder="Contraseña"
+                    value={passwordValue}
+                    onChange={(e) => setPasswordValue(e.target.value)}
+                  />
 
-                {userNotExists && (
-                  <Alert className="mt-3 mb-1" variant="danger">
-                    No hay ningún usuario con este nombre de usuario
-                  </Alert>
-                )}
+                  {userNotExists && (
+                    <Alert className="mt-3 mb-1" variant="danger">
+                      No hay ningún usuario con este nombre de usuario
+                    </Alert>
+                  )}
 
-                {passwordsDontMatch && (
-                  <Alert className="mt-3 mb-1" variant="danger">
-                    La contraseña es incorrecta
-                  </Alert>
-                )}
-              </Form.Group>
-              <Button className="mt-1 text-decoration-none" variant="link" as={Link} to="/forgot-password">
-                ¿Has olvidado tu contraseña?
+                  {passwordsDontMatch && (
+                    <Alert className="mt-3 mb-1" variant="danger">
+                      La contraseña es incorrecta
+                    </Alert>
+                  )}
+                </Form.Group>
+                <Button className="mt-1 text-decoration-none" variant="link" as={Link} to="/forgot-password">
+                  ¿Has olvidado tu contraseña?
+                </Button>
+
+                <Button className="d-flex justify-content-center mx-auto mt-2 mb-2 px-3" variant="dark" type="submit">
+                  Iniciar sesión
+                </Button>
+              </Form>
+              <Button
+                className="d-flex justify-content-center mx-auto mt-1 mb-4 px-3"
+                variant="light"
+                type="submit"
+                size="sm"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Acceder como cliente
               </Button>
-
-              <Button className="d-flex justify-content-center mx-auto mt-2 mb-2 px-3" variant="dark" type="submit">
-                Iniciar sesión
-              </Button>
-            </Form>
-            <Button
-              className="d-flex justify-content-center mx-auto mt-1 mb-4 px-3"
-              variant="light"
-              type="submit"
-              size="sm"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Acceder como cliente
-            </Button>
-          </Card.Body>
-        </Card>
-      </Container>
-    </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
