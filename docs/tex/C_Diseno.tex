@@ -6,6 +6,1439 @@
 
 \section{Diseño procedimental}
 
+Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. A continuación voy a proceder a detallar y documentar cada uno de los distintos endpoints a los cuáles se puede hacer llamadas HTTP:
+
+% TODO Indicar cómo hacer llamadas a la API %
+% TODO Indicar el endpoint al que hacer las llamadas %
+
+\subsection{Empresas}
+
+\begin{apiRoute}{get}{/empresas}{Devuelve todas las empresas existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Devuelve la empresa con el ID correspondiente}
+		\routeParamItem{nombre}{Devuelve todas las empresas cuyo nombre contengan el valor pasado por parámetro}
+		\routeParamItem{email}{Devuelve la empresa con el email correspondiente}
+		\routeParamItem{telefono}{Devuelve la empresa con el teléfono correspondiente}
+		\routeParamItem{cif}{Devuelve la empresa con el CIF correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "UBU",
+	"email": "cafeterias@ubu.es",
+	"direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+	"telefono": "947258060",
+	"cif": "123456789"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/empresas}{Añade una nueva empresa}
+	\begin{routeParameter}
+		\noRouteParameter{No hay parámetros}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Vips",
+	"email": "empresa@vips.com",
+	"direccion": "Puerta del Sol, Madrid",
+	"telefono": "900123123",
+	"cif": "123456787"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 3,
+	"nombre": "Vips",
+	"email": "empresa@vips.com",
+	"direccion": "Puerta del Sol, Madrid",
+	"telefono": "900123123",
+	"cif": "123456787"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/empresas}{Actualiza la información de una empresa ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Modifica cualquier valor de la empresa con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Universidad de Burgos"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "UBU",
+	"email": "cafeterias@ubu.es",
+	"direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+	"telefono": "947258060",
+	"cif": "123456789"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/empresas}{Elimina una empresa de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Elimina la empresa con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Empresa con id eliminada correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/empresas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Usuarios}
+
+\begin{apiRoute}{get}{/usuarios}{Devuelve todos los usuarios existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_usuario}{Devuelve el usuario con el ID correspondiente}
+		\routeParamItem{id\_empresa}{Devuelve todos los usuarios de la empresa con el ID correspondiente}
+		\routeParamItem{id\_local}{Devuelve todos los usuarios del local con el ID correspondiente}
+		\routeParamItem{email}{Devuelve el usuario cuyo email sea el pasado por parámetro}
+		\routeParamItem{rol}{Devuelve todos los usuarios con un rol determinado}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+[
+    {
+        "id": 1,
+        "usuario": "camarero",
+        "password": "test",
+        "nombre": "Administrador",
+        "email": "camarero@gmail.com",
+        "rol": "CAMARERO",
+        "empresa": 
+        	{...},
+        "local": 
+        	{...}
+        }
+    }
+]
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un usuario con id 3",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/usuarios}{Añade un nuevo usuario}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{ID de la empresa a la que va a pertenecer el usuario (en caso de que su rol lo indique)}
+		\routeParamItem{id\_local}{ID del local al que va a pertenecer el usuario (en caso de que su rol lo indique)}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "usuario": "administrador",
+    "password": "admin123",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "rol": "ADMINISTRADOR"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "usuario": "administrador",
+    "password": "admin123",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "rol": "ADMINISTRADOR",
+    "empresa": null,
+    "local": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/login}{Comprueba un inicio de sesión}	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "usuario": "administrador",
+    "password": "admin123"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "usuario": "administrador",
+    "password": "admin123",
+    "nombre": "Administrador",
+    "email": "administrador@gmail.com",
+    "rol": "ADMINISTRADOR",
+    "empresa": null,
+    "local": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un usuario con id 3",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{401}{Bad Request: PasswordNotCorrectException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": La contrasena para el usuario administrador es incorrecta",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/usuarios}{Actualiza la información de un usuario ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_usuario}{Modifica cualquier valor del usuario con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Juan Sanchez"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "usuario": "administrador",
+    "password": "admin123",
+    "nombre": "Juan Sanchez",
+    "email": "administrador@gmail.com",
+    "rol": "ADMINISTRADOR",
+    "empresa": null,
+    "local": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un usuario con id 3",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/usuarios}{Elimina un usuario de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_usuario}{Elimina el usuario con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Usuario con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un usuario con id 3",
+    "path": "/usuarios"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Locales}
+
+\begin{apiRoute}{get}{/locales}{Devuelve todos los locales existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Devuelve el local con el ID correspondiente}
+		\routeParamItem{id\_empresa}{Devuelve todos los locales correspondientes a la empresa con el ID correspondiente}
+		\routeParamItem{nombre}{Devuelve todos los locales cuyo nombre contengan el valor pasado por parámetro}
+		\routeParamItem{email}{Devuelve el local con el email correspondiente}
+		\routeParamItem{telefono}{Devuelve el local con el teléfono correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Escuela Politecnica",
+	"email": "eps@ubu.es",
+	"direccion": "Avenida Cantabria",
+	"telefono": "947123123",
+	"empresa": {
+		"id": 1,
+		"nombre": "Universidad de Burgos",
+		"email": "cafeterias@ubu.es",
+		"direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+		"telefono": "9002375432",
+		"cif": "1113111"
+        }
+    }
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/locales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/locales}{Añade un nuevo local}
+	\begin{routeParameter}
+		\routeParamItem{id\_empresa}{Indica a qué empresa pertenece el local}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Cafeteria EPS",
+	"email": "eps@ubu.es",
+	"direccion": "Avenida Cantabria",
+	"telefono": "947123954"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 3,
+    "nombre": "Cafeteria EPS",
+    "email": "eps@ubu.es",
+    "direccion": "Avenida Cantabria",
+    "telefono": "947123954",
+    "empresa": {
+        "id": 1,
+        "nombre": "Universidad de Burgos",
+        "email": "cafeterias@ubu.es",
+        "direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+        "telefono": "9002375432",
+        "cif": "1113111"
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe una empresa con id 3",
+    "path": "/locales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/locales}{Actualiza la información de un local ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Modifica cualquier valor del local con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Cafeteria Economicas"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 3,
+    "nombre": "Cafeteria Economicas",
+    "email": "eps@ubu.es",
+    "direccion": "Avenida Cantabria",
+    "telefono": "947123954",
+    "empresa": {
+        "id": 1,
+        "nombre": "Universidad de Burgos",
+        "email": "cafeterias@ubu.es",
+        "direccion": "Calle Don Juan de Austria 1, 09001 Burgos",
+        "telefono": "9002375432",
+        "cif": "1113111"
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/locales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/local/menus}{Añade un menú a un local}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{ID del local al que se le va a añadir un menú}
+		\routeParamItem{id\_menu}{ID del menú que va a ser añadido al local}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Menu del miercoles",
+    "descripcion": "Menu del martes",
+    "fechaCreacion": "2023-09-19T19:00:14.998139Z",
+    "fechaModificacion": "2023-09-19T19:22:57.314517Z",
+    "platos": [
+        {
+            "id": 1,
+            "tipoPlato": "PRIMER_PLATO",
+            "nombre": "Kevin Bacon",
+            "descripcion": "Hamburguesa rellena de bacon",
+            "fechaCreacion": "2023-09-19T19:00:59.387553Z",
+            "fechaModificacion": "2023-09-19T19:00:59.387556Z"
+        }
+    ]
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/add/local/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/locales}{Elimina un local de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Elimina el local con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Local con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/locales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Menús}
+
+\begin{apiRoute}{get}{/menus}{Devuelve todos los menús existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{Devuelve el menú con el ID correspondiente}
+		\routeParamItem{id\_local}{Devuelve todos los menús del local con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: LackOfParametersException}
+			\begin{routeResponseItemBody}
+No se ha especificado ningun parametro de busqueda
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/menus}{Añade un nuevo menú}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Indica a qué local pertenece el menú}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del martes",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/menus}{Actualiza la información de un menú ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{Modifica cualquier valor del menú con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Menu del miercoles"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+	"id": 1,
+	"nombre": "Menu del miercoles",
+	"descripcion": "Menu del martes",
+	"fechaCreacion": "2023-09-19T19:00:14.998139Z",
+	"fechaModificacion": "2023-09-19T19:00:14.998140Z",
+	"platos": []
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/menu/platos}{Añade un plato a un menú}
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{ID del menú al que se le va a añadir un plato}
+		\routeParamItem{id\_plato}{ID del plato que va a ser añadido al menú}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Menu del miercoles",
+    "descripcion": "Menu del martes",
+    "fechaCreacion": "2023-09-19T19:00:14.998139Z",
+    "fechaModificacion": "2023-09-19T19:22:57.314517Z",
+    "platos": [
+        {
+            "id": 1,
+            "tipoPlato": "PRIMER_PLATO",
+            "nombre": "Kevin Bacon",
+            "descripcion": "Hamburguesa rellena de bacon",
+            "fechaCreacion": "2023-09-19T19:00:59.387553Z",
+            "fechaModificacion": "2023-09-19T19:00:59.387556Z"
+        }
+    ]
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/add/menu/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/menus}{Elimina un menú de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_menu}{Elimina el menú con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Menu con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un menu con id 3",
+    "path": "/menus"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Platos}
+
+\begin{apiRoute}{get}{/platos}{Devuelve todos los platos existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_plato}{Devuelve el plato con el ID correspondiente}
+		\routeParamItem{id\_local}{Devuelve todos los platos del local con el ID correspondiente}
+		\routeParamItem{tipo\_plato}{Devuelve todos los platos de un tipo determinado dentro de un local (para poder realizar esta búsqueda es necesario pasar id\_local también)}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+[
+    {
+        "id": 1,
+        "tipoPlato": "PRIMER_PLATO",
+        "nombre": "Kevin Bacon",
+        "descripcion": "Hamburguesa rellena de bacon",
+        "fechaCreacion": "2023-09-19T19:00:59.387553Z",
+        "fechaModificacion": "2023-09-19T19:00:59.387556Z"
+    }
+]
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un plato con id 3",
+    "path": "/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: LackOfParametersException}
+			\begin{routeResponseItemBody}
+No se ha especificado ningun parametro de busqueda
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/platos}{Añade un nuevo plato}
+	\begin{routeParameter}
+		\routeParamItem{id\_local}{Indica a qué local pertenece el plato}
+	\end{routeParameter}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "nombre": "Paella",
+    "descripcion": "Paella valenciana",
+    "tipoPlato": "PRIMER_PLATO"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 4,
+    "tipoPlato": "PRIMER_PLATO",
+    "nombre": "Paella",
+    "descripcion": "Paella valenciana",
+    "fechaCreacion": "2023-09-19T20:57:24.250981714Z",
+    "fechaModificacion": "2023-09-19T20:57:24.250982798Z"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un local con id 3",
+    "path": "/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/platos}{Actualiza la información de un plato ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_plato}{Modifica cualquier valor del plato con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Paella valenciana"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 4,
+    "tipoPlato": "PRIMER_PLATO",
+    "nombre": "Paella valenciana",
+    "descripcion": "Paella valenciana",
+    "fechaCreacion": "2023-09-19T20:57:24.250982Z",
+    "fechaModificacion": "2023-09-19T21:00:18.340522711Z"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un plato con id 3",
+    "path": "/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/plato/alimentos}{Añade un alimento a un plato}
+	\begin{routeParameter}
+		\routeParamItem{id\_plato}{ID del plato al que se le va a añadir un alimento}
+		\routeParamItem{id\_alimento}{ID del alimento que va a ser añadido al plato}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "plato": {
+        "id": 4,
+        "tipoPlato": "PRIMER_PLATO",
+        "nombre": "Paella valenciana",
+        "descripcion": "Paella valenciana",
+        "fechaCreacion": "2023-09-19T20:57:24.250982Z",
+        "fechaModificacion": "2023-09-19T21:03:37.990019721Z"
+    },
+    "alimento": {
+        "id": 2,
+        "nombre": "Arroz",
+        "grupoAlimento": "CEREALES",
+        "gramosPorRacion": 125.0,
+        "componentesNutricionales": {...}
+    },
+    "gramosEscogidos": 100.0,
+    "componentesNutricionales": {...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un plato con id 3",
+    "path": "/add/plato/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/update/plato/alimentos}{Actualiza la cantidad de alimento en un plato}
+	\begin{routeParameter}
+		\routeParamItem{id\_plato}{ID del plato que contiene el alimento}
+		\routeParamItem{id\_alimento}{ID del alimento}
+		\routeParamItem{cantidad}{Cantidad de alimento}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "plato": {
+        "id": 4,
+        "tipoPlato": "PRIMER_PLATO",
+        "nombre": "Paella valenciana",
+        "descripcion": "Paella valenciana",
+        "fechaCreacion": "2023-09-19T20:57:24.250982Z",
+        "fechaModificacion": "2023-09-19T21:03:37.990020Z"
+    },
+    "alimento": {
+        "id": 2,
+        "nombre": "Arroz",
+        "grupoAlimento": "CEREALES",
+        "gramosPorRacion": 125.0,
+        "componentesNutricionales": {...}
+    },
+    "gramosEscogidos": 300.0,
+    "componentesNutricionales": [...]	
+}
+    		\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un plato con id 3",
+    "path": "/update/plato/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/platos}{Elimina un plato de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_plato}{Elimina el plato con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Plato con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un plato con id 3",
+    "path": "/platos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Alimentos}
+
+\begin{apiRoute}{get}{/alimentos}{Devuelve todos los alimentos existentes}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Devuelve el alimento con el ID correspondiente}
+		\routeParamItem{nombre}{Devuelve todos los alimentos que contienen ese nombre}
+		\routeParamItem{tipo\_alimento}{Devuelve todos los alimentos de un tipo determinado}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+[
+    {
+        "id": 1,
+        "nombre": "Tequenos",
+        "grupoAlimento": "CEREALES",
+        "gramosPorRacion": 125.0,
+        "componentesNutricionales": null
+    },
+    ...
+]
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+	
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/alimentos}{Añade un nuevo alimento}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "nombre": "Arroz",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "nombre": "Arroz",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/alimentos}{Actualiza la información de un alimento ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Modifica cualquier valor del alimento con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"nombre": "Teques"
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Teques",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/alimento/componentes}{Añade componentes nutricionales a un plato}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{ID del alimento al que se le va a añadir unos componentes nutricionales}
+		\routeParamItem{id\_componente}{ID de los componentes nutricionales que van a ser añadidos a un plato}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "nombre": "Teques",
+    "grupoAlimento": "CEREALES",
+    "gramosPorRacion": 125.0,
+    "componentesNutricionales": null
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/alimentos}{Elimina un alimento de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_alimento}{Elimina el alimento con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Alimento con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un alimento con id 3",
+    "path": "/alimentos"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
+\subsection{Componentes nutricionales}
+
+\begin{apiRoute}{get}{/componentes}{Devuelve información sobre componentes nutricionales}
+	
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Devuelve el componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    "calorias": 566.20,
+    "grasas": 30.00,
+    "grasasSaturadas": 10.00,
+    "hidratosCarbono": 15.00,
+    "azucares": 7.00,
+    "fibra": 2.00,
+    "proteinas": 3.00,
+    "sal": 2.00,
+    "vitaminas": {
+        ...
+    },
+    "minerales": {
+        ...
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: LackOfParametersException}
+			\begin{routeResponseItemBody}
+No se ha especificado ningun parametro de busqueda
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{post}{/componentes}{Añade un nuevo componente nutricional}
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+    "calorias": 566.2
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "calorias": 566.2,
+    "grasas": 0,
+    "grasasSaturadas": 0,
+    "hidratosCarbono": 0,
+    "azucares": 0,
+    "fibra": 0,
+    "proteinas": 0,
+    "sal": 0,
+    "vitaminas": 
+    	{...},
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/componentes}{Actualiza la información de un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Modifica cualquier valor del componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"calorias": 900
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 2,
+    "calorias": 900,
+    "grasas": 0,
+    "grasasSaturadas": 0,
+    "hidratosCarbono": 0,
+    "azucares": 0,
+    "fibra": 0,
+    "proteinas": 0,
+    "sal": 0,
+    "vitaminas": 
+    	{...},
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/componente/vitaminas}{Añade vitaminas a un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{ID del componente nutricional al que se le van a añadir las vitaminas}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"vitaminaA": 10
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    ...
+    "vitaminas": {
+        "id": 3,
+        "vitaminaA": 10,
+        "vitaminaD": 0,
+        "vitaminaE": 0,
+        "vitaminaB9": 0,
+        "vitaminaB3": 0,
+        "vitaminaB2": 0,
+        "vitaminaB1": 0,
+        "vitaminaB12": 0,
+        "vitaminaB6": 0,
+        "vitaminaC": 0
+    },
+    "minerales": 
+    	{...}
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/add/componente/vitaminas"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{put}{/add/componente/minerales}{Añade minerales a un componente nutricional ya existente}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{ID del componente nutricional al que se le van a añadir los minerales}
+	\end{routeParameter}
+	
+	\begin{routeRequest}{application/json}
+		\begin{routeRequestBody}
+{
+	"fosforo": 20
+}
+		\end{routeRequestBody}
+	\end{routeRequest}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+{
+    "id": 1,
+    ...
+    "vitaminas":
+        {...},
+    "minerales": {
+        "id": 3,
+        "calcio": 0,
+        "hierro": 0,
+        "potasio": 0,
+        "magnesio": 0,
+        "sodio": 0,
+        "fosforo": 20,
+        "selenio": 0,
+        "zinc": 0
+    }
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/add/componente/minerales"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+	\end{routeResponse}
+\end{apiRoute}
+
+\begin{apiRoute}{delete}{/componentes}{Elimina un componente nutricional de la base de datos}
+	\begin{routeParameter}
+		\routeParamItem{id\_componente}{Elimina el componente nutricional con el ID correspondiente}
+	\end{routeParameter}
+	\begin{routeResponse}{application/json}
+		\begin{routeResponseItem}{200}{ok}
+			\begin{routeResponseItemBody}
+Componentes nutricionales con id eliminado correctamente	
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\begin{routeResponseItem}{400}{Bad Request: EntityDoesntExistsException}
+			\begin{routeResponseItemBody}
+{
+    "timestamp": "2023-09-19T17:18:27.228+00:00",
+    "status": 400,
+    "error": "Bad Request",
+    "trace": "ooo.alvar.nutrimenu.apirest.excepciones...",
+    "message": "No existe un componente nutricional con id 3",
+    "path": "/componentes"
+}
+			\end{routeResponseItemBody}
+		\end{routeResponseItem}
+		
+	\end{routeResponse}
+\end{apiRoute}
+
 \section{Diseño arquitectónico}
 
 

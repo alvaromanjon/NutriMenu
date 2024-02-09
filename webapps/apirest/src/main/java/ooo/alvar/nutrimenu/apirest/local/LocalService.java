@@ -33,6 +33,14 @@ public class LocalService {
     return localDevuelto;
   }
 
+  public List<Local> getAllLocales() {
+    List<Local> locales = new ArrayList<>();
+    localRepository.findAll()
+      .forEach(locales::add);
+
+    return locales;
+  }
+
   public List<Local> getAllLocalesByEmpresa(Long id) {
     List<Local> locales = new ArrayList<>();
     locales.addAll(localRepository.findAllByEmpresaId(id));
@@ -42,7 +50,7 @@ public class LocalService {
 
   public List<Local> getLocalByNombre(String nombre, Long idEmpresa) {
     List<Local> locales = new ArrayList<>();
-    locales.addAll(localRepository.findAllByNombreContainsIgnoreCaseAndEmpresaId(nombre, idEmpresa));
+    locales.addAll(localRepository.findAllByNombreContainsIgnoreCase(nombre));
 
     return locales;
   }

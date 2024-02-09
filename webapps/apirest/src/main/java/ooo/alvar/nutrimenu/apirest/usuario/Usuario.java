@@ -29,7 +29,6 @@ public class Usuario {
   @ManyToOne
   @JoinColumn(name = "empresa_id")
   private Empresa empresa;
-
   @ManyToOne
   @JoinColumn(name = "local_id")
   private Local local;

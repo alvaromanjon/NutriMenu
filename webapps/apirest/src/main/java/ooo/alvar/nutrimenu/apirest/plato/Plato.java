@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
+import ooo.alvar.nutrimenu.apirest.local.Local;
 import ooo.alvar.nutrimenu.apirest.menu.Menu;
 import ooo.alvar.nutrimenu.apirest.plato.tipoPlato.tipoPlato;
 import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nombre", "empresa_id"})
+        @UniqueConstraint(columnNames = {"nombre", "local_id"})
       })
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Plato {
@@ -30,24 +30,26 @@ public class Plato {
   private String descripcion;
   private Instant fechaCreacion;
   private Instant fechaModificacion;
-  @ManyToOne
-  @JoinColumn(name = "empresa_id")
-  private Empresa empresa;
   @JsonIgnore
   @ManyToMany(mappedBy = "platos")
   private List<Menu> menus = new ArrayList<>();
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "local_id")
+  private Local local;
+  @JsonIgnore
   @OneToMany(mappedBy = "plato", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<PlatoAlimento> alimentos = new ArrayList<>();
 
   public Plato() {
   }
 
-  public Plato(String nombre, String descripcion, tipoPlato tipoPlato, Empresa empresa) {
+  public Plato(String nombre, String descripcion, tipoPlato tipoPlato, Local local) {
     super();
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.tipoPlato = tipoPlato;
-    this.empresa = empresa;
+    this.local = local;
   }
 
   public Long getId() {
@@ -98,20 +100,20 @@ public class Plato {
     this.fechaModificacion = fechaModificacion;
   }
 
-  public Empresa getEmpresa() {
-    return empresa;
-  }
-
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
-  }
-
   public List<Menu> getMenus() {
     return menus;
   }
 
   public void setMenus(List<Menu> menus) {
     this.menus = menus;
+  }
+
+  public Local getLocal() {
+    return local;
+  }
+
+  public void setLocal(Local local) {
+    this.local = local;
   }
 
   public List<PlatoAlimento> getAlimentos() {

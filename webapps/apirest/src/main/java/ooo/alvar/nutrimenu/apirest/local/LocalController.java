@@ -1,6 +1,5 @@
 package ooo.alvar.nutrimenu.apirest.local;
 
-import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +28,12 @@ public class LocalController {
       listaLocales.add(localService.getLocalByEmail(email));
     } else if (telefono != null) {
       listaLocales.add(localService.getLocalByTelefono(telefono));
+    } else if (nombre != null) {
+      listaLocales = localService.getLocalByNombre(nombre, idEmpresa);
     } else if (idEmpresa != null) {
-      if (nombre != null) {
-        listaLocales = localService.getLocalByNombre(nombre, idEmpresa);
-      } else {
-        listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
-      }
+      listaLocales = localService.getAllLocalesByEmpresa(idEmpresa);
     } else {
-      throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
+      listaLocales = localService.getAllLocales();
     }
 
     return new ResponseEntity<>(listaLocales, HttpStatus.OK);

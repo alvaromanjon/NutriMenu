@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
-import ooo.alvar.nutrimenu.apirest.empresa.Empresa;
 import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento;
 
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {
-  @UniqueConstraint(columnNames = {"nombre", "empresa_id"})
+  @UniqueConstraint(columnNames = {"nombre"})
 })
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Alimento {
@@ -27,9 +26,6 @@ public class Alimento {
   @Column(nullable = false)
   private grupoAlimento grupoAlimento;
   private double gramosPorRacion = 100;
-  @ManyToOne
-  @JoinColumn(name = "empresa_id")
-  private Empresa empresa;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "componentes_nutricionales_id", referencedColumnName = "id", unique = true)
   private ComponentesNutricionales componentesNutricionales;
@@ -40,12 +36,11 @@ public class Alimento {
   public Alimento() {
   }
 
-  public Alimento(String nombre, grupoAlimento grupoAlimento, double gramosPorRacion, Empresa empresa, ComponentesNutricionales componentesNutricionales) {
+  public Alimento(String nombre, grupoAlimento grupoAlimento, double gramosPorRacion, ComponentesNutricionales componentesNutricionales) {
     super();
     this.nombre = nombre;
     this.grupoAlimento = grupoAlimento;
     this.gramosPorRacion = gramosPorRacion;
-    this.empresa = empresa;
     this.componentesNutricionales = componentesNutricionales;
   }
 
@@ -79,14 +74,6 @@ public class Alimento {
 
   public void setGramosPorRacion(double gramosPorRacion) {
     this.gramosPorRacion = gramosPorRacion;
-  }
-
-  public Empresa getEmpresa() {
-    return empresa;
-  }
-
-  public void setEmpresa(Empresa empresa) {
-    this.empresa = empresa;
   }
 
   public ComponentesNutricionales getComponentesNutricionales() {

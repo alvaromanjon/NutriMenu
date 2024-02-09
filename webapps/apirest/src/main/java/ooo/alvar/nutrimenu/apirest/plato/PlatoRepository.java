@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface PlatoRepository extends CrudRepository<Plato, Long> {
-  List<Plato> findAllByEmpresaId(Long idEmpresa);
-  List<Plato> findAllByEmpresaIdAndTipoPlato(Long idEmpresa, tipoPlato plato);
+  List<Plato> findAllByLocalIdAndTipoPlato(Long idLocal, tipoPlato plato);
+  List<Plato> findAllByLocalId(Long idLocal);
 }

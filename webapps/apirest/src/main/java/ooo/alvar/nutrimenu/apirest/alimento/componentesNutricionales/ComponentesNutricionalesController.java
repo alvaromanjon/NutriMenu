@@ -2,6 +2,7 @@ package ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales;
 
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.minerales.Minerales;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.vitaminas.Vitaminas;
+import ooo.alvar.nutrimenu.apirest.excepciones.LackOfParametersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,10 @@ public class ComponentesNutricionalesController {
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping("/componentes")
-  public ResponseEntity<ComponentesNutricionales> getComponentesNutricionales(@RequestParam(name="id_componente") Long id) {
+  public ResponseEntity<ComponentesNutricionales> getComponentesNutricionales(@RequestParam(required = false, name="id_componente") Long id) {
+    if (id == null) {
+      throw new LackOfParametersException("No se ha especificado ningún parámetro de búsqueda");
+    }
     ComponentesNutricionales componentesNutricionales = componentesNutricionalesService.getComponentesNutricionales(id);
     return new ResponseEntity<>(componentesNutricionales, HttpStatus.OK);
   }
