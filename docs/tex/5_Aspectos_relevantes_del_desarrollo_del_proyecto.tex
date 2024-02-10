@@ -24,11 +24,11 @@ Inicialmente, la aplicaciones web parten de un modelo de despliegue de forma man
 
 Además de esto, este modelo de infraestructura es dependiente del sistema operativo y la arquitectura de hardware usadas, lo cual puede suponer un gran inconveniente, como ha terminado siendo el caso, ya que mi equipo personal es un MacBook Pro con procesador Apple Silicon, el cual está basado en una arquitectura ARM. Esto ha supuesto un gran problema a la hora de realizar el despliegue inicial de las aplicaciones, ya que el despliegue está pensado para ser realizado desde un equipo con sistema operativo Windows. 
 
-Inicialmente se intentó solucionar este problema mediante el uso de una máquina virtual, puesto que existen versiones tanto de Windows 10 como de Windows 11 para equipos con arquitectura ARM (cosa no exclusiva de los procesadores de Apple, ya que los propios equipos de Microsoft, los portátiles Surface, actualmente también están dotados de procesadores ARM). Sin embargo, el gran inconveniente surgió a la hora de instalar MySQL, ya que nada más abrir el instalador se obtuvo el siguiente error:
+Primero se intentó solucionar este problema mediante el uso de una máquina virtual, puesto que existen versiones tanto de Windows 10 como de Windows 11 para equipos con arquitectura ARM (cosa no exclusiva de los procesadores de Apple, ya que los propios equipos de Microsoft, los portátiles Surface, actualmente también están dotados de procesadores ARM). Sin embargo, el gran inconveniente surgió a la hora de instalar MySQL, ya que nada más abrir el instalador se obtuvo el siguiente error:
 
 \imagen{MySQL/mysql_installation_error}{MySQL Workbench sólo es compatible con equipos de arquitectura x86$\_$x64}{0.8}
 
-Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios de la aplicación (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de Docker y Docker Compose, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
+Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de Docker y Docker Compose, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
 
 \begin{itemize}
   \item La infraestructura pasa a ser totalmente independiente del sistema operativo y la arquitectura de procesador, ya que Docker funciona con todos los sistemas y arquitecturas principales.
@@ -36,3 +36,25 @@ Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable
   \item Este tipo de infraestructura permite la creación de distintos entornos (desarrollo, producción, testing) consistentes y sencillos de implementar, ya que permite asegurarse de que la aplicación se va a ejecutar de la misma forma en todos ellos.
   \item Cada contenedor se encuentra aislado del resto, con sus propios recursos y sistemas de archivos, por lo que mejora bastante la seguridad y asegura que un problema en uno de ellos no va a afectar ni canibalizar al resto.
 \end{itemize}
+
+Además de esto, puesto que ambas aplicaciones trabajan con el mismo conjunto de datos y no existe realmente un grado de separación necesario como para mantener dos proyectos, también se ha decidido unificar las dos aplicaciones web en una, debido a que esto facilita bastante su desarrollo, elimina código repetido y mantiene mayor homogeneidad.
+
+\section{Lógica de negocio}
+
+En el proyecto original, ambas aplicaciones siguen el patrón Modelo-Vista-Controlador (MVC) en todo su desarrollo, tanto para el manejo de datos como la interfaz, ya que todo forma parte de un mismo monolito. Sin embargo, como en este proyecto se ha decidido hacer una separación total de los servicios, el enfoque adoptado ha sido el de API-Driven Development, en el que primero se implementa esta lógica de negocio siguiendo el patrón MVC, y en la capa del Controlador se implementa una API REST que proporciona los endpoints necesarios para que el frontend interactúe con esta. 
+
+Esto ha permitido abstraer a la aplicación web de tener que interactuar directamente con la base de datos, lo que ahorra el uso de queries SQL complejas y permite prescindir de APIs como JDBC, ya que se va a trabajar directamente con objetos JSON mucho más amigables de manejar y representar en la capa frontend.
+
+Para la implementación de este servicio se ha mantenido el uso de Spring Boot, al igual que en el proyecto original, lo que ha permitido tener el modelo original como referencia a la hora de realizar esta reimplementación.
+
+\subsection{Modelo de datos}
+
+Puesto que tanto el proyecto de Mariya como el actual siguen el modelo MVC, las capas del Modelo de datos se asemejan, ya que en ambos se mantiene un modelo puramente relacional. Sin embargo, esta transformación en la capa del Controlador, así como los cambios realizados a la hora de obtener la información de los alimentos, han hecho que haya varias diferencias entre los dos:
+
+\imagen{DB/mariya_data_schema}{Modelo de base de datos de Mariya \cite{tfg-mariya:anexos}}{0.7}
+
+Como los datos van a ser accedidos y manipulados directamente desde la API, se ha eliminado la necesidad de tener vistas en la base de datos, ya que los propios endpoints son los encargados de mostrar sólo la información que nos interese, permitiendo además mayor personalización y granularidad en los resultados obtenidos.
+
+Además de esto, como en la sección de Alimentos se ha pasado de un modelo en el que los datos sólo se podían almacenar de forma local, usando los datos de BEDCA, a un modelo híbrido que permite tanto el almacenamiento local como la interacción con la API de Nutritionix, esta parte del modelo de datos se ha rediseñado completamente, intentando hacerla más simple y fácil de entender.
+
+\imagen{DB/nutrimenu_data_schema}{Modelo de base de datos actual}{0.7}
