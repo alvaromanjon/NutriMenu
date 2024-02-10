@@ -14,8 +14,25 @@ En este apartado se recogerán los aspectos de mayor relevancia que han surgido 
 
 Este proyecto, propuesto por mis tutores, surge como continuidad de otro Trabajo de Final de Grado, el realizado por Mariya Aleksandrova Stroyanova, en el que trabajó para crear una versión web y ampliar las funcionalidades de otro Trabajo de Final de Grado, el realizado por Joseba Fernando Moisén, que consistía en una aplicación de escritorio de la que se podían obtener los valores nutricionales de los alimentos de la base de datos de BEDCA. 
 
-El Trabajo de Mariya, que es del que he partido, consta de dos aplicaciones web: una encargada de la generación y gestión de empresas, locales, usuarios, menús y platos, que sería la parte que controlarían las empresas encargadas de la gestión de las cafeterías de las distintas facultades de la Universidad de Burgos; y otra aplicación que sería a la que tendrían acceso los clientes, en la cual se puede realizar informes nutricionales a partir de los menús escogidos por el usuario.
+El Trabajo de Mariya, que ha sido el punto de partida, consta de dos aplicaciones web: una encargada de la generación y gestión de empresas, locales, usuarios, menús y platos, que sería la parte que controlarían las empresas encargadas de la gestión de las cafeterías de las distintas facultades de la Universidad de Burgos; y otra aplicación que sería a la que tendrían acceso los clientes, en la cual se pueden realizar informes nutricionales a partir de los menús escogidos por el usuario.
 
-Mi propuesta para este Trabajo de Final de Grado ha sido la de mejorar esta aplicación web, tanto a nivel de infraestructura y servicios, como a nivel de interactividad y usabilidad, haciéndola mucho más amigable a los dispositivos móviles, ya que es el lugar desde donde van a acceder la mayoría de usuarios que visiten la cafetería.
+La propuesta para este Trabajo de Final de Grado ha sido la de mejorar estas aplicaciones web, tanto a nivel de infraestructura y servicios, como a nivel de interactividad y usabilidad, procediendo a realizar un rediseño completo de ellas y haciéndolas mucho más amigables a los dispositivos móviles, ya que es el lugar desde donde van a acceder la mayoría de usuarios que visiten la cafetería.
 
+\section{Infraestructura de la aplicación}
 
+Inicialmente, la aplicaciones web parten de un modelo de despliegue de forma manual y en local, ya que requieren de la instalación de varios programas, como MySQL Community, para poder lanzar la base de datos; el SDK de Java, para poder ejecutar el código; así como Eclipse o un IDE similar, para poder lanzar los proyectos de Spring Boot en los que están contenidas las aplicaciones. Esto, como se puede observar en el apartado de Documentación técnica de programación en los anexos de Mariya \cite{tfg-mariya:anexos} es un proceso bastante laborioso, que requiere de la preparación y configuración de un entorno específico para esta tarea, y que no dota a la infraestructura de ningún tipo de escalabilidad ni posibilidad de automatización a la hora de su despliegue.
+
+Además de esto, este modelo de infraestructura es dependiente del sistema operativo y la arquitectura de hardware usadas, lo cual puede suponer un gran inconveniente, como ha terminado siendo el caso, ya que mi equipo personal es un MacBook Pro con procesador Apple Silicon, el cual está basado en una arquitectura ARM. Esto ha supuesto un gran problema a la hora de realizar el despliegue inicial de las aplicaciones, ya que el despliegue está pensado para ser realizado desde un equipo con sistema operativo Windows. 
+
+Inicialmente se intentó solucionar este problema mediante el uso de una máquina virtual, puesto que existen versiones tanto de Windows 10 como de Windows 11 para equipos con arquitectura ARM (cosa no exclusiva de los procesadores de Apple, ya que los propios equipos de Microsoft, los portátiles Surface, actualmente también están dotados de procesadores ARM). Sin embargo, el gran inconveniente surgió a la hora de instalar MySQL, ya que nada más abrir el instalador se obtuvo el siguiente error:
+
+\imagen{MySQL/mysql_installation_error}{MySQL Workbench sólo es compatible con equipos de arquitectura x86$\_$x64}{0.8}
+
+Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios de la aplicación (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de Docker y Docker Compose, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
+
+\begin{itemize}
+  \item La infraestructura pasa a ser totalmente independiente del sistema operativo y la arquitectura de procesador, ya que Docker funciona con todos los sistemas y arquitecturas principales.
+  \item El despliegue se vuelve mucho más rápido y sencillo, ya que en prácticamente un minuto y con tan sólo dos comandos puedes estar ejecutando la aplicación con todos sus servicios activos. 
+  \item Este tipo de infraestructura permite la creación de distintos entornos (desarrollo, producción, testing) consistentes y sencillos de implementar, ya que permite asegurarse de que la aplicación se va a ejecutar de la misma forma en todos ellos.
+  \item Cada contenedor se encuentra aislado del resto, con sus propios recursos y sistemas de archivos, por lo que mejora bastante la seguridad y asegura que un problema en uno de ellos no va a afectar ni canibalizar al resto.
+\end{itemize}
