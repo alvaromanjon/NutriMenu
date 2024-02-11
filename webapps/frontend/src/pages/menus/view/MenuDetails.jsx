@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import MenuDetailsTipoPlato from "./MenuDetailsTipoPlato";
 import { useState } from "react";
-import MenuDetailsGraph from "./MenuDetailsGraph";
+import MenuDetailsInformation from "./MenuDetailsInformation";
 
 const MenuDetails = () => {
   const data = useLoaderData();
@@ -51,7 +51,7 @@ const MenuDetails = () => {
       </Row>
       <Row>
         <Col xl={8} className="align-items-center justify-content-center">
-          <MenuDetailsGraph
+          <MenuDetailsInformation
             entrante={entranteEscogido}
             primerPlato={primerPlatoEscogido}
             segundoPlato={segundoPlatoEscogido}

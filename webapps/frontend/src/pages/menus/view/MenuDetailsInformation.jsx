@@ -6,7 +6,7 @@ import { Card, Nav } from "react-bootstrap";
 import { NutrientTableData, NutrientTableHeader } from "../../../utils/nutrientTableData";
 import { NutrientChartData, NutrientChartOptions } from "../../../utils/nutrientChartData";
 
-const MenuDetailsGraph = ({ entrante, primerPlato, segundoPlato, postre }) => {
+const MenuDetailsInformation = ({ entrante, primerPlato, segundoPlato, postre }) => {
   const [chartData, setChartData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const colDefs = NutrientTableHeader();
@@ -61,4 +61,4 @@ const MenuDetailsGraph = ({ entrante, primerPlato, segundoPlato, postre }) => {
   );
 };
 
-export default MenuDetailsGraph;
+export default MenuDetailsInformation;
