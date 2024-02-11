@@ -43,7 +43,7 @@ import NewMenu from "./pages/menus/new/NewMenu";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
-import GestionLayout from "./layouts/Gestionlayout";
+import GestionLayout from "./layouts/GestionLayout";
 
 // Loaders
 import { listAlimentosLoader } from "./loaders/list/listAlimentosLoader";

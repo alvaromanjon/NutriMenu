@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import "./styles.css";
@@ -6,10 +6,6 @@ import "./styles.css";
 const SelectMenuFromLocal = () => {
   const data = useLoaderData();
   const [fechaEscogida, setFechaEscogida] = useState("");
-
-  useEffect(() => {
-    console.log(fechaEscogida);
-  }, [fechaEscogida]);
 
   const modifyFechaEscogida = (e) => {
     setFechaEscogida(e.currentTarget.value);
@@ -32,37 +28,42 @@ const SelectMenuFromLocal = () => {
                   <h3 className="pt-2">Escoge una fecha para ver los menús disponibles</h3>
                 </Card.Title>
               </Card.Header>
-              <Card.Body>
-                <Form>
-                  <Form.Group className="mb-4">
-                    <Form.Control
-                      name="fechaEscogida"
-                      type="date"
-                      value={fechaEscogida}
-                      onChange={modifyFechaEscogida}
-                    />
-                  </Form.Group>
-                </Form>
-                {menusDisponibles.length !== 0 ? (
-                  menusDisponibles.map((menu) => (
-                    <Card key={menu.id} className="mt-3 menu-card">
-                      <Card.Body>
-                        <Card.Title>{menu.nombre}</Card.Title>
-                        <Card.Text>
-                          {menu.descripcion}
-                          <div className="text-muted mt-2">
-                            Contiene {menu.platos.length} {menu.platos.length > 1 ? "platos" : "plato"}
-                          </div>
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  ))
-                ) : (
-                  <Alert variant="light" className="mt-3">
-                    No hay menús disponibles para esta fecha
-                  </Alert>
-                )}
-              </Card.Body>
+
+              <Row>
+                <Col className="col-1"></Col>
+                <Col>
+                  <Card.Body className="mb-4">
+                    <Form>
+                      <Form.Group className="mb-4">
+                        <Form.Control
+                          name="fechaEscogida"
+                          type="date"
+                          value={fechaEscogida}
+                          onChange={modifyFechaEscogida}
+                        />
+                      </Form.Group>
+                    </Form>
+                    {menusDisponibles.length !== 0 ? (
+                      menusDisponibles.map((menu) => (
+                        <Card key={menu.id} className="mt-3 menu-card">
+                          <Card.Body>
+                            <Card.Title>{menu.nombre}</Card.Title>
+                            <Card.Subtitle className="text-muted mt-2">
+                              Contiene {menu.platos.length} {menu.platos.length > 1 ? "platos" : "plato"}
+                            </Card.Subtitle>
+                            <Card.Text className="mt-2">{menu.descripcion}</Card.Text>
+                          </Card.Body>
+                        </Card>
+                      ))
+                    ) : (
+                      <Alert variant="light" className="mt-3">
+                        No hay menús disponibles para esta fecha
+                      </Alert>
+                    )}
+                  </Card.Body>
+                </Col>
+                <Col className="col-1"></Col>
+              </Row>
             </Card>
           </Col>
         </Row>
