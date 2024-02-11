@@ -8,6 +8,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
+import HomeSelectLocal from "./pages/home/NotLoggedIn/HomeSelectLocal";
 
 // Tablas
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
@@ -47,11 +48,13 @@ import { listLocalesLoader } from "./loaders/list/listLocalesLoader";
 import { listEmpresasLoader } from "./loaders/list/listEmpresasLoader";
 import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
+import ListLocalesEmpresaLoader from "./loaders/list/listLocalesEmpresaLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
+      <Route path=":id" element={<HomeSelectLocal />} loader={ListLocalesEmpresaLoader}></Route>
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
 
