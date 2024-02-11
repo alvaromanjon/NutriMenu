@@ -1,16 +1,17 @@
 import { useLoaderData } from "react-router-dom";
-import { AgChartsReact } from "ag-charts-react";
-import { Col, Container, Row } from "react-bootstrap";
+import { calculatePlatoNutrients } from "../../../utils/calculatePlatoNutrients";
 import { NutrientChartData, NutrientChartOptions } from "../../../utils/nutrientChartData";
 import { NutrientTableData, NutrientTableHeader } from "../../../utils/nutrientTableData";
-import { flattenObject } from "../../../utils/flattenObject";
+import { Col, Container, Row } from "react-bootstrap";
+import { AgChartsReact } from "ag-charts-react";
 import AgGridTableRepresentation from "../../../utils/AgGridTableRepresentation";
 
-const AlimentoDetails = () => {
-  const alimento = useLoaderData();
-  const alimentoTransformado = flattenObject(alimento[0].componentesNutricionales);
-  const chartData = NutrientChartData(alimentoTransformado);
-  const tableData = NutrientTableData(alimentoTransformado);
+const PlatoDetails = () => {
+  const plato = useLoaderData();
+  console.log(plato);
+  const nutrientesSumados = calculatePlatoNutrients(plato[0]);
+  const chartData = NutrientChartData(nutrientesSumados);
+  const tableData = NutrientTableData(nutrientesSumados);
   const colDefs = NutrientTableHeader();
   const chartOptions = NutrientChartOptions(chartData);
 
@@ -18,7 +19,7 @@ const AlimentoDetails = () => {
     <Container fluid="md">
       <Row>
         <Col className="text-center mb-2 mt-3">
-          <h3>{alimento[0].nombre}</h3>
+          <h3>{plato[0].nombre}</h3>
           <hr />
         </Col>
       </Row>
@@ -34,4 +35,4 @@ const AlimentoDetails = () => {
   );
 };
 
-export default AlimentoDetails;
+export default PlatoDetails;

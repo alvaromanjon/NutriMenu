@@ -22,6 +22,7 @@ import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
 // Ver item
 import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import MenuDetails from "./pages/menus/view/MenuDetails";
+import PlatoDetails from "./pages/platos/view/PlatoDetails";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -55,6 +56,7 @@ import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
 import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoader";
 import { localMenusLoader } from "./loaders/list/localMenusLoader";
 import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
+import { platoDetailsLoader } from "./loaders/details/platoDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -100,6 +102,7 @@ const router = createBrowserRouter(
 
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
+        <Route path=":id" element={<PlatoDetails />} loader={platoDetailsLoader} />
         <Route path="new" element={<NewPlato />}>
           <Route path="list" element={<NewPlatoAddFromList />} loader={listAlimentosLoader} />
           <Route path="search" element={<NewPlatoAddFromNutritionix />} />
