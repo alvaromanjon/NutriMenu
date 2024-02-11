@@ -55,7 +55,7 @@ const NewPlatoAddFromNutritionixList = ({ data }) => {
           sal: alimentoAPI.foods[0].nf_sodium / 1000,
           vitaminas: {
             vitaminaA: getValUsingId(alimentoAPI, 320),
-            vitaminaD: getValUsingId(alimentoAPI, 324),
+            vitaminaD: getValUsingId(alimentoAPI, 328),
             vitaminaE: getValUsingId(alimentoAPI, 573),
             vitaminaB9: getValUsingId(alimentoAPI, 431),
             vitaminaB3: getValUsingId(alimentoAPI, 406),
