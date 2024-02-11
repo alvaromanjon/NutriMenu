@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 const GestionLayout = ({ title }) => {
   return (
     <div>
-      <Container fluid="md mt-5">
+      <Container fluid="md my-5">
         <Card className="shadow-lg">
           <Card.Header>
             <h3 className="pt-3">{title}</h3>

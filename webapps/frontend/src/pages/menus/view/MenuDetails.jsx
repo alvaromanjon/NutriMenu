@@ -50,7 +50,7 @@ const MenuDetails = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={6} className="align-items-center justify-content-center">
+        <Col xl={8} className="align-items-center justify-content-center">
           <MenuDetailsGraph
             entrante={entranteEscogido}
             primerPlato={primerPlatoEscogido}
@@ -58,8 +58,8 @@ const MenuDetails = () => {
             postre={postreEscogido}
           />
         </Col>
-        
-        <Col md={6} className="text-center">
+
+        <Col xl={4} className="text-center">
           <MenuDetailsTipoPlato
             title="Selecciona un entrante"
             data={entrantes}

@@ -222,15 +222,13 @@ const MenuDetailsGraph = ({ entrante, primerPlato, segundoPlato, postre }) => {
 
   const options = {
     data: chartData,
+    autoSize: true,
+    height: 500,
     series: [
       {
         type: "pie",
         angleKey: "valor",
         legendItemKey: "tipo",
-        sectorLabel: {
-          color: "white",
-          fontWeight: "bold",
-        },
       },
     ],
   };
