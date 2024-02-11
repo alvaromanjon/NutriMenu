@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
+import "./styles.css";
 
 const SelectMenuFromLocal = () => {
   const data = useLoaderData();
@@ -44,10 +45,15 @@ const SelectMenuFromLocal = () => {
                 </Form>
                 {menusDisponibles.length !== 0 ? (
                   menusDisponibles.map((menu) => (
-                    <Card key={menu.id} className="mt-3">
+                    <Card key={menu.id} className="mt-3 menu-card">
                       <Card.Body>
                         <Card.Title>{menu.nombre}</Card.Title>
-                        <Card.Text>{menu.descripcion}</Card.Text>
+                        <Card.Text>
+                          {menu.descripcion}
+                          <div className="text-muted mt-2">
+                            Contiene {menu.platos.length} {menu.platos.length > 1 ? "platos" : "plato"}
+                          </div>
+                        </Card.Text>
                       </Card.Body>
                     </Card>
                   ))
