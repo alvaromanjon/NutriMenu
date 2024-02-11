@@ -21,6 +21,7 @@ import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
 
 // Ver item
 import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
+import MenuDetails from "./pages/menus/view/MenuDetails";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -53,6 +54,7 @@ import { listEmpresasLoader } from "./loaders/list/listEmpresasLoader";
 import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
 import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoader";
 import { localMenusLoader } from "./loaders/list/localMenusLoader";
+import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -92,6 +94,7 @@ const router = createBrowserRouter(
 
       <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
         <Route index element={<DataTableMenus />} />
+        <Route path=":id" element={<MenuDetails />} loader={menuDetailsLoader} />
         <Route path="new" element={<NewMenu />}></Route>
       </Route>
 

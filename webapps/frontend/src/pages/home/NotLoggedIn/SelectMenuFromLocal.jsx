@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import "./styles.css";
 
 const SelectMenuFromLocal = () => {
@@ -45,7 +45,13 @@ const SelectMenuFromLocal = () => {
                     </Form>
                     {menusDisponibles.length !== 0 ? (
                       menusDisponibles.map((menu) => (
-                        <Card key={menu.id} className="mt-3 menu-card">
+                        <Card
+                          key={menu.id}
+                          className="mt-3 menu-card"
+                          as={Link}
+                          to={`/menus/${menu.id}`}
+                          style={{ textDecoration: "inherit" }}
+                        >
                           <Card.Body>
                             <Card.Title>{menu.nombre}</Card.Title>
                             <Card.Subtitle className="text-muted mt-2">
