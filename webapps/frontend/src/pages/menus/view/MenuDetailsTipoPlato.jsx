@@ -2,8 +2,12 @@ import { Card } from "react-bootstrap";
 import MenuItem from "./MenuItem";
 
 const MenuDetailsTipoPlato = ({ title, data, platoEscogido, setPlatoEscogido }) => {
-  const handleChange = (id) => {
-    setPlatoEscogido(id);
+  const handleChange = (obj) => {
+    if (platoEscogido.id === obj.id) {
+      setPlatoEscogido({ alimentos: [{}] });
+    } else {
+      setPlatoEscogido(obj);
+    }
   };
 
   return (
@@ -20,8 +24,8 @@ const MenuDetailsTipoPlato = ({ title, data, platoEscogido, setPlatoEscogido }) 
               <MenuItem
                 key={plato.id}
                 item={plato}
-                checked={platoEscogido === plato.id}
-                onChange={() => handleChange(plato.id)}
+                checked={platoEscogido.id === plato.id}
+                onChange={() => handleChange(plato)}
               />
             ))
           )}
