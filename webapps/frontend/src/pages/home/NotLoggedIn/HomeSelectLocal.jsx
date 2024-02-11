@@ -7,7 +7,7 @@ const HomeSelectLocal = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate(`/${e.target.value}/listaLocales`);
+    navigate(`/${e.target.value}/selectMenu`);
   };
 
   return (

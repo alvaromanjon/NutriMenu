@@ -25,7 +25,7 @@ const HomeSelectEmpresa = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate(`/${e.target.value}`);
+    navigate(`/${e.target.value}/locales`);
   };
 
   return (

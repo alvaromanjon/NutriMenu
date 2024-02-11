@@ -1,4 +1,4 @@
-const ListLocalesEmpresaLoader = async ({ params }) => {
+export const ListLocalesEmpresaLoader = async ({ params }) => {
   const { id } = params;
 
   const res = await fetch(`http://localhost:8080/locales?id_empresa=${id}`);
@@ -9,5 +9,3 @@ const ListLocalesEmpresaLoader = async ({ params }) => {
 
   return res.json();
 };
-
-export default ListLocalesEmpresaLoader;

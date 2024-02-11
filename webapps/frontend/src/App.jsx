@@ -9,6 +9,7 @@ import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
 import HomeSelectLocal from "./pages/home/NotLoggedIn/HomeSelectLocal";
+import SelectMenuFromLocal from "./pages/home/NotLoggedIn/SelectMenuFromLocal";
 
 // Tablas
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
@@ -17,6 +18,9 @@ import DataTableLocales from "./pages/locales/tabla/DataTableLocales";
 import DataTableUsuarios from "./pages/usuarios/tabla/DataTableUsuarios";
 import DataTablePlatos from "./pages/platos/tabla/DataTablePlatos";
 import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
+
+// Ver item
+import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -46,15 +50,16 @@ import { listAlimentosLoader } from "./loaders/list/listAlimentosLoader";
 import { listUsuariosLoader } from "./loaders/list/listUsuariosLoader";
 import { listLocalesLoader } from "./loaders/list/listLocalesLoader";
 import { listEmpresasLoader } from "./loaders/list/listEmpresasLoader";
-import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
-import ListLocalesEmpresaLoader from "./loaders/list/listLocalesEmpresaLoader";
+import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoader";
+import { localMenusLoader } from "./loaders/list/localMenusLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
-      <Route path=":id" element={<HomeSelectLocal />} loader={ListLocalesEmpresaLoader}></Route>
+      <Route path=":id/locales" element={<HomeSelectLocal />} loader={ListLocalesEmpresaLoader} />
+      <Route path=":id/selectMenu" element={<SelectMenuFromLocal />} loader={localMenusLoader} />
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
 
