@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useLoaderData } from "react-router-dom";
 import MenuDetailsTipoPlato from "./MenuDetailsTipoPlato";
 import { useState } from "react";
+import MenuDetailsGraph from "./MenuDetailsGraph";
 
 const MenuDetails = () => {
   const data = useLoaderData();
@@ -27,10 +28,18 @@ const MenuDetails = () => {
   const segundosPlatos = getPlatosSegundoPlato();
   const postres = getPlatosPostre();
 
-  const [entranteEscogido, setEntranteEscogido] = useState("");
-  const [primerPlatoEscogido, setPrimerPlatoEscogido] = useState("");
-  const [segundoPlatoEscogido, setSegundoPlatoEscogido] = useState("");
-  const [postreEscogido, setPostreEscogido] = useState("");
+  const [entranteEscogido, setEntranteEscogido] = useState({
+    alimentos: [{}],
+  });
+  const [primerPlatoEscogido, setPrimerPlatoEscogido] = useState({
+    alimentos: [{}],
+  });
+  const [segundoPlatoEscogido, setSegundoPlatoEscogido] = useState({
+    alimentos: [{}],
+  });
+  const [postreEscogido, setPostreEscogido] = useState({
+    alimentos: [{}],
+  });
 
   return (
     <Container fluid="md">
@@ -41,7 +50,14 @@ const MenuDetails = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={6} className="text-center"></Col>
+        <Col md={6} className="text-center">
+          <MenuDetailsGraph
+            entrante={entranteEscogido}
+            primerPlato={primerPlatoEscogido}
+            segundoPlato={segundoPlatoEscogido}
+            postre={postreEscogido}
+          />
+        </Col>
         <Col md={6} className="text-center">
           <MenuDetailsTipoPlato
             title="Selecciona un entrante"
