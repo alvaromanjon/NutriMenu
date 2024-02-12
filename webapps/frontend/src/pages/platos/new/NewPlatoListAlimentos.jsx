@@ -1,10 +1,8 @@
 import { Button, Card, Table } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
-import DataTableHeader from "../../../utils/DataTableHeader";
 import { useAlimentosPlato } from "../../../store/alimentosPlato";
 
 const NewPlatoListAlimentos = () => {
-  const valores = ["Nombre", "Cantidad"];
   const [alimentos, updateCantidad, removeAlimento] = useAlimentosPlato((state) => [
     state.alimentos,
     state.updateCantidad,
@@ -21,7 +19,9 @@ const NewPlatoListAlimentos = () => {
         <Table responsive>
           <thead>
             <tr>
-              <DataTableHeader valores={valores} />
+              <th>Nombre</th>
+              <th>Cantidad (g)</th>
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
