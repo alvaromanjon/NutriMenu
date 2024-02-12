@@ -1,3 +1,25 @@
 \capitulo{2}{Objetivos del proyecto}
 
-Este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto. Se puede distinguir entre los objetivos marcados por los requisitos del software a construir y los objetivos de carácter técnico que plantea a la hora de llevar a la práctica el proyecto.
+Los objetivos que se buscan con el desarrollo de este proyecto son los siguientes:
+
+\section{Objetivos generales}
+\begin{itemize}
+	\item Implementar una infraestructura que sea agnóstica al hardware en el que se ejecute.
+	\item Separar la infraestructura en servicios bien definidos y aislados.
+	\item Desarrollar un sistema de orquestación del despliegue y hacer que este sea sencillo y escalable.
+	\item Buscar una forma de poder acceder a nuevos datos nutricionales sin tener que tenerlos almacenados en local de forma obligatoria.
+	\item Unificar las dos aplicaciones web en una, mejorar su interfaz y experiencia de usuario para que sean más sencillas de usar y hacer que sean funcionales en dispositivos móviles.
+	\end{itemize}
+	
+\section{Objetivos técnicos}
+\begin{itemize}
+\item Contenerizar todos los servicios mediante Docker y Docker Compose.
+\item Reestructurar la lógica del modelo de datos para separarla de la aplicación web, manteniendo el patrón Modelo - Vista - Controlador (MVC).
+\item Desarrollar una API REST usando Spring Boot para que esta sea la vía por la que la aplicación interactúe con los datos.
+\item Implementar un flujo de integración continua mediante el uso de GitHub Actions para comprobar que la infraestructura es funcional en todo momento.
+\item Desarrollar una aplicación web con React que cumpla con todos los requisitos de las dos aplicaciones previas.
+\item Hacer un diseño responsive con Bootstrap, que funcione en cualquier tamaño de pantalla.
+\item Implementar la API externa de Nutritionix como fuente de composición nutricional de los alimentos.
+\item Hacer uso de GitHub para la gestión del control de versiones de este proyecto, así como la administración de las tareas y los sprints.
+
+\end{itemize}
