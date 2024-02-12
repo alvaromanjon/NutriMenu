@@ -19,7 +19,10 @@ export const NutrientChartOptions = (chartData) => {
       {
         type: "pie",
         angleKey: "valor",
-        legendItemKey: "tipo",
+        calloutLabelKey: "tipo",
+        calloutLabel: {
+          formatter: ({ value }) => `${value} (g)`,
+        },
       },
     ],
   };
