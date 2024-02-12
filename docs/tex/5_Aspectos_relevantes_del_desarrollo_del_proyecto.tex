@@ -79,8 +79,12 @@ Por último, para la representación de las tablas y los gráficos en las vistas
 
 \section{Fuente de datos nutricionales}
 
-Las aplicaciones originales hacían uso de la base de datos de BEDCA, la Base de Datos Española de Composición de Alimentos, para obtener toda la información relacionada con los alimentos y sus componentes nutricionales. El gran inconveniente de esto es que esta base de datos no dispone de un punto de acceso al que consultar los datos mediante una API o similar, así que era necesario mantener la base de datos en local. Esto, además de que impide obtener la última información nutricional disponible, puede suponer un costo en almacenamiento y rendimiento importante, ya que todos los alimentos y su información deben estar guardados en el servidor obligatoriamente.
+Las aplicaciones originales hacían uso de la base de datos de BEDCA, la Base de Datos Española de Composición de Alimentos, para obtener toda la información relacionada con los alimentos y sus componentes nutricionales. 
 
-Para solucionar esto, se ha decidido dar uso de la API de Nutritionix, que dispone de una base de datos específica para alimentos en castellano. Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
+El gran inconveniente de esto es que esta base de datos no dispone de un punto de acceso al que consultar los datos mediante una API o similar, así que era necesario mantener la base de datos en local. Esto, además de que impide obtener la última información nutricional disponible, puede suponer un costo en almacenamiento y rendimiento importante, ya que todos los alimentos y su información deben estar guardados en el servidor obligatoriamente.
+
+Para solucionar esto, se ha decidido dar uso de la API de Nutritionix, que dispone de una base de datos específica para alimentos en castellano. Esto permite almacenar sólo los alimentos que vayan a ser usados, mientras que el resto quedan disponibles con tan sólo realizar una búsqueda en la aplicación \ref{fig:App/nutritionix_search}. Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
+
+\imagen{App/nutritionix_search}{Búsqueda de un alimento mediante el uso de la API de Nutritionix}{1}
 
 El mayor inconveniente que he encontrado con el uso de esta API es el hecho de que no contiene información nutricional sobre alérgenos, quedando esto como objeto de mejora del proyecto.
