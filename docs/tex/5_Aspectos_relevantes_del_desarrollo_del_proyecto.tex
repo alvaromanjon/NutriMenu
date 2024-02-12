@@ -1,13 +1,5 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-\begin{comment}
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
-\end{comment}
-
 En este apartado se recogerán los aspectos de mayor relevancia que han surgido durante la realización de este proyecto, con el objetivo de comprender mejor el desarrollo y los desafíos encontrados a lo largo del camino.
 
 \section{Inicio del proyecto}
@@ -84,3 +76,11 @@ Existe una librería llamada \textbf{React Bootstrap} que integra todos los elem
 Por último, para la representación de las tablas y los gráficos en las vistas de información nutricional \ref{fig:App/charts_and_tables}, he usado las librerías \textbf{AG React Data Grid} y \textbf{AG React Charts} respectivamente, debido a que requieren de muy poco código para conseguir los resultados buscados, y me permiten actualizar los datos de forma dinámica, algo que necesitaba para poder cambiar los datos nada más se seleccione un plato distinto en la vista del informe nutricional de un menú.
 
 \imagen{App/charts_and_tables}{Distintas tablas y gráficos usados en la aplicación}{1}
+
+\section{Fuente de datos nutricionales}
+
+Las aplicaciones originales hacían uso de la base de datos de BEDCA, la Base de Datos Española de Composición de Alimentos, para obtener toda la información relacionada con los alimentos y sus componentes nutricionales. El gran inconveniente de esto es que esta base de datos no dispone de un punto de acceso al que consultar los datos mediante una API o similar, así que era necesario mantener la base de datos en local. Esto, además de que impide obtener la última información nutricional disponible, puede suponer un costo en almacenamiento y rendimiento importante, ya que todos los alimentos y su información deben estar guardados en el servidor obligatoriamente.
+
+Para solucionar esto, se ha decidido dar uso de la API de Nutritionix, que dispone de una base de datos específica para alimentos en castellano. Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
+
+El mayor inconveniente que he encontrado con el uso de esta API es el hecho de que no contiene información nutricional sobre alérgenos, quedando esto como objeto de mejora del proyecto.
