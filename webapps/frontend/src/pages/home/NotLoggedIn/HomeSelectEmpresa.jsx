@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import Loading from "../../utils/Loading";
-import SelectableItem from "./SelectableItem";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import Loading from "../../../utils/Loading";
+import { useNavigate } from "react-router-dom";
 
-const HomeNotLoggedIn = () => {
+const HomeSelectEmpresa = () => {
   const [data, setData] = useState([]);
   const [isPending, setIsPending] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8080/empresas")
@@ -22,9 +23,10 @@ const HomeNotLoggedIn = () => {
       });
   });
 
-  if (isPending) {
-    return <Loading />;
-  }
+  const handleNext = (e) => {
+    e.preventDefault();
+    navigate(`/${e.target.value}/locales`);
+  };
 
   return (
     <>
@@ -37,9 +39,16 @@ const HomeNotLoggedIn = () => {
           <Col className="col-md-auto"></Col>
 
           <Col md={5}>
-            {data.map((item) => (
-              <SelectableItem text={item.nombre} key={item.id} />
-            ))}
+            <Form onClick={handleNext}>
+              {isPending && <Loading />}
+              {data.map((item) => (
+                <div className="d-grid gap-2" key={item.id}>
+                  <Button variant="outline-dark" size="lg" className="mb-3" value={item.id} type="submit">
+                    {item.nombre}
+                  </Button>
+                </div>
+              ))}
+            </Form>
           </Col>
         </Row>
       </Container>
@@ -47,4 +56,4 @@ const HomeNotLoggedIn = () => {
   );
 };
 
-export default HomeNotLoggedIn;
+export default HomeSelectEmpresa;

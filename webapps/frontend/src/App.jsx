@@ -8,6 +8,8 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/login/ForgotPassword";
 import NotFound from "./utils/NotFound";
+import HomeSelectLocal from "./pages/home/NotLoggedIn/HomeSelectLocal";
+import SelectMenuFromLocal from "./pages/home/NotLoggedIn/SelectMenuFromLocal";
 
 // Tablas
 import DataTableEmpresas from "./pages/empresas/tabla/DataTableEmpresas";
@@ -16,6 +18,11 @@ import DataTableLocales from "./pages/locales/tabla/DataTableLocales";
 import DataTableUsuarios from "./pages/usuarios/tabla/DataTableUsuarios";
 import DataTablePlatos from "./pages/platos/tabla/DataTablePlatos";
 import DataTableMenus from "./pages/menus/tabla/DataTableMenus";
+
+// Ver item
+import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
+import MenuDetails from "./pages/menus/view/MenuDetails";
+import PlatoDetails from "./pages/platos/view/PlatoDetails";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -38,20 +45,25 @@ import NewMenu from "./pages/menus/new/NewMenu";
 
 // Layouts
 import RootLayout from "./layouts/RootLayout";
-import GestionLayout from "./layouts/Gestionlayout";
+import GestionLayout from "./layouts/GestionLayout";
 
 // Loaders
 import { listAlimentosLoader } from "./loaders/list/listAlimentosLoader";
 import { listUsuariosLoader } from "./loaders/list/listUsuariosLoader";
 import { listLocalesLoader } from "./loaders/list/listLocalesLoader";
 import { listEmpresasLoader } from "./loaders/list/listEmpresasLoader";
-import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import { alimentoDetailsLoader } from "./loaders/details/alimentoDetailsLoader";
+import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoader";
+import { localMenusLoader } from "./loaders/list/localMenusLoader";
+import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
+import { platoDetailsLoader } from "./loaders/details/platoDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
+      <Route path=":id/locales" element={<HomeSelectLocal />} loader={ListLocalesEmpresaLoader} />
+      <Route path=":id/selectMenu" element={<SelectMenuFromLocal />} loader={localMenusLoader} />
       <Route path="login" element={<Login />} />
       <Route path="forgot-password" element={<ForgotPassword />} />
 
@@ -84,11 +96,13 @@ const router = createBrowserRouter(
 
       <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
         <Route index element={<DataTableMenus />} />
+        <Route path=":id" element={<MenuDetails />} loader={menuDetailsLoader} />
         <Route path="new" element={<NewMenu />}></Route>
       </Route>
 
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
+        <Route path=":id" element={<PlatoDetails />} loader={platoDetailsLoader} />
         <Route path="new" element={<NewPlato />}>
           <Route path="list" element={<NewPlatoAddFromList />} loader={listAlimentosLoader} />
           <Route path="search" element={<NewPlatoAddFromNutritionix />} />
