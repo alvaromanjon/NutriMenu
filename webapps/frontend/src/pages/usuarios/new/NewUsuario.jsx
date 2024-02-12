@@ -91,11 +91,11 @@ const NewUsuarioElements = (handleFormChange, errorFlag, errorMessage, selectorD
     <>
       <Form.Group className="mb-3">
         <Form.Label>Nombre y apellidos</Form.Label>
-        <Form.Control name="nombre" type="text" placeholder="Juan Martínez" onChange={handleFormChange} />
+        <Form.Control name="nombre" type="text" placeholder="Persona inventada" onChange={handleFormChange} />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Nombre de usuario (*)</Form.Label>
-        <Form.Control name="usuario" type="text" placeholder="juanmartinez" onChange={handleFormChange} required />
+        <Form.Control name="usuario" type="text" placeholder="personainventada" onChange={handleFormChange} required />
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Contraseña (*)</Form.Label>
@@ -118,7 +118,7 @@ const NewUsuarioElements = (handleFormChange, errorFlag, errorMessage, selectorD
         />
       </Form.Group>
       <Row>
-        <Col md="6">
+        <Col>
           <Form.Group className="mb-3">
             <Form.Label>Rol (*)</Form.Label>
             <Form.Select name="rol" onChange={handleFormChange} required>
@@ -128,7 +128,7 @@ const NewUsuarioElements = (handleFormChange, errorFlag, errorMessage, selectorD
             </Form.Select>
           </Form.Group>
         </Col>
-        <Col>
+        <Col xxl={4}>
           <Form.Group className="mb-3">
             <Form.Label>Empresa a la que pertenece</Form.Label>
             <Form.Select name="empresa" onChange={handleFormChange} disabled={conditionDisabled}>

@@ -79,16 +79,10 @@ const NewLocalElements = (handleFormChange, errorFlag, errorMessage, selectorDat
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Nombre del local (*)</Form.Label>
-            <Form.Control
-              name="nombre"
-              type="text"
-              placeholder="Pepito Avenida Cantabria"
-              onChange={handleFormChange}
-              required
-            />
+            <Form.Control name="nombre" type="text" placeholder="Local Falso" onChange={handleFormChange} required />
           </Form.Group>
         </Col>
-        <Col md="6" xl="4">
+        <Col xxl="4">
           <Form.Group className="mb-3">
             <Form.Label>Empresa a la que pertenece (*)</Form.Label>
             <Form.Select name="empresa" onChange={handleFormChange}>
@@ -129,7 +123,7 @@ const NewLocalElements = (handleFormChange, errorFlag, errorMessage, selectorDat
             <Form.Control
               name="direccion"
               type="text"
-              placeholder="Avenida Cantabria 83"
+              placeholder="Avenida Falsa 123"
               onChange={handleFormChange}
               required
             />
@@ -138,13 +132,13 @@ const NewLocalElements = (handleFormChange, errorFlag, errorMessage, selectorDat
         <Col lg="2">
           <Form.Group className="mb-3">
             <Form.Label>Ciudad (*)</Form.Label>
-            <Form.Control name="ciudad" type="text" placeholder="Burgos" onChange={handleFormChange} required />
+            <Form.Control name="ciudad" type="text" placeholder="Atlántida" onChange={handleFormChange} required />
           </Form.Group>
         </Col>
         <Col lg="3">
           <Form.Group className="mb-3">
             <Form.Label>Código postal (*)</Form.Label>
-            <Form.Control name="codigoPostal" type="number" placeholder="09006" onChange={handleFormChange} required />
+            <Form.Control name="codigoPostal" type="number" placeholder="12345" onChange={handleFormChange} required />
           </Form.Group>
         </Col>
       </Row>

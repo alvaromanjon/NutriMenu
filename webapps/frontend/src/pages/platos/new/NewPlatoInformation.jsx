@@ -23,7 +23,7 @@ const NewPlatoInformation = () => {
             <Form.Control
               name="nombre"
               type="text"
-              placeholder="Berenjenas gratinadas"
+              placeholder="Un plato"
               value={nombre}
               onChange={(e) => setNombre(e.currentTarget.value)}
             />

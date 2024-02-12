@@ -71,13 +71,19 @@ const NewEmpresaElements = (handleFormChange, errorFlag, errorMessage) => {
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Nombre de la empresa (*)</Form.Label>
-            <Form.Control name="nombre" type="text" placeholder="Pepito SL" onChange={handleFormChange} required />
+            <Form.Control
+              name="nombre"
+              type="text"
+              placeholder="Empresa ficticia SL"
+              onChange={handleFormChange}
+              required
+            />
           </Form.Group>
         </Col>
         <Col md="6" xl="4">
           <Form.Group className="mb-3">
             <Form.Label>CIF (*)</Form.Label>
-            <Form.Control name="cif" type="text" placeholder="A29268166" onChange={handleFormChange} required />
+            <Form.Control name="cif" type="text" placeholder="123456" onChange={handleFormChange} required />
           </Form.Group>
         </Col>
       </Row>
@@ -93,19 +99,19 @@ const NewEmpresaElements = (handleFormChange, errorFlag, errorMessage) => {
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Dirección</Form.Label>
-            <Form.Control name="direccion" type="text" placeholder="Avenida Cantabria 83" onChange={handleFormChange} />
+            <Form.Control name="direccion" type="text" placeholder="Avenida Falsa 123" onChange={handleFormChange} />
           </Form.Group>
         </Col>
-        <Col md="3" xl="2">
+        <Col lg="2">
           <Form.Group className="mb-3">
             <Form.Label>Ciudad</Form.Label>
-            <Form.Control name="ciudad" type="text" placeholder="Burgos" onChange={handleFormChange} />
+            <Form.Control name="ciudad" type="text" placeholder="Atlántida" onChange={handleFormChange} />
           </Form.Group>
         </Col>
-        <Col md="3" xl="2">
+        <Col lg="3">
           <Form.Group className="mb-3">
             <Form.Label>Código postal</Form.Label>
-            <Form.Control name="codigoPostal" type="number" placeholder="09006" onChange={handleFormChange} />
+            <Form.Control name="codigoPostal" type="number" placeholder="12345" onChange={handleFormChange} />
           </Form.Group>
         </Col>
       </Row>
