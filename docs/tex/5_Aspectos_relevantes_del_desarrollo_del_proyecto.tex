@@ -28,24 +28,24 @@ Primero se intentó solucionar este problema mediante el uso de una máquina vir
 
 \imagen{MySQL/mysql_installation_error}{MySQL Workbench sólo es compatible con equipos de arquitectura x86$\_$x64}{0.8}
 
-Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de Docker y Docker Compose, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
+Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de \textbf{Docker y Docker Compose}, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
 
 \begin{itemize}
-  \item La infraestructura pasa a ser totalmente independiente del sistema operativo y la arquitectura de procesador, ya que Docker funciona con todos los sistemas y arquitecturas principales.
-  \item El despliegue se vuelve mucho más rápido y sencillo, ya que en prácticamente un minuto y con tan sólo dos comandos puedes estar ejecutando la aplicación con todos sus servicios activos. 
-  \item Este tipo de infraestructura permite la creación de distintos entornos (desarrollo, producción, testing) consistentes y sencillos de implementar, ya que permite asegurarse de que la aplicación se va a ejecutar de la misma forma en todos ellos.
-  \item Cada contenedor se encuentra aislado del resto, con sus propios recursos y sistemas de archivos, por lo que mejora bastante la seguridad y asegura que un problema en uno de ellos no va a afectar ni canibalizar al resto.
+  \item \textbf{La infraestructura pasa a ser totalmente independiente del sistema operativo y la arquitectura de procesador}, ya que Docker funciona con todos los sistemas y arquitecturas principales.
+  \item \textbf{El despliegue se vuelve mucho más rápido y sencillo}, ya que en prácticamente un minuto y con tan sólo dos comandos puedes estar ejecutando la aplicación con todos sus servicios activos. 
+  \item \textbf{Este tipo de infraestructura permite la creación de distintos entornos} (desarrollo, producción, testing) consistentes y sencillos de implementar, ya que permite asegurarse de que la aplicación se va a ejecutar de la misma forma en todos ellos.
+  \item \textbf{Cada contenedor se encuentra aislado del resto}, con sus propios recursos y sistemas de archivos, por lo que mejora bastante la seguridad y asegura que un problema en uno de ellos no va a afectar ni canibalizar al resto.
 \end{itemize}
 
 Además de esto, puesto que ambas aplicaciones trabajan con el mismo conjunto de datos y no existe realmente un grado de separación necesario como para mantener dos proyectos, también se ha decidido unificar las dos aplicaciones web en una, debido a que esto facilita bastante su desarrollo, elimina código repetido y mantiene mayor homogeneidad.
 
 \section{Lógica de negocio}
 
-En el proyecto original, ambas aplicaciones siguen el patrón Modelo-Vista-Controlador (MVC) en todo su desarrollo, tanto para el manejo de datos como la interfaz, ya que todo forma parte de un mismo monolito. Sin embargo, como en este proyecto se ha decidido hacer una separación total de los servicios, el enfoque adoptado ha sido el de API-Driven Development, en el que primero se implementa esta lógica de negocio siguiendo el patrón MVC, y en la capa del Controlador se implementa una API REST que proporciona los endpoints necesarios para que el frontend interactúe con esta. 
+En el proyecto original, ambas aplicaciones siguen el patrón \textbf{Modelo-Vista-Controlador (MVC)} en todo su desarrollo, tanto para el manejo de datos como la interfaz, ya que todo forma parte de un mismo monolito. Sin embargo, como en este proyecto se ha decidido hacer una separación total de los servicios, el enfoque adoptado ha sido el de \textbf{API-Driven Development}, en el que primero se implementa esta lógica de negocio siguiendo el patrón MVC, y en la capa del Controlador se implementa una API REST que proporciona los endpoints necesarios para que el frontend interactúe con esta. 
 
 Esto ha permitido abstraer a la aplicación web de tener que interactuar directamente con la base de datos, lo que ahorra el uso de queries SQL complejas y permite prescindir de APIs como JDBC, ya que se va a trabajar directamente con objetos JSON mucho más amigables de manejar y representar en la capa frontend.
 
-Para la implementación de este servicio se ha mantenido el uso de Spring Boot, al igual que en el proyecto original, lo que ha permitido tener el modelo original como referencia a la hora de realizar esta reimplementación.
+Para la implementación de este servicio se ha mantenido el uso de \textbf{Spring Boot}, al igual que en el proyecto original, lo que ha permitido tener el modelo original como referencia a la hora de realizar esta reimplementación.
 
 \subsection{Modelo de datos}
 
@@ -58,3 +58,29 @@ Como los datos van a ser accedidos y manipulados directamente desde la API, se h
 Además de esto, como en la sección de Alimentos se ha pasado de un modelo en el que los datos sólo se podían almacenar de forma local, usando los datos de BEDCA, a un modelo híbrido que permite tanto el almacenamiento local como la interacción con la API de Nutritionix, esta parte del modelo de datos se ha rediseñado completamente, intentando hacerla más simple y fácil de entender.
 
 \imagen{DB/nutrimenu_data_schema}{Modelo de base de datos actual}{0.7}
+
+Para la implementación de la base de datos se ha mantenido \textbf{MySQL}, ya que al seguir manteniendo un modelo de bases de datos relacional no he visto necesidad de modificarlo.
+
+\section{Frontend}
+
+Este es el servicio que más cambios ha sufrido, puesto que prácticamente ha sido recreado desde 0. Para el desarrollo de esta aplicación web se ha usado la librería \textbf{React}, debido a que actualmente es de las opciones más populares en el desarrollo frontend, y su modelo basado en Componentes me pareció muy buena solución para el desarrollo de este proyecto, puesto que prima bastante la reutilización y la modularidad. 
+
+Sin embargo, como React no dispone de forma nativa de ningún sistema de enrutamiento, puesto que su modelo principal es el de Single Page Applications (aplicaciones que reescriben el contenido mostrado de forma dinámica, en vez de recargar la página completa), el proyecto da bastante uso a otra librería pensada para ser usada junto a React, que es \textbf{React Router}. Esta librería ha permitido gestionar las distintas partes de la aplicación sin ningún problema, pues al ser una aplicación con distintas secciones bien diferenciadas, siguiendo el modelo de las SPA sería mucho más complicado de separar y limitaría bastante las posibilidades.
+
+Además de esto, \textbf{React Router} incluye otras funciones bastante aprovechadas en este proyecto, como los \textbf{Outlets}, que permiten crear un componente plantilla y que los componentes hijos se rendericen dentro de ese componente padre (usados en varias partes, como por ejemplo en los layouts de la barra de navegación y los paneles de gestión de los elementos, como se puede ver en la figura \ref{fig:App/outlets_demo}); o los \textbf{loaders}, que son funciones que permiten realizar llamadas asíncronas a una API antes de que se renderice el componente que va a usar esos datos (usados cada vez que se muestra información sobre un alimento, plato o menú), lo cual acelera bastante la carga.
+
+\imagen{App/outlets_demo}{Aplicación renderizando sólo el contenido de los componentes padre}{1}
+
+El desarrollo se ha realizado mediante el uso de \textbf{JavaScript}, lo que ha supuesto posiblemente el mayor reto de todo el proyecto, pues previo a la realización de este trabajo no había tenido ninguna experiencia con este lenguaje.
+
+Como he usado React, a la hora de escribir el código referente a la interfaz he usado \textbf{JSX}, una extensión de JavaScript que permite integrar tanto HTML como JavaScript como si fueran un sólo lenguaje.
+
+Para la construcción y compilación del frontend inicialmente se comenzó usando \textbf{Create React App}, ya que hasta hace poco era la opción recomendada por los propios desarrolladores de React, pero puesto que es un proyecto que ha dejado de ser mantenido, y los paquetes que contiene están quedando desactualizados, finalmente se ha cambiado por \textbf{Vite}, una de las herramientas de compilación de JavaScript más eficientes de la actualidad. Esta herramienta ofrece distintas optimizaciones a la hora de ejecutar y compilar nuestro código que hacen que la aplicación web sea lo más rápida posible, lo que se nota bastante al usarla, ya que todo es prácticamente instantáneo.
+
+En el estilado de la aplicación se ha trabajado principalmente con \textbf{Bootstrap}, ya que anteriormente ya había realizado algún proyecto dando uso de este framework y tenía algo de experiencia, y ha sido de bastante ayuda al crear una interfaz responsive y visualmente agradable, adaptada tanto a pantallas de dispositivos móviles como a pantallas de ordenador. 
+
+Existe una librería llamada \textbf{React Bootstrap} que integra todos los elementos de Bootstrap dentro de React, para trabajar con ellos como si fueran componentes de React, por lo que me he ahorrado el uso de bastantes clases de CSS.
+
+Por último, para la representación de las tablas y los gráficos en las vistas de información nutricional \ref{fig:App/charts_and_tables}, he usado las librerías \textbf{AG React Data Grid} y \textbf{AG React Charts} respectivamente, debido a que requieren de muy poco código para conseguir los resultados buscados, y me permiten actualizar los datos de forma dinámica, algo que necesitaba para poder cambiar los datos nada más se seleccione un plato distinto en la vista del informe nutricional de un menú.
+
+\imagen{App/charts_and_tables}{Distintas tablas y gráficos usados en la aplicación}{1}
