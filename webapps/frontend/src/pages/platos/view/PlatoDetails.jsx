@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { calculatePlatoNutrients } from "../../../utils/calculatePlatoNutrients";
 import { NutrientChartData, NutrientChartOptions } from "../../../utils/nutrientChartData";
-import { NutrientTableData, NutrientTableHeader } from "../../../utils/nutrientTableData";
+import { NutrientTableData, NutrientTableHeader, NutrientTableStyle } from "../../../utils/nutrientTableData";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { AgChartsReact } from "ag-charts-react";
 import AgGridTableRepresentation from "../../../utils/AgGridTableRepresentation";
@@ -13,6 +13,7 @@ const PlatoDetails = () => {
   const chartData = NutrientChartData(nutrientesSumados);
   const tableData = NutrientTableData(nutrientesSumados);
   const colDefs = NutrientTableHeader();
+  const rowStyle = NutrientTableStyle;
   const chartOptions = NutrientChartOptions(chartData);
 
   return (
@@ -28,7 +29,7 @@ const PlatoDetails = () => {
           <AgChartsReact options={chartOptions} />
         </Col>
         <Col md={6}>
-          <AgGridTableRepresentation rowData={tableData} colDefs={colDefs} />
+          <AgGridTableRepresentation rowData={tableData} colDefs={colDefs} getRowStyle={rowStyle} />
         </Col>
       </Row>
       <Row>

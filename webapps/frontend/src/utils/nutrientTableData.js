@@ -220,3 +220,12 @@ export const NutrientTableHeader = () => {
     { headerName: "Nombre alternativo", field: "nombreAlternativo", sortable: false, filter: true },
   ];
 };
+
+export const NutrientTableStyle = (params) => {
+  if (params.data.valor > params.data.ingestaReferencia) {
+    return { background: "#FCD3D0" };
+  }
+  if (params.data.valor > params.data.ingestaReferencia * 0.8) {
+    return { background: "#FFF2CC" };
+  }
+};

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AgChartsReact } from "ag-charts-react";
 import { calculateMenuNutrients } from "../../../utils/calculateMenuNutrients";
 import { Card, Nav } from "react-bootstrap";
-import { NutrientTableData, NutrientTableHeader } from "../../../utils/nutrientTableData";
+import { NutrientTableData, NutrientTableHeader, NutrientTableStyle } from "../../../utils/nutrientTableData";
 import { NutrientChartData, NutrientChartOptions } from "../../../utils/nutrientChartData";
 import AgGridTableRepresentation from "../../../utils/AgGridTableRepresentation";
 
@@ -10,6 +10,7 @@ const MenuDetailsInformation = ({ entrante, primerPlato, segundoPlato, postre })
   const [chartData, setChartData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const colDefs = NutrientTableHeader();
+  const rowStyle = NutrientTableStyle;
   const chartOptions = NutrientChartOptions(chartData);
   const [grafico, setGrafico] = useState(true);
   const [tabla, setTabla] = useState(false);
@@ -54,7 +55,7 @@ const MenuDetailsInformation = ({ entrante, primerPlato, segundoPlato, postre })
         </Card.Header>
         <Card.Body className="p-4">
           {grafico && <AgChartsReact options={chartOptions} />}
-          {tabla && <AgGridTableRepresentation rowData={rowData} colDefs={colDefs} />}
+          {tabla && <AgGridTableRepresentation rowData={rowData} colDefs={colDefs} getRowStyle={rowStyle} />}
         </Card.Body>
       </Card>
     </>

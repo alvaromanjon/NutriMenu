@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import { AgChartsReact } from "ag-charts-react";
 import { Col, Container, Row } from "react-bootstrap";
 import { NutrientChartData, NutrientChartOptions } from "../../../utils/nutrientChartData";
-import { NutrientTableData, NutrientTableHeader } from "../../../utils/nutrientTableData";
+import { NutrientTableData, NutrientTableHeader, NutrientTableStyle } from "../../../utils/nutrientTableData";
 import { flattenObject } from "../../../utils/flattenObject";
 import AgGridTableRepresentation from "../../../utils/AgGridTableRepresentation";
 
@@ -12,6 +12,7 @@ const AlimentoDetails = () => {
   const chartData = NutrientChartData(alimentoTransformado);
   const tableData = NutrientTableData(alimentoTransformado);
   const colDefs = NutrientTableHeader();
+  const rowStyle = NutrientTableStyle;
   const chartOptions = NutrientChartOptions(chartData);
 
   return (
@@ -27,7 +28,7 @@ const AlimentoDetails = () => {
           <AgChartsReact options={chartOptions} />
         </Col>
         <Col md={6}>
-          <AgGridTableRepresentation rowData={tableData} colDefs={colDefs} />
+          <AgGridTableRepresentation rowData={tableData} colDefs={colDefs} getRowStyle={rowStyle} />
         </Col>
       </Row>
     </Container>
