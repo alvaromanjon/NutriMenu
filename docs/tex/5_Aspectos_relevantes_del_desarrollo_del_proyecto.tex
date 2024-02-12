@@ -73,7 +73,7 @@ En el estilado de la aplicación se ha trabajado principalmente con \textbf{Boot
 
 Existe una librería llamada \textbf{React Bootstrap} que integra todos los elementos de Bootstrap dentro de React, para trabajar con ellos como si fueran componentes de React, por lo que me he ahorrado el uso de bastantes clases de CSS.
 
-Por último, para la representación de las tablas y los gráficos en las vistas de información nutricional \ref{fig:App/charts_and_tables}, he usado las librerías \textbf{AG React Data Grid} y \textbf{AG React Charts} respectivamente, debido a que requieren de muy poco código para conseguir los resultados buscados, y me permiten actualizar los datos de forma dinámica, algo que necesitaba para poder cambiar los datos nada más se seleccione un plato distinto en la vista del informe nutricional de un menú.
+Por último, para la representación de las tablas y los gráficos en las vistas de información nutricional (ejemplo en la figura \ref{fig:App/charts_and_tables}), he usado las librerías \textbf{AG React Data Grid} y \textbf{AG React Charts} respectivamente, debido a que requieren de muy poco código para conseguir los resultados buscados, y me permiten actualizar los datos de forma dinámica, algo que necesitaba para poder cambiar los datos nada más se seleccione un plato distinto en la vista del informe nutricional de un menú.
 
 \imagen{App/charts_and_tables}{Distintas tablas y gráficos usados en la aplicación}{1}
 
@@ -83,8 +83,16 @@ Las aplicaciones originales hacían uso de la base de datos de BEDCA, la Base de
 
 El gran inconveniente de esto es que esta base de datos no dispone de un punto de acceso al que consultar los datos mediante una API o similar, así que era necesario mantener la base de datos en local. Esto, además de que impide obtener la última información nutricional disponible, puede suponer un costo en almacenamiento y rendimiento importante, ya que todos los alimentos y su información deben estar guardados en el servidor obligatoriamente.
 
-Para solucionar esto, se ha decidido dar uso de la API de Nutritionix, que dispone de una base de datos específica para alimentos en castellano. Esto permite almacenar sólo los alimentos que vayan a ser usados, mientras que el resto quedan disponibles con tan sólo realizar una búsqueda en la aplicación \ref{fig:App/nutritionix_search}. Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
+Para solucionar esto, se ha decidido dar uso de la \textbf{API de Nutritionix}, que dispone de una base de datos específica para alimentos en castellano. Esto permite almacenar sólo los alimentos que vayan a ser usados, mientras que el resto quedan disponibles con tan sólo realizar una búsqueda en la aplicación (como se ve en la figura \ref{fig:App/nutritionix_search}). Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
 
-\imagen{App/nutritionix_search}{Búsqueda de un alimento mediante el uso de la API de Nutritionix}{1}
+\imagen{App/nutritionix_search}{Búsqueda de un alimento mediante el uso de la API de Nutritionix}{0.8}
 
 El mayor inconveniente que he encontrado con el uso de esta API es el hecho de que no contiene información nutricional sobre alérgenos, quedando esto como objeto de mejora del proyecto.
+
+\section{Automatizaciones}
+
+Como la infraestructura de la aplicación dispone de varios servicios independientes, es posible que en algún momento realice un cambio en uno de ellos y sin darme cuenta esto afecte a otro distinto, haciendo que algún elemento no funcione como debería. Es por ello que he realizado una implementación de integración continua mediante el uso de \textbf{GitHub Actions}, aprovechando que el despliegue se realiza con Docker y Docker Compose. 
+
+De lo que se encarga esta automatización es que, cada vez que se hace un push de algún commit al repositorio de GitHub, se ejecutan una serie de pasos (como podemos ver en la figura \ref{fig:App/github_actions_execution}) para desplegar los contenedores de Docker en una máquina nueva, y le da un minuto desde que todos los contenedores están corriendo para que cada servicio devuelva un \textit{healthcheck} indicando que todo está funcionando correctamente. En caso de que alguno de los servicios no devuelva este mensaje, el propio GitHub se encarga de enviar un mensaje indicando que algo ha fallado, además de indicarlo en el propio commit.
+
+\imagen{App/github_actions_execution}{Listado de pasos ejecutados por la acción de GitHub Actions}{0.8}
