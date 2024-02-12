@@ -58,7 +58,7 @@ const PlatoDetails = () => {
                           {item.alimento.nombre}
                         </Link>
                       </td>
-                      <td style={{ verticalAlign: "middle" }}>{item.gramosEscogidos}</td>
+                      <td style={{ verticalAlign: "middle" }}>{item.gramosEscogidos} g</td>
                     </tr>
                   ))}
                 </tbody>
