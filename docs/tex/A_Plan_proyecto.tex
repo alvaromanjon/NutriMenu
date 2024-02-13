@@ -2,8 +2,134 @@
 
 \section{Introducción}
 
+En este apartado se va a comenzar hablando sobre cómo se ha planificado el proyecto en el tiempo, cómo se han organizado las tareas en el tiempo y cuánto han durado finalmente. 
+
+Después se va a proceder a hablar sobre los distintos costes que conforman el proyecto, y cuánta sería la cantidad estimada a pagar en caso de que la aplicación estuviese funcionando durante un año.
+
+Para acabar, se va a hablar de las distintas implicaciones legales que conllevan el uso de las tecnologías integradas en el proyecto, así como del tipo de licencia escogido para la aplicación.
+
+Estos estudios son esenciales para entender cómo el proyecto se ha llevado a cabo y qué implicaciones tendría el ponerlo en marcha.
+
 \section{Planificación temporal}
 
+\subsection{Sprint 1 (08/03 - 22/03)}
+
+Durante el sprint 1 del proyecto se llevó a cabo la configuración del repositorio, la asimilación de cómo funciona un TFG y qué partes lo componen, y es donde se estuvo leyendo y probando el TFG del que parte este proyecto, el TFG de Mariya Aleksandrova \cite{tfg-mariya:memoria}.
+
+Durante este sprint se realizó la primera reunión con los tutores, en la que me facilitaron todos los materiales referentes al TFG anterior, y discutimos sobre los posibles caminos a escoger para mejorar el proyecto existente. Al final se decidió comenzar por intentar dockerizar la aplicación existente.
+
+\imagen{Sprints/sprint-1}{Tareas del Sprint 1}{1}
+
+\subsection{Sprint 2 (23/03 - 12/04)}
+
+El segundo sprint lo dediqué a investigar y ampliar mis conocimientos de Docker y Docker Compose, ver cómo ambas tecnologías pueden funcionar juntas y cómo se podrían llegar a aplicar en este proyecto. 
+
+Durante este período intenté contenerizar las dos aplicaciones de las que partía el proyecto, pero tuve problemas a la hora de conectar las dos aplicaciones con la base de datos, así que terminé creando un proyecto nuevo de Spring Boot.
+
+\imagen{Sprints/sprint-2}{Tareas del Sprint 2}{1}
+
+\subsection{Sprint 3 (13/04 - 26/04)}
+
+Durante este sprint se comenzó a plantear la idea de cambiar la fuente de datos nutricionales para pasar de BEDCA a un modelo más moderno, idealmente un modelo al que se pudiese acceder mediante el uso de una API REST. Después de darle varias vueltas, finalmente mi decisión fue usar la API de Nutritionix.
+
+\imagen{Sprints/sprint-3}{Tareas del Sprint 3}{1}
+
+\subsection{Sprint 4 (27/04 - 17/05)}
+
+Este período de tiempo lo dedique a familiarizarme con LaTeX y a aprender cómo utilizarlo, ya que casi no tenía experiencia con este lenguaje. Fue también el momento en el que se decidió usar el propio repositorio como lugar para almacenar la memoria y los anexos, en vez de usar una herramienta externa como Overleaf. Fue aquí cuando descubrí y comencé a usar Texifier como herramienta para redactar estos documentos.
+
+\imagen{Sprints/sprint-4}{Tareas del Sprint 4}{1}
+
+\subsection{Sprint 5 (18/05 - 01/06)}
+
+En este sprint fue cuando se terminó la primera iteración del despliegue de la infraestructura en Docker, creando un contenedor para la base de datos y otro para el proyecto de Spring Boot.
+
+Es aquí donde se realizó toda la gestión del despliegue en Docker Compose, revisando que el orden de la ejecución de los contenedores fuese el correcto (ya que si la base de datos se ejecuta después que los proyectos de Spring Boot, la ejecución falla al no tener estos una base de datos a la que conectarse), así como la creación de los Dockerfiles y la configuración adecuada de sus parámetros. 
+
+Después de hacer varias pruebas y cambiar unas cuántas cosas, finalmente se consiguió desplegar un entorno en el que se pudiera realizar el desarrollo en local y los cambios se replicaran a los contenedores al momento.
+
+\imagen{Sprints/sprint-5}{Tareas del Sprint 5}{1}
+\subsection{Sprint 6 (02/06 - 15/06)}
+
+Este sprint se dedicó a desarrollar todos los cambios realizados en el sprint anterior en los anexos, así como a hablar sobre Docker en la memoria.
+
+\imagen{Sprints/sprint-6}{Tareas del Sprint 6}{1}
+
+\subsection{Sprint 7 (16/06 - 22/06)}
+
+En este período de tiempo se realizó tanto toda la investigación referente a GitHub Actions como su implementación en el repositorio. 
+
+Inicialmente se intentó reutilizar la infraestructura ya implementada de Docker para esta tarea, pero no todos los elementos se traducían al 100\% a este tipo de despliegue, así que terminé desarrollando una infraestructura Docker ligeramente modificada.
+
+\imagen{Sprints/sprint-7}{Tareas del Sprint 7}{1}
+
+\subsection{Sprint 8 (07/09 - 14/09)}
+
+Fue en este sprint cuando se realizó toda la nueva implementación de la lógica de negocio, fusionando el backend de ambas aplicaciones en uno solo. 
+
+Me basé en el modelo de datos original para realizar esta nueva iteración, y la capa de negocio fue reescrita para que los datos actuasen de manera conjunta y no se encontrasen separados. 
+
+Por último se desarrolló la API en la capa del controlador, planteando qué endpoints iban a ser necesarios para que posteriormente la aplicación pudiese interactuar con los datos sin problemas.
+
+Además de esto, también se realizaron algunas mejoras en la documentación de Docker para que quedase más claro cómo desplegar el proyecto desde 0, intentando cubrir todos los elementos necesarios.
+
+\imagen{Sprints/sprint-8}{Tareas del Sprint 8}{1}
+
+\subsection{Sprint 9 (15/09 - 21/09)}
+
+En este sprint comenzó el desarrollo de la capa frontend, comenzando por crear un proyecto de React e integrar este proyecto dentro de la infraestructura Docker actual.
+
+Fue en esta parte cuando se desarrollaron las primeras iteraciones de las vistas de gestión de todos los elementos, además de las vistas de inicio de sesión y contraseña olvidada. Aquí comencé a realizar mi primera implementación de la integración con la API de Nutritionix, pero no llegué a terminarla debido a que no conseguía sincronizar las múltiples llamadas a la API para que los datos se gestionasen correctamente.
+
+También se documentaron todos los endpoints desarrollados para la API en los anexos, así como también se arregló un fallo que hacía que a veces la base de datos arrancase antes que el resto de servicios. Para solucionar esto se implementó un healthcheck en la base de datos, que se encarga de comprobar si el servicio ha arrancado completamente, para que cuando así sea se avise al resto de servicios y continúen con su inicio.
+
+\imagen{Sprints/sprint-9}{Tareas del Sprint 9}{1}
+
+\subsection{Sprint 10 (21/12 - 08/01)}
+
+Dentro de este sprint se realizó la redacción completa del apartado Técnicas y herramientas de la memoria.
+
+\imagen{Sprints/sprint-10}{Tareas del Sprint 10}{1}
+
+\subsection{Sprint 11 (09/01 - 16/01)}
+
+En este período se crearon las vistas de creación de usuarios, locales y empresas, así como toda su lógica subyacente para que estas funcionasen.
+
+\imagen{Sprints/sprint-11}{Tareas del Sprint 11}{1}
+
+\subsection{Sprint 12 (17/01 - 30/01)}
+
+Este período lo dediqué mayoritariamente a seguir formándome sobre React, ya que era la tecnología con la que menos experiencia contaba, y había algunas partes del código con las que estaba teniendo complicaciones para conseguir que realizasen lo que tenía en mente.
+
+También descubrí que la herramienta de compilación que estaba usando, Create React App, ya no era la opción recomendada por la comunidad de desarrolladores, ya que su ritmo de mantenimiento era bastante lento y sus paquetes se estaban quedando desactualizados, así que decidí hacer la migración a Vite. Esto se notó bastante en el rendimiento, ya que de repente todo funcionaba mucho más rápido, y dejé de tener problemas a la hora de instalar algunas dependencias.
+
+\imagen{Sprints/sprint-12}{Tareas del Sprint 12}{1}
+
+\subsection{Sprint 13 (31/01 - 05/02)}
+
+En este sprint conseguí terminar con la integración de la API de Nutritionix, lo que me supuso inicialmente un gran reto, y terminé de desarrollar toda la funcionalidad de las vistas de creación de alimentos. 
+
+También desarrollé la vista de creación de platos por completo, aprovechando lo desarrollado en las vistas de creación de alimentos para integrar estas aquí también.
+
+\imagen{Sprints/sprint-13}{Tareas del Sprint 13}{1}
+
+\subsection{Sprint 14 (06/02 - 12/02)}
+
+Durante este sprint se ha originado la vista de creación de menús, se han terminado de implementar todas las acciones relacionadas a eliminar elementos en los apartados de gestión, y se ha desarrollado todo lo relacionado a la parte de consumidores.
+
+También se ha avanzado en el desarrollo de la memoria, terminando los apartados de Introducción, Objetivos del proyecto, y Aspectos relevantes del desarrollo del proyecto.
+
+\imagen{Sprints/sprint-14}{Tareas del Sprint 14}{1}
+
+\subsection{Sprint 15 (13/02 - 16/02)}
+
+En este período se han realizado las últimas tareas por completar en la aplicación, añadiendo las vistas de edición de elementos e implementando un conjunto de datos de prueba para que la aplicación parta de unos datos en su primera ejecución.
+
+Se han terminado de desarrollar los apartados de Conceptos teóricos, Trabajos relacionados y Conclusiones y líneas de trabajo futuras en la memoria, además de revisar unas mejoras pendientes en el apartado de Técnicas y herramientas.
+
+En los anexos se han terminado todos los apartados, ya que había algunos pendientes de revisión y otros que todavía no se habían completado.
+
+\imagen{Sprints/sprint-15}{Tareas del Sprint 15}{1}
 \section{Estudio de viabilidad}
 
 \subsection{Viabilidad económica}
@@ -124,4 +250,3 @@ La gran mayoría de licencias de los productos escogidos son open source, y todo
 Como este es un proyecto en el que probablemente termine trabajando e iterando más gente, la licencia GPL 3.0 es la más adecuada para este caso, ya que permite que se haga prácticamente de todo con el proyecto excepto distribuir el código de forma privada \cite{choose-license:gnu-3.0}.
 
 \imagen{GitHub/github_repo_license}{Información detallada sobre la licencia escogida para el proyecto}{0.8}
-% TODO Añadir información sobre la licencia del proyecto
