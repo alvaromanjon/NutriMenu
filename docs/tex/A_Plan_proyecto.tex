@@ -91,3 +91,37 @@ Los cuales se desglosarían en:
 Aunque el coste inicial del proyecto es significativo principalmente debido a los costes de desarrollo, los costes de infraestructura y mantenimiento son relativamente bajos, por lo que el proyecto podría ser económicamente viable si se implementa en más empresas y se gestiona eficientemente.
 
 \subsection{Viabilidad legal}
+
+Para realizar el estudio de viabilidad legal se van a listar todas las licencias involucradas en este proyecto en la tabla \ref{tab:licencias}.
+
+\begin{table}[p]
+\centering
+	\begin{tabularx}{\linewidth}{ p{0.45\columnwidth} p{0.47\columnwidth} }
+\toprule
+\textbf{Herramienta usada}                      & \textbf{Licencia}                                                                                                                   \\ \toprule
+\textbf{Docker (Community Edition)}             & Apache License 2.0                                                                                                         \\
+\textbf{Docker Compose}                         & Apache License 2.0                                                                                                         \\
+\textbf{MySQL}                                  & GNU-2.0                                                                                                                    \\
+\textbf{Spring Boot}                            & Apache License 2.0                                                                                                         \\
+\textbf{Java (Eclipse Temurin)}                 & Eclipse Public License (EPL) 2.0                                                                                           \\
+\textbf{React}                                  & MIT License                                                                                                                \\
+\textbf{Vite}                                   & MIT License                                                                                                                \\
+\textbf{React Router}                           & MIT License                                                                                                                \\
+\textbf{Bootstrap}                              & MIT License                                                                                                                \\
+\textbf{React Bootstrap}                        & MIT License                                                                                                                \\
+\textbf{AG React Data Grid (Community Edition)} & MIT License                                                                                                                \\
+\textbf{AG React Charts (Community Edition)}    & MIT License                                                                                                                \\
+\textbf{JavaScript}                             & Depende de la implementación del navegador, en caso del motor de Google (V8) es una mezcla de la MIT License y BSD License \\
+\textbf{Nutritionix}                            & Propietaria, es una licencia de uso no exclusiva, revocable, no sublicenciable y no transferible                           \\
+\textbf{GitHub}                                 & Propietaria                      \\ \bottomrule                                                                                     
+\end{tabularx}
+\caption{Herramientas y tecnologías usadas y sus licencias}
+\label{tab:licencias}
+\end{table}
+
+La gran mayoría de licencias de los productos escogidos son open source, y todos son compatibles con la licencia escogida para este proyecto (figura \ref{fig:GitHub/github_repo_license}), la \textbf{GPL 3.0}. Para escoger la licencia se ha hecho uso de \href{https://choosealicense.com/}{https://choosealicense.com/}, una web que te permite escoger una licencia en función del propósito del proyecto. 
+
+Como este es un proyecto en el que probablemente termine trabajando e iterando más gente, la licencia GPL 3.0 es la más adecuada para este caso, ya que permite que se haga prácticamente de todo con el proyecto excepto distribuir el código de forma privada \cite{choose-license:gnu-3.0}.
+
+\imagen{GitHub/github_repo_license}{Información detallada sobre la licencia escogida para el proyecto}{0.8}
+% TODO Añadir información sobre la licencia del proyecto
