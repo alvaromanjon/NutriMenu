@@ -8,6 +8,86 @@
 
 \subsection{Viabilidad económica}
 
+Para elaborar un estudio de viabilidad económica de esta aplicación es necesario estimar los costes asociados a su desarrollo y mantenimiento, considerando el tiempo invertido en su realización. Se asume que el proyecto podría tener potencial para escalar o comercializarse en el futuro.
+
+Todos los costes que se van a considerar a continuación llevan incluido el IVA del 21\%, haciéndose su desglose al final del análisis económico.
+
+\subsubsection{Costes de recursos humanos}
+
+Dado que el desarrollo del proyecto ha supuesto unas 300 horas efectivas a lo largo de 10 meses, se calcula el coste como si se estuviese contratando a un desarrollador externo, lo que da una idea del valor de mercado del trabajo realizado.
+
+Para el coste por hora de un desarrollador de software, se considera un coste promedio de 50 €/hora (costes indirectos incluidos) para un desarrollador con las habilidades necesarias, por lo que para las 300 horas de trabajo indicadas, resulta un coste de \num{15000} €.
+
+\[ 300 \text{ horas * } 50\text{ €/hora} = \num{15000}\text{ €}
+ \]
+ 
+ \subsubsection{Costes de hardware}
+ 
+El costo estimado de un equipo informático de desarrollo es de \num{2000} €, al que se le considera una vida útil de 3 años. Considerando que cada año tiene \num{1820} horas laborales, supone en total una vida útil para el ordenador de \num{5460} horas laborales.
+
+El coste por hora de ordenador resulta ser de: 
+
+\[ \num{2000} \text{ € / } \num{5460} \text{ horas} = 0,37 \text{ €/hora}\]
+
+Teniendo en cuenta las 300 h de trabajo utilizadas para el desarrollo del proyecto, resulta un coste de 111€:
+
+\[\num{300} \text{ horas * } 0,37 \text{ €/hora} = 111 \text{ €}\]
+
+\subsubsection{Costes de software y herramientas}
+
+Se ha intentado utilizar software gratuito u open source para el desarrollo del proyecto en la medida de lo posible, sin embargo hay ciertas herramientas que requieren de una licencia o que lo requerirían una vez puesto en producción:
+
+\begin{itemize}
+	\item \textbf{Texifier}, la aplicación utilizada para redactar los anexos y la memoria, tiene un coste de 34,99 €. Suponiendo que la licencia puede llegar a durar unos 3 años, hasta que salga una actualización mayor que requiera volver a pagar para actualizar, y que la aplicación ha sido usada durante un tercio de las horas dedicadas al proyecto, el coste sería:
+
+\[\num{34,99} \text{ € / } 5460 \text{ horas} = 0,0064 \text{ €/hora}\]
+\[\num{0,0064} \text{ € * } 100 \text{ horas} = 0,64 \text{ €}\]
+
+	\item \textbf{La API de Nutritionix} es gratuita cuando se utiliza para un desarrollo, ya que tiene un límite de 2 usuarios como máximo. Sin embargo, una vez puesta en producción, se requeriría una licencia que soporte un mayor número de usuarios. Al ser una aplicación gratuita, el coste sería necesario negociarlo con la empresa, como indican en \href{https://www.nutritionix.com/business/api}{las FAQs de su web}.
+
+\end{itemize}
+
+Por lo tanto, a falta de saber el precio del uso de Nutritionix, el coste quedaría en 0,64 € en gastos de software y herramientas.
+
+\subsubsection{Coste total del desarrollo}
+
+El coste total del desarrollo de este proyecto sería la suma de todos los costes mencionados anteriormente:
+
+\[\num{15000} \text{ € + } \num{111} \text{ € + } \num{0,64} \text{ € } = \num{15111,64} \text{ €}\]
+
+Si además de esto queremos calcular el costo del proyecto con un año de operación, deberíamos de añadir los costes de infraestructura y mantenimiento:
+
+\subsubsection{Costes de infraestructura}
+
+Una vez desarrollada la aplicación, esta requerirá de una plataforma donde ser alojada para poder ser accesible. 
+
+Para hacer estas estimaciones, se ha supuesto que toda la infraestructura estaría alojada en una máquina virtual Compute Engine en Google Cloud, así que se ha hecho una configuración estimada de lo que podría ser una instancia adecuada para este proyecto (figura \ref{fig:GoogleCloud/google_cloud_pricing}). 
+
+El coste mensual sería de unos \$ 172,88, lo que convertido a euros a día de hoy sería unos 161,28 €. Por lo tanto, el coste anual sería de:
+
+\[\num{161,28} \text{ € * } 12 \text{ meses} = \num{1935,36} \text{ €}\]
+
+\imagen{GoogleCloud/google_cloud_pricing}{Cálculos estimados de una instancia Compute Engine}{1}
+
+\subsubsection{Costes de mantenimiento}
+
+Las actualizaciones, corrección de errores, etc. pueden estimarse en términos de horas al año. Se estima que se necesitarán 50 horas al año al mismo coste que el tenido en cuenta para el desarrollador, lo que supone un coste anual de \num{2500} €:
+
+\[50 \text{ horas/año * } 50 \text{ €/hora} = \num{2500} \text{ €/año}\]
+
+\subsubsection{Coste total del proyecto con un año de operación y mantenimiento}
+
+Sumando los costes de desarrollo y los de infraestructura y mantenimiento se obtiene el coste total del proyecto:
+
+\[\num{15111,64} \text{ € + } \num{1935,36} \text{ € + } \num{2500} \text{ €} = \num{19547} \text{ €}\]
+
+Los cuales se desglosarían en:
+
+\begin{itemize}
+	\item \textbf{Coste líquido:} \num{15442,13} €
+	\item \textbf{IVA (21\%):} \num{4104,87} €
+\end{itemize}
+
+Aunque el coste inicial del proyecto es significativo principalmente debido a los costes de desarrollo, los costes de infraestructura y mantenimiento son relativamente bajos, por lo que el proyecto podría ser económicamente viable si se implementa en más empresas y se gestiona eficientemente.
+
 \subsection{Viabilidad legal}
-
-
