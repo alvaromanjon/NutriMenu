@@ -4,6 +4,32 @@
 
 \section{Diseño de datos}
 
+En esta sección se va a presentar el modelo de datos usado en la aplicación (figura \ref{fig:DB/nutrimenu_data_schema}), y se van a describir las distintas relaciones entre las entidades que lo forman:
+
+\begin{itemize}
+	\item \textbf{Empresa}: Contiene toda la información referente a las empresas registradas en la aplicación. Esta entidad puede estar relacionada con uno o varios locales, menús, platos y usuarios.
+	\item \textbf{Usuario}: Dispone de toda la información referente a los usuarios, como su información de acceso y una enumeración que indica el rol al que pertenecen. Los roles a tomar pueden ser:
+	\begin{itemize}
+		\item \textbf{Administrador}: Permite el acceso al panel de administración, que se encarga de la gestión de empresas, locales, usuarios y alimentos. No pertenecen a ninguna empresa.
+		\item \textbf{Editor}: Son miembros de una empresa, y se permite el acceso al panel de editores, que se encarga de la gestión de menús y platos.
+		\item \textbf{Camarero}: Son miembros de una empresa, y se permite el acceso al panel de camareros, que se encarga de la gestión de menús.
+	\end{itemize}
+	Los usuarios con roles de Editor o Camarero van a tener una relación varios a uno con una empresa (realmente los administradores también, solo que se les va a asignar el id de una empresa que no exista).
+	\item \textbf{Local}: Esta entidad contiene toda al información relacionada con los locales. Los locales sólo puede pertenecer a una empresa, debido a su relación varios a uno. Además, existe una relación de varios a varios con los menús.
+	\item \textbf{Menú}: Es la entidad que contiene toda la información relacionada con los menús. Está directamente relacionada con las empresas, ya que varios menús pueden pertenecer a una sola empresa. Además existe una relación de varios a varios con los locales, y otra de este mismo tipo con los platos.
+	\item \textbf{Plato}: Esta entidad dispone de toda la información referente a los platos, y dispone de una enumeración que indica qué tipo de plato es cada objeto de tipo Plato. Tiene una relación de varios a uno con una empresa, y además de esto tiene dos relaciones varios a varios: una correspondiente a los menús, y otra a los alimentos.
+	\item \textbf{Alimento}: Es la entidad que almacena la información básica de los alimentos, como el grupo de alimento al que pertenece, los gramos por ración que representan los componentes nutricionales, y su nombre y descripción. Esta entidad tiene una relación de varios a varios con los platos, y además tiene una relación uno a uno con los componentes nutricionales, ya que cada alimento dispone de una instancia de componentes.
+	\item \textbf{Componentes nutricionales}: Esta entidad contiene toda la información relevante a los componentes nutricionales de un alimento. Tiene dos relaciones uno a uno, una con vitaminas y otra con minerales, ya que estas 3 entidades juntas forman el junto de información referente a un alimento. También forma parte de una relación uno a varios con la entidad Plato \textunderscore Alimento, puesto que es la entidad intermedia que contiene información adicional sobre la relación varios a varios entre Plato y Alimento.
+	\item \textbf{Vitaminas}: Es la instancia que contiene toda la información sobre las vitaminas de un alimento, y tiene una relación uno a uno con componentes nutricionales.
+	\item \textbf{Minerales}: Es la instancia que contiene toda la información sobre los minerales de un alimento, y tiene una relación uno a uno con componentes nutricionales.
+	\item \textbf{Plato\textunderscore Alimento}: Esta relación es la que permite que varios platos puedan pertenecer a varios alimentos, y viceversa. Esta entidad intermedia existe para almacenar los gramos por ración escogidos para un alimento en un plato, y calcular y almacenar los valores de los componentes nutricionales proporcionales a esa cantidad.
+	\item \textbf{Menu\textunderscore Local}: Esta relación es la que permite que varios locales puedan pertenecer a varios menús, y viceversa. Esto es esencial para que no haga falta crear menús duplicados por cada local, y que estos puedan ser reutilizados tantas veces como sea necesario.
+	\item \textbf{Menu\textunderscore Plato}: Esta relación es la que permite que varios menús puedan pertenecer a varios platos, y viceversa. Esto permite que un plato pueda estar en varios menús, y no tengan que existir entidades duplicadas.
+\end{itemize}
+
+
+\imagen{DB/nutrimenu_data_schema}{Diagrama relacional del modelo de datos}{1}
+
 \section{Diseño procedimental}
 
 Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. A continuación voy a proceder a detallar y documentar cada uno de los distintos endpoints a los cuáles se puede hacer llamadas HTTP:
