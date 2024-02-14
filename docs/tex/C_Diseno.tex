@@ -34,11 +34,34 @@ En esta sección se va a presentar el modelo de datos usado en la aplicación (f
 
 \section{Diseño procedimental}
 
+\subsection{Diagramas de secuencia}
+
+En esta sección se van a presentar las interacciones entre el usuario, la aplicación web y la API REST mediante el uso de diagramas de secuencia, ya que esto va a permitir entender mejor el flujo de ejecución de las distintas tareas que se pueden ejecutar en la aplicación.
+
+\imagen{diagramas_secuencia/inicio_sesion}{Diagrama de inicio de sesión}{1}
+
+\imagen{diagramas_secuencia/contraseña_olvidada}{Diagrama del proceso de contraseña olvidada}{1}
+
+\imagen{diagramas_secuencia/creacion_nuevo_elemento}{Diagrama de creación de una empresa o alimento a mano}{1}
+
+\imagen{diagramas_secuencia/creacion_nuevo_elemento_empresas}{Diagrama de creación de un local o usuario}{1}
+
+\imagen{diagramas_secuencia/creacion_alimento_nutritionix}{Diagrama de creación de un alimento con Nutritionix}{1}
+
+\imagen{diagramas_secuencia/creacion_plato}{Diagrama de creación de un plato}{1}
+
+\imagen{diagramas_secuencia/creacion_menu}{Diagrama de creación de un menú}{1}
+
+\imagen{diagramas_secuencia/edicion_elemento}{Diagrama de edición de un elemento}{1}
+
+\imagen{diagramas_secuencia/borrado_elemento}{Diagrama de borrado de un elemento}{1}
+
+
 \subsection{Diseño de la API REST}
 
 Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. 
 
-Al final de este apartado se van a detallar y documentar cada uno de los \textit{endpoints} disponibles.
+Al final de este apartado se van a detallar y documentar cada uno de los \textit{endpoints} disponibles, para poder trabajar con ellos cómodamente.
 
 \begin{table}
 \begin{apiRoute}{get}{/empresas}{Devuelve todas las empresas existentes}
