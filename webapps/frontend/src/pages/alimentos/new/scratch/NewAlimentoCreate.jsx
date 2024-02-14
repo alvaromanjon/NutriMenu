@@ -23,7 +23,7 @@ const NewAlimentoCreate = () => {
     const data = await response.json();
 
     if (response.ok) {
-      if (data.length !== 0) {
+      if (data[0] !== null) {
         setErrorFlag(true);
         setErrorMessage("Ya existe un alimento con este nombre");
       } else {
