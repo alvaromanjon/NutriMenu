@@ -32,11 +32,7 @@ Los tres componentes fundamentales de este patrón tienen misiones diferenciadas
 El motivo por el cual he decidido utilizar este patrón es porque permite trabajar de una forma precisa y eficaz, haciendo que la estructura del sistema sea clara, ordenada y separada, lo que facilita su comprensión y posterior mantenimiento.  
 
 
-\section{Contenerización}
-
-Se conoce como contenerización a la tecnología de virtualización que permite ejecutar \textbf{contenedores}, entornos completamente aislados del resto de la máquina que los está ejecutando, y que contienen todo lo necesario (bibliotecas, código, archivos de configuración, dependencias...) para que se pueda ejecutar una aplicación en cualquier entorno.\cite{microsoft:contenedores}
-
-A diferencia de entornos clásicos de virtualización como las \textbf{máquinas virtuales}, en los que se emula el hardware por completo y se debe disponer de una instalación completa del sistema operativo para funcionar, en los contenedores se permite que múltiples instancias compartan un mismo sistema operativo, a pesar de estar usando espacios de ejecución distintos. Esto se consigue usando características de Linux como los \textit{espacios de nombres del kernel} o los \textit{cgroups} \cite{medium:kernelspace}, puesto que los contenedores están basados en Linux, pero esto no impide su ejecución en distintas plataformas y sistemas operativos, incluido Windows.
+\section{Infraestructura y despliegue}
  
 \subsection{Docker}
 

@@ -1,83 +1,58 @@
 \capitulo{3}{Conceptos teóricos}
 
-En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
+En este apartado se van a tratar de introducir algunos de los conceptos más relevantes al proyecto, para así poder tener una mejor comprensión de estos.
 
-Algunos conceptos teóricos de \LaTeX \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
+\section{HTTP}
 
-\section{Secciones}
+HTTP (\textit{Hypertext Transfer Protocol}) es un protocolo de la capa de aplicación diseñado para distribuir información entre equipos conectados a una red. 
 
-Las secciones se incluyen con el comando section.
+Se utiliza como base para la comunicación de datos en la World Wide Web (WWW), permitiendo la transferencia de hipertextos (archivos HTML), que son documentos unidos a través de enlaces. 
 
-\subsection{Subsecciones}
+Este protocolo \textbf{facilita la comunicación entre clientes y servidores}, ya que el cliente (por lo general, un navegador web) envía una solicitud HTTP al servidor, el cual responde con los recursos solicitados, como pueden ser una página web, imágenes, archivos... \cite{cloudflare:http}
 
-Además de secciones tenemos subsecciones.
+HTTP dispone de distintos métodos para realizar solicitudes, que son la forma en la que los clientes se comunican con los servidores. Algunos de los métodos más comunes son: \textbf{GET}, que se encarga de solicitar un recurso; \textbf{POST}, para enviar datos al servidor; y \textbf{PUT}, para actualizar un elemento. HTTP también soporta cabeceras en las solicitudes y respuestas, las cuales contienen información sobre el recurso o el estado.
 
-\subsubsection{Subsubsecciones}
+\section{Aplicación web}
 
-Y subsecciones. 
+Una aplicación web es un programa o software que se ejecuta en un servidor web, en lugar de hacerlo localmente en el dispositivo del usuario, y a la que generalmente se accede mediante un navegador.
+
+La principal característica de una aplicación web es su \textbf{capacidad para operar de manera independiente del sistema operativo o del dispositivo}, lo que permite a los usuarios acceder a la misma funcionalidad desde diversos dispositivos.
+
+Además de esto, las aplicaciones web permiten desplegar cambios de forma instantánea, ya que el código no se encuentra descargado en el cliente, sino que este lo solicita al servidor cada vez que accede.
+
+Las aplicaciones web modernas generalmente siguen el modelo de arquitectura cliente-servidor, donde el cliente (el navegador) interactúa con el servidor a través de solicitudes HTTP, permitiendo una experiencia de usuario interactiva y dinámica \cite{aws:aplicaciones-web}.
+
+\section{Base de datos}
+
+Una base de datos es un sistema organizado de almacenamiento de datos que permite la \textbf{recopilación, consulta, actualización y administración de información de manera eficiente}.
+
+Las bases de datos están diseñadas para gestionar grandes volúmenes de datos de forma que se puedan realizar búsquedas, selecciones y operaciones sobre estos con gran rapidez y precisión.
+
+Existen diferentes tipos de bases de datos, como las \textbf{relacionales}, que organizan la información en tablas relacionadas entre sí (y son el tipo de base de datos usada en este proyecto); las \textbf{no relacionales o NoSQL}, que permiten almacenar datos de forma más flexible; y las \textbf{bases de datos distribuidas}, que distribuyen los datos a través de múltiples ubicaciones para mejorar la accesibilidad y la escalabilidad \cite{wikipedia:db}.
+
+\section{API REST}
+
+Una API REST (\textit{Representational State Transfer}) es un conjunto de principios de arquitectura que se utilizan para el diseño de interfaces de programación de aplicaciones (APIs) cuyo objetivo es el de permitir la comunicación entre sistemas en red.
+
+ Las APIs permiten la interacción entre aplicaciones cliente y servidor a través de protocolos y solicitudes, utilizando métodos HTTP como GET, POST, PUT y DELETE para realizar operaciones CRUD (creación, lectura, actualizado y eliminado) sobre recursos web identificados mediante URIs (\textit{Uniform Resource Identifier}) \cite{red-hat:api-rest}.
+ 
+ Al ser interfaces, la mayor ventaja que ofrecen es que nos permiten \textbf{acceder a los datos de una aplicación sin necesidad de conocer su modelo de datos interno}, ni el cómo funciona su lógica de negocio.
+
+\section{Backend}
 
 
-\section{Referencias}
+El backend se refiere a la \textbf{parte del servidor de una aplicación}, la cual es responsable de la lógica de negocio, el almacenamiento de datos y la gestión de solicitudes que provienen del frontend \cite{platzi:backend-frontend}. 
 
-Las referencias se incluyen en el texto usando cite \cite{wiki:latex}. Para citar webs, artículos o libros \cite{koza92}.
+Es la parte de la aplicación que no se ve de forma directa, pero que es crucial para el funcionamiento correcto de una aplicación, ya que es el núcleo de esta. Si nuestro proyecto no dispusiese de un backend la aplicación no podría almacenar ni consultar ningún dato, por lo que perdería totalmente el sentido.
 
+\section{Frontend}
 
-\section{Imágenes}
+El frontend es la \textbf{parte de una aplicación web o móvil con la que el usuario interactúa directamente}. Es toda la parte visible, como la UI (User Interface), UX (User eXperience), el diseño escogido, los colores, las animaciones... \cite{platzi:backend-frontend}
 
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
+El desarrollo frontend se enfoca principalmente en la experiencia del usuario, el diseño de interfaces atractivas y adaptables que se ajusten a diferentes dispositivos y tamaños de pantalla, y la implementación de la lógica de interacción en el lado del cliente.
 
-\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
+\section{Contenerización}
 
+Se conoce como contenerización a la tecnología de virtualización que permite ejecutar contenedores, entornos completamente aislados del resto de la máquina que los está ejecutando, y que contienen todo lo necesario (bibliotecas, código, archivos de configuración, dependencias...) para que se pueda ejecutar una aplicación en cualquier entorno.\cite{microsoft:contenedores}
 
-
-\section{Listas de items}
-
-Existen tres posibilidades:
-
-\begin{itemize}
-	\item primer item.
-	\item segundo item.
-\end{itemize}
-
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
-
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
-	
-\begin{itemize}
-\item 
-\end{itemize}
-
-\section{Tablas}
-
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
-
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+A diferencia de entornos clásicos de virtualización como las máquinas virtuales, en los que se emula el hardware por completo y se debe disponer de una instalación completa del sistema operativo para funcionar, en los contenedores se permite que \textbf{múltiples instancias compartan un mismo sistema operativo}, a pesar de estar usando espacios de ejecución distintos. Esto se consigue usando características de Linux como los \textit{espacios de nombres del kernel} o los \textit{cgroups} \cite{medium:kernelspace}, puesto que los contenedores están basados en Linux, pero esto no impide su ejecución en distintas plataformas y sistemas operativos, incluido Windows.
