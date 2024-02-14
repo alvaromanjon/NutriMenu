@@ -24,6 +24,9 @@ import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import MenuDetails from "./pages/menus/view/MenuDetails";
 import PlatoDetails from "./pages/platos/view/PlatoDetails";
 
+// Editar item
+import EditEmpresa from "./pages/empresas/edit/EditEmpresa";
+
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
 import NewAlimentoSearch from "./pages/alimentos/new/nutritionix/NewAlimentoSearch";
@@ -57,6 +60,7 @@ import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoade
 import { localMenusLoader } from "./loaders/list/localMenusLoader";
 import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
 import { platoDetailsLoader } from "./loaders/details/platoDetailsLoader";
+import { empresaDetailsLoader } from "./loaders/details/empresaDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,6 +74,7 @@ const router = createBrowserRouter(
       <Route path="empresas" element={<GestionLayout title="Gestión de empresas" />}>
         <Route index element={<DataTableEmpresas />} loader={listEmpresasLoader} />
         <Route path="new" element={<NewEmpresa />} />
+        <Route path=":id/edit" element={<EditEmpresa />} loader={empresaDetailsLoader} />
       </Route>
 
       <Route path="locales" element={<GestionLayout title="Gestión de locales" />}>
