@@ -58,7 +58,7 @@ public class PlatoController {
     return new ResponseEntity<>(platoCreado, HttpStatus.CREATED);
   }
 
-  @CrossOrigin(origins = "http://localhost:3000")
+/*  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/add/plato/alimentos")
   public ResponseEntity<PlatoAlimento> addAlimentoToPlato(@RequestParam(name="id_plato") Long idPlato, @RequestParam(name="id_alimento") Long idAlimento) {
     PlatoAlimento platoCreado = platoService.addAlimentoToPlato(idPlato, idAlimento);
@@ -71,7 +71,7 @@ public class PlatoController {
   public ResponseEntity<PlatoAlimento> updateCantidadAlimento(@RequestParam(name="id_plato") Long idPlato, @RequestParam(name="id_alimento") Long idAlimento, @RequestParam Double cantidad) {
     PlatoAlimento platoActualizado = platoService.actualizaCantidad(idPlato, idAlimento, cantidad);
     return new ResponseEntity<>(platoActualizado, HttpStatus.CREATED);
-  }
+  }*/
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/platos")

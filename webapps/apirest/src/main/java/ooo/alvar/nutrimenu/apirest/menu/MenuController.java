@@ -57,12 +57,12 @@ public class MenuController {
     return new ResponseEntity<>(menuInicial, HttpStatus.CREATED);
   }
 
-  @CrossOrigin(origins = "http://localhost:3000")
+/*  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/add/menu/platos")
   public ResponseEntity<Menu> addPlatoToMenu(@RequestParam(name="id_menu") Long idMenu, @RequestParam(name="id_plato") Long idPlato) {
     Menu menuCreado = menuService.addPlatoToMenu(idMenu, idPlato);
     return new ResponseEntity<>(menuCreado, HttpStatus.CREATED);
-  }
+  }*/
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/menus")

@@ -43,12 +43,12 @@ public class AlimentoController {
     return new ResponseEntity<>(alimentoCreado, HttpStatus.CREATED);
   }
 
-  @CrossOrigin(origins = "http://localhost:3000")
+/*  @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="add/alimento/componentes")
   public ResponseEntity<Alimento> addComponentesNutricionalesToAlimento(@RequestParam(name="id_componente") Long idComponente, @RequestParam(name="id_alimento") Long idAlimento) {
     Alimento alimentoActualizado = alimentoService.addComponenteNutricionalToAlimento(idAlimento, idComponente);
     return new ResponseEntity<>(alimentoActualizado, HttpStatus.CREATED);
-  }
+  }*/
 
   @CrossOrigin(origins = "http://localhost:3000")
   @RequestMapping(method = RequestMethod.PUT, value="/alimentos")
