@@ -27,6 +27,7 @@ import PlatoDetails from "./pages/platos/view/PlatoDetails";
 // Editar item
 import EditEmpresa from "./pages/empresas/edit/EditEmpresa";
 import EditLocal from "./pages/locales/edit/EditLocal";
+import EditUsuario from "./pages/usuarios/edit/EditUsuario";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -63,6 +64,7 @@ import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
 import { platoDetailsLoader } from "./loaders/details/platoDetailsLoader";
 import { empresaDetailsLoader } from "./loaders/details/empresaDetailsLoader";
 import { localDetailsLoader } from "./loaders/details/localDetailsLoader";
+import { usuarioDetaisLoader } from "./loaders/details/usuarioDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -88,6 +90,7 @@ const router = createBrowserRouter(
       <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>
         <Route index element={<DataTableUsuarios />} loader={listUsuariosLoader} />
         <Route path="new" element={<NewUsuario />} loader={listEmpresasLoader} />
+        <Route path=":id/edit" element={<EditUsuario />} loader={usuarioDetaisLoader} />
       </Route>
 
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>

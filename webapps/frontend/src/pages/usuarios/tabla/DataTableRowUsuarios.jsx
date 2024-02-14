@@ -1,6 +1,8 @@
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const DataTableRowUsuarios = ({ data, onDelete }) => {
+  const navigate = useNavigate();
   return (
     <>
       <tr>
@@ -12,7 +14,7 @@ const DataTableRowUsuarios = ({ data, onDelete }) => {
         {data.rol == "ADMINISTRADOR" && <td>-</td>}
 
         <td>
-          <Button className="mx-1 my-1" variant="secondary" size="sm">
+          <Button className="mx-1 my-1" variant="secondary" size="sm" onClick={() => navigate(`${data.id}/edit`)}>
             Editar
           </Button>
           <Button className="mx-1 my-1" variant="danger" size="sm" onClick={() => onDelete(data)}>
