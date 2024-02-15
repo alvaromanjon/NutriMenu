@@ -123,37 +123,425 @@ Se van a proceder a indicar los distintos requisitos, tanto funcionales como no 
 \item \textbf{RNF - 2. Escalabilidad}: La aplicación debe ser capaz de soportar grandes cargas de usuarios, puesto que al final la mayoría de usuarios van a usarla en la misma franja de tiempo, la hora de la comida.
 \item \textbf{RNF - 3. Modularidad}: La aplicación debe estar formada por módulos independientes, que se puedan reemplazar sin afectar al resto de la funcionalidad de la aplicación.
 \item \textbf{RNF - 4. Usabilidad}: Debe ser un producto fácil de usar, que no requiera de conocimientos avanzados de informática. Las distintas funciones deben ser intuitivas y estar claramente definidas, sin que haga falta indicar cómo realizarlas de forma explícita.
-\item \textbf{RNF - 5. Responsibilidad}: La aplicación debe ser adaptable a los distintos tamaños de pantalla, funcionando igual de bien tanto en ordenadores como en dispositivos móviles.
+\item \textbf{RNF - 5. Responsividad}: La aplicación debe ser adaptable a los distintos tamaños de pantalla, funcionando igual de bien tanto en ordenadores como en dispositivos móviles.
 \item \textbf{RNF - 6. Legalidad}: Se deben cumplir con las normativas y leyes del territorio en el que se ejecute la aplicación, que de momento sólo es España.
 \end{itemize}
 
 
 \section{Especificación de requisitos}
 
-\begin{table}[p]
+A continuación se van a proceder a detallar todos los casos de uso de la aplicación, indicando los requisitos que aplican en cada uno:
+
+\begin{table}[htp]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
+		\textbf{CU-1}    & \textbf{Inicio de sesión a la aplicación}\\
 		\toprule
 		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-1 \\
+		\textbf{Descripción}          & Los usuarios de la aplicación iniciarán sesión para poder acceder al panel de gestión \\
+		\textbf{Precondición}         & No debe haber ninguna sesión iniciada, y los usuarios deben disponer de credenciales \\
 		\textbf{Acciones}             &
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
 			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
+			\item Hacer click en el botón \textit{Iniciar sesión}
+			\item Introducir nombre de usuario y contraseña en los recuadros correspondientes
+			\item Pulsar en \textit{Iniciar sesión}
+			\begin{enumerate}
+				\item Si las credenciales son correctas, se redigirá al panel de gestión
+				\item Si las credenciales son incorrectas, se mostrará un error
+			\end{enumerate}
+		\end{enumerate} \\
+		\textbf{Postcondición}        & Se permite acceder o se deniega el acceso \\
+		\textbf{Excepciones}          & \begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Si se introduce el nombre de un usuario que no existe o se deja el campo en blanco
+			\item Si se introduce la contraseña incorrecta o se deja el campo en blanco
+		\end{enumerate} \\
+		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
+	\caption{CU-1 Inicio de sesión a la aplicación}
 \end{table}
+\afterpage{\clearpage}
 
-% TODO Especificación de requisitos
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-2}    & \textbf{Recuperación de contraseña olvidada}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-8 \\
+		\textbf{Descripción}          & Los usuarios que no recuerden su contraseña podrán usar este panel para volver a tener acceso \\
+		\textbf{Precondición}         & No debe haber ninguna sesión iniciada, y los usuarios deben recordar al menos su nombre de usuario \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en el botón \textit{Iniciar sesión}
+			\item Hacer click en \textit{¿Has olvidado tu contraseña?}
+			\item Introducir el nombre de usuario actual
+			\begin{enumerate}
+  				\item En caso de que el nombre de usuario no exista, se devolverá un error
+  				\item En caso de que el nombre de usuario exista, se pasará a la página para cambiar la contraseña
+  				\begin{enumerate}
+  					\item Se debe introducir la nueva contraseña dos veces
+  					\item Se debe hacer click en \textit{Continuar}
+  					\begin{enumerate}
+  						\item En caso de que las contraseñas no coincidan, se devolverá error
+  						\item En caso de que coincidan, se cambiará la contraseña y se devolverá a la página de inicio de sesión
+					\end{enumerate}
+				\end{enumerate}
+			\end{enumerate}
+		\end{enumerate} \\
+		\textbf{Postcondición}        & Se cambia la contraseña o se deniega el cambio \\
+		\textbf{Excepciones}          & Ninguna \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-2 Recuperación de contraseña olvidada}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-3}    & \textbf{Búsqueda de alimentos en Nutritionix}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-2.1 \\
+		\textbf{Descripción}          & Los usuarios de tipo administrador podrán buscar alimentos en la base de datos de Nutritionix \\
+		\textbf{Precondición}         & Se debe disponer de un usuario de tipo administrador, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en \textit{Gestión de alimentos} en la barra de navegación
+			\item Hacer click en el botón \textit{Crear un nuevo alimento}
+			\item Seleccionar \textit{Buscar en Nutritionix}
+			\item Escribir en el cuadro de búsqueda el nombre del alimento
+			\item Hacer click en Buscar
+			\begin{enumerate}
+				\item Si la búsqueda es correcta, se listarán todos los alimentos disponibles
+				\begin{enumerate}
+					\item Si queremos añadir algún alimento hacer click en Añadir
+					\begin{enumerate}
+  						\item Si no existe un elemento con ese nombre, se añade a la base de datos
+  						\item Si existe un alimento con ese nombre se devolverá un error
+					\end{enumerate}
+				\end{enumerate}
+				\item Si la búsqueda se encuentra vacía, se mostrará un error
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se agrega el elemento o no a la base de datos \\
+		\textbf{Excepciones}          & \begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Si hay un error de conexión con la API de Nutritionix
+			\end{enumerate}
+			 \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-3 Búsqueda de alimentos en Nutritionix}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-4}    & \textbf{Creación de alimentos a mano}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-2.4 \\
+		\textbf{Descripción}          & Los usuarios de tipo administrador podrán crear alimentos a mano \\
+		\textbf{Precondición}         & Se debe disponer de un usuario de tipo administrador, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en \textit{Gestión de alimentos} en la barra de navegación
+			\item Hacer click en el botón \textit{Crear un nuevo alimento}
+			\item Seleccionar \textit{Crear a mano}
+			\item Rellenar la información básica del alimento
+			\item Hacer click en Continuar
+			\begin{enumerate}
+				\item Si la búsqueda es correcta, se continuará a la ventana de creación de Componentes nutricionales
+				\begin{enumerate}
+					\item Rellenar la información de los componentes nutricionales y continuar
+					\item Rellenar la información de las vitaminas y continuar
+					\item Rellenar la información de los minerales y continuar
+					\item Hacer click en Continuar para guardar el alimento
+				\end{enumerate}
+				\item Si el nombre se encuentra vacío, o ya existe un alimento con ese nombre, se mostrará un error
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se agrega el elemento o no a la base de datos \\
+		\textbf{Excepciones}          & Ninguna \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-4 Creación de alimentos a mano}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-5}    & \textbf{Creación de platos}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-3.1.1 \\
+		\textbf{Descripción}          & Los usuarios de tipo editor podrán crear platos \\
+		\textbf{Precondición}         & Se debe disponer de un usuario de tipo editor, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en \textit{Gestión de platos} en la barra de navegación
+			\item Hacer click en el botón \textit{Crear un nuevo plato}
+			\item Introducir la información básica del plato
+			\item Añadir nuevos alimentos de la tabla de alimentos, o crear uno nuevo a mano o buscando en Nutritionix
+			\item Hacer click en Guardar
+			\begin{enumerate}
+				\item Si existe un plato con el mismo nombre, se devolverá un error
+				\item Si no existe un plato con el mismo nombre, se guardará el plato
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se agrega el elemento o no a la base de datos \\
+		\textbf{Excepciones}          & \begin{enumerate}
+  \item Si se cancela la creación del plato
+\end{enumerate}
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-5 Creación de platos}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-6}    & \textbf{Creación de menús}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-4.1.1 \\
+		\textbf{Descripción}          & Los usuarios de tipo editor y camarero podrán crear menús \\
+		\textbf{Precondición}         & Se debe disponer de un usuario de tipo editor o camarero, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en \textit{Gestión de menús} en la barra de navegación
+			\item Hacer click en el botón \textit{Crear un nuevo menú}
+			\item Introducir la información básica del menú
+			\item Seleccionar en la lista los locales en los que se va a publicar el menú
+			\item Seleccionar en la lista los platos que se van a añadir al menú
+			\item Hacer click en Guardar
+			\begin{enumerate}
+				\item Si existe un menú con el mismo nombre, se devolverá un error
+				\item Si no existe un menú con el mismo nombre, se guardará el menú
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se agrega el elemento o no a la base de datos \\
+		\textbf{Excepciones}          & \begin{enumerate}
+  \item Si se cancela la creación del menú
+\end{enumerate}
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-6 Creación de menús}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-7}    & \textbf{Creación de elementos}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-5.1, RF-6.1, RF-7.1 \\
+		\textbf{Descripción}          & Los usuarios de tipo administrador podrán crear usuarios, empresas y locales \\
+		\textbf{Precondición}         & Se debe disponer de un usuario de tipo administrador, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en el botón de gestión del elemento correspondiente en la barra de navegación
+			\item Hacer click en el botón de crear un nuevo elemento
+			\item Introducir la información solicitada
+			\item Hacer click en Guardar
+			\begin{enumerate}
+				\item Si se introducen datos ya existentes que son clave primaria o faltan datos obligatorios, se devolverá un error
+				\item Si no, se guardará el elemento
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se agrega el elemento o no a la base de datos \\
+		\textbf{Excepciones}          & \begin{enumerate}
+  \item Si se cancela la creación del elemento
+\end{enumerate}
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-7 Creación de elementos}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-8}    & \textbf{Edición de elementos}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-2.2.1, RF-3.1.2, RF-4.1.2, RF-5.2, RF-6.2, RF-7.2 \\
+		\textbf{Descripción}          & Dependiendo del tipo de usuario, podrán editar unos tipos de elementos u otros \\
+		\textbf{Precondición}         & Se debe disponer de un usuario que pueda gestionar el tipo de elemento que queremos editar, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en el botón de gestión del elemento correspondiente en la barra de navegación
+			\item Hacer click en el botón de Editar en la fila del elemento a editar
+			\item Modificar la información deseada
+			\item Hacer click en Guardar
+			\begin{enumerate}
+				\item Si se introducen datos ya existentes que son clave primaria o faltan datos obligatorios, se devolverá un error
+				\item Si no, se actualizará el elemento
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se actualiza el elemento o no en la base de datos \\
+		\textbf{Excepciones}          & \begin{enumerate}
+  \item Si se cancela la actualización del elemento
+\end{enumerate}
+ \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-8 Edición de elementos}
+\end{table}
+\afterpage{\clearpage}
+	
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-9}    & \textbf{Eliminación de elementos}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-2.2.2, RF-3.1.3, RF-4.1.3, RF-5.3, RF-6.3, RF-7.3 \\
+		\textbf{Descripción}          & Dependiendo del tipo de usuario, podrán eliminar unos tipos de elementos u otros \\
+		\textbf{Precondición}         & Se debe disponer de un usuario que pueda gestionar el tipo de elemento que queremos eliminar, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en el botón de gestión del elemento correspondiente en la barra de navegación
+			\item Hacer click en el botón de Eliminar en la fila del elemento a eliminar
+			\item Se abrirá una ventana pidiéndonos confirmar el borrado
+			\begin{enumerate}
+				\item Si se selecciona que no, se cancelará el borrado
+				\item Si se selecciona que sí, se borrará el elemento
+			\end{enumerate}
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se borra el elemento o no en la base de datos \\
+		\textbf{Excepciones}          & Ninguna
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-9 Eliminación de elementos}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-10}    & \textbf{Visualización de los componentes nutricionales}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-2.3.1, RF-2.3.2, RF-3.2.1, RF-3.2.2, RF-3.3 \\
+		\textbf{Descripción}          & Dependiendo del tipo de usuario, podrá visualizar unos componentes nutricionales u otros \\
+		\textbf{Precondición}         & Se debe disponer de un usuario que pueda gestionar el tipo de elemento que queremos visualizar, y se debe haber iniciado sesión \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Hacer click en el botón de gestión del elemento correspondiente en la barra de navegación
+			\item Hacer click en el nombre del elemento que queremos visualizar
+			\item Se abrirá el informe nutricional del elemento
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se visualizan los componentes nutricionales del elemento \\
+		\textbf{Excepciones}          & Ninguna
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-10 Visualización de componentes nutricionales}
+\end{table}
+\afterpage{\clearpage}
+
+\begin{table}[htp]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-11}    & \textbf{Visualización de los componentes nutricionales en un menú}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Álvaro Manjón Vara \\
+		\textbf{Requisitos asociados} & RF-4.2.1, RF-4.2.2, RF-4.2.3, RF-4.3, RF-9 \\
+		\textbf{Descripción}          & Dependiendo de los elementos escogidos se calcularán los informes nutricionales en tiempo real \\
+		\textbf{Precondición}         & Se debe haber iniciado sesión como editor o camarero en caso de que accedamos desde el panel de gestión, o se debe haber seleccionado un menú si el usuario es un consumidor \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item En caso de que queramos acceder desde el panel de gestión
+			\begin{enumerate}
+  				\item Hacer click en el botón de \textit{Gestión de menús} en la barra de navegación
+  				\item Hacer click en el nombre del menú que queremos visualizar
+			\end{enumerate}
+			\item En caso de que queramos acceder como consumidor
+			\begin{enumerate}
+  				\item Se debe seleccionar la empresa a la que pertenece el local
+  				\item Se debe seleccionar el local del que queremos ver los menús
+  				\item Se debe seleccionar la fecha en la que queremos ver los menús disponibles
+  				\item Se debe seleccionar un menú
+			\end{enumerate}
+			\item Se nos mostrará una vista con los platos disponibles, y al seleccionar uno o varios se actualizará el informe
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Se visualizan los componentes nutricionales en función de los platos seleccionados \\
+		\textbf{Excepciones}          & \begin{enumerate}
+  \item No existan menús disponibles para la fecha indicada en caso de ser un consumidor
+\end{enumerate}
+
+ \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-11 Visualización de los componentes nutricionales en un menú}
+\end{table}
+\afterpage{\clearpage}
