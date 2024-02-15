@@ -2,7 +2,7 @@
 
 \section{Introducción}
 
-% TODO Introducción de la especificación de diseño %
+Este apartado provee un estudio que permite entender mejor cómo se integran todas las piezas que conforman el proyecto. En los siguientes puntos se va a proceder a analizar cómo se ha planteado el modelo de datos, se van a explorar las distintas rutas que existen para interactuar con los datos y cómo se llevan a cabo, y se va a analizar la arquitectura de todos los servicios, con el objetivo de que leyendo esta sección se sea capaz de tener una idea bastante acertada de cómo se comporta y comunica la aplicación.
 
 \section{Diseño de datos}
 
@@ -36,7 +36,7 @@ En esta sección se va a presentar el modelo de datos usado en la aplicación (f
 
 \subsection{Diagramas de secuencia}
 
-En esta sección se van a presentar las interacciones entre el usuario, la aplicación web y la API REST mediante el uso de diagramas de secuencia, ya que esto va a permitir entender mejor el flujo de ejecución de las distintas tareas que se pueden ejecutar en la aplicación.
+A continuación se van a presentar las interacciones entre el usuario, la aplicación web y la API REST mediante el uso de diagramas de secuencia, ya que esto va a permitir entender mejor el flujo de ejecución de las distintas tareas que se pueden ejecutar en la aplicación.
 
 \imagen{diagramas_secuencia/inicio_sesion}{Diagrama de inicio de sesión}{1}
 
@@ -59,9 +59,9 @@ En esta sección se van a presentar las interacciones entre el usuario, la aplic
 
 \subsection{Diseño de la API REST}
 
-Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. 
+Uno de los grandes cambios que se han realizado en este proyecto respecto a la iteración anterior es el desarrollo de una API REST completa para trabajar e interactuar con los datos. Esta API nos permite abstraernos de la base de datos, ya que todas las operaciones CRUD en la aplicación se van a realizar atacando directamente a esta.
 
-Al final de este apartado se van a detallar y documentar cada uno de los \textit{endpoints} disponibles, para poder trabajar con ellos cómodamente.
+Al final de este apartado se van a detallar y documentar cada uno de los \textit{endpoints} disponibles, para poder trabajar con ellos cómodamente y entender mejor las posibilidades que ofrecen.
 
 \begin{table}
 \begin{apiRoute}{get}{/empresas}{Devuelve todas las empresas existentes}
