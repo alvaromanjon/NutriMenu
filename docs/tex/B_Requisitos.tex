@@ -2,7 +2,7 @@
 
 \section{Introducción}
 
-% TODO Introducción del apéndice
+En este apéndice se van a identificar y discutir los distintos objetivos que debe cumplir el proyecto, y los requisitos funcionales y no funcionales necesarios para que estos objetivos se lleguen a cumplir.
 
 \begin{comment}
 \begin{table}[p]
@@ -38,7 +38,7 @@ El objetivo del proyecto es el de disponer de una aplicación que permita mostra
 
 Para escoger el menú que desean, los consumidores primero deben seleccionar una fecha para ver los menús disponibles en ese día.
 
-Inicialmente el proyecto está planteado para ser usado por la Universidad de Burgos, pero se dispone de la opción de crear nuevas empresas, por lo que podría ser implementado en otros lugares. Cada empresa dispone de una URL única, en la cual se muestran los distintos locales de esa empresa, por lo que esta URL podría ser la facilitada a los usuarios finales.
+Inicialmente el proyecto está planteado para ser usado por la Universidad de Burgos, pero se va a disponer de la opción de crear nuevas empresas, por lo que podría ser implementado en otros lugares. Cada empresa tiene una URL única, en la cual se muestran los distintos locales de esa empresa, por lo que esta URL podría ser la facilitada a los usuarios finales.
 
 Además de esto, también se ofrece un panel de gestión en el que el personal de los centros pueda administrar los distintos recursos, y este panel ofrece distintas funciones de administración en función del rol que cumpla el personal en la empresa.
 
@@ -47,9 +47,12 @@ Existen tres roles diferenciados:
 \begin{itemize}
 	\item \textbf{Administrador}: Este tipo de usuario va a tener acceso para manejar los recursos globales de la aplicación, que son las empresas, los locales, los usuarios y los alimentos. Va a tener permisos para crear, editar o borrar cualquiera de estos 4 recursos. También va a tener posibilidad de ver los informes nutricionales de los alimentos. Es el único tipo de usuario que no va a estar vinculado a una empresa. 
 	\item \textbf{Editor}: Este tipo de usuario va a tener acceso a los recursos vinculados a su empresa (exceptuando los locales), es decir, va a tener acceso para gestionar los menús y los platos, pudiendo crear nuevos elementos, editarlos o borrarlos. Además de esto, dentro del panel de creación de platos va a tener la posibilidad de crear nuevos alimentos, pero no va a poder editarlos ni borrarlos. También va a poder visualizar los informes nutricionales de los menús, los platos y los alimentos.
-\end{itemize} \textbf{Camarero}: Este tipo de usuario sólo va a tener acceso a gestionar los menús, pudiendo crear, editar y borrar los distintos menús de su empresa. Va a poder visualizar los informes nutricionales de los menús.
+	\item \textbf{Camarero}: Este tipo de usuario sólo va a tener acceso a gestionar los menús, pudiendo crear, editar y borrar los distintos menús de su empresa. Va a poder visualizar los informes nutricionales de los menús.
+\end{itemize}
 
-Para el acceso al panel de gestión, existe una vista de inicio de sesión en la que el usuario debe indicar su nombre de usuario y contraseña. En caso de que el usuario haya olvidado su contraseña, hay un panel de contraseña olvidada en el que el usuario debe introducir su nombre de usuario, y a continuación, la nueva contraseña deseada.
+Para el acceso al panel de gestión, existe una vista de inicio de sesión en la que el usuario debe indicar su nombre de usuario y contraseña. 
+
+En caso de que el usuario haya olvidado su contraseña, hay un panel de contraseña olvidada en el que el usuario debe introducir su nombre de usuario, y a continuación, la nueva contraseña deseada.
 
 
 \section{Catálogo de requisitos}
