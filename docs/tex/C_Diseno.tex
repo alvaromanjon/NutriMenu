@@ -1144,15 +1144,30 @@ Para el desarrollo del frontend, las distintas piezas que conforman la aplicaci�
 	
 	Un componente padre (\textbf{Contenedor}) se encarga del manejo de los datos, mientras que los componentes hijos (\textbf{Presentacionales}) son los encargados de presentar la interfaz al usuario.
 	
-	\imagen{React/container_presentation_pattern}{Diagrama del patrón Contenedor/Presentacional en React}{0.8}
+	\imagen{React/container_presentation_pattern}{Diagrama del patrón Contenedor/Presentacional en React \cite{openreplay:container-pattern}}{0.8}
 	
 	\item \textbf{Patrón Proveedor}: El patrón Proveedor se usa en React para pasar datos a lo largo del árbol de componentes sin tener que hacerlo de forma explícita, ya que se acabaría produciendo lo que se denomina como \textit{perforación de accesorios} (figura \ref{fig:React/accessory_perforation}), que es el enviar props de un elemento de alto nivel a otro de muy bajo nivel, pasando este prop por todos los elementos intermedios. 
 	
-	\imagen{React/accessory_perforation}{Diagrama de la perforación de accesorios}{0.8}
+	\imagen{React/accessory_perforation}{Diagrama de la perforación de accesorios \cite{flexiple:provider-pattern}}{0.8}
 
 	Para esto, lo que se hace es envolver al árbol de componentes de un componente Proveedor (figura \ref{fig:React/provider_pattern}), que va a ser el que va a almacenar los valores que queremos que estén disponibles. 
 	
-	\imagen{React/provider_pattern}{Diagrama del patrón Proveedor en React}{0.8}
+	\imagen{React/provider_pattern}{Diagrama del patrón Proveedor en React \cite{flexiple:provider-pattern}}{0.8}
 	
 	En caso de este proyecto esto se utiliza para almacenar la información referente al usuario que ha iniciado sesión.
 \end{itemize}
+
+\subsection{Infraestructura}
+
+La infraestructura de la aplicación consta de 3 servicios, que son el \textit{frontend}, el \textit{backend} (API REST) y la base de datos, los cuales se encuentran conectados entre ellos (figura \ref{fig:Docker/infrastructure_diagram}). 
+
+Los puertos por los que se van a conectar los distintos elementos se van a especificar en el archivo de variables, aunque mis puertos recomendados son los que se van a indicar a continuación:
+
+\begin{itemize}
+	\item El usuario se conecta al frontend mediante el puerto \textbf{3000}.
+	\item El frontend hace llamadas a la API REST mediante el puerto \textbf{8080}.
+	\item El backend se conecta a la base de datos mediante el puerto \textbf{3306}.	
+\end{itemize}
+
+
+\imagen{Docker/infrastructure_diagram}{Diagrama de la infraestructura en Docker Compose}{0.75}
