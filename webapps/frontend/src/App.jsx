@@ -32,6 +32,7 @@ import EditAlimento from "./pages/alimentos/edit/EditAlimento";
 import EditAlimentoComponents from "./pages/alimentos/edit/EditAlimentoComponents";
 import EditAlimentoVitamins from "./pages/alimentos/edit/EditAlimentoVitamins";
 import EditAlimentoMinerals from "./pages/alimentos/edit/EditAlimentoMinerals";
+import EditMenu from "./pages/menus/edit/EditMenu";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -116,6 +117,7 @@ const router = createBrowserRouter(
       <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
         <Route index element={<DataTableMenus />} />
         <Route path=":id" element={<MenuDetails />} loader={menuDetailsLoader} />
+        <Route path=":id/edit" element={<EditMenu />} loader={menuDetailsLoader} />
         <Route path="new" element={<NewMenu />}></Route>
       </Route>
 
