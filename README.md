@@ -62,3 +62,25 @@ docker compose -f docker-compose.dev.yml down
 ```
 
 For further documentation, please refer to the .pdf files in folder `/docs`.
+
+## Testing the app
+
+When the app first runs, the application is loaded with some sample data. There are 3 users that you can use to access to all the sections of the app:
+
+### Administrador user
+
+**Username**: `administrador`
+
+**Password**: `administrador1`
+
+### Editor user
+
+**Username**: `editorubu`
+
+**Password**: `editorubu1`
+
+### Camarero user
+
+**Username**: `camareroubu `
+
+**Password**: `camareroubu1`
