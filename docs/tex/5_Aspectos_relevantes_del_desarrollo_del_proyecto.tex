@@ -12,7 +12,7 @@ La propuesta para este Trabajo de Final de Grado ha sido la de mejorar estas apl
 
 \section{Infraestructura de la aplicación}
 
-Inicialmente, la aplicaciones web parten de un modelo de despliegue de forma manual y en local, ya que requieren de la instalación de varios programas, como MySQL Community, para poder lanzar la base de datos; el SDK de Java, para poder ejecutar el código; así como Eclipse o un IDE similar, para poder lanzar los proyectos de Spring Boot en los que están contenidas las aplicaciones. Esto, como se puede observar en el apartado de Documentación técnica de programación en los anexos de Mariya \cite{tfg-mariya:anexos} es un proceso bastante laborioso, que requiere de la preparación y configuración de un entorno específico para esta tarea, y que no dota a la infraestructura de ningún tipo de escalabilidad ni posibilidad de automatización a la hora de su despliegue.
+Inicialmente, las aplicaciones web parten de un modelo de despliegue de forma manual y en local, ya que requieren de la instalación de varios programas, como MySQL Community, para poder lanzar la base de datos; el SDK de Java, para poder ejecutar el código; así como Eclipse o un IDE similar, para poder lanzar los proyectos de Spring Boot en los que están contenidas las aplicaciones. Esto, como se puede observar en el apartado de Documentación técnica de programación en los anexos de Mariya \cite{tfg-mariya:anexos} es un proceso bastante laborioso, que requiere de la preparación y configuración de un entorno específico para esta tarea, y que no dota a la infraestructura de ningún tipo de escalabilidad ni posibilidad de automatización a la hora de su despliegue.
 
 Además de esto, este modelo de infraestructura es dependiente del sistema operativo y la arquitectura de hardware usadas, lo cual puede suponer un gran inconveniente, como ha terminado siendo el caso, ya que mi equipo personal es un MacBook Pro con procesador Apple Silicon, el cual está basado en una arquitectura ARM. Esto ha supuesto un gran problema a la hora de realizar el despliegue inicial de las aplicaciones, ya que el despliegue está pensado para ser realizado desde un equipo con sistema operativo Windows. 
 
@@ -43,7 +43,7 @@ Para la implementación de este servicio se ha mantenido el uso de \textbf{Sprin
 
 Puesto que tanto el proyecto de Mariya como el actual siguen el modelo MVC, las capas del Modelo de datos se asemejan, ya que en ambos se mantiene un modelo puramente relacional. Sin embargo, esta transformación en la capa del Controlador, así como los cambios realizados a la hora de obtener la información de los alimentos, han hecho que haya varias diferencias entre los dos:
 
-\imagen{DB/mariya_data_schema}{Modelo de base de datos de Mariya \cite{tfg-mariya:anexos}}{0.7}
+\imagen{DB/mariya_data_schema}{Modelo de base de datos del TFG del que se parte \cite{tfg-mariya:anexos}}{0.7}
 
 Como los datos van a ser accedidos y manipulados directamente desde la API, se ha eliminado la necesidad de tener vistas en la base de datos, ya que los propios endpoints son los encargados de mostrar sólo la información que nos interese, permitiendo además mayor personalización y granularidad en los resultados obtenidos.
 
