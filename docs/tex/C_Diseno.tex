@@ -63,7 +63,7 @@ Uno de los grandes cambios que se han realizado en este proyecto respecto a la i
 
 Al final de este apartado se van a detallar y documentar cada uno de los \textit{endpoints} disponibles, para poder trabajar con ellos cómodamente y entender mejor las posibilidades que ofrecen.
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/empresas}{Devuelve todas las empresas existentes}
 	
 	\begin{routeParameter}
@@ -105,7 +105,7 @@ Al final de este apartado se van a detallar y documentar cada uno de los \textit
 \caption{Endpoint que devuelve empresas existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/empresas}{Añade una nueva empresa}
 	\begin{routeParameter}
 		\noRouteParameter{No hay parámetros}
@@ -139,7 +139,7 @@ Al final de este apartado se van a detallar y documentar cada uno de los \textit
 \caption{Endpoint que permite añadir una empresa}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/empresas}{Actualiza la información de una empresa ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{Modifica cualquier valor de la empresa con el ID correspondiente}
@@ -184,7 +184,7 @@ Al final de este apartado se van a detallar y documentar cada uno de los \textit
 \caption{Endpoint que permite actualizar la información de una empresa}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/empresas}{Elimina una empresa de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{Elimina la empresa con el ID correspondiente}
@@ -214,7 +214,7 @@ Empresa con id eliminada correctamente
 \caption{Endpoint que permite borrar una empresa}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/usuarios}{Devuelve todos los usuarios existentes}
 	
 	\begin{routeParameter}
@@ -260,7 +260,7 @@ Empresa con id eliminada correctamente
 \caption{Endpoint que devuelve usuarios existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/usuarios}{Añade un nuevo usuario}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{ID de la empresa a la que va a pertenecer el usuario (en caso de que su rol lo indique)}
@@ -308,7 +308,7 @@ Empresa con id eliminada correctamente
 \caption{Endpoint que permite añadir un usuario}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/login}{Comprueba un inicio de sesión}	
 	\begin{routeRequest}{application/json}
 		\begin{routeRequestBody}
@@ -361,7 +361,7 @@ Empresa con id eliminada correctamente
 \caption{Endpoint que permite comprobar un inicio de sesión}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/usuarios}{Actualiza la información de un usuario ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_usuario}{Modifica cualquier valor del usuario con el ID correspondiente}
@@ -405,7 +405,7 @@ Empresa con id eliminada correctamente
 \caption{Endpoint que permite actualizar la información de un usuario}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/usuarios}{Elimina un usuario de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_usuario}{Elimina el usuario con el ID correspondiente}
@@ -435,7 +435,7 @@ Usuario con id eliminado correctamente
 \caption{Endpoint que permite borrar un usuario}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/locales}{Devuelve todos los locales existentes}
 	
 	\begin{routeParameter}
@@ -480,7 +480,7 @@ Usuario con id eliminado correctamente
 \caption{Endpoint que devuelve locales existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/locales}{Añade un nuevo local}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{Indica a qué empresa pertenece el local}
@@ -528,7 +528,7 @@ Usuario con id eliminado correctamente
 \caption{Endpoint que permite añadir un local}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/locales}{Actualiza la información de un local ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_local}{Modifica cualquier valor del local con el ID correspondiente}
@@ -574,7 +574,7 @@ Usuario con id eliminado correctamente
 \caption{Endpoint que permite actualizar la información de un local}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/locales}{Elimina un local de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_local}{Elimina el local con el ID correspondiente}
@@ -604,7 +604,7 @@ Local con id eliminado correctamente
 \caption{Endpoint que permite eliminar un local}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/menus}{Devuelve todos los menús existentes}
 	
 	\begin{routeParameter}
@@ -654,7 +654,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que devuelve menús existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/menus}{Añade un nuevo menú}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{Indica a qué empresa pertenece el menú}
@@ -705,7 +705,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que permite añadir menús}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/menus}{Actualiza la información de un menú ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_menu}{Modifica cualquier valor del menú con el ID correspondiente}
@@ -753,7 +753,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que permite actualizar la información de un menú}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/menus}{Elimina un menú de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_menu}{Elimina el menú con el ID correspondiente}
@@ -783,7 +783,7 @@ Menu con id eliminado correctamente
 \caption{Endpoint que permite eliminar un menú}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/platos}{Devuelve todos los platos existentes}
 	
 	\begin{routeParameter}
@@ -833,7 +833,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que devuelve platos existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/platos}{Añade un nuevo plato}
 	\begin{routeParameter}
 		\routeParamItem{id\_empresa}{Indica a qué empresa pertenece el plato}
@@ -880,7 +880,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que permite la creación de un plato}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/platos}{Actualiza la información de un plato ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_plato}{Modifica cualquier valor del plato con el ID correspondiente}
@@ -921,7 +921,7 @@ No se ha especificado ningun parametro de busqueda
 \caption{Endpoint que permite modificar un plato}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/platos}{Elimina un plato de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_plato}{Elimina el plato con el ID correspondiente}
@@ -951,7 +951,7 @@ Plato con id eliminado correctamente
 \caption{Endpoint que permite borrar un plato}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{get}{/alimentos}{Devuelve todos los alimentos existentes}
 	
 	\begin{routeParameter}
@@ -995,7 +995,7 @@ Plato con id eliminado correctamente
 \caption{Endpoint que devuelve alimentos existentes}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{post}{/alimentos}{Añade un nuevo alimento}
 	\begin{routeRequest}{application/json}
 		\begin{routeRequestBody}
@@ -1028,7 +1028,7 @@ Plato con id eliminado correctamente
 \caption{Endpoint que permite añadir un alimento}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{put}{/alimentos}{Actualiza la información de un alimento ya existente}
 	\begin{routeParameter}
 		\routeParamItem{id\_alimento}{Modifica cualquier valor del alimento con el ID correspondiente}
@@ -1072,7 +1072,7 @@ Plato con id eliminado correctamente
 \caption{Endpoint que permite actualizar la información de un alimento}
 \end{table}
 
-\begin{table}
+\begin{table}[b]
 \begin{apiRoute}{delete}{/alimentos}{Elimina un alimento de la base de datos}
 	\begin{routeParameter}
 		\routeParamItem{id\_alimento}{Elimina el alimento con el ID correspondiente}
@@ -1104,4 +1104,18 @@ Alimento con id eliminado correctamente
 
 \section{Diseño arquitectónico}
 
-% TODO Diseño arquitectónico de la app
+
+En esta sección se va a analizar cómo está construida la aplicación desde una perspectiva estructural y de alto nivel. Para ello, se van a analizar los distintos patrones de diseño aplicados, así como la estructura de la infraestructura planteada. 
+
+\subsection{Backend}
+
+Para el desarrollo del backend se ha aplicado el patrón Modelo-Vista-Controlador, como ya se ha descrito en la memoria. A continuación se van a desarrollar las distintas capas que conforman cada entidad en Spring Boot (figura \ref{fig:SpringBoot/architecture_model}), con el fin de entender cómo se traduce el patrón MVC a este modelo:
+
+\begin{itemize}
+\item \textbf{Modelo}: Corresponde a la definición como tal de cada entidad, es decir, la estructura de datos por la que está compuesta y sus relaciones con otras entidades. Los modelos se van a mapear a las tablas de la base de datos a través del uso de JPA y anotaciones.
+\item \textbf{Repositorio}: Esta capa permite abstraer la lógica de acceso a datos. Para crear un repositorio, se define una interfaz que extiende \textit{CrudRepository}, otra interfaz que ofrece métodos ya predefinidos de acceso a datos, para evitar tener que escribir consultas SQL explícitas. En esta interfaz se van a indicar los métodos que van a ser necesarios para acceder a la base de datos. En caso de que algún método requiera de una operación no contenida en \textit{CrudRepository}, también se pueden indicar las \textit{queries} SQL de forma explícita mediante el uso de JPQL.
+\item \textbf{Servicio}: Esta es la capa que contiene la lógica de negocio de la aplicación. Se encuentra entre la capa de repositorio y la de controlador, puesto que va a ser la encargada de realizar las operaciones complejas de gestión de datos mediante el uso de los repositorios, para luego proveer estos métodos al controlador. 
+\item \textbf{Controlador}: La capa de controlador es la encargada de definir, gestionar y proveer de una forma de acceso a los datos, que en nuestro caso son los \textit{endpoints} de la API. Esta capa interactúa con los distintos métodos que provee la capa de servicio para que cada endpoint realice las operaciones correspondientes, y sea capaz de presentar los datos adecuados.
+\end{itemize}
+
+\imagen{SpringBoot/architecture_model}{Arquitectura de un proyecto Spring Boot \cite{researchgate:spring-boot-architecture}}{1}
