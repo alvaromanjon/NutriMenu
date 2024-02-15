@@ -4,33 +4,6 @@
 
 En este apéndice se van a identificar y discutir los distintos objetivos que debe cumplir el proyecto, y los requisitos funcionales y no funcionales necesarios para que estos objetivos se lleguen a cumplir.
 
-\begin{comment}
-\begin{table}[p]
-	\centering
-	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
-		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
-		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
-		\textbf{Acciones}             &
-		\begin{enumerate}
-			\def\labelenumi{\arabic{enumi}.}
-			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
-		\bottomrule
-	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
-\end{table}
-\end{comment}
 
 \section{Objetivos generales}
 
@@ -143,9 +116,44 @@ Se van a proceder a indicar los distintos requisitos, tanto funcionales como no 
 	\end{itemize}
 \end{itemize}
 
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+\item \textbf{RNF - 1. Eficiencia}: Se debe tener una respuesta rápida a las peticiones del usuario, tanto por parte de la propia aplicación como por parte de la API REST, que debe manejar la información en el menor tiempo posible.
+\item \textbf{RNF - 2. Escalabilidad}: La aplicación debe ser capaz de soportar grandes cargas de usuarios, puesto que al final la mayoría de usuarios van a usarla en la misma franja de tiempo, la hora de la comida.
+\item \textbf{RNF - 3. Modularidad}: La aplicación debe estar formada por módulos independientes, que se puedan reemplazar sin afectar al resto de la funcionalidad de la aplicación.
+\item \textbf{RNF - 4. Usabilidad}: Debe ser un producto fácil de usar, que no requiera de conocimientos avanzados de informática. Las distintas funciones deben ser intuitivas y estar claramente definidas, sin que haga falta indicar cómo realizarlas de forma explícita.
+\item \textbf{RNF - 5. Responsibilidad}: La aplicación debe ser adaptable a los distintos tamaños de pantalla, funcionando igual de bien tanto en ordenadores como en dispositivos móviles.
+\item \textbf{RNF - 6. Legalidad}: Se deben cumplir con las normativas y leyes del territorio en el que se ejecute la aplicación, que de momento sólo es España.
+\end{itemize}
+
 
 \section{Especificación de requisitos}
 
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Alumno \\
+		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
+		\textbf{Descripción}          & La descripción del CU \\
+		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item Pasos del CU
+			\item Pasos del CU (añadir tantos como sean necesarios)
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
+		\textbf{Excepciones}          & Excepciones \\
+		\textbf{Importancia}          & Alta o Media o Baja... \\
+		\bottomrule
+	\end{tabularx}
+	\caption{CU-1 Nombre del caso de uso.}
+\end{table}
+
 % TODO Especificación de requisitos
-
-
