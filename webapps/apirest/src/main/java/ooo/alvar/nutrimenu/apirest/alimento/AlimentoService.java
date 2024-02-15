@@ -88,8 +88,16 @@ public class AlimentoService {
     if (alimento.getNombre() != null) {
       nuevoAlimento.setNombre(alimento.getNombre());
     }
+
+    if (alimento.getGramosPorRacion() != 0) {
+      nuevoAlimento.setGramosPorRacion(alimento.getGramosPorRacion());
+    }
+
     if (alimento.getGrupoAlimento() != null) {
       nuevoAlimento.setGrupoAlimento(alimento.getGrupoAlimento());
+    }
+    if (alimento.getComponentesNutricionales() != null) {
+      nuevoAlimento.setComponentesNutricionales(alimento.getComponentesNutricionales());
     }
 
     return alimentoRepository.save(nuevoAlimento);

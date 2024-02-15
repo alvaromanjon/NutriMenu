@@ -73,8 +73,8 @@ const NewPlatoCreateFromScratch = () => {
                 className="form-control"
                 id="gramosPorRacion"
                 type="number"
+                step="any"
                 min="0"
-                step="10"
                 placeholder="100"
                 onChange={handleFormChange}
               />

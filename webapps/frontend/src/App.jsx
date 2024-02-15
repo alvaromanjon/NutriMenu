@@ -28,6 +28,10 @@ import PlatoDetails from "./pages/platos/view/PlatoDetails";
 import EditEmpresa from "./pages/empresas/edit/EditEmpresa";
 import EditLocal from "./pages/locales/edit/EditLocal";
 import EditUsuario from "./pages/usuarios/edit/EditUsuario";
+import EditAlimento from "./pages/alimentos/edit/EditAlimento";
+import EditAlimentoComponents from "./pages/alimentos/edit/EditAlimentoComponents";
+import EditAlimentoVitamins from "./pages/alimentos/edit/EditAlimentoVitamins";
+import EditAlimentoMinerals from "./pages/alimentos/edit/EditAlimentoMinerals";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -96,6 +100,10 @@ const router = createBrowserRouter(
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>
         <Route index element={<DataTableAlimentos />} loader={listAlimentosLoader} />
         <Route path=":id" element={<AlimentoDetails />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit" element={<EditAlimento />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/components" element={<EditAlimentoComponents />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/vitamins" element={<EditAlimentoVitamins />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/minerals" element={<EditAlimentoMinerals />} loader={alimentoDetailsLoader} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
           <Route path="create" element={<NewAlimentoCreate />} />

@@ -84,6 +84,7 @@ const NewPlatoCreateFromScratchMinerals = () => {
                 ref={firstInput}
                 name="calcio"
                 type="number"
+                step="any"
                 min="0"
                 placeholder="0"
                 onChange={handleFormChange}
@@ -92,37 +93,72 @@ const NewPlatoCreateFromScratchMinerals = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Hierro</Form.Label>
-              <Form.Control name="hierro" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                name="hierro"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Potasio</Form.Label>
-              <Form.Control name="potasio" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                name="potasio"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Magnesio</Form.Label>
-              <Form.Control name="magnesio" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                name="magnesio"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Sodio</Form.Label>
-              <Form.Control name="sodio" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="sodio" type="number" step="any" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Fósforo</Form.Label>
-              <Form.Control name="fosforo" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                name="fosforo"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Selenio</Form.Label>
-              <Form.Control name="selenio" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control
+                name="selenio"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0"
+                onChange={handleFormChange}
+              />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Zinc</Form.Label>
-              <Form.Control name="zinc" type="number" min="0" placeholder="0" onChange={handleFormChange} />
+              <Form.Control name="zinc" type="number" step="any" min="0" placeholder="0" onChange={handleFormChange} />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
             </Form.Group>
             {error && (
