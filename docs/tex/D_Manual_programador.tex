@@ -355,3 +355,32 @@ En caso de querer borrar los contenedores y los volúmenes asociados (en nuestro
 Hay que tener en mente que ejecutar este comando \textbf{hará que se pierdan todos los datos de la base de datos}.
 
 \section{Pruebas del sistema}
+
+A lo largo de la aplicación existen varias comprobaciones que permiten indicar al usuario que la acción que está realizando no está permitida, o que hay algo que no es correcto:
+
+\begin{itemize}
+	\item \textbf{Comprobación de que el usuario no existe}: Esta comprobación se puede encontrar tanto en el inicio de sesión como en el panel de contraseña olvidada.
+
+\imagen{Testing/user_not_exists}{Mensaje de que no existe el usuario indicado}{0.8}
+
+\item \textbf{Comprobación de que la contraseña es incorrecta}: Esta comprobación se puede encontrar al iniciar sesión.
+
+\imagen{Testing/incorrect_password}{Mensaje de que la contraseña introducida es incorrecta}{0.8}
+	
+	\item \textbf{Comprobación de que las contraseñas no coinciden}: Esta comprobación se puede encontrar en el panel de contraseña olvidada, cuando se pide introducir la nueva contraseña dos veces.
+	
+\imagen{Testing/passwords_dont_match}{Mensaje de que las contraseñas no coinciden}{0.8}
+
+\item \textbf{Comprobación de que un elemento requerido no se ha rellenado}: Esta comprobación se puede encontrar al crear elementos de distinto tipo, cuando no rellenamos un campo obligatorio.
+	
+\imagen{Testing/required_value}{Mensaje de que el valor es requerido}{0.8}
+
+\item \textbf{Comprobación de que ya existe un elemento con ese valor}: Esta comprobación se puede encontrar al crear elementos de distinto tipo, cuando se intenta repetir un valor que es clave primaria de ese elemento.
+	
+\imagen{Testing/repeated_value}{Mensaje de que el valor se ha repetido}{0.8}
+
+\item \textbf{Comprobación de que ya existe un alimento con ese nombre en la base de datos}: Esta comprobación se puede encontrar al buscar un alimento en Nutritionix.	
+\imagen{Testing/alimento_exists}{Mensaje de que el alimento ya existe}{0.8}
+	
+\end{itemize}
+
