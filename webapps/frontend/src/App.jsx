@@ -33,6 +33,7 @@ import EditAlimentoComponents from "./pages/alimentos/edit/EditAlimentoComponent
 import EditAlimentoVitamins from "./pages/alimentos/edit/EditAlimentoVitamins";
 import EditAlimentoMinerals from "./pages/alimentos/edit/EditAlimentoMinerals";
 import EditMenu from "./pages/menus/edit/EditMenu";
+import EditPlato from "./pages/platos/edit/EditPlato";
 
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
@@ -124,6 +125,7 @@ const router = createBrowserRouter(
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
         <Route path=":id" element={<PlatoDetails />} loader={platoDetailsLoader} />
+        <Route path=":id/edit" element={<EditPlato />} loader={platoDetailsLoader} />
         <Route path="new" element={<NewPlato />}>
           <Route path="list" element={<NewPlatoAddFromList />} loader={listAlimentosLoader} />
           <Route path="search" element={<NewPlatoAddFromNutritionix />} />
