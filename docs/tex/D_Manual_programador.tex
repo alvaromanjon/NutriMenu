@@ -244,6 +244,10 @@ Para realizar la instalación de Docker Desktop tan sólo debemos dirigirnos a \
 
 \imagen{Docker/docker-installation-mac}{Instalación de Docker Desktop en Mac}{0.8}
 
+En caso de realizar la instalación en Windows, es importante tener en cuenta que se debe tener WSL (\textit{Windows Subsystem for Linux}) instalado y con una distribución activa, ya que si no la instalación puede dar errores (figura \ref{fig:Docker/docker_error_wsl}). Para realizar esto se puede usar \href{https://learn.microsoft.com/es-es/windows/wsl/install}{la guía de Microsoft}. También se puede seguir \href{https://learn.microsoft.com/es-es/windows/wsl/tutorials/wsl-containers}{esta guía} para usar Docker desde WSL.
+
+\imagen{Docker/docker_error_wsl}{Error de instalación al no tener WSL instalado}{0.8}
+
 Una vez ejecutemos el instalador (en caso de macOS simplemente se debe arrastrar la aplicación a la carpeta de Aplicaciones), y hayamos seguido todos los pasos hasta finalizar la instalación, nos encontraremos con el panel principal de Docker Desktop. 
 
 \imagen{Docker/docker-main-window}{Ventana principal de Docker Desktop}{0.8}
@@ -302,7 +306,7 @@ Los valores pueden ser modificados si es necesario, pero se recomienda usar los 
 
 \imagen{Docker/docker-compose-build}{Creación de las imágenes de los contenedores Docker}{0.8}
 
-Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola y accederemos al directorio \verb,/docker-compose,, (\textbf{TODOS los comandos que veremos a continuación deben ejecutarse dentro del directorio} \verb,docker-compose,), donde ejecutaremos el siguiente comando:
+Una vez definidas las variables de entorno, podemos probar que todo funciona correctamente construyendo las imágenes de los contenedores de los servicios. Para ello, abriremos una consola (se puede usar PowerShell en Windows, o la nueva Terminal de Windows 11) y accederemos al directorio \verb,/docker-compose,, (\textbf{TODOS los comandos que veremos a continuación deben ejecutarse dentro del directorio} \verb,docker-compose,), donde ejecutaremos el siguiente comando:
 
 \begin{lstlisting}[language=Bash]
 docker compose -f docker-compose.dev.yml build
