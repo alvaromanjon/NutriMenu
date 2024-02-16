@@ -1,25 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const NewPlatoCreateFromScratchVitamins = () => {
+const EditAlimentoVitamins = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const firstInput = useRef(null);
   const alimentoData = location.state.alimento || {};
   const componentesData = location.state.componentes || {};
-  const [vitaminasData, setVitaminasData] = useState({
-    vitaminaA: 0,
-    vitaminaD: 0,
-    vitaminaE: 0,
-    vitaminaB9: 0,
-    vitaminaB3: 0,
-    vitaminaB2: 0,
-    vitaminaB1: 0,
-    vitaminaB12: 0,
-    vitaminaB6: 0,
-    vitaminaC: 0,
-  });
+  const [vitaminasData, setVitaminasData] = useState(componentesData.vitaminas);
 
   useEffect(() => {
     firstInput.current.focus();
@@ -32,9 +22,10 @@ const NewPlatoCreateFromScratchVitamins = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    navigate("/platos/new/create/minerals", {
+    navigate(`/alimentos/${id}/edit/minerals`, {
       state: { alimento: alimentoData, componentes: componentesData, vitaminas: vitaminasData },
     });
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -53,6 +44,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaA}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
@@ -65,6 +57,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaD}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
@@ -77,6 +70,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaE}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -89,6 +83,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB9}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
@@ -101,6 +96,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB3}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -113,6 +109,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB2}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -125,6 +122,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB1}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -137,6 +135,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB12}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en microgramos (μg)</Form.Text>
@@ -149,6 +148,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaB6}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -161,6 +161,7 @@ const NewPlatoCreateFromScratchVitamins = () => {
                 step="any"
                 min="0"
                 placeholder="0"
+                value={vitaminasData.vitaminaC}
                 onChange={handleFormChange}
               />
               <Form.Text className="text-muted">Se mide en miligramos (mg)</Form.Text>
@@ -186,4 +187,4 @@ const NewPlatoCreateFromScratchVitamins = () => {
   );
 };
 
-export default NewPlatoCreateFromScratchVitamins;
+export default EditAlimentoVitamins;

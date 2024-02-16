@@ -41,11 +41,10 @@ public class AlimentoService {
     return alimentos;
   }
 
-  public List<Alimento> getAllAlimentosByNombre(String nombre) {
-    List<Alimento> alimentos = new ArrayList<>();
-    alimentos.addAll(alimentoRepository.findAllByNombreContainsIgnoreCase(nombre));
+  public Alimento getAlimentoByNombre(String nombre) {
+    Alimento alimento = alimentoRepository.findByNombre(nombre).orElse(null);
 
-    return alimentos;
+    return alimento;
   }
 
   public List<Alimento> getAllAlimentosByGrupoAlimento(grupoAlimento grupoAlimento) {
@@ -89,8 +88,16 @@ public class AlimentoService {
     if (alimento.getNombre() != null) {
       nuevoAlimento.setNombre(alimento.getNombre());
     }
+
+    if (alimento.getGramosPorRacion() != 0) {
+      nuevoAlimento.setGramosPorRacion(alimento.getGramosPorRacion());
+    }
+
     if (alimento.getGrupoAlimento() != null) {
       nuevoAlimento.setGrupoAlimento(alimento.getGrupoAlimento());
+    }
+    if (alimento.getComponentesNutricionales() != null) {
+      nuevoAlimento.setComponentesNutricionales(alimento.getComponentesNutricionales());
     }
 
     return alimentoRepository.save(nuevoAlimento);

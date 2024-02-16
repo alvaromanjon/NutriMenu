@@ -3,6 +3,7 @@ import { Alert, Form, Button, Container, Card, InputGroup, Row, Col } from "reac
 import { useNavigate, Link } from "react-router-dom";
 import "./styles.css";
 import { UserContext } from "../../contexts/UserContext";
+import { KeyFill } from "react-bootstrap-icons";
 
 const Login = () => {
   const [usuarioValue, setUsuarioValue] = useState("");
@@ -72,12 +73,18 @@ const Login = () => {
                 </InputGroup>
 
                 <Form.Group className="mt-2 mb-1" controlId="formBasicPassword">
-                  <Form.Control
-                    type="password"
-                    placeholder="Contraseña"
-                    value={passwordValue}
-                    onChange={(e) => setPasswordValue(e.target.value)}
-                  />
+                  <InputGroup className="mt-3 mb-1">
+                    <InputGroup.Text id="password-symbol">
+                      <KeyFill />
+                    </InputGroup.Text>
+                    <Form.Control
+                      type="password"
+                      aria-describedby="password-symbol"
+                      placeholder="Contraseña"
+                      value={passwordValue}
+                      onChange={(e) => setPasswordValue(e.target.value)}
+                    />
+                  </InputGroup>
 
                   {userNotExists && (
                     <Alert className="mt-3 mb-1" variant="danger">

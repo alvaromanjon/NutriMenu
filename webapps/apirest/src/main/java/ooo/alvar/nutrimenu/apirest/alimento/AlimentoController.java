@@ -26,7 +26,7 @@ public class AlimentoController {
     if (id != null) {
       listaAlimentos.add(alimentoService.getAlimento(id));
     } else if (nombre != null) {
-      listaAlimentos = alimentoService.getAllAlimentosByNombre(nombre);
+      listaAlimentos.add(alimentoService.getAlimentoByNombre(nombre));
     } else if (grupoAlimento != null) {
       listaAlimentos = alimentoService.getAllAlimentosByGrupoAlimento(grupoAlimento);
     } else {

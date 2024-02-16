@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { Row, Col, Container, Button, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 
-const NewAlimentoCreate = () => {
+const EditAlimento = () => {
+  const { id } = useParams();
+  const alimentoOriginal = useLoaderData();
   const navigate = useNavigate();
   const [errorFlag, setErrorFlag] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [alimentoData, setAlimentoData] = useState({
-    nombre: "",
-    grupoAlimento: "LACTEOS",
-    gramosPorRacion: 100,
-    componentesNutricionales: null,
+    nombre: alimentoOriginal[0].nombre,
+    grupoAlimento: alimentoOriginal[0].grupoAlimento,
+    gramosPorRacion: alimentoOriginal[0].gramosPorRacion,
+    componentesNutricionales: alimentoOriginal[0].componentesNutricionales,
   });
 
   const handleFormChange = (e) => {
@@ -18,27 +20,12 @@ const NewAlimentoCreate = () => {
     setAlimentoData({ ...alimentoData, [name]: value });
   };
 
-  const checkData = async () => {
-    const response = await fetch(`http://localhost:8080/alimentos?nombre=${alimentoData.nombre}`);
-    const data = await response.json();
-
-    if (response.ok) {
-      if (data[0] !== null) {
-        setErrorFlag(true);
-        setErrorMessage("Ya existe un alimento con este nombre");
-      } else {
-        setErrorFlag(false);
-        navigate("/alimentos/new/create/components", { state: { alimento: alimentoData } });
-        window.scrollTo(0, 0);
-      }
-    }
-  };
-
   const handleNext = async (e) => {
     e.preventDefault();
     if (alimentoData.nombre !== "") {
       setErrorFlag(false);
-      checkData();
+      navigate(`/alimentos/${id}/edit/components`, { state: { alimento: alimentoData } });
+      window.scrollTo(0, 0);
     } else {
       setErrorFlag(true);
       setErrorMessage("El nombre del alimento no puede quedar vacío");
@@ -50,7 +37,7 @@ const NewAlimentoCreate = () => {
       <Row>
         <Col className="col-2"></Col>
         <Col>
-          <h1 className="h2 text-center my-4">Crear alimento a mano</h1>
+          <h1 className="h2 text-center my-4">Editar alimento</h1>
           <form className="justify-content-md-center" onSubmit={handleNext}>
             <div className="mb-3">
               <label htmlFor="nombreAlimento" className="form-label">
@@ -62,6 +49,7 @@ const NewAlimentoCreate = () => {
                 id="nombreAlimento"
                 type="text"
                 placeholder="Queso"
+                value={alimentoData.nombre}
                 onChange={handleFormChange}
               />
             </div>
@@ -75,9 +63,10 @@ const NewAlimentoCreate = () => {
                 className="form-control"
                 id="gramosPorRacion"
                 type="number"
-                step="any"
                 min="0"
                 placeholder="100"
+                step="any"
+                value={alimentoData.gramosPorRacion}
                 onChange={handleFormChange}
               />
             </div>
@@ -86,7 +75,13 @@ const NewAlimentoCreate = () => {
               <label htmlFor="grupoAlimenticio" className="form-label">
                 Grupo alimenticio
               </label>
-              <select name="grupoAlimento" id="grupoAlimenticio" className="form-select" onChange={handleFormChange}>
+              <select
+                name="grupoAlimento"
+                id="grupoAlimenticio"
+                className="form-select"
+                value={alimentoData.grupoAlimento}
+                onChange={handleFormChange}
+              >
                 <option value="LACTEOS">Lácteos</option>
                 <option value="PROTEICOS">Alimentos proteicos</option>
                 <option value="FRUTA">Fruta</option>
@@ -124,4 +119,4 @@ const NewAlimentoCreate = () => {
   );
 };
 
-export default NewAlimentoCreate;
+export default EditAlimento;

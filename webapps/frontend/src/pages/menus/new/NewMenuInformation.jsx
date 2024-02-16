@@ -25,7 +25,7 @@ const NewMenuInformation = () => {
             <Form.Control
               name="nombre"
               type="text"
-              placeholder="Menú del viernes"
+              placeholder="Menú de un día"
               value={nombre}
               onChange={(e) => setNombre(e.currentTarget.value)}
             />
@@ -35,7 +35,7 @@ const NewMenuInformation = () => {
             <Form.Control
               name="descripcion"
               type="text"
-              placeholder="Este es el menú del día de los viernes"
+              placeholder="Este es el menú de un día"
               value={descripcion}
               onChange={(e) => setDescripcion(e.currentTarget.value)}
             />

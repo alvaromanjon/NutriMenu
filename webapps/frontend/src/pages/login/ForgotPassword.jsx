@@ -23,13 +23,12 @@ const ForgotPassword = () => {
       .then((res) => {
         if (!res.ok) {
           setErrorData(res);
-          if (res.status === 400) {
-            setUserNotExists(true);
-            console.error("No existe el usuario: ", errorData);
-          }
+          setUserNotExists(true);
+          console.error("No existe el usuario: ", errorData);
+        } else {
+          setUserExists(true);
+          return res.json();
         }
-        setUserExists(true);
-        return res.json();
       })
       .then((data) => {
         setUsuarioActualizar(data[0]);
@@ -66,12 +65,11 @@ const ForgotPassword = () => {
         })
         .then((data) => {
           setUsuarioActualizar(data);
+          setTimeout(() => {
+            navigate("/login");
+          }, 800);
         });
     }
-
-    setTimeout(() => {
-      navigate("/login");
-    }, 800);
   };
 
   const showCheckUser = () => {

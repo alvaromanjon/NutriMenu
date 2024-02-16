@@ -23,7 +23,7 @@ const NewPlatoCreateFromScratch = () => {
     const data = await response.json();
 
     if (response.ok) {
-      if (data.length !== 0) {
+      if (data[0] !== null) {
         setErrorFlag(true);
         setErrorMessage("Ya existe un alimento con este nombre");
       } else {
@@ -73,8 +73,8 @@ const NewPlatoCreateFromScratch = () => {
                 className="form-control"
                 id="gramosPorRacion"
                 type="number"
+                step="any"
                 min="0"
-                step="10"
                 placeholder="100"
                 onChange={handleFormChange}
               />

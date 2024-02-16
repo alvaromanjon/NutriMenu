@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useLoaderData } from "react-router-dom";
 import "./styles.css";
@@ -16,6 +16,12 @@ const SelectMenuFromLocal = () => {
   };
 
   const menusDisponibles = menusFechaEscogida();
+
+  useEffect(() => {
+    const today = new Date();
+    const currentDate = today.toISOString().split("T")[0];
+    setFechaEscogida(currentDate);
+  }, []);
 
   return (
     <>

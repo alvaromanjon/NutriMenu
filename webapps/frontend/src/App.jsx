@@ -24,6 +24,17 @@ import AlimentoDetails from "./pages/alimentos/view/AlimentoDetails";
 import MenuDetails from "./pages/menus/view/MenuDetails";
 import PlatoDetails from "./pages/platos/view/PlatoDetails";
 
+// Editar item
+import EditEmpresa from "./pages/empresas/edit/EditEmpresa";
+import EditLocal from "./pages/locales/edit/EditLocal";
+import EditUsuario from "./pages/usuarios/edit/EditUsuario";
+import EditAlimento from "./pages/alimentos/edit/EditAlimento";
+import EditAlimentoComponents from "./pages/alimentos/edit/EditAlimentoComponents";
+import EditAlimentoVitamins from "./pages/alimentos/edit/EditAlimentoVitamins";
+import EditAlimentoMinerals from "./pages/alimentos/edit/EditAlimentoMinerals";
+import EditMenu from "./pages/menus/edit/EditMenu";
+import EditPlato from "./pages/platos/edit/EditPlato";
+
 // Nuevo item
 import NewAlimento from "./pages/alimentos/new/NewAlimento";
 import NewAlimentoSearch from "./pages/alimentos/new/nutritionix/NewAlimentoSearch";
@@ -57,6 +68,9 @@ import { ListLocalesEmpresaLoader } from "./loaders/list/listLocalesEmpresaLoade
 import { localMenusLoader } from "./loaders/list/localMenusLoader";
 import { menuDetailsLoader } from "./loaders/details/menuDetailsLoader";
 import { platoDetailsLoader } from "./loaders/details/platoDetailsLoader";
+import { empresaDetailsLoader } from "./loaders/details/empresaDetailsLoader";
+import { localDetailsLoader } from "./loaders/details/localDetailsLoader";
+import { usuarioDetaisLoader } from "./loaders/details/usuarioDetailsLoader";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,21 +84,28 @@ const router = createBrowserRouter(
       <Route path="empresas" element={<GestionLayout title="Gestión de empresas" />}>
         <Route index element={<DataTableEmpresas />} loader={listEmpresasLoader} />
         <Route path="new" element={<NewEmpresa />} />
+        <Route path=":id/edit" element={<EditEmpresa />} loader={empresaDetailsLoader} />
       </Route>
 
       <Route path="locales" element={<GestionLayout title="Gestión de locales" />}>
         <Route index element={<DataTableLocales />} loader={listLocalesLoader} />
         <Route path="new" element={<NewLocal />} loader={listEmpresasLoader} />
+        <Route path=":id/edit" element={<EditLocal />} loader={localDetailsLoader} />
       </Route>
 
       <Route path="usuarios" element={<GestionLayout title="Gestión de usuarios" />}>
         <Route index element={<DataTableUsuarios />} loader={listUsuariosLoader} />
         <Route path="new" element={<NewUsuario />} loader={listEmpresasLoader} />
+        <Route path=":id/edit" element={<EditUsuario />} loader={usuarioDetaisLoader} />
       </Route>
 
       <Route path="alimentos" element={<GestionLayout title="Gestión de alimentos" />}>
         <Route index element={<DataTableAlimentos />} loader={listAlimentosLoader} />
         <Route path=":id" element={<AlimentoDetails />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit" element={<EditAlimento />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/components" element={<EditAlimentoComponents />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/vitamins" element={<EditAlimentoVitamins />} loader={alimentoDetailsLoader} />
+        <Route path=":id/edit/minerals" element={<EditAlimentoMinerals />} loader={alimentoDetailsLoader} />
         <Route path="new" element={<NewAlimento />}>
           <Route path="search" element={<NewAlimentoSearch />} />
           <Route path="create" element={<NewAlimentoCreate />} />
@@ -97,12 +118,14 @@ const router = createBrowserRouter(
       <Route path="menus" element={<GestionLayout title="Gestión de menús" />}>
         <Route index element={<DataTableMenus />} />
         <Route path=":id" element={<MenuDetails />} loader={menuDetailsLoader} />
+        <Route path=":id/edit" element={<EditMenu />} loader={menuDetailsLoader} />
         <Route path="new" element={<NewMenu />}></Route>
       </Route>
 
       <Route path="platos" element={<GestionLayout title="Gestión de platos" />}>
         <Route index element={<DataTablePlatos />} />
         <Route path=":id" element={<PlatoDetails />} loader={platoDetailsLoader} />
+        <Route path=":id/edit" element={<EditPlato />} loader={platoDetailsLoader} />
         <Route path="new" element={<NewPlato />}>
           <Route path="list" element={<NewPlatoAddFromList />} loader={listAlimentosLoader} />
           <Route path="search" element={<NewPlatoAddFromNutritionix />} />
