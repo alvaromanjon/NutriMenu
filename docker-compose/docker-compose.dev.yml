@@ -5,7 +5,7 @@ services:
       context: ../webapps/frontend
     restart: always
     ports:
-      - ${FRONTEND_DOCKER_PORT}:3000
+      - 3000:3000
     networks:
       - nutrimenu-net
     env_file:
@@ -48,9 +48,10 @@ services:
     env_file:
       - .env
     volumes:
+      - ../data:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 15s
       timeout: 5s
       start_period: 10s

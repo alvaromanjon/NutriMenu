@@ -1,11 +1,11 @@
 package ooo.alvar.nutrimenu.apirest.alimento;
 
+import jakarta.transaction.Transactional;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionalesRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.grupoAlimento.grupoAlimento;
-import ooo.alvar.nutrimenu.apirest.empresa.EmpresaRepository;
 import ooo.alvar.nutrimenu.apirest.alimento.componentesNutricionales.ComponentesNutricionales;
 import ooo.alvar.nutrimenu.apirest.excepciones.EntityDoesntExistsException;
-import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimentoRepository;
+import ooo.alvar.nutrimenu.apirest.relaciones.PlatoAlimento.PlatoAlimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +41,10 @@ public class AlimentoService {
     return alimentos;
   }
 
-  public List<Alimento> getAllAlimentosByNombre(String nombre) {
-    List<Alimento> alimentos = new ArrayList<>();
-    alimentos.addAll(alimentoRepository.findAllByNombreContainsIgnoreCase(nombre));
+  public Alimento getAlimentoByNombre(String nombre) {
+    Alimento alimento = alimentoRepository.findByNombre(nombre).orElse(null);
 
-    return alimentos;
+    return alimento;
   }
 
   public List<Alimento> getAllAlimentosByGrupoAlimento(grupoAlimento grupoAlimento) {
@@ -89,13 +88,22 @@ public class AlimentoService {
     if (alimento.getNombre() != null) {
       nuevoAlimento.setNombre(alimento.getNombre());
     }
+
+    if (alimento.getGramosPorRacion() != 0) {
+      nuevoAlimento.setGramosPorRacion(alimento.getGramosPorRacion());
+    }
+
     if (alimento.getGrupoAlimento() != null) {
       nuevoAlimento.setGrupoAlimento(alimento.getGrupoAlimento());
+    }
+    if (alimento.getComponentesNutricionales() != null) {
+      nuevoAlimento.setComponentesNutricionales(alimento.getComponentesNutricionales());
     }
 
     return alimentoRepository.save(nuevoAlimento);
   }
 
+  @Transactional
   public void deleteAlimento(Long id) {
     Alimento alimentoActual = alimentoRepository.findById(id).orElse(null);
     if (alimentoActual ==null) {

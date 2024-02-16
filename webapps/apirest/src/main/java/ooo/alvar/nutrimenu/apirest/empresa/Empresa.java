@@ -1,8 +1,11 @@
 package ooo.alvar.nutrimenu.apirest.empresa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import ooo.alvar.nutrimenu.apirest.local.Local;
+import ooo.alvar.nutrimenu.apirest.menu.Menu;
+import ooo.alvar.nutrimenu.apirest.plato.Plato;
 import ooo.alvar.nutrimenu.apirest.usuario.Usuario;
 
 import java.util.ArrayList;
@@ -11,8 +14,6 @@ import java.util.List;
 @Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"nombre"}),
-        @UniqueConstraint(columnNames = {"email"}),
-        @UniqueConstraint(columnNames = {"telefono"}),
         @UniqueConstraint(columnNames = {"cif"})
       })
 public class Empresa {
@@ -22,11 +23,15 @@ public class Empresa {
   private Long id;
   @Column(nullable = false)
   private String nombre;
-  @Column(nullable = false)
+  @Nullable
   private String email;
-  @Column(nullable = false)
+  @Nullable
   private String direccion;
-  @Column(nullable = false)
+  @Nullable
+  private String ciudad;
+  @Nullable
+  private Long codigoPostal;
+  @Nullable
   private String telefono;
   @Column(nullable = false)
   private String cif;
@@ -35,16 +40,24 @@ public class Empresa {
   private List<Local> locales = new ArrayList<>();
   @JsonIgnore
   @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Menu> menus = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<Plato> platos = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy="empresa", cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Usuario> usuarios = new ArrayList<>();
 
   public Empresa() {
   }
 
-  public Empresa(String nombre, String email, String direccion, String telefono, String cif) {
+  public Empresa(String nombre, String email, String direccion, String ciudad, Long codigoPostal, String telefono, String cif) {
     super();
     this.nombre = nombre;
     this.email = email;
     this.direccion = direccion;
+    this.ciudad = ciudad;
+    this.codigoPostal = codigoPostal;
     this.telefono = telefono;
     this.cif = cif;
   }
@@ -79,6 +92,22 @@ public class Empresa {
 
   public void setDireccion(String direccion) {
     this.direccion = direccion;
+  }
+
+  public String getCiudad() {
+    return ciudad;
+  }
+
+  public void setCiudad(String ciudad) {
+    this.ciudad = ciudad;
+  }
+
+  public Long getCodigoPostal() {
+    return codigoPostal;
+  }
+
+  public void setCodigoPostal(Long codigoPostal) {
+    this.codigoPostal = codigoPostal;
   }
 
   public String getTelefono() {

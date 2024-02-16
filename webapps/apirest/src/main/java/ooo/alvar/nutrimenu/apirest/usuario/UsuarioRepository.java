@@ -11,5 +11,4 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
   Usuario findByUsuario(String usuario);
   List<Usuario> findAllByRol(Rol rol);
   List<Usuario> findAllByEmpresaId(Long id);
-  List<Usuario> findAllByLocalId(Long id);
 }
