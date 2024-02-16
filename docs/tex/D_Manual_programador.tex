@@ -22,7 +22,11 @@ Podemos descargar el repositorio desde el propio GitHub, haciendo click en el bo
 
 \dirtree{%
 .1 NutriMenu.
+.2 data.
+.3 nutridb.sql.
 .2 docker-compose.
+.3 .env.
+.3 .env.example.
 .3 docker-compose.ci.yml.
 .3 docker-compose.dev.yml.
 .2 webapps.
@@ -166,6 +170,7 @@ Para la parte del \textit{backend} muchos de los elementos del Dockerfile son si
     env_file:
       - .env
     volumes:
+      - ../data:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
@@ -179,7 +184,7 @@ La base de datos también va a disponer de su propio contenedor, con ciertos par
 
 \begin{itemize}
 	\item Vamos a usar la \textbf{imagen oficial de MySQL} (\href{https://hub.docker.com/layers/library/mysql/8/images/sha256-1717a37c2adc7772b569eb727bb198b6792f7d50c2adb4839ba637b5c9d88f42?context=explore}{Docker Hub}), concretamente la versión \textbf{8} (con los últimos parches). 
-	\item Se va a conectar un volumen a la base de datos, que no es más que \textbf{el volumen encargado de almacenar todos los datos} de la base de datos. Esto es para no tener que inicializar la base de datos cada vez que la despleguemos, y mantener así persistencia entre sesiones.
+	\item Se va a conectar un volumen a la base de datos, que no es más que \textbf{el volumen encargado de almacenar todos los datos} de la base de datos. Esto es para no tener que inicializar la base de datos cada vez que la despleguemos, y mantener así persistencia entre sesiones. Además, si no existen datos en la base de datos se ejecutará el script SQL localizado en \textit{data}, que contiene un conjunto de datos de prueba.
 	\item Se ha definido el \textit{healthcheck} del que hemos hablado en el apartado del \textit{backend}, que lanza un comando para comprobar que el servicio esté totalmente arrancado. Este comando se va a lanzar un máximo de 3 veces en un intervalo de 15 segundos entre una y otra, siendo la primera 10 segundos después de que arranque el contenedor, y con un timeout de 5 segundos.
 \end{itemize} 
 
@@ -263,8 +268,10 @@ API_DEBUG_DOCKER_PORT=5005
 API_DEBUG_LOCAL_PORT=5005
 
 # Variables del frontend
-FRONTEND_DOCKER_PORT=3000
 CHOKIDAR_USEPOLLING=true
+VITE_NUTRI_X_APP_ID=<YOUR_APP_ID> # Introduce el App ID de la API de Nutritionix
+VITE_NUTRI_X_APP_KEY=<YOUR_APP_KEY> # Introduce el App Key de la API de Nutritionix
+VITE_NUTRI_X_REMOTE_USER_ID=0
 
 # Variables de la base de datos
 DATABASE_HOST=mysqldb
@@ -285,8 +292,11 @@ Los valores pueden ser modificados si es necesario, pero se recomienda usar los 
 	\item El puerto en el que va a estar escuchando el plugin \textit{LiveReload} de Spring, que es el encargado de recargar el servidor en caliente cada vez que se produzcan cambios en el código, y no tener así que recompilar todo el código cada vez que cambiemos algo. En este caso el puerto va a ser el \textbf{35729}.
 	\item El puerto que se va a usar para permitir conectar un debugger remoto a la aplicación, y poder así hacer debug desde el IDE que usemos para el desarrollo. El puerto va a ser el \textbf{5005} para la API REST.
 	\item Configuración adicional de la parte del frontend, como la variable \verb,CHOKIDAR_USEPOLLING, que indica que usemos el mecanismo \textit{CHOKIDAR} para observar cambios en los archivos fuente, para así poder aplicar los cambios de forma automática y realizar una recarga de la página de forma instantánea. Es necesario usar este mecanismo en aplicaciones React que se encuentren desplegadas en VMs o dockerizadas, como es este caso \cite{create-react-app:advanced-conf}.
+	\item \textbf{Las claves para poder conectar con la API de Nutritionix}. Esto es esencial para que la búsqueda de alimentos funcione, ya que sin esto sólo se pueden crear alimentos a mano.
 	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, y \textbf{credenciales de los usuarios de MySQL}.
 \end{itemize}
+
+% TODO añadir cómo obtener credenciales de Nutritionix
 
 \subsection{Despliegue del entorno de desarrollo}
 
@@ -353,6 +363,29 @@ En caso de querer borrar los contenedores y los volúmenes asociados (en nuestro
 \imagen{Docker/docker-desktop-down-volumes}{Volumen de la base de datos totalmente eliminado}{0.8}
 
 Hay que tener en mente que ejecutar este comando \textbf{hará que se pierdan todos los datos de la base de datos}.
+
+\subsection{Acceso a la aplicación}
+
+Si se han mantenido los puertos recomendados en el archivo .env de ejemplo, podremos acceder a la aplicación desde el navegador escribiendo \textbf{http://localhost:3000/}. Para poder interactuar con la aplicación se han creado tres usuarios distintos, cada uno con un rol distinto, cuyas credenciales son:
+
+\textbf{Usuario de tipo administrador}
+\begin{itemize}
+	\item \textbf{Nombre de usuario}: administrador
+	\item \textbf{Contraseña}: administrador1	
+\end{itemize}
+
+\textbf{Usuario de tipo editor}
+\begin{itemize}
+	\item \textbf{Nombre de usuario}: editorubu
+	\item \textbf{Contraseña}: editorubu1	
+\end{itemize}
+
+\textbf{Usuario de tipo camarero}
+\begin{itemize}
+	\item \textbf{Nombre de usuario}: camareroubu
+	\item \textbf{Contraseña}: camareroubu1	
+\end{itemize}
+
 
 \section{Pruebas del sistema}
 
