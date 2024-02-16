@@ -1,7 +1,98 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+En el siguiente apartado se recogerán los aspectos de mayor relevancia que han surgido durante la realización de este proyecto, con el objetivo de comprender mejor el desarrollo y los desafíos encontrados a lo largo del camino.
+
+\section{Inicio del proyecto}
+
+Este proyecto, propuesto por mis tutores, surge como continuidad de otro Trabajo de Final de Grado, el realizado por Mariya Aleksandrova Stroyanova, en el que trabajó para crear una versión web y ampliar las funcionalidades de otro Trabajo de Final de Grado, el realizado por Joseba Fernando Moisén, que consistía en una aplicación de escritorio de la que se podían obtener los valores nutricionales de los alimentos de la base de datos de BEDCA. 
+
+El Trabajo de Mariya, que ha sido el punto de partida, consta de dos aplicaciones web: una encargada de la generación y gestión de empresas, locales, usuarios, menús y platos, que sería la parte que controlarían las empresas encargadas de la gestión de las cafeterías de las distintas facultades de la Universidad de Burgos; y otra aplicación que sería a la que tendrían acceso los clientes, en la cual se pueden realizar informes nutricionales a partir de los menús escogidos por el usuario.
+
+La propuesta para este Trabajo de Final de Grado ha sido la de mejorar estas aplicaciones web, tanto a nivel de infraestructura y servicios, como a nivel de interactividad y usabilidad, procediendo a realizar un rediseño completo de ellas y haciéndolas mucho más amigables a los dispositivos móviles, ya que es el lugar desde donde van a acceder la mayoría de usuarios que visiten la cafetería.
+
+\section{Infraestructura de la aplicación}
+
+Inicialmente, las aplicaciones web parten de un modelo de despliegue de forma manual y en local, ya que requieren de la instalación de varios programas, como MySQL Community, para poder lanzar la base de datos; el SDK de Java, para poder ejecutar el código; así como Eclipse o un IDE similar, para poder lanzar los proyectos de Spring Boot en los que están contenidas las aplicaciones. Esto, como se puede observar en el apartado de Documentación técnica de programación en los anexos de Mariya \cite{tfg-mariya:anexos} es un proceso bastante laborioso, que requiere de la preparación y configuración de un entorno específico para esta tarea, y que no dota a la infraestructura de ningún tipo de escalabilidad ni posibilidad de automatización a la hora de su despliegue.
+
+Además de esto, este modelo de infraestructura es dependiente del sistema operativo y la arquitectura de hardware usadas, lo cual puede suponer un gran inconveniente, como ha terminado siendo el caso, ya que mi equipo personal es un MacBook Pro con procesador Apple Silicon, el cual está basado en una arquitectura ARM. Esto ha supuesto un gran problema a la hora de realizar el despliegue inicial de las aplicaciones, ya que el despliegue está pensado para ser realizado desde un equipo con sistema operativo Windows. 
+
+Primero se intentó solucionar este problema mediante el uso de una máquina virtual, puesto que existen versiones tanto de Windows 10 como de Windows 11 para equipos con arquitectura ARM (cosa no exclusiva de los procesadores de Apple, ya que los propios equipos de Microsoft, los portátiles Surface, actualmente también están dotados de procesadores ARM). Sin embargo, el gran inconveniente surgió a la hora de instalar MySQL, ya que nada más abrir el instalador se obtuvo el siguiente error:
+
+\imagen{MySQL/mysql_installation_error}{MySQL Workbench sólo es compatible con equipos de arquitectura x86$\_$x64}{0.8}
+
+Esto, unido a la motivación de la búsqueda de un despliegue rápido, escalable y moderno, ha terminado en la decisión de realizar un aislamiento completo de los distintos servicios (frontend, backend y base de datos) y contenerizar estos servicios mediante el uso de \textbf{Docker y Docker Compose}, para poder orquestarlos y gestionarlos de forma conjunta. Esto trae numerosas ventajas al proyecto:
+
+\begin{itemize}
+  \item \textbf{La infraestructura pasa a ser totalmente independiente del sistema operativo y la arquitectura de procesador}, ya que Docker funciona con todos los sistemas y arquitecturas principales.
+  \item \textbf{El despliegue se vuelve mucho más rápido y sencillo}, ya que en prácticamente un minuto y con tan sólo dos comandos puedes estar ejecutando la aplicación con todos sus servicios activos. 
+  \item \textbf{Este tipo de infraestructura permite la creación de distintos entornos} (desarrollo, producción, testing) consistentes y sencillos de implementar, ya que permite asegurarse de que la aplicación se va a ejecutar de la misma forma en todos ellos.
+  \item \textbf{Cada contenedor se encuentra aislado del resto}, con sus propios recursos y sistemas de archivos, por lo que mejora bastante la seguridad y asegura que un problema en uno de ellos no va a afectar ni canibalizar al resto.
+\end{itemize}
+
+Además de esto, puesto que ambas aplicaciones trabajan con el mismo conjunto de datos y no existe realmente un grado de separación necesario como para mantener dos proyectos, también se ha decidido unificar las dos aplicaciones web en una, debido a que esto facilita bastante su desarrollo, elimina código repetido y mantiene mayor homogeneidad.
+
+\section{Lógica de negocio}
+
+En el proyecto original, ambas aplicaciones siguen el patrón \textbf{Modelo-Vista-Controlador (MVC)} en todo su desarrollo, tanto para el manejo de datos como la interfaz, ya que todo forma parte de un mismo monolito. Sin embargo, como en este proyecto se ha decidido hacer una separación total de los servicios, el enfoque adoptado ha sido el de \textbf{API-Driven Development}, en el que primero se implementa esta lógica de negocio siguiendo el patrón MVC, y en la capa del Controlador se implementa una API REST que proporciona los endpoints necesarios para que el frontend interactúe con esta. 
+
+Esto ha permitido abstraer a la aplicación web de tener que interactuar directamente con la base de datos, lo que ahorra el uso de queries SQL complejas y permite prescindir de APIs como JDBC, ya que se va a trabajar directamente con objetos JSON mucho más amigables de manejar y representar en la capa frontend.
+
+Para la implementación de este servicio se ha mantenido el uso de \textbf{Spring Boot}, al igual que en el proyecto original, lo que ha permitido tener el modelo original como referencia a la hora de realizar esta reimplementación.
+
+\subsection{Modelo de datos}
+
+Puesto que tanto el proyecto de Mariya como el actual siguen el modelo MVC, las capas del Modelo de datos se asemejan, ya que en ambos se mantiene un modelo puramente relacional. Sin embargo, esta transformación en la capa del Controlador, así como los cambios realizados a la hora de obtener la información de los alimentos, han hecho que haya varias diferencias entre los dos:
+
+\imagen{DB/mariya_data_schema}{Modelo de base de datos del TFG del que se parte \cite{tfg-mariya:anexos}}{0.7}
+
+Como los datos van a ser accedidos y manipulados directamente desde la API, se ha eliminado la necesidad de tener vistas en la base de datos, ya que los propios endpoints son los encargados de mostrar sólo la información que nos interese, permitiendo además mayor personalización y granularidad en los resultados obtenidos.
+
+Además de esto, como en la sección de Alimentos se ha pasado de un modelo en el que los datos sólo se podían almacenar de forma local, usando los datos de BEDCA, a un modelo híbrido que permite tanto el almacenamiento local como la interacción con la API de Nutritionix, esta parte del modelo de datos se ha rediseñado completamente, intentando hacerla más simple y fácil de entender.
+
+\imagen{DB/nutrimenu_data_schema}{Modelo de base de datos actual}{0.7}
+
+Para la implementación de la base de datos se ha mantenido \textbf{MySQL}, ya que al seguir manteniendo un modelo de bases de datos relacional no he visto necesidad de modificarlo.
+
+\section{Frontend}
+
+Este es el servicio que más cambios ha sufrido, puesto que prácticamente ha sido recreado desde 0. Para el desarrollo de esta aplicación web se ha usado la librería \textbf{React}, debido a que actualmente es de las opciones más populares en el desarrollo frontend, y su modelo basado en Componentes me pareció muy buena solución para el desarrollo de este proyecto, puesto que prima bastante la reutilización y la modularidad. 
+
+Sin embargo, como React no dispone de forma nativa de ningún sistema de enrutamiento, puesto que su modelo principal es el de Single Page Applications (aplicaciones que reescriben el contenido mostrado de forma dinámica, en vez de recargar la página completa), el proyecto da bastante uso a otra librería pensada para ser usada junto a React, que es \textbf{React Router}. Esta librería ha permitido gestionar las distintas partes de la aplicación sin ningún problema, pues al ser una aplicación con distintas secciones bien diferenciadas, siguiendo el modelo de las SPA sería mucho más complicado de separar y limitaría bastante las posibilidades.
+
+Además de esto, \textbf{React Router} incluye otras funciones bastante aprovechadas en este proyecto, como los \textbf{Outlets}, que permiten crear un componente plantilla y que los componentes hijos se rendericen dentro de ese componente padre (usados en varias partes, como por ejemplo en los layouts de la barra de navegación y los paneles de gestión de los elementos, como se puede ver en la figura \ref{fig:App/outlets_demo}); o los \textbf{loaders}, que son funciones que permiten realizar llamadas asíncronas a una API antes de que se renderice el componente que va a usar esos datos (usados cada vez que se muestra información sobre un alimento, plato o menú), lo cual acelera bastante la carga.
+
+\imagen{App/outlets_demo}{Aplicación renderizando sólo el contenido de los componentes padre}{1}
+
+El desarrollo se ha realizado mediante el uso de \textbf{JavaScript}, lo que ha supuesto posiblemente el mayor reto de todo el proyecto, pues previo a la realización de este trabajo no había tenido ninguna experiencia con este lenguaje.
+
+Como he usado React, a la hora de escribir el código referente a la interfaz he usado \textbf{JSX}, una extensión de JavaScript que permite integrar tanto HTML como JavaScript como si fueran un sólo lenguaje.
+
+Para la construcción y compilación del frontend inicialmente se comenzó usando \textbf{Create React App}, ya que hasta hace poco era la opción recomendada por los propios desarrolladores de React, pero puesto que es un proyecto que ha dejado de ser mantenido, y los paquetes que contiene están quedando desactualizados, finalmente se ha cambiado por \textbf{Vite}, una de las herramientas de compilación de JavaScript más eficientes de la actualidad. Esta herramienta ofrece distintas optimizaciones a la hora de ejecutar y compilar nuestro código que hacen que la aplicación web sea lo más rápida posible, lo que se nota bastante al usarla, ya que todo es prácticamente instantáneo.
+
+En el estilado de la aplicación se ha trabajado principalmente con \textbf{Bootstrap}, ya que anteriormente ya había realizado algún proyecto dando uso de este framework y tenía algo de experiencia, y ha sido de bastante ayuda al crear una interfaz responsive y visualmente agradable, adaptada tanto a pantallas de dispositivos móviles como a pantallas de ordenador. 
+
+Existe una librería llamada \textbf{React Bootstrap} que integra todos los elementos de Bootstrap dentro de React, para trabajar con ellos como si fueran componentes de React, por lo que me he ahorrado el uso de bastantes clases de CSS.
+
+Por último, para la representación de las tablas y los gráficos en las vistas de información nutricional (ejemplo en la figura \ref{fig:App/charts_and_tables}), he usado las librerías \textbf{AG React Data Grid} y \textbf{AG React Charts} respectivamente, debido a que requieren de muy poco código para conseguir los resultados buscados, y me permiten actualizar los datos de forma dinámica, algo que necesitaba para poder cambiar los datos nada más se seleccione un plato distinto en la vista del informe nutricional de un menú.
+
+\imagen{App/charts_and_tables}{Distintas tablas y gráficos usados en la aplicación}{1}
+
+\section{Fuente de datos nutricionales}
+
+Las aplicaciones originales hacían uso de la base de datos de BEDCA, la Base de Datos Española de Composición de Alimentos, para obtener toda la información relacionada con los alimentos y sus componentes nutricionales. 
+
+El gran inconveniente de esto es que esta base de datos no dispone de un punto de acceso al que consultar los datos mediante una API o similar, así que era necesario mantener la base de datos en local. Esto, además de que impide obtener la última información nutricional disponible, puede suponer un costo en almacenamiento y rendimiento importante, ya que todos los alimentos y su información deben estar guardados en el servidor obligatoriamente.
+
+Para solucionar esto, se ha decidido dar uso de la \textbf{API de Nutritionix}, que dispone de una base de datos específica para alimentos en castellano. Esto permite almacenar sólo los alimentos que vayan a ser usados, mientras que el resto quedan disponibles con tan sólo realizar una búsqueda en la aplicación (como se ve en la figura \ref{fig:App/nutritionix_search}). Además, para suplir aquellos alimentos que pueden no estar presentes en esta nueva base de datos, también se ha dado la opción de crear los alimentos a mano, para que en caso de que sea necesario un alimento esto no sea un factor limitante. 
+
+\imagen{App/nutritionix_search}{Búsqueda de un alimento mediante el uso de la API de Nutritionix}{0.8}
+
+El mayor inconveniente que he encontrado con el uso de esta API es el hecho de que no contiene información nutricional sobre alérgenos, quedando esto como objeto de mejora del proyecto.
+
+\section{Automatizaciones}
+
+Como la infraestructura de la aplicación dispone de varios servicios independientes, es posible que en algún momento realice un cambio en uno de ellos y sin darme cuenta esto afecte a otro distinto, haciendo que algún elemento no funcione como debería. Es por ello que he realizado una implementación de integración continua mediante el uso de \textbf{GitHub Actions}, aprovechando que el despliegue se realiza con Docker y Docker Compose. 
+
+De lo que se encarga esta automatización es que, cada vez que se hace un push de algún commit al repositorio de GitHub, se ejecutan una serie de pasos (como podemos ver en la figura \ref{fig:App/github_actions_execution}) para desplegar los contenedores de Docker en una máquina nueva, y le da un minuto desde que todos los contenedores están corriendo para que cada servicio devuelva un \textit{healthcheck} indicando que todo está funcionando correctamente. En caso de que alguno de los servicios no devuelva este mensaje, el propio GitHub se encarga de enviar un mensaje indicando que algo ha fallado, además de indicarlo en el propio commit.
+
+\imagen{App/github_actions_execution}{Listado de pasos ejecutados por la acción de GitHub Actions}{0.8}

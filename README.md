@@ -1,8 +1,12 @@
 # NutriMenu
+
 Web app that informs you of the nutritional content of food items on menus.
 
+# Development environment
+
 ## Setting up environment variables
-In order to run the app, you need to set some environment variables first. You must create an `.env` file on `docker-compose` directory to set up all the necessary variables:
+
+In order to run the app, you need to set some environment variables first. You must create an `.env` file on `docker-compose` directory to set up all the necessary variables (replacing the angle brackets strings with your own values, WITHOUT keeping the angle brackets):
 
 ```shell
 # API REST variables
@@ -14,23 +18,25 @@ API_DEBUG_DOCKER_PORT=5005
 API_DEBUG_LOCAL_PORT=5005
 
 # Frontend variables
-FRONTEND_DOCKER_PORT=3000
 CHOKIDAR_USEPOLLING=true
-# API Keys to support Nutritionix API integration
-REACT_APP_NUTRI_X_APP_ID=<x_app_id value>
-REACT_APP_NUTRI_X_APP_KEY=<x_app_key value>
-REACT_APP_NUTRI_X_REMOTE_USER_ID=<x_remote_user_id value>
+VITE_NUTRI_X_APP_ID=<YOUR_APP_ID>
+VITE_NUTRI_X_APP_KEY=<YOUR_APP_KEY>
+VITE_NUTRI_X_REMOTE_USER_ID=0
 
-# DB variables
+#DB variables
 DATABASE_HOST=mysqldb
 MYSQL_DATABASE=nutri_db
 MYSQL_USER=dbadmin
-MYSQL_PASSWORD=<MySQL password> # Choose a password for dbadmin user
-MYSQL_ROOT_PASSWORD=<MySQL root password> # Choose a password for MySQL root user
+MYSQL_PASSWORD=<YOUR_PASSWORD>
+MYSQL_ROOT_PASSWORD=<YOUR_ROOT_PASSWORD>
 DB_DOCKER_PORT=3306
 DB_LOCAL_PORT=3306
 ```
+
+For more information about this variables, you can see the `.env.example` file on `docker-compose` directory.
+
 ## Building and deploying the app
+
 To build and run the app, open a new console, access to the `docker-compose` directory, and run the following command:
 
 ```bash
@@ -56,3 +62,25 @@ docker compose -f docker-compose.dev.yml down
 ```
 
 For further documentation, please refer to the .pdf files in folder `/docs`.
+
+## Testing the app
+
+When the app first runs, the application is loaded with some sample data. There are 3 users that you can use to access to all the sections of the app:
+
+### Administrador user
+
+**Username**: `administrador`
+
+**Password**: `administrador1`
+
+### Editor user
+
+**Username**: `editorubu`
+
+**Password**: `editorubu1`
+
+### Camarero user
+
+**Username**: `camareroubu `
+
+**Password**: `camareroubu1`

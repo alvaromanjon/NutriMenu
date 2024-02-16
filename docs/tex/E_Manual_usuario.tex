@@ -2,10 +2,260 @@
 
 \section{Introducción}
 
+Esta sección pretende ilustrar cómo funciona la aplicación, cuales son las distintas partes que la componen, y cómo el usuario puede interactuar con ellas. 
+
+Para el desarrollo de este manual se parte con la idea de que la aplicación se encuentra desplegada y disponible.
+
 \section{Requisitos de usuarios}
+
+Como se trata de una aplicación web, los únicos requisitos por parte del usuario son:
+
+\begin{itemize}
+  \item Una conexión a Internet estable, que permita conectar con el servidor que almacena la aplicación (en caso de que el despliegue de la aplicación no sea local).
+  \item Disponer de cualquier navegador web moderno, como Google Chrome, Mozilla Firefox, Safari o similares. No se recomienda usar un navegador desactualizado, ya que puede no ser compatible con algunas de las funcionalidades que ofrece React.
+\end{itemize}
+
 
 \section{Instalación}
 
+La aplicación no requiere de ningún tipo de instalación, con disponer de un navegador web es suficiente.
+
 \section{Manual del usuario}
 
+Se van a proceder a detallar los distintos apartados que conforman la aplicación web:
 
+\subsection{Vista inicial}
+
+Nada más abrir la aplicación, lo primero que nos encontramos es la vista inicial. Desde aquí podemos usar la aplicación como un consumidor, o podemos pasar a la ventana de inicio de sesión haciendo click en el botón \textit{Iniciar sesión}.
+
+\imagen{Manual/main}{Vista inicial de NutriMenu}{0.8}
+
+\subsection{Inicio de sesión}
+
+Esta es la vista desde la cual vamos a acceder a los paneles de gestión. Para acceder debemos de introducir las credenciales y hacer click en \textit{Inicio de sesión}, o hacer click en \textit{¿Has olvidado tu contraseña?} en caso de no recordarla.
+
+\imagen{Manual/login}{Vista de inicio de sesión}{0.8}
+
+\subsection{Recuperación de contraseña}
+
+Para recuperar la contraseña se debe introducir el nombre de usuario de la cuenta que queremos recuperar, y a continuación se nos va a solicitar que escribamos la nueva contraseña dos veces, para asegurarnos de que la nueva contraseña es la que realmente queremos. Una vez la tengamos, debemos hacer click en Continuar, para que así esta contraseña se guarde y volvamos a la página de inicio de sesión.
+
+\imagen{Manual/forgotpass_user}{Primera vista en el proceso de recuperar contraseña}{0.8}
+
+\imagen{Manual/forgotpass_passwords}{Vista para establecer una nueva contraseña}{0.8}
+
+\subsection{Panel de control de administradores}
+
+Esto es lo primero que veremos al iniciar sesión con una cuenta de administrador. Podemos gestionar empresas, locales, usuarios y alimentos desde este tipo de cuenta.
+
+\imagen{Manual/admin_panel}{Vista del panel de control de administradores}{0.8}
+
+\subsection{Gestión de empresas}
+
+En la sección de Gestión de empresas dispondremos de todas las empresas disponibles en la aplicación.
+
+\imagen{Manual/empresa_table}{Vista principal de gestión de empresas}{0.8}
+
+Para crear una nueva empresa, debemos hacer click en \textit{Crear una nueva empresa} dentro del panel de gestión de empresas. Debemos rellenar los datos que se marcan con asterisco, y cuando hayamos terminado, haremos click en \textit{Guardar}.
+
+\imagen{Manual/empresa_new}{Vista de creación de empresas}{0.8}
+
+Para editar una empresa, haremos click en \textit{Editar} en el panel de Gestión de empresas. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/empresa_edit}{Vista de edición de empresas}{0.8}
+
+Para borrar una empresa, haremos click en \textit{Borrar} en el panel de Gestión de empresas. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado de la empresa.
+
+\imagen{Manual/empresa_delete}{Vista de borrado de empresas}{0.8}
+
+\subsection{Gestión de locales}
+
+En la sección de Gestión de locales dispondremos de todos los locales disponibles en la aplicación.
+
+\imagen{Manual/locales_table}{Vista principal de gestión de locales}{0.8}
+
+Para crear un nuevo local, debemos hacer click en \textit{Crear un nuevo local} dentro del panel de gestión de locales. Debemos rellenar los datos que se marcan con asterisco, y cuando hayamos terminado, haremos click en \textit{Guardar}.
+
+\imagen{Manual/locales_new}{Vista de creación de locales}{0.8}
+
+Para editar un local, haremos click en \textit{Editar} en el panel de Gestión de locales. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/locales_edit}{Vista de edición de locales}{0.8}
+
+Para borrar un local, haremos click en \textit{Borrar} en el panel de Gestión de locales. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del local.
+
+\imagen{Manual/locales_delete}{Vista de borrado de locales}{0.8}
+
+\subsection{Gestión de usuarios}
+
+En la sección de Gestión de usuarios dispondremos de todos los usuarios disponibles en la aplicación.
+
+\imagen{Manual/usuarios_table}{Vista principal de gestión de usuarios}{0.8}
+
+Para crear un nuevo usuario, debemos hacer click en \textit{Crear un nuevo usuario} dentro del panel de gestión de usuarios. Debemos rellenar los datos que se marcan con asterisco, y cuando hayamos terminado, haremos click en \textit{Guardar}. En caso de que el usuario sea de tipo Administrador, no hace falta asignar una empresa al usuario, pero si tiene un rol distinto sí se debe hacer.
+
+\imagen{Manual/usuarios_new}{Vista de creación de usuarios}{0.8}
+
+Para editar un usuario, haremos click en \textit{Editar} en el panel de Gestión de usuarios. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/usuarios_edit}{Vista de edición de usuarios}{0.8}
+
+Para borrar un usuario, haremos click en \textit{Borrar} en el panel de Gestión de usuarios. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del usuario.
+
+\imagen{Manual/usuarios_delete}{Vista de borrado de usuarios}{0.8}
+
+\subsection{Gestión de alimentos}
+
+En la sección de Gestión de alimentos dispondremos de todos los alimentos disponibles en la aplicación.
+
+\imagen{Manual/alimentos_table}{Vista principal de gestión de alimentos}{0.8}
+
+Para buscar un alimento en la base de datos de Nutritionix, debemos hacer click en \textit{Crear un nuevo alimento} dentro del panel de gestión de usuarios. A continuación, debemos asegurarnos que estamos en la sección \textit{Buscar en Nutritionix}, aunque es la sección que se abre por defecto. 
+
+Introduciremos el nombre del alimento a buscar, y haremos click en \textit{Buscar}. El nombre del alimento no tiene por qué ser exacto, ya que la búsqueda soporte lenguaje natural, aunque cuanto más precisos seamos, mejor serán los resultado.
+
+Si existen alimentos que respondan a la búsqueda que acabamos de hacer, se mostrarán en forma de lista junto a una imagen de este mismo. Si queremos añadir alguno de estos alimentos haremos click en \textit{Añadir}, y el alimento se añadirá a nuestra base de datos. La aplicación nos redirigirá al panel de Gestión de alimentos al terminar.
+
+\imagen{Manual/alimentos_nutritionix}{Vista de búsqueda de alimentos en Nutritionix}{0.8}
+
+Si por el contrario queremos crear un alimento a mano, deberemos de hacer click en \textit{Crear a mano}. Primero se nos pedirá la información básica del alimento, así que deberemos de rellenar los datos pedidos y hacer click en \textit{Continuar}. 
+
+A continuación veremos varias páginas de introducción de datos, las correspondientes a la introducción de datos de componentes, a introducción de vitaminas, y a introducción de minerales. Una vez estén todas rellenas y hagamos click en \textit{Guardar}, el alimento se guardará en la base de datos y la aplicación nos devolverá al panel de Gestión de elementos.
+
+\imagen{Manual/alimentos_create}{Vista de creación de alimentos a mano}{0.8}
+
+\imagen{Manual/alimentos_nutrients}{Vista para indicar los componentes de un alimento}{0.8}
+
+\imagen{Manual/alimentos_vitamins}{Vista para indicar las vitaminas de un alimento}{0.8}
+
+\imagen{Manual/alimentos_minerals}{Vista para indicar los minerales de un alimento}{0.8}
+
+Si dentro del panel de Gestión de alimentos hacemos click en el nombre de un alimento, se nos dirigirá a la vista de componentes nutricionales de un alimento. Aquí podemos observar tanto el gráfico de componentes como la tabla detallada de componentes nutricionales del alimento.
+
+\imagen{Manual/alimentos_view_1}{Vista de componentes nutricionales de un alimento}{0.8}
+
+En caso de poner el ratón encima de alguno de los quesos del gráfico, podemos ver los valores exactos de ese componente.
+
+\imagen{Manual/alimentos_view_2}{Vista con la distinta información que muestran las tablas de componentes}{0.8}
+
+\imagen{Manual/alimentos_view_details}{Vista con información adicional en el gráfico}{0.8}
+
+Para editar un alimento, haremos click en \textit{Editar} en el panel de Gestión de alimentos. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/alimentos_edit_1}{Vista de edición de alimentos}{0.8}
+
+\imagen{Manual/alimentos_edit_2}{Vista de edición de los componentes de un alimento}{0.8}
+
+\imagen{Manual/alimentos_edit_3}{Vista de edición de las vitaminas de un alimento}{0.8}
+
+\imagen{Manual/alimentos_edit_4}{Vista de edición de los minerales de un alimento}{0.8}
+
+Para borrar un alimento, haremos click en \textit{Borrar} en el panel de Gestión de alimentos. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del alimento.
+
+\imagen{Manual/alimentos_delete}{Vista de borrado de alimentos}{0.8}
+
+\subsection{Panel de control de editores}
+
+Esto es lo primero que veremos al iniciar sesión con una cuenta de editor. Podemos gestionar los menús y platos de la empresa a la que pertenece el usuario desde este tipo de cuenta.
+
+\imagen{Manual/editor_panel}{Vista del panel de control de editores}{0.8}
+
+\subsection{Gestión de platos}
+
+En la sección de Gestión de locales dispondremos de todos los locales disponibles en la aplicación.
+
+\imagen{Manual/platos_table}{Vista principal de gestión de platos}{0.8}
+
+Para crear un nuevo plato, debemos hacer click en \textit{Crear un nuevo plato} dentro del panel de gestión de platos. Debemos rellenar la información básica del plato en el panel \textit{Información sobre el plato}, y a continuación podemos proceder a añadir los alimentos que van a formar el plato.
+
+Para añadir alimentos a un plato existen tres formas:
+
+\begin{itemize}
+	\item Añadir el alimento desde la lista de alimentos existentes en la base de datos
+	\item Buscar un alimento en Nutritionix
+	\item Crear un alimento a mano	
+\end{itemize}
+
+Según vayamos añadiendo los alimentos al plato, estos irán apareciendo en el panel \textit{Lista de alimentos}. Podemos modificar su cantidad en gramos, o borrarlos del plato.
+
+Cuando estemos satisfechos con el plato, debemos hacer click en \textit{Guardar}. En caso de querer cancelar la creación del plato, debemos hacer click en \textit{Cancelar}, donde se nos abrirá una ventana preguntando si realmente queremos cancelar la creación del plato.
+
+\imagen{Manual/platos_new_table}{Vista de creación de platos}{0.8}
+
+\imagen{Manual/platos_new_nutritionix}{Vista para añadir un alimento de Nutritionix al plato}{0.8}
+
+\imagen{Manual/platos_new_create}{Vista para crear un alimento y añadirlo al plato}{0.8}
+
+\imagen{Manual/platos_new_cancel}{Vista de cancelación de la creación de un plato}{0.8}
+
+Para editar un plato, haremos click en \textit{Editar} en el panel de Gestión de platos. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/platos_edit}{Vista de edición de platos}{0.8}
+
+Para borrar un plato, haremos click en \textit{Borrar} en el panel de Gestión de platos. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del plato.
+
+\imagen{Manual/platos_delete}{Vista de borrado de platos}{0.8}
+
+Si dentro del panel de Gestión de platos hacemos click en el nombre de un plato, se nos dirigirá a la vista de componentes nutricionales de un plato. Aquí podemos observar tanto el gráfico de componentes como la tabla detallada de componentes nutricionales del plato.
+
+Debajo del informe nutricional también disponemos de los alimentos que componen el plato, así como su cantidad. Si hacemos click en el nombre de un alimento podemos ver el informe nutricional de ese alimento.
+
+\imagen{Manual/platos_view}{Vista de componentes nutricionales e ingredientes de un plato}{0.8}
+
+\subsection{Gestión de menús}
+
+En la sección de Gestión de menús dispondremos de todos los menús disponibles en la aplicación.
+
+\imagen{Manual/menus_table}{Vista principal de gestión de menús}{0.8}
+
+Para crear un nuevo menú, debemos hacer click en \textit{Crear un nuevo menú} dentro del panel de gestión de menús. Debemos rellenar la información básica del menú en el panel \textit{Información sobre el menú}, y a continuación podemos proceder a seleccionar los locales en los que va a aparecer este menú y los platos que queremos añadir en él.
+
+Cuando estemos satisfechos con el menú, debemos hacer click en \textit{Guardar}. En caso de querer cancelar la creación del menú, debemos hacer click en \textit{Cancelar}, donde se nos abrirá una ventana preguntando si realmente queremos cancelar la creación del plato.
+
+\imagen{Manual/menus_new}{Vista de creación de menús}{0.8}
+
+\imagen{Manual/menus_new_cancel}{Vista de cancelación de la creación de un menú}{0.8}
+
+Para editar un menú, haremos click en \textit{Editar} en el panel de Gestión de menús. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
+\imagen{Manual/menus_edit}{Vista de edición de menús}{0.8}
+
+Para borrar un menú, haremos click en \textit{Borrar} en el panel de Gestión de menús. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del menú.
+
+\imagen{Manual/menus_delete}{Vista de borrado de menús}{0.8}
+
+Si dentro del panel de Gestión de menús hacemos click en el nombre de un menú, se nos dirigirá a la vista de componentes nutricionales de un menú. Esta es la misma vista que se van a encontrar los consumidores al seleccionar un menú.
+
+Si seleccionamos un plato, podemos observar como automáticamente se actualizan tanto el gráfico como la tabla (podemos alternar entre ellos pulsando en los botones \textit{Gráfico} y \textit{Tabla de nutrientes}). Podemos seleccionar o deseleccionar tantos platos como deseemos, ya que el informe se va a actualizar de forma automática.
+
+\imagen{Manual/menus_view_1}{Vista de informe nutricional de un menú (gráfica)}{0.8}
+
+En caso de que un valor supere el 80\% de su cantidad recomendada, la fila de ese valor se pondrá de color amarillo. En caso de que ese valor supere su cantidad recomendad, la fila se pondrá de color rojo.
+
+\imagen{Manual/menus_view_2}{Vista de informe nutricional de un menú (tabla de nutrientes)}{0.8}
+
+\subsection{Panel de control de camareros}
+
+Esto es lo primero que veremos al iniciar sesión con una cuenta de camarero. Podemos gestionar los menús de la empresa a la que pertenece el usuario desde este tipo de cuenta.
+
+\imagen{Manual/camarero_view}{Vista del panel de control de camareros}{0.8}
+
+\subsection{Parte para consumidores}
+
+Esta es la parte de la aplicación a la que van a acceder los consumidores. Lo primero que nos pregunta la aplicación es que seleccionemos una empresa.
+
+\imagen{Manual/main}{Vista de selección de una empresa}{0.8}
+
+A continuación se nos pide que escojamos un local de los pertenecientes a la empresa que acabamos de escoger.
+
+\imagen{Manual/seleccion_local}{Vista de selección de un local}{0.8}
+
+Por último, se nos pide que seleccionemos una fecha para ver los menús disponibles. Por defecto la fecha escogida es la del día de hoy, pero se puede modificar para escoger otra fecha.
+
+Una vez hayamos seleccionado la fecha deseada, podemos ver los menús publicados para ese día. Si hacemos click en alguno de ellos podemos ver el informe nutricional de ese menú, el cual funciona de la misma que acabamos de explicar en el panel de Gestión de menús.
+
+\imagen{Manual/seleccion_menu}{Vista de selección de un menú}{0.8}
+
+\imagen{Manual/menus_view_1}{Vista de selección de platos, junto a la gráfica nutricional}{0.8}
+
+\imagen{Manual/menus_view_2}{Vista de selección de platos, junto a la tabla de nutrientes}{0.8}
