@@ -142,8 +142,13 @@ En caso de poner el ratón encima de alguno de los quesos del gráfico, podemos 
 
 Para editar un alimento, haremos click en \textit{Editar} en el panel de Gestión de alimentos. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
 
-% TODO añadir imagen de la edición de alimentos
-% \imagen{Manual/alimentos_edit}{Vista de edición de alimentos}{0.8}
+\imagen{Manual/alimentos_edit_1}{Vista de edición de alimentos}{0.8}
+
+\imagen{Manual/alimentos_edit_2}{Vista de edición de los componentes de un alimento}{0.8}
+
+\imagen{Manual/alimentos_edit_3}{Vista de edición de las vitaminas de un alimento}{0.8}
+
+\imagen{Manual/alimentos_edit_4}{Vista de edición de los minerales de un alimento}{0.8}
 
 Para borrar un alimento, haremos click en \textit{Borrar} en el panel de Gestión de alimentos. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del alimento.
 
@@ -157,7 +162,23 @@ Esto es lo primero que veremos al iniciar sesión con una cuenta de editor. Pode
 
 \subsection{Gestión de platos}
 
+En la sección de Gestión de locales dispondremos de todos los locales disponibles en la aplicación.
+
 \imagen{Manual/platos_table}{Vista principal de gestión de platos}{0.8}
+
+Para crear un nuevo plato, debemos hacer click en \textit{Crear un nuevo plato} dentro del panel de gestión de platos. Debemos rellenar la información básica del plato en el panel \textit{Información sobre el plato}, y a continuación podemos proceder a añadir los alimentos que van a formar el plato.
+
+Para añadir alimentos a un plato existen tres formas:
+
+\begin{itemize}
+	\item Añadir el alimento desde la lista de alimentos existentes en la base de datos
+	\item Buscar un alimento en Nutritionix
+	\item Crear un alimento a mano	
+\end{itemize}
+
+Según vayamos añadiendo los alimentos al plato, estos irán apareciendo en el panel \textit{Lista de alimentos}. Podemos modificar su cantidad en gramos, o borrarlos del plato.
+
+Cuando estemos satisfechos con el plato, debemos hacer click en \textit{Guardar}. En caso de querer cancelar la creación del plato, debemos hacer click en \textit{Cancelar}, donde se nos abrirá una ventana preguntando si realmente queremos cancelar la creación del plato.
 
 \imagen{Manual/platos_new_table}{Vista de creación de platos}{0.8}
 
@@ -167,39 +188,71 @@ Esto es lo primero que veremos al iniciar sesión con una cuenta de editor. Pode
 
 \imagen{Manual/platos_new_cancel}{Vista de cancelación de la creación de un plato}{0.8}
 
+Para editar un plato, haremos click en \textit{Editar} en el panel de Gestión de platos. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
 \imagen{Manual/platos_edit}{Vista de edición de platos}{0.8}
 
+Para borrar un plato, haremos click en \textit{Borrar} en el panel de Gestión de platos. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del plato.
+
 \imagen{Manual/platos_delete}{Vista de borrado de platos}{0.8}
+
+Si dentro del panel de Gestión de platos hacemos click en el nombre de un plato, se nos dirigirá a la vista de componentes nutricionales de un plato. Aquí podemos observar tanto el gráfico de componentes como la tabla detallada de componentes nutricionales del plato.
+
+Debajo del informe nutricional también disponemos de los alimentos que componen el plato, así como su cantidad. Si hacemos click en el nombre de un alimento podemos ver el informe nutricional de ese alimento.
 
 \imagen{Manual/platos_view}{Vista de componentes nutricionales e ingredientes de un plato}{0.8}
 
 \subsection{Gestión de menús}
 
+En la sección de Gestión de menús dispondremos de todos los menús disponibles en la aplicación.
+
 \imagen{Manual/menus_table}{Vista principal de gestión de menús}{0.8}
+
+Para crear un nuevo menú, debemos hacer click en \textit{Crear un nuevo menú} dentro del panel de gestión de menús. Debemos rellenar la información básica del menú en el panel \textit{Información sobre el menú}, y a continuación podemos proceder a seleccionar los locales en los que va a aparecer este menú y los platos que queremos añadir en él.
+
+Cuando estemos satisfechos con el menú, debemos hacer click en \textit{Guardar}. En caso de querer cancelar la creación del menú, debemos hacer click en \textit{Cancelar}, donde se nos abrirá una ventana preguntando si realmente queremos cancelar la creación del plato.
 
 \imagen{Manual/menus_new}{Vista de creación de menús}{0.8}
 
 \imagen{Manual/menus_new_cancel}{Vista de cancelación de la creación de un menú}{0.8}
 
+Para editar un menú, haremos click en \textit{Editar} en el panel de Gestión de menús. Modificaremos los datos que deseemos y haremos click en \textit{Guardar} para que se apliquen los cambios.
+
 \imagen{Manual/menus_edit}{Vista de edición de menús}{0.8}
+
+Para borrar un menú, haremos click en \textit{Borrar} en el panel de Gestión de menús. Nos aparecerá una ventana pidiéndonos confirmar la acción, y si le damos a \textit{Sí, borrar} se producirá el borrado del menú.
 
 \imagen{Manual/menus_delete}{Vista de borrado de menús}{0.8}
 
+Si dentro del panel de Gestión de menús hacemos click en el nombre de un menú, se nos dirigirá a la vista de componentes nutricionales de un menú. Esta es la misma vista que se van a encontrar los consumidores al seleccionar un menú.
+
+Si seleccionamos un plato, podemos observar como automáticamente se actualizan tanto el gráfico como la tabla (podemos alternar entre ellos pulsando en los botones \textit{Gráfico} y \textit{Tabla de nutrientes}). Podemos seleccionar o deseleccionar tantos platos como deseemos, ya que el informe se va a actualizar de forma automática.
+
 \imagen{Manual/menus_view_1}{Vista de informe nutricional de un menú (gráfica)}{0.8}
+
+En caso de que un valor supere el 80\% de su cantidad recomendada, la fila de ese valor se pondrá de color amarillo. En caso de que ese valor supere su cantidad recomendad, la fila se pondrá de color rojo.
 
 \imagen{Manual/menus_view_2}{Vista de informe nutricional de un menú (tabla de nutrientes)}{0.8}
 
 \subsection{Panel de control de camareros}
 
-\imagen{Manual/camarero_view}{Vista del panel de control de camareros}{0.8}
-
 Esto es lo primero que veremos al iniciar sesión con una cuenta de camarero. Podemos gestionar los menús de la empresa a la que pertenece el usuario desde este tipo de cuenta.
+
+\imagen{Manual/camarero_view}{Vista del panel de control de camareros}{0.8}
 
 \subsection{Parte para consumidores}
 
+Esta es la parte de la aplicación a la que van a acceder los consumidores. Lo primero que nos pregunta la aplicación es que seleccionemos una empresa.
+
 \imagen{Manual/main}{Vista de selección de una empresa}{0.8}
 
+A continuación se nos pide que escojamos un local de los pertenecientes a la empresa que acabamos de escoger.
+
 \imagen{Manual/seleccion_local}{Vista de selección de un local}{0.8}
+
+Por último, se nos pide que seleccionemos una fecha para ver los menús disponibles. Por defecto la fecha escogida es la del día de hoy, pero se puede modificar para escoger otra fecha.
+
+Una vez hayamos seleccionado la fecha deseada, podemos ver los menús publicados para ese día. Si hacemos click en alguno de ellos podemos ver el informe nutricional de ese menú, el cual funciona de la misma que acabamos de explicar en el panel de Gestión de menús.
 
 \imagen{Manual/seleccion_menu}{Vista de selección de un menú}{0.8}
 
