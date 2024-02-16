@@ -300,7 +300,15 @@ Los valores pueden ser modificados si es necesario, pero se recomienda usar los 
 	\item Todas las variables correspondientes a la base de datos, como el \textbf{nombre de la instancia}, \textbf{nombre de la base de datos}, y \textbf{credenciales de los usuarios de MySQL}.
 \end{itemize}
 
-% TODO añadir cómo obtener credenciales de Nutritionix
+\subsection{Obtención de credenciales para la API de Nutritionix}
+
+Para obtener credenciales para la API de Nutritionix, debemos dirigirnos a \href{https://developer.nutritionix.com/}{https://developer.nutritionix.com/} y registrarnos con una cuenta gratuita.
+
+\imagen{Nutritionix/control_panel}{Panel de control de Nutritionix}{0.8}
+
+Una vez hayamos creado una cuenta, en el panel de control debemos seleccionar \textit{View API Keys}, y desde aquí podremos obtener tanto el Application ID (correspondiente a la variable \textbf{VITE\_NUTRI\_X\_APP\_ID}) como la Application Key (correspondiente a la variable \textbf{VITE\_NUTRI\_X\_APP\_KEY}). La Application Key se debe copiar sin los guiones que aparecen al final, sólo la cadena de letras y números.
+
+\imagen{Nutritionix/keys}{Panel de API Keys de Nutritionix}{0.8}
 
 \subsection{Despliegue del entorno de desarrollo}
 
